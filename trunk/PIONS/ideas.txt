@@ -1,0 +1,9 @@
+jButton1.text=Create a New Account
+jButton2.text=Insert new Superior
+jButton3.text=Insert new Subordinate
+jButton4.text=Update Contact Info
+jButton5.text=Check for Contact Info requests
+jButton6.text=Check for New Employee requests
+jButton7.text=Send Contact Info request
+jButton8.text=Send New Employee request
+jButton9.text=Edit Availability GoogleCalendar
