@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class ContactInfo implements Serializable {
     String email;
     ArrayList<PhoneNumber> phone_numbers = new ArrayList<PhoneNumber>();
-    Address address;
+    Address address = new Address();
 
     public static class PhoneNumber implements Serializable {
         private PhoneType type = PhoneType.Home;
@@ -122,10 +122,10 @@ public class ContactInfo implements Serializable {
     }
 
     public static class Address implements Serializable {
-        private String street_address;
-        private String city;
-        private State state;
-        private int zip;
+        private String street_address = "";
+        private String city = "";
+        private State state = State.None;
+        private int zip = 0;
 
         public enum State{
             AL("Alabama"), AK("Alaska"), AZ("Arizona"), AR("Arkansas"),
@@ -141,7 +141,7 @@ public class ContactInfo implements Serializable {
             PA("Pennsylvania"), RI("Rhode Island"), SC("South Carolina"),
             SD("South Dakota"), TN("Tennessee"), TX("Texas"), UT("Utah"),
             VT("Vermont"), VA("Virginia"), WA("Washington"),
-            WV("West Virginia"), WI("Wisconsin"), WY("Wyoming");
+            WV("West Virginia"), WI("Wisconsin"), WY("Wyoming"), None("");
 
             String state;
             
