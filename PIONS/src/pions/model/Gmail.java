@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.BodyPart;
-import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
@@ -37,9 +36,13 @@ public class Gmail implements Serializable {
         try{
             Gmail gmail = new Gmail("pionstest@gmail.com", "PIONSpassword");
             
-            gmail.sendAlert(AlertType.AddSubordinate, "Hello World!".getBytes());
+            //gmail.sendAlert(AlertType.AddSuperior, "Hello World!".getBytes());
 
-            System.out.println(gmail.retrieveAlerts().get(0).getHeader("AlertType")[0]);
+            gmail.received_messages.add(1);
+            gmail.received_messages.add(2);
+            ArrayList<Message> messages = gmail.retrieveAlerts();
+            System.out.println(messages.get(0).getHeader("AlertType")[0] +
+                    messages.get(0).getMessageNumber());
         }
         catch(Exception e){
             e.printStackTrace();
@@ -49,8 +52,10 @@ public class Gmail implements Serializable {
     private final String host = "pop.gmail.com";
     private final String store = "pop3s";
     private final String folder_name = "Inbox";
+    private final String subject = "PIONS MESSAGE SYSTEM";
     private String gmail_username;
     private String gmail_password;
+    private ArrayList<Integer> received_messages = new ArrayList<Integer>();
 
     public Gmail(String gmail_username, String gmail_password) throws NoSuchProviderException, MessagingException {
         this.gmail_username = gmail_username;
@@ -91,8 +96,10 @@ public class Gmail implements Serializable {
 
         ArrayList<Message> new_messages = new ArrayList<Message>();
         for(Message current: messages){
-            if(current.isSet(Flag.RECENT)){
+            if(!received_messages.contains(current.getMessageNumber()) &&
+                    current.getSubject().compareTo(subject) == 0){
                 new_messages.add(current);
+                received_messages.add(current.getMessageNumber());
             }
         }
 
@@ -113,13 +120,14 @@ public class Gmail implements Serializable {
         //Set message content
         Address recipient = new InternetAddress(gmail_username);
         message.addRecipient(RecipientType.TO, recipient);
-        message.setSubject("PIONS MESSAGE SYSTEM");
+        message.setSubject(subject);
         Multipart multipart = new MimeMultipart();
 
         //Add message text
         BodyPart mail_text = new MimeBodyPart();
         mail_text.setText(type.toString());
         multipart.addBodyPart(mail_text);
+        //TODO make AlertType be a toString method
         message.addHeader("AlertType", type.name());
 
         //Add attachment
