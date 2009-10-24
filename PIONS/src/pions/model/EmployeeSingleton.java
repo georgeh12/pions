@@ -6,7 +6,6 @@
 package pions.model;
 
 import java.io.Serializable;
-import pions.model.EmployeeFactory.Employee;
 
 /**
  *
