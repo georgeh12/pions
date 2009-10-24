@@ -73,9 +73,10 @@ public class Login {
      * @throws IOException
      * @throws pions.model.PIONSModelException.NotLoggedInException
      */
-    public byte[] serialize(Object object) throws IOException, NotLoggedInException
+    public static byte[] serialize(Object object) throws IOException, NotLoggedInException
     {
-        validate();
+        //TODO use AES encryption to serialize objects
+        //validate();
 
         ObjectOutputStream oos;
         ByteArrayOutputStream baos;
@@ -98,9 +99,10 @@ public class Login {
      * @throws ClassNotFoundException
      * @throws pions.model.PIONSModelException.NotLoggedInException
      */
-    public Object deserialize(byte[] object) throws IOException, ClassNotFoundException, NotLoggedInException
+    public static Object deserialize(byte[] object) throws IOException, ClassNotFoundException, NotLoggedInException
     {
-        validate();
+        //TODO use AES decryption to deserialize objects
+        //validate();
 
         ObjectInputStream ois;
         ByteArrayInputStream bais;
