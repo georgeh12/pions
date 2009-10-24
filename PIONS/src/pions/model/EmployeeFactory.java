@@ -13,7 +13,12 @@ import java.util.ArrayList;
  * @author George
  */
 public class EmployeeFactory {
+    public static Employee getInstance(){
+        return new Employee();
+    }
+
     public static class Employee extends Login implements Serializable {
+        private Gmail gmail;
         private ContactInfo contact_info;
         private ArrayList<Position> position;
         private ArrayList<Employee> superiors = new ArrayList<Employee>();

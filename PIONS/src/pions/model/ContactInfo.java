@@ -13,9 +13,35 @@ import java.util.ArrayList;
  * @author George
  */
 public class ContactInfo implements Serializable {
-    String email;
+    ArrayList<Email> email_addresses = new ArrayList<Email>();
     ArrayList<PhoneNumber> phone_numbers = new ArrayList<PhoneNumber>();
     Address address = new Address();
+
+    public static class Email implements Serializable {
+        String name = "";
+        String domain = "";
+
+        public Email(String name, String domain){
+            set(name, domain);
+        }
+
+        /**
+         * Throws IndexOutOfBoundsException if the e-mail address is not valid.
+         * Either there is no '@' character, or there is no domain specified
+         * after the '@' character.
+         * @param email_address
+         * @throws IndexOutOfBoundsException
+         */
+        public Email(String email_address) throws IndexOutOfBoundsException {
+            this(email_address.substring(0, email_address.indexOf('@')),
+                    email_address.substring(email_address.indexOf('@') + 1));
+        }
+
+        private void set(String name, String domain){
+            this.name = name;
+            this.domain = domain;
+        }
+    }
 
     public static class PhoneNumber implements Serializable {
         private PhoneType type = PhoneType.Home;
