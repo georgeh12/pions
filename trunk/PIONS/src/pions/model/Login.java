@@ -5,7 +5,8 @@
 
 package pions.model;
 
-import pions.model.PIONSModelException.*;
+import java.util.Observable;
+import pions.model.ModelException.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.io.ObjectOutputStream;
  *
  * @author George
  */
-public class Login {
+public class Login extends Observable {
     private String username;
     private String password;
     private boolean validated = false;
@@ -24,7 +25,7 @@ public class Login {
 
     /**
      * Throw exception if user is not logged in.
-     * @throws pions.model.PIONSModelException.NotLoggedInException
+     * @throws pions.model.ModelException.NotLoggedInException
      */
     private void validate() throws NotLoggedInException {
         if(validated == false){
@@ -71,7 +72,7 @@ public class Login {
      * @param object
      * @return Encrypted object
      * @throws IOException
-     * @throws pions.model.PIONSModelException.NotLoggedInException
+     * @throws pions.model.ModelException.NotLoggedInException
      */
     public static byte[] serialize(Object object) throws IOException, NotLoggedInException
     {
@@ -97,7 +98,7 @@ public class Login {
      * @return
      * @throws IOException
      * @throws ClassNotFoundException
-     * @throws pions.model.PIONSModelException.NotLoggedInException
+     * @throws pions.model.ModelException.NotLoggedInException
      */
     public static Object deserialize(byte[] object) throws IOException, ClassNotFoundException, NotLoggedInException
     {

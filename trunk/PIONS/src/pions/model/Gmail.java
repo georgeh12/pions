@@ -36,12 +36,12 @@ public class Gmail implements Serializable {
         try{
             Gmail gmail = new Gmail("pionstest@gmail.com", "PIONSpassword");
             
-            //gmail.sendAlert(AlertType.AddSuperior, "Hello World!".getBytes());
+            //gmail.sendAlert(AlertType.AddManager, "Hello World!".getBytes());
 
             gmail.received_messages.add(1);
-            gmail.received_messages.add(2);
+            //gmail.received_messages.add(2);
             ArrayList<Message> messages = gmail.retrieveAlerts();
-            System.out.println(messages.get(0).getHeader("AlertType")[0] +
+            System.out.println(messages.get(0).getHeader(AlertType.class.getName())[0] +
                     messages.get(0).getMessageNumber());
         }
         catch(Exception e){
@@ -127,8 +127,7 @@ public class Gmail implements Serializable {
         BodyPart mail_text = new MimeBodyPart();
         mail_text.setText(type.toString());
         multipart.addBodyPart(mail_text);
-        //TODO make AlertType be a toString method
-        message.addHeader("AlertType", type.name());
+        message.addHeader(AlertType.class.getName(), type.name());
 
         //Add attachment
         BodyPart mail_attachment = new MimeBodyPart();
@@ -149,15 +148,15 @@ public class Gmail implements Serializable {
     }
 
     public enum AlertType{
-        AddSubordinate, AddSuperior, NewWorkSchedule, UpdatedWorkSchedule,
-        SwapShiftRequest;
+        AddSubordinate, AddManager, NewWorkSchedule, UpdatedWorkSchedule,
+        SwapShift;
 
         public AlertType parse(String type){
             if(type.equals(AddSubordinate.toString())){
                 return AddSubordinate;
             }
-            else if(type.equals(AddSuperior.toString())){
-                return AddSuperior;
+            else if(type.equals(AddManager.toString())){
+                return AddManager;
             }
             else if(type.equals(NewWorkSchedule.toString())){
                 return NewWorkSchedule;
@@ -165,8 +164,8 @@ public class Gmail implements Serializable {
             else if(type.equals(UpdatedWorkSchedule.toString())){
                 return UpdatedWorkSchedule;
             }
-            else if(type.equals(SwapShiftRequest.toString())){
-                return SwapShiftRequest;
+            else if(type.equals(SwapShift.toString())){
+                return SwapShift;
             }
             else{
                 return null;
