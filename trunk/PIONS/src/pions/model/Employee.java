@@ -9,11 +9,11 @@ import java.util.ArrayList;
  * @author George
  */
 public class Employee extends Login implements Serializable {
-    private Gmail gmail;
-    private ContactInfo contact_info;
     private ArrayList<Position> position = new ArrayList<Position>();
     private ArrayList<Employee> managers = new ArrayList<Employee>();
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
+    public Gmail gmail;
+    public ContactInfo contact_info;
 
     /**
      * Adds a new manager for the current Employee.

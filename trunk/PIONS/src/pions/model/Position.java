@@ -11,8 +11,12 @@ class Position implements Serializable {
     private String title;
     private Pay pay;
 
-    Position(String title){
+    protected Position(String title){
         this.title = title;
+    }
+
+    protected void setPay(boolean hourly, Double rate){
+
     }
 
     public static class Pay{

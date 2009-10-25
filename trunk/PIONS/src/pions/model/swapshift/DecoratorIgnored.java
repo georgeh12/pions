@@ -1,31 +1,29 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package pions.model.swapshift;
+
+import java.io.Serializable;
 
 /**
  *
  * @author George
  */
-class DecoratorIgnored extends DecoratorAbstract {
-    protected DecoratorIgnored(StateAbstract swap_shift_state){
+class DecoratorIgnored extends AbstractDecorator implements Serializable {
+    protected DecoratorIgnored(AbstractState swap_shift_state){
         super(swap_shift_state);
     }
 
     @Override
-    void accepted() {
+    protected void accepted() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    void rejected() {
+    protected void rejected() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    void ignored() {
+    protected void ignored() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
