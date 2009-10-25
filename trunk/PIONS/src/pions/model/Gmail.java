@@ -1,6 +1,9 @@
 
 package pions.model;
 
+import pions.model.alerts.SwapShiftAlert;
+import pions.model.alerts.WorkScheduleAlert;
+import pions.model.alerts.EmployeeAlert;
 import com.sun.mail.util.BASE64DecoderStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -23,8 +26,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.NoSuchProviderException;
 import javax.mail.MessagingException;
-import pions.model.Alert.AlertType;
+import pions.model.alerts.Alert.AlertType;
 import pions.model.ModelException.MessageParserException;
+import pions.model.alerts.Alert;
 import pions.model.swapshift.SwapShift;
 
 /**
@@ -37,7 +41,7 @@ public class Gmail extends Observable implements Serializable {
         try{
             Gmail gmail = new Gmail("pionstest@gmail.com", "PIONSpassword");
             
-            //gmail.sendAlert(AlertType.SwapShift, EmployeeSingleton.getInstance().encryptRSA(new SwapShift()));
+            //gmail.sendAlert(AlertType.SwapShiftMachine, EmployeeSingleton.getInstance().encryptRSA(new SwapShiftMachine()));
 
             //gmail.received_alerts = 1;
             //gmail.received_alerts = 2;
@@ -101,34 +105,38 @@ public class Gmail extends Observable implements Serializable {
                 //Retrieves the attachment and decodes it using decryptRSA()
                 Object object = EmployeeSingleton.getInstance().decryptRSA(
                         (BASE64DecoderStream)((Multipart) current.getContent()).getBodyPart(0).getContent());
-                
+
+                //Strategy design pattern at work.
+                Alert add_alert = null;
+
                 switch (alert_type) {
                     case AddSubordinate:
-                        EmployeeAlert add_subordinate = new EmployeeAlert((Employee)object);
-                        add_subordinate.set(AlertType.AddSubordinate);
-                        active_alerts.add(add_subordinate);
+                        add_alert = new EmployeeAlert((Employee)object);
+                        add_alert.set(AlertType.AddSubordinate);
+                        active_alerts.add(add_alert);
                         break;
                     case AddManager:
-                        EmployeeAlert add_manager = new EmployeeAlert((Employee)object);
-                        add_manager.set(AlertType.AddManager);
-                        active_alerts.add(add_manager);
+                        add_alert = new EmployeeAlert((Employee)object);
+                        add_alert.set(AlertType.AddManager);
+                        active_alerts.add(add_alert);
                         break;
                     case NewWorkSchedule:
                         throw new UnsupportedOperationException("Not supported yet.");
                         //TODO NewWorkSchedule AlertType
                         //break;
                     case UpdatedWorkSchedule:
-                        throw new UnsupportedOperationException("Not supported yet.");
-                        //TODO UpdatedWorkSchedule AlertType
+                        add_alert = new WorkScheduleAlert((WorkSchedule)object);
+                        add_alert.set(AlertType.UpdatedWorkSchedule);
                         //break;
                     case SwapShift:
-                        SwapShiftAlert add_swapshift = new SwapShiftAlert((SwapShift)object);
-                        add_swapshift.set(AlertType.SwapShift);
-                        active_alerts.add(add_swapshift);
+                        add_alert = new SwapShiftAlert((SwapShift)object);
+                        add_alert.set(AlertType.SwapShift);
                         break;
                     default:
                         break;
                 }
+
+                active_alerts.add(add_alert);
             } catch (Exception e) {
                 e.initCause(new MessageParserException(new_alerts.indexOf(current), alert_type));
                 message_exceptions.add(e);

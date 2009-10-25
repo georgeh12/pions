@@ -12,10 +12,16 @@ import pions.model.ModelException.NotLoggedInException;
 public class Employee extends Login implements Serializable {
     public Gmail gmail;
     public ContactInfo contact_info;
+    public WorkSchedule availability;
+    public WorkSchedule work_schedule;
     private ArrayList<Position> positions = new ArrayList<Position>();
     private ArrayList<Employee> managers = new ArrayList<Employee>();
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
-    private String public_key = null;  //for RSA
+
+    //TODO fix once public key is done
+    public String getPublicKey(){
+        return public_key.get();
+    }
 
     public void addPosition(String title, boolean hourly, double rate){
         positions.add(new Position(title, hourly, rate));

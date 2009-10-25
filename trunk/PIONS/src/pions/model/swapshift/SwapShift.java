@@ -2,49 +2,23 @@
 package pions.model.swapshift;
 
 import java.io.Serializable;
+import pions.model.GoogleCalendar;
 
 /**
- * The machine to handle swap shift states.
- * Implements state and decorator patterns. BOOYA!
+ *
  * @author George
  */
+//TODO design SwapShift
 public class SwapShift implements Serializable {
-    AbstractState initial_state = new StateInitial(this);
-    AbstractState authorizing_state = new StateAuthorizing(this);
-    AbstractState pending_state = new StatePending(this);
-    AbstractState final_state = new StateFinal(this);
-    AbstractState current_state = initial_state;
+    private SwapShiftMachine machine = new SwapShiftMachine();
+    private GoogleCalendar current;
+    private GoogleCalendar proposed;
 
-    void setState(AbstractState state){
-        current_state = state;
+    public SwapShift(GoogleCalendar current){
+        this.current = current;
     }
 
-    void setAccepted(AbstractState state){
-        current_state = new DecoratorAccepted(state);
-    }
-
-    void setRejected(AbstractState state){
-        current_state = new DecoratorRejected(state);
-    }
-
-    void setIgnored(AbstractState state){
-        current_state = new DecoratorIgnored(state);
-    }
-
-    public void accepted(){
-        current_state.accepted();
-    }
-
-    public void rejected(){
-        current_state.rejected();
-    }
-
-    public void ignored(){
-        current_state.ignored();
-    }
-
-    @Override
-    public String toString(){
-        return current_state.toString();
+    public void setProposed(GoogleCalendar proposed){
+        this.proposed = proposed;
     }
 }

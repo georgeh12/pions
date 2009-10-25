@@ -16,7 +16,8 @@ import java.util.Observable;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
- *
+ * This class is not Serializable so the username or passwords, besides
+ * the PublicKey, will not be saved.
  * @author George
  */
 public class Login extends Observable {
@@ -24,21 +25,15 @@ public class Login extends Observable {
     private String password = null;    //for AES
     private String private_key = null; //for RSA
     private String display_name = null;
-    private boolean validated = true;
-    private String public_key = null;  //for RSA
+    private boolean validated = false;
+    protected PublicKey public_key = null;
 
-    //TODO generate public key
-    public void generatePublicKey() throws NotLoggedInException {
-        validate();
-
-        this.public_key = "";
-    }
-
-    //TODO generate private key
-    public void generatePrivateKey() throws NotLoggedInException {
+    //TODO generate RSA keys
+    public void generateRSAKeys() throws NotLoggedInException {
         validate();
 
         this.private_key = "";
+        public_key = new PublicKey("");
     }
 
     /**

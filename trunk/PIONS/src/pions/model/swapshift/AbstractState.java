@@ -9,9 +9,9 @@ import java.util.ArrayList;
  * @author George
  */
 abstract class AbstractState implements Serializable {
-    protected SwapShift swap_shift;
+    protected SwapShiftMachine swap_shift;
 
-    protected AbstractState(SwapShift swap_shift){
+    protected AbstractState(SwapShiftMachine swap_shift){
         this.swap_shift = swap_shift;
     }
     
