@@ -1,31 +1,29 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package pions.model.swapshift;
+
+import java.io.Serializable;
 
 /**
  *
  * @author George
  */
-class StateInitial extends StateAbstract {
+class StateInitial extends AbstractState implements Serializable {
     protected StateInitial(SwapShift swap_shift){
         super(swap_shift);
     }
 
     @Override
-    void accepted() {
+    protected void accepted() {
         swap_shift.setAccepted(swap_shift.authorizing_state);
     }
 
     @Override
-    void rejected() {
+    protected void rejected() {
         swap_shift.setRejected(swap_shift.authorizing_state);
     }
 
     @Override
-    void ignored() {
+    protected void ignored() {
         swap_shift.setIgnored(swap_shift.authorizing_state);
     }
 }

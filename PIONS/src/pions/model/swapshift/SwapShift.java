@@ -1,35 +1,35 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package pions.model.swapshift;
+
+import java.io.Serializable;
 
 /**
  * The machine to handle swap shift states.
  * Implements state and decorator patterns. BOOYA!
  * @author George
  */
-public class SwapShift {
-    StateAbstract initial_state = new StateInitial(this);
-    StateAbstract authorizing_state = new StateAuthorizing(this);
-    StateAbstract pending_state = new StatePending(this);
-    StateAbstract final_state = new StateFinal(this);
-    StateAbstract current_state = initial_state;
+public class SwapShift implements Serializable {
 
-    protected void setState(StateAbstract state){
+
+    AbstractState initial_state = new StateInitial(this);
+    AbstractState authorizing_state = new StateAuthorizing(this);
+    AbstractState pending_state = new StatePending(this);
+    AbstractState final_state = new StateFinal(this);
+    AbstractState current_state = initial_state;
+
+    void setState(AbstractState state){
         current_state = state;
     }
 
-    protected void setAccepted(StateAbstract state){
+    void setAccepted(AbstractState state){
         current_state = new DecoratorAccepted(state);
     }
 
-    protected void setRejected(StateAbstract state){
+    void setRejected(AbstractState state){
         current_state = new DecoratorRejected(state);
     }
 
-    protected void setIgnored(StateAbstract state){
+    void setIgnored(AbstractState state){
         current_state = new DecoratorIgnored(state);
     }
 

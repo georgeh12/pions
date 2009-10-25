@@ -1,31 +1,29 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package pions.model.swapshift;
+
+import java.io.Serializable;
 
 /**
  *
  * @author George
  */
-class StateFinal extends StateAbstract {
+class StateFinal extends AbstractState implements Serializable {
     protected StateFinal(SwapShift swap_shift){
         super(swap_shift);
     }
 
     @Override
-    void accepted() {
+    protected void accepted() {
         throw new UnsupportedOperationException("Final state reached.");
     }
 
     @Override
-    void rejected() {
+    protected void rejected() {
         throw new UnsupportedOperationException("Final state reached.");
     }
 
     @Override
-    void ignored() {
+    protected void ignored() {
         throw new UnsupportedOperationException("Final state reached.");
     }
 }
