@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package pions.model;
 
@@ -12,6 +8,16 @@ import java.io.Serializable;
  * @author George
  */
 public class EmployeeSingleton extends Employee implements Serializable {
+    public static void main(String args[]){
+        try{
+            EmployeeSingleton.getInstance().saveFile();
+            EmployeeSingleton.getInstance().authenticate("george", "gay slippers");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private static EmployeeSingleton employee_singleton;
     
     private EmployeeSingleton(){}
