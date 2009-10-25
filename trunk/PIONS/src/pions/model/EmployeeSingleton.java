@@ -8,6 +8,7 @@ import java.io.Serializable;
  * @author George
  */
 public class EmployeeSingleton extends Employee implements Serializable {
+    //TODO testing purposes only
     public static void main(String args[]){
         try{
             EmployeeSingleton.getInstance().saveFile();

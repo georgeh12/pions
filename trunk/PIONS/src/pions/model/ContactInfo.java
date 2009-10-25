@@ -9,16 +9,29 @@ import java.util.ArrayList;
  * @author George
  */
 public class ContactInfo implements Serializable {
-    ArrayList<Email> email_addresses = new ArrayList<Email>();
+    ArrayList<EmailAddress> email_addresses = new ArrayList<EmailAddress>();
     ArrayList<PhoneNumber> phone_numbers = new ArrayList<PhoneNumber>();
     Address address = new Address();
 
-    public static class Email implements Serializable {
+    public void addEmailAddress(String name, String domain){
+        email_addresses.add(new EmailAddress(name, domain));
+    }
+
+    public void setEmailAddress(int index, String name, String domain){
+        email_addresses.set(index, new EmailAddress(name, domain));
+    }
+
+    public ArrayList<EmailAddress> getEmailAddresses(){
+        return (ArrayList<EmailAddress>) email_addresses.clone();
+    }
+
+    public static class EmailAddress implements Serializable {
         String name = "";
         String domain = "";
 
-        public Email(String name, String domain){
-            set(name, domain);
+        public EmailAddress(String name, String domain){
+            this.name = name;
+            this.domain = domain;
         }
 
         /**
@@ -28,15 +41,37 @@ public class ContactInfo implements Serializable {
          * @param email_address
          * @throws IndexOutOfBoundsException
          */
-        public Email(String email_address) throws IndexOutOfBoundsException {
+        public EmailAddress(String email_address) throws IndexOutOfBoundsException {
             this(email_address.substring(0, email_address.indexOf('@')),
                     email_address.substring(email_address.indexOf('@') + 1));
         }
 
-        private void set(String name, String domain){
-            this.name = name;
-            this.domain = domain;
+        public String getName(){
+            return name;
         }
+
+        public String getDomain(){
+            return domain;
+        }
+
+        @Override
+        public EmailAddress clone(){
+            return new EmailAddress(name, domain);
+        }
+    }
+
+    public void addPhoneNumber(PhoneNumber.PhoneType type,
+            long number, int extension){
+        phone_numbers.add(new PhoneNumber(type, number, extension));
+    }
+
+    public void setPhoneNumber(int index, PhoneNumber.PhoneType type,
+            long number, int extension){
+        phone_numbers.set(index, new PhoneNumber(type, number, extension));
+    }
+
+    public ArrayList<PhoneNumber> getPhoneNumbers(){
+        return (ArrayList<PhoneNumber>) phone_numbers.clone();
     }
 
     public static class PhoneNumber implements Serializable {
@@ -44,13 +79,9 @@ public class ContactInfo implements Serializable {
         private long number = 0;
         private int extension = 0;
 
-        public PhoneNumber(PhoneType type, long number){
+        public PhoneNumber(PhoneType type, long number, int extension){
             this.type = type;
             this.number = number;
-        }
-
-        public PhoneNumber(PhoneType type, long number, int extension){
-            this(type, number);
             this.extension = extension;
         }
 
@@ -66,7 +97,7 @@ public class ContactInfo implements Serializable {
             return new_string;
         }
 
-        public static long format(String number_string){
+        public void formatPhoneNumber(String number_string){
             String new_string = "";
 
             new_string = getDigits(number_string);
@@ -78,10 +109,10 @@ public class ContactInfo implements Serializable {
                 new_string = new_string.substring(0, 10);
             }
 
-            return Long.parseLong(new_string);
+            number = Long.parseLong(new_string);
         }
 
-        public static int formatExt(String number_string){
+        public void formatExt(String number_string){
             String new_string = getDigits(number_string);
 
             if(new_string.length() == 0){
@@ -91,14 +122,14 @@ public class ContactInfo implements Serializable {
                 new_string = new_string.substring(0, 7);
             }
 
-            return Integer.parseInt(new_string);
+            extension = Integer.parseInt(new_string);
         }
 
         public PhoneType getType(){
             return type;
         }
 
-        public String toPhoneString(){
+        public String toStringPhone(){
             String number_string = Long.toString(number);
 
             while(number_string.length() < 10){
@@ -109,21 +140,33 @@ public class ContactInfo implements Serializable {
                     "-" + number_string.substring(6);
         }
 
-        public String toExtString(){
+        public String toStringExtension(){
             return (extension == 0 ? "" : "" + extension);
         }
 
+        /**
+         * Returns a string containing the phone number followed by
+         * ' x' + extension.
+         * @return
+         */
+        @Override
         public String toString(){
-            return toPhoneString() +
-                    (toExtString().isEmpty() ? "" : " x" + toExtString());
+            return toStringPhone() +
+                    (toStringExtension().isEmpty() ? "" : " x" + toStringExtension());
         }
 
+        /**
+         * True if the PhoneNumbers have the same type.
+         * @param contact
+         * @return
+         */
         public boolean equals(PhoneNumber contact){
             return this.type.equals(contact.type);
         }
 
-        public enum PhoneType {
+        public static enum PhoneType {
             Home, Cell, Work, Fax, Other;
+            @Override
             public String toString(){
                 if(this.equals(Home)){
                     return "Home";
@@ -143,13 +186,41 @@ public class ContactInfo implements Serializable {
         }
     }
 
+    public void setAddress(String street_address, String city, Address.State state,
+            int zip, String country){
+        address = new Address(street_address, city, state, zip, country);
+    }
+
+    /**
+     * Returns a clone of address.
+     * @return
+     */
+    public Address getAddress(){
+        return address.clone();
+    }
+
     public static class Address implements Serializable {
         private String street_address = "";
         private String city = "";
         private State state = State.None;
         private int zip = 0;
+        private String country = "";
 
-        public enum State{
+        public Address() { }
+
+        public Address(String street_address, String city, Address.State state,
+            int zip, String country){
+            this.street_address = street_address;
+            this.city = city;
+            this.state = state;
+            this.zip = zip;
+            this.country = country;
+        }
+
+        /**
+         * Contains every state in the USA!
+         */
+        public static enum State{
             AL("Alabama"), AK("Alaska"), AZ("Arizona"), AR("Arkansas"),
             CA("California"), CO("Colorado"), CT("Connecticut"), DE("Delaware"),
             DC("District of Columbia"), FL("Florida"), GA("Georgia"),
@@ -163,7 +234,8 @@ public class ContactInfo implements Serializable {
             PA("Pennsylvania"), RI("Rhode Island"), SC("South Carolina"),
             SD("South Dakota"), TN("Tennessee"), TX("Texas"), UT("Utah"),
             VT("Vermont"), VA("Virginia"), WA("Washington"),
-            WV("West Virginia"), WI("Wisconsin"), WY("Wyoming"), None("");
+            WV("West Virginia"), WI("Wisconsin"), WY("Wyoming"),
+            Other("Outside USA"), None("");
 
             String state;
             
@@ -172,12 +244,26 @@ public class ContactInfo implements Serializable {
             }
 
             public String toAbbrev(){
-                return state.getClass().toString();
+                return name();
             }
 
+            @Override
             public String toString(){
                 return state;
             }
+        }
+
+        @Override
+        public String toString(){
+            return street_address + "\n" +
+                    city +
+                    (state != State.Other && state != State.None ? ", " + state + " " + zip : "") +
+                    " " + country;
+        }
+
+        @Override
+        public Address clone(){
+            return new Address(street_address, city, state, zip, country);
         }
     }
 }

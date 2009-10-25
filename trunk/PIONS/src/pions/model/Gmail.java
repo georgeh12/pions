@@ -37,7 +37,7 @@ public class Gmail implements Serializable {
             gmail.received_messages.add(1);
             //gmail.received_messages.add(2);
             ArrayList<Message> messages = gmail.retrieveAlerts();
-            System.out.println(messages.get(0).getHeader(AlertType.class.getName())[0] +
+            System.out.println(messages.get(0).getHeader(alert_header)[0] +
                     messages.get(0).getMessageNumber());
         }
         catch(Exception e){
@@ -45,17 +45,26 @@ public class Gmail implements Serializable {
         }
     }
 
-    private final String host = "pop.gmail.com";
-    private final String store = "pop3s";
-    private final String folder_name = "Inbox";
-    private final String subject = "PIONS MESSAGE SYSTEM";
+    private final static String host = "pop.gmail.com";
+    private final static String store = "pop3s";
+    private final static String folder_name = "Inbox";
+    private final static String subject = "PIONS MESSAGE SYSTEM";
+    private final static String alert_header = AlertType.class.getName();
     private String gmail_username;
     private String gmail_password;
     private ArrayList<Integer> received_messages = new ArrayList<Integer>();
 
-    public Gmail(String gmail_username, String gmail_password) throws NoSuchProviderException, MessagingException {
+    public Gmail(String gmail_username, String gmail_password) {
+        setGmail(gmail_username, gmail_password);
+    }
+
+    public void setGmail(String gmail_username, String gmail_password){
         this.gmail_username = gmail_username;
         this.gmail_password = gmail_password;
+    }
+
+    public String getUsername(){
+        return gmail_username;
     }
 
     private Folder getFolder(Store store)
@@ -123,7 +132,7 @@ public class Gmail implements Serializable {
         BodyPart mail_text = new MimeBodyPart();
         mail_text.setText(type.toString());
         multipart.addBodyPart(mail_text);
-        message.addHeader(AlertType.class.getName(), type.name());
+        message.addHeader(alert_header, type.name());
 
         //Add attachment
         BodyPart mail_attachment = new MimeBodyPart();
@@ -147,7 +156,7 @@ public class Gmail implements Serializable {
         AddSubordinate, AddManager, NewWorkSchedule, UpdatedWorkSchedule,
         SwapShift;
 
-        public AlertType parse(String type){
+        private AlertType parse(String type){
             if(type.equals(AddSubordinate.toString())){
                 return AddSubordinate;
             }
