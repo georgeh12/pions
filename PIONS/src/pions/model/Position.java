@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package pions.model;
 
@@ -14,6 +10,10 @@ import java.io.Serializable;
 class Position implements Serializable {
     private String title;
     private Pay pay;
+
+    Position(String title){
+        this.title = title;
+    }
 
     public static class Pay{
         public enum Type{
