@@ -32,10 +32,10 @@ public class Gmail implements Serializable {
         try{
             Gmail gmail = new Gmail("pionstest@gmail.com", "PIONSpassword");
             
-            //gmail.sendAlert(AlertType.AddManager, "Hello World!".getBytes());
+            //gmail.sendAlert(AlertType.SwapShift, "Hello World!".getBytes());
 
-            gmail.received_messages.add(1);
-            //gmail.received_messages.add(2);
+            //gmail.received_alerts = 1;
+            //gmail.received_alerts = 2;
             ArrayList<Message> messages = gmail.retrieveAlerts();
             System.out.println(messages.get(0).getHeader(alert_header)[0] +
                     messages.get(0).getMessageNumber());
@@ -52,7 +52,7 @@ public class Gmail implements Serializable {
     private final static String alert_header = AlertType.class.getName();
     private String gmail_username;
     private String gmail_password;
-    private ArrayList<Integer> received_messages = new ArrayList<Integer>();
+    private int received_alerts = 0;
 
     public Gmail(String gmail_username, String gmail_password) {
         setGmail(gmail_username, gmail_password);
@@ -66,6 +66,8 @@ public class Gmail implements Serializable {
     public String getUsername(){
         return gmail_username;
     }
+
+    //TODO parse alerts
 
     private Folder getFolder(Store store)
             throws NoSuchProviderException, MessagingException {
@@ -97,18 +99,18 @@ public class Gmail implements Serializable {
 
         Folder folder = getFolder(connect(session));
         folder.open(Folder.READ_WRITE);
-        Message messages[] = folder.getMessages();
+        Message alerts[] = folder.getMessages(received_alerts + 1, folder.getMessageCount());
 
-        ArrayList<Message> new_messages = new ArrayList<Message>();
-        for(Message current: messages){
-            if(!received_messages.contains(current.getMessageNumber()) &&
-                    current.getSubject().compareTo(subject) == 0){
-                new_messages.add(current);
-                received_messages.add(current.getMessageNumber());
+        ArrayList<Message> new_alerts = new ArrayList<Message>();
+        for(Message current: alerts){
+            received_alerts = current.getMessageNumber();
+            
+            if(current.getSubject().compareTo(subject) == 0){
+                new_alerts.add(current);
             }
         }
 
-        return new_messages;
+        return new_alerts;
     }
 
     /**
