@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author George
  */
 class StatePending extends AbstractState implements Serializable {
-    protected StatePending(SwapShift swap_shift){
+    protected StatePending(SwapShiftMachine swap_shift){
         super(swap_shift);
     }
 

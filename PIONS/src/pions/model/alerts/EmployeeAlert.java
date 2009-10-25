@@ -1,11 +1,14 @@
 
-package pions.model;
+package pions.model.alerts;
+
+import java.io.Serializable;
+import pions.model.Employee;
 
 /**
  *
  * @author George
  */
-public class EmployeeAlert extends Alert {
+public class EmployeeAlert extends Alert implements Serializable {
     private Employee employee = null;
 
     public EmployeeAlert(Employee employee){

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author George
  */
 class StateFinal extends AbstractState implements Serializable {
-    protected StateFinal(SwapShift swap_shift){
+    protected StateFinal(SwapShiftMachine swap_shift){
         super(swap_shift);
     }
 

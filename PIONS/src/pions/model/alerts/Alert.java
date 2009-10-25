@@ -1,5 +1,5 @@
 
-package pions.model;
+package pions.model.alerts;
 
 import java.io.Serializable;
 

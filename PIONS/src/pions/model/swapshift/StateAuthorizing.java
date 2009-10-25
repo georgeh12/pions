@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author George
  */
 class StateAuthorizing extends AbstractState implements Serializable {
-    protected StateAuthorizing(SwapShift swap_shift){
+    protected StateAuthorizing(SwapShiftMachine swap_shift){
         super(swap_shift);
     }
 

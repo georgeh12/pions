@@ -1,13 +1,14 @@
 
-package pions.model;
+package pions.model.alerts;
 
+import java.io.Serializable;
 import pions.model.swapshift.SwapShift;
 
 /**
  *
  * @author George
  */
-public class SwapShiftAlert extends Alert {
+public class SwapShiftAlert extends Alert implements Serializable {
     private SwapShift swap_shift = null;
 
     public SwapShiftAlert(SwapShift swap_shift){
