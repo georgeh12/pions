@@ -1,9 +1,11 @@
 
 package pions.model;
 
+import com.sun.mail.util.BASE64DecoderStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Properties;
 import javax.mail.Address;
 import javax.mail.BodyPart;
@@ -21,24 +23,29 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.NoSuchProviderException;
 import javax.mail.MessagingException;
+import pions.model.Alert.AlertType;
+import pions.model.ModelException.MessageParserException;
+import pions.model.swapshift.SwapShift;
 
 /**
  *
  * @author George
  */
-public class Gmail implements Serializable {
+public class Gmail extends Observable implements Serializable {
     //TODO testing purposes only
     public static void main(String args[]){
         try{
             Gmail gmail = new Gmail("pionstest@gmail.com", "PIONSpassword");
             
-            //gmail.sendAlert(AlertType.SwapShift, "Hello World!".getBytes());
+            //gmail.sendAlert(AlertType.SwapShift, EmployeeSingleton.getInstance().encryptRSA(new SwapShift()));
 
             //gmail.received_alerts = 1;
             //gmail.received_alerts = 2;
-            ArrayList<Message> messages = gmail.retrieveAlerts();
-            System.out.println(messages.get(0).getHeader(alert_header)[0] +
-                    messages.get(0).getMessageNumber());
+            ArrayList<Exception> errors = gmail.parseAlerts();
+            if(errors.size() > 0){
+                System.out.println(errors);
+            }
+            System.out.println(gmail.active_alerts.get(0));
         }
         catch(Exception e){
             e.printStackTrace();
@@ -53,6 +60,8 @@ public class Gmail implements Serializable {
     private String gmail_username;
     private String gmail_password;
     private int received_alerts = 0;
+    private ArrayList<Alert> active_alerts = new ArrayList<Alert>();
+    private ArrayList<Alert> saved_alerts = new ArrayList<Alert>();
 
     public Gmail(String gmail_username, String gmail_password) {
         setGmail(gmail_username, gmail_password);
@@ -61,13 +70,77 @@ public class Gmail implements Serializable {
     public void setGmail(String gmail_username, String gmail_password){
         this.gmail_username = gmail_username;
         this.gmail_password = gmail_password;
+
+        notifyObservers();
     }
 
     public String getUsername(){
         return gmail_username;
     }
 
-    //TODO parse alerts
+    /**
+     * New alerts are placed into the active_alerts list. Returns any errors
+     * received while parsing messages. Throws errors if they occur while
+     * messages are being retrieved from Gmail.
+     * @return
+     * @throws NoSuchProviderException
+     * @throws MessagingException
+     * @throws IOException
+     */
+    public ArrayList<Exception> parseAlerts() throws NoSuchProviderException,
+            MessagingException, IOException {
+        ArrayList<Message> new_alerts = retrieveAlerts();
+        ArrayList<Exception> message_exceptions = new ArrayList<Exception>();
+
+        for(Message current: new_alerts){
+            AlertType alert_type = null;
+            
+            try {
+                alert_type = AlertType.parse(current.getHeader(alert_header)[0]);
+
+                //Retrieves the attachment and decodes it using decryptRSA()
+                Object object = EmployeeSingleton.getInstance().decryptRSA(
+                        (BASE64DecoderStream)((Multipart) current.getContent()).getBodyPart(0).getContent());
+                
+                switch (alert_type) {
+                    case AddSubordinate:
+                        EmployeeAlert add_subordinate = new EmployeeAlert((Employee)object);
+                        add_subordinate.set(AlertType.AddSubordinate);
+                        active_alerts.add(add_subordinate);
+                        break;
+                    case AddManager:
+                        EmployeeAlert add_manager = new EmployeeAlert((Employee)object);
+                        add_manager.set(AlertType.AddManager);
+                        active_alerts.add(add_manager);
+                        break;
+                    case NewWorkSchedule:
+                        throw new UnsupportedOperationException("Not supported yet.");
+                        //TODO NewWorkSchedule AlertType
+                        //break;
+                    case UpdatedWorkSchedule:
+                        throw new UnsupportedOperationException("Not supported yet.");
+                        //TODO UpdatedWorkSchedule AlertType
+                        //break;
+                    case SwapShift:
+                        SwapShiftAlert add_swapshift = new SwapShiftAlert((SwapShift)object);
+                        add_swapshift.set(AlertType.SwapShift);
+                        active_alerts.add(add_swapshift);
+                        break;
+                    default:
+                        break;
+                }
+            } catch (Exception e) {
+                e.initCause(new MessageParserException(new_alerts.indexOf(current), alert_type));
+                message_exceptions.add(e);
+            }
+        }
+        
+        return message_exceptions;
+    }
+
+    public void saveAlert(int index){
+        saved_alerts.add(active_alerts.remove(index));
+    }
 
     private Folder getFolder(Store store)
             throws NoSuchProviderException, MessagingException {
@@ -94,7 +167,7 @@ public class Gmail implements Serializable {
         return session;
     }
 
-    public ArrayList<Message> retrieveAlerts() throws NoSuchProviderException, MessagingException, IOException {
+    private ArrayList<Message> retrieveAlerts() throws NoSuchProviderException, MessagingException, IOException {
         Session session = getSession();
 
         Folder folder = getFolder(connect(session));
@@ -124,16 +197,13 @@ public class Gmail implements Serializable {
         Session session = getSession();
         MimeMessage message = new MimeMessage(session);
 
-        //Set message content
+        //Add message content
         Address recipient = new InternetAddress(gmail_username);
         message.addRecipient(RecipientType.TO, recipient);
         message.setSubject(subject);
         Multipart multipart = new MimeMultipart();
 
-        //Add message text
-        BodyPart mail_text = new MimeBodyPart();
-        mail_text.setText(type.toString());
-        multipart.addBodyPart(mail_text);
+        //Add message header
         message.addHeader(alert_header, type.name());
 
         //Add attachment
@@ -151,32 +221,6 @@ public class Gmail implements Serializable {
             transport.sendMessage(message, message.getAllRecipients());
         } finally {
             transport.close();
-        }
-    }
-
-    public enum AlertType{
-        AddSubordinate, AddManager, NewWorkSchedule, UpdatedWorkSchedule,
-        SwapShift;
-
-        private AlertType parse(String type){
-            if(type.equals(AddSubordinate.toString())){
-                return AddSubordinate;
-            }
-            else if(type.equals(AddManager.toString())){
-                return AddManager;
-            }
-            else if(type.equals(NewWorkSchedule.toString())){
-                return NewWorkSchedule;
-            }
-            else if(type.equals(UpdatedWorkSchedule.toString())){
-                return UpdatedWorkSchedule;
-            }
-            else if(type.equals(SwapShift.toString())){
-                return SwapShift;
-            }
-            else{
-                return null;
-            }
         }
     }
 }

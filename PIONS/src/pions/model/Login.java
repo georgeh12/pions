@@ -22,29 +22,23 @@ import pions.model.ModelException.NotLoggedInException;
 public class Login extends Observable {
     private String username = null;
     private String password = null;    //for AES
-    private String public_key = null;  //for RSA
     private String private_key = null; //for RSA
     private String display_name = null;
-    private boolean validated = false;
-
-    //TODO generate private key
-    public void generatePrivateKey() throws NotLoggedInException {
-        if(validated){
-            this.public_key = "";
-        }
-        else{
-            throw new NotLoggedInException();
-        }
-    }
+    private boolean validated = true;
+    private String public_key = null;  //for RSA
 
     //TODO generate public key
     public void generatePublicKey() throws NotLoggedInException {
-        if(validated){
-            this.public_key = "";
-        }
-        else{
-            throw new NotLoggedInException();
-        }
+        validate();
+
+        this.public_key = "";
+    }
+
+    //TODO generate private key
+    public void generatePrivateKey() throws NotLoggedInException {
+        validate();
+
+        this.private_key = "";
     }
 
     /**
@@ -52,16 +46,13 @@ public class Login extends Observable {
      * @return
      */
     public String getDisplayName() throws NotLoggedInException {
-        if(validated){
-            if(display_name != null){
-                return display_name;
-            }
-            else{
-                return username;
-            }
+        validate();
+
+        if(display_name != null){
+            return display_name;
         }
         else{
-            throw new NotLoggedInException();
+            return username;
         }
     }
     
@@ -71,12 +62,9 @@ public class Login extends Observable {
      * @throws pions.model.ModelException.NotLoggedInException
      */
     public void setDisplayName(String display_name) throws NotLoggedInException {
-        if(validated){
-            this.display_name = display_name;
-        }
-        else{
-            throw new NotLoggedInException();
-        }
+        validate();
+        
+        this.display_name = display_name;
     }
 
     /**
@@ -117,12 +105,7 @@ public class Login extends Observable {
      * Logout the user.
      */
     public void logout(){
-        username = null;
-        password = null;
-        public_key = null;
-        private_key = null;
-        display_name = null;
-        validated = false;
+        //TODO
     }
 
     //TODO add file header and encryption
@@ -179,7 +162,7 @@ public class Login extends Observable {
      * @throws IOException
      * @throws pions.model.ModelException.NotLoggedInException
      */
-    //TODO use AES/RSA encryption to encryptAES/serialize objects
+    //TODO use AES encryption to encryptAES/serialize objects
     public byte[] encryptAES(Object object)
             throws IOException, NotLoggedInException{
         validate();
@@ -195,6 +178,22 @@ public class Login extends Observable {
         return baos.toByteArray();
     }
 
+    //TODO use RSA encryption to encryptAES/serialize objects
+    public ByteArrayOutputStream encryptRSA(Object object)
+            throws IOException, NotLoggedInException{
+        validate();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+
+        // write object to bytes
+        oos.writeObject(object);
+        oos.close();
+
+        return baos;
+    }
+
     /**
      * Decrypt object using login information with AES encryption.
      * StreamCorruptedException indicates an incorrect password.
@@ -204,8 +203,19 @@ public class Login extends Observable {
      * @throws ClassNotFoundException
      * @throws pions.model.ModelException.NotLoggedInException
      */
-    //TODO use AES/RSA decryption to decryptAES/deserialize objects
+    //TODO use AES decryption to decryptAES/deserialize objects
     public Object decryptAES(InputStream is)
+            throws StreamCorruptedException, IOException,
+            ClassNotFoundException, NotLoggedInException {
+        validate();
+
+        ObjectInputStream ois = new ObjectInputStream(is);
+
+        return ois.readObject();
+    }
+
+    //TODO use RSA decryption to decryptAES/deserialize objects
+    public Object decryptRSA(InputStream is)
             throws StreamCorruptedException, IOException,
             ClassNotFoundException, NotLoggedInException {
         validate();

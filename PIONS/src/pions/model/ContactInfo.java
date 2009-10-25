@@ -3,22 +3,27 @@ package pions.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  *
  * @author George
  */
-public class ContactInfo implements Serializable {
+public class ContactInfo extends Observable implements Serializable {
     ArrayList<EmailAddress> email_addresses = new ArrayList<EmailAddress>();
     ArrayList<PhoneNumber> phone_numbers = new ArrayList<PhoneNumber>();
     Address address = new Address();
 
     public void addEmailAddress(String name, String domain){
         email_addresses.add(new EmailAddress(name, domain));
+
+        notifyObservers();
     }
 
     public void setEmailAddress(int index, String name, String domain){
         email_addresses.set(index, new EmailAddress(name, domain));
+
+        notifyObservers();
     }
 
     public ArrayList<EmailAddress> getEmailAddresses(){
@@ -63,11 +68,15 @@ public class ContactInfo implements Serializable {
     public void addPhoneNumber(PhoneNumber.PhoneType type,
             long number, int extension){
         phone_numbers.add(new PhoneNumber(type, number, extension));
+
+        notifyObservers();
     }
 
     public void setPhoneNumber(int index, PhoneNumber.PhoneType type,
             long number, int extension){
         phone_numbers.set(index, new PhoneNumber(type, number, extension));
+
+        notifyObservers();
     }
 
     public ArrayList<PhoneNumber> getPhoneNumbers(){
@@ -189,6 +198,8 @@ public class ContactInfo implements Serializable {
     public void setAddress(String street_address, String city, Address.State state,
             int zip, String country){
         address = new Address(street_address, city, state, zip, country);
+
+        notifyObservers();
     }
 
     /**
