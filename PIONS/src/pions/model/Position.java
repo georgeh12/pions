@@ -7,16 +7,28 @@ import java.io.Serializable;
  *
  * @author George
  */
-class Position implements Serializable {
+public class Position implements Serializable {
     private String title;
     private Pay pay;
 
-    protected Position(String title){
+    protected Position(String title, boolean hourly, Double rate){
+        setPosition(title);
+    }
+
+    protected void setPosition(String title){
         this.title = title;
     }
 
     protected void setPay(boolean hourly, Double rate){
+        //If hourly is true, Pay Type is set to Hourly.
+        pay = new Pay((hourly ? Pay.Type.Hourly : Pay.Type.Yearly), rate);
+    }
 
+    @Override
+    protected Position clone(){
+        return new Position(this.title,
+                (this.pay.type == Pay.Type.Hourly ? true : false),
+                this.pay.rate);
     }
 
     public static class Pay{
