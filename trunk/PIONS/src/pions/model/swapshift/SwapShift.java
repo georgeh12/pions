@@ -9,8 +9,6 @@ import java.io.Serializable;
  * @author George
  */
 public class SwapShift implements Serializable {
-
-
     AbstractState initial_state = new StateInitial(this);
     AbstractState authorizing_state = new StateAuthorizing(this);
     AbstractState pending_state = new StatePending(this);

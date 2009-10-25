@@ -12,7 +12,7 @@ public class EmployeeSingleton extends Employee implements Serializable {
     public static void main(String args[]){
         try{
             EmployeeSingleton.getInstance().saveFile();
-            EmployeeSingleton.getInstance().authenticate("george", "gay slippers");
+            EmployeeSingleton.getInstance().authenticate("george", "password");
         }
         catch(Exception e){
             e.printStackTrace();
@@ -22,6 +22,8 @@ public class EmployeeSingleton extends Employee implements Serializable {
     private static EmployeeSingleton employee_singleton;
     
     private EmployeeSingleton(){}
+
+    //TODO login function
 
     public static EmployeeSingleton getInstance(){
         if(employee_singleton == null){

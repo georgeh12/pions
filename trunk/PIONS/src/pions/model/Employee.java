@@ -3,6 +3,7 @@ package pions.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
@@ -14,13 +15,18 @@ public class Employee extends Login implements Serializable {
     private ArrayList<Position> positions = new ArrayList<Position>();
     private ArrayList<Employee> managers = new ArrayList<Employee>();
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
+    private String public_key = null;  //for RSA
 
     public void addPosition(String title, boolean hourly, double rate){
         positions.add(new Position(title, hourly, rate));
+
+        notifyObservers();
     }
 
     public void setPosition(int index, String title, boolean hourly, double rate){
         positions.set(index, new Position(title, hourly, rate));
+
+        notifyObservers();
     }
 
     /**
@@ -31,12 +37,26 @@ public class Employee extends Login implements Serializable {
         return (ArrayList<Position>) positions.clone();
     }
 
+    public void removeManager(int index){
+        managers.remove(index);
+
+        notifyObservers();
+    }
+
+    public void removeSubordinate(int index){
+        subordinates.remove(index);
+
+        notifyObservers();
+    }
+
     /**
      * Adds a new manager for the current Employee.
      * @param new_manager
      */
     public void addManager(Employee new_manager) {
         managers.add(new_manager);
+
+        notifyObservers();
     }
 
     /**
@@ -45,6 +65,8 @@ public class Employee extends Login implements Serializable {
      */
     public void addSubordinate(Employee new_subordinate) {
         subordinates.add(new_subordinate);
+
+        notifyObservers();
     }
 
     /**
@@ -55,6 +77,8 @@ public class Employee extends Login implements Serializable {
     public void addAbove(Employee manager) {
         managers.clear();
         managers.add(manager);
+
+        notifyObservers();
     }
 
     /**
@@ -65,5 +89,7 @@ public class Employee extends Login implements Serializable {
     public void addBelow(Employee subordinate) {
         subordinates.clear();
         subordinates.add(subordinate);
+
+        notifyObservers();
     }
 }
