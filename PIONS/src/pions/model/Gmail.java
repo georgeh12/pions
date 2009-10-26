@@ -56,16 +56,18 @@ public class Gmail extends Observable implements Serializable {
         }
     }
 
-    private final static String host = "pop.gmail.com";
-    private final static String store = "pop3s";
-    private final static String folder_name = "Inbox";
-    private final static String subject = "PIONS MESSAGE SYSTEM";
-    private final static String alert_header = AlertType.class.getName();
+    private final static String HOST = "pop.gmail.com";
+    private final static String STORE = "pop3s";
+    private final static String FOLDER_NAME = "Inbox";
+    private final static String SUBJECT = "PIONS Alert";
+    private final static String ALERT_HEADER = AlertType.class.getName();
     private String gmail_username;
     private String gmail_password;
     private int received_alerts = 0;
     private ArrayList<Alert> active_alerts = new ArrayList<Alert>();
     private ArrayList<Alert> saved_alerts = new ArrayList<Alert>();
+
+    public Gmail() { }
 
     public Gmail(String gmail_username, String gmail_password) {
         setGmail(gmail_username, gmail_password);
@@ -79,6 +81,10 @@ public class Gmail extends Observable implements Serializable {
     }
 
     public String getUsername(){
+        return gmail_username;
+    }
+
+    String getPassword(){
         return gmail_username;
     }
 
@@ -100,7 +106,7 @@ public class Gmail extends Observable implements Serializable {
             AlertType alert_type = null;
             
             try {
-                alert_type = AlertType.parse(current.getHeader(alert_header)[0]);
+                alert_type = AlertType.parse(current.getHeader(ALERT_HEADER)[0]);
 
                 //Retrieves the attachment and decodes it using decryptRSA()
                 Object object = EmployeeSingleton.getInstance().decryptRSA(
@@ -121,13 +127,13 @@ public class Gmail extends Observable implements Serializable {
                         active_alerts.add(add_alert);
                         break;
                     case NewWorkSchedule:
-                        throw new UnsupportedOperationException("Not supported yet.");
-                        //TODO NewWorkSchedule AlertType
-                        //break;
+                        add_alert = new WorkScheduleAlert((CalendarCollection)object);
+                        add_alert.set(AlertType.NewWorkSchedule);
+                        break;
                     case UpdatedWorkSchedule:
-                        add_alert = new WorkScheduleAlert((WorkSchedule)object);
+                        add_alert = new WorkScheduleAlert((CalendarCollection)object);
                         add_alert.set(AlertType.UpdatedWorkSchedule);
-                        //break;
+                        break;
                     case SwapShift:
                         add_alert = new SwapShiftAlert((SwapShift)object);
                         add_alert.set(AlertType.SwapShift);
@@ -152,15 +158,15 @@ public class Gmail extends Observable implements Serializable {
 
     private Folder getFolder(Store store)
             throws NoSuchProviderException, MessagingException {
-        Folder folder = store.getFolder(folder_name);
+        Folder folder = store.getFolder(FOLDER_NAME);
 
         return folder;
     }
 
     private Store connect(Session session) throws NoSuchProviderException, MessagingException{
         //Connect to Gmail server
-        Store new_store = session.getStore(store);
-        new_store.connect(host, gmail_username, gmail_password);
+        Store new_store = session.getStore(STORE);
+        new_store.connect(HOST, gmail_username, gmail_password);
         
         return new_store;
     }
@@ -186,7 +192,7 @@ public class Gmail extends Observable implements Serializable {
         for(Message current: alerts){
             received_alerts = current.getMessageNumber();
             
-            if(current.getSubject().compareTo(subject) == 0){
+            if(current.getSubject().compareTo(SUBJECT) == 0){
                 new_alerts.add(current);
             }
         }
@@ -208,11 +214,11 @@ public class Gmail extends Observable implements Serializable {
         //Add message content
         Address recipient = new InternetAddress(gmail_username);
         message.addRecipient(RecipientType.TO, recipient);
-        message.setSubject(subject);
+        message.setSubject(SUBJECT);
         Multipart multipart = new MimeMultipart();
 
         //Add message header
-        message.addHeader(alert_header, type.name());
+        message.addHeader(ALERT_HEADER, type.name());
 
         //Add attachment
         BodyPart mail_attachment = new MimeBodyPart();
@@ -225,7 +231,7 @@ public class Gmail extends Observable implements Serializable {
         //Send message
         Transport transport = session.getTransport("smtps");
         try {
-            transport.connect(host, gmail_username, gmail_password);
+            transport.connect(HOST, gmail_username, gmail_password);
             transport.sendMessage(message, message.getAllRecipients());
         } finally {
             transport.close();

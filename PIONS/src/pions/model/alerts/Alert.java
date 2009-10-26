@@ -18,6 +18,7 @@ public abstract class Alert implements Serializable {
 
     public abstract Object get();
 
+    //TODO add an alert to transfer an EmployeeSingleton's data file
     public enum AlertType{
         AddSubordinate, AddManager, NewWorkSchedule, UpdatedWorkSchedule,
         SwapShift;
