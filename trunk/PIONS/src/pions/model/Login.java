@@ -21,12 +21,12 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 public class Login extends Observable {
+    protected PublicKey public_key = null;
     private String username = null;
     private String password = null;    //for AES
     private String private_key = null; //for RSA
     private String display_name = null;
     private boolean validated = false;
-    protected PublicKey public_key = null;
 
     //TODO generate RSA keys
     public void generateRSAKeys() throws NotLoggedInException {
@@ -49,6 +49,10 @@ public class Login extends Observable {
         else{
             return username;
         }
+    }
+
+    protected void setLogin(String username, String password){
+
     }
     
     /**
@@ -73,14 +77,24 @@ public class Login extends Observable {
     }
 
     private File getFile(){
+        return getFile(username);
+    }
+
+    private static File getFile(String username){
         return new File(username + ".pions");
     }
 
     /**
-     * Only function that can manipulate username and password
+     * Checks that the file storing the Employee's information can be decrypted.
      * @param username
      * @param password
      * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws FileNotFoundException
+     * @throws StreamCorruptedException
+     * @throws ClassNotFoundException
+     * @throws pions.model.ModelException.NotLoggedInException
      */
     //TODO add valid exceptions
     public boolean authenticate(String username, String password)
@@ -110,46 +124,12 @@ public class Login extends Observable {
         fos.write(encryptAES(EmployeeSingleton.getInstance()));
     }
 
-    /**
-     * Serialize object to a byte array.
-     * @param object
-     * @return Encrypted object
-     * @throws IOException
-     * @throws pions.model.ModelException.NotLoggedInException
-     */
-    private static byte[] serialize(Object object) throws IOException
-    {
-        ObjectOutputStream oos;
-        ByteArrayOutputStream baos;
-
-        // write object to bytes
-        baos = new ByteArrayOutputStream();
-        oos = new ObjectOutputStream(baos);
-        oos.writeObject(object);
-        oos.close();
-
-        return baos.toByteArray();
+    //TODO add file header and encryption
+    public static EmployeeSingleton loadFile(String username, String password) throws IOException,
+            NotLoggedInException, StreamCorruptedException, ClassNotFoundException {
+        return (EmployeeSingleton)decryptAES(new FileInputStream(getFile(username)));
     }
-
-    /**
-     * Serialize byte array to an object.
-     * @param object
-     * @return
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws pions.model.ModelException.NotLoggedInException
-     */
-    private static Object deserialize(byte[] object)
-            throws IOException, ClassNotFoundException
-    {
-        ObjectInputStream ois;
-
-        // write object to bytes
-        ois = new ObjectInputStream(new ByteArrayInputStream(object));
-
-        return ois.readObject();
-    }
-
+    
     /**
      * Encrypt object using login information with AES encryption.
      * @param object
@@ -158,10 +138,8 @@ public class Login extends Observable {
      * @throws pions.model.ModelException.NotLoggedInException
      */
     //TODO use AES encryption to encryptAES/serialize objects
-    public byte[] encryptAES(Object object)
+    public static byte[] encryptAES(Object object)
             throws IOException, NotLoggedInException{
-        validate();
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         ObjectOutputStream oos = new ObjectOutputStream(baos);
@@ -199,11 +177,9 @@ public class Login extends Observable {
      * @throws pions.model.ModelException.NotLoggedInException
      */
     //TODO use AES decryption to decryptAES/deserialize objects
-    public Object decryptAES(InputStream is)
+    public static Object decryptAES(InputStream is)
             throws StreamCorruptedException, IOException,
             ClassNotFoundException, NotLoggedInException {
-        validate();
-
         ObjectInputStream ois = new ObjectInputStream(is);
 
         return ois.readObject();

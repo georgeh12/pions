@@ -1,7 +1,10 @@
 
 package pions.model;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.StreamCorruptedException;
+import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
@@ -21,13 +24,23 @@ public class EmployeeSingleton extends Employee implements Serializable {
 
     private static EmployeeSingleton employee_singleton;
     
-    private EmployeeSingleton(){}
+    private EmployeeSingleton(String username, String password){
+        super(username, password);
+    }
 
-    //TODO login function
+    public static void init(String username, String password){
+        employee_singleton = new EmployeeSingleton(username, password);
+    }
 
-    public static EmployeeSingleton getInstance(){
+    public static void load(String username, String password)
+            throws NotLoggedInException, StreamCorruptedException,
+            ClassNotFoundException, IOException{
+        employee_singleton = Login.loadFile(username, password);
+    }
+
+    public static EmployeeSingleton getInstance() throws NotLoggedInException{
         if(employee_singleton == null){
-            return new EmployeeSingleton();
+            throw new NotLoggedInException();
         }
 
         return employee_singleton;

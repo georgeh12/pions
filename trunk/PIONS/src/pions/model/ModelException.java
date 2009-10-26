@@ -9,10 +9,19 @@ import pions.model.alerts.Alert.AlertType;
  */
 public class ModelException extends Exception {
     /**
-     * This is thrown when Login has not been validated.
+     * Thrown when Login has not been validated.
      */
-    public static class NotLoggedInException extends ModelException { }
+    public static class NotLoggedInException extends ModelException {
+        @Override
+        public String toString(){
+            return "User must be logged in first.";
+        }
+    }
 
+    /**
+     * Used when the message parser receives an error while opening messages.
+     * Holds useful information to diagnose the source of the exception.
+     */
     public static class MessageParserException extends ModelException {
         private int alert_id;
         private AlertType type;
@@ -22,6 +31,7 @@ public class ModelException extends Exception {
             this.type = type;
         }
 
+        @Override
         public String toString(){
             return "error while parsing message: " + alert_id + ", " + type;
         }

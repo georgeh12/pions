@@ -2,7 +2,7 @@
 package pions.model.swapshift;
 
 import java.io.Serializable;
-import pions.model.GoogleCalendar;
+import pions.model.CalendarCollection;
 
 /**
  *
@@ -11,14 +11,14 @@ import pions.model.GoogleCalendar;
 //TODO design SwapShift
 public class SwapShift implements Serializable {
     private SwapShiftMachine machine = new SwapShiftMachine();
-    private GoogleCalendar current;
-    private GoogleCalendar proposed;
+    private CalendarCollection current;
+    private CalendarCollection proposed;
 
-    public SwapShift(GoogleCalendar current){
+    public SwapShift(CalendarCollection current){
         this.current = current;
     }
 
-    public void setProposed(GoogleCalendar proposed){
+    public void setProposed(CalendarCollection proposed){
         this.proposed = proposed;
     }
 }
