@@ -1,7 +1,6 @@
 
 package pions.model;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.util.Observable;
 import pions.model.ModelException.NotLoggedInException;
@@ -27,6 +27,11 @@ public class Login extends Observable {
     private String private_key = null; //for RSA
     private String display_name = null;
     private boolean validated = false;
+
+    //TODO fix once public key is done
+    public String getPublicKey(){
+        return public_key.get();
+    }
 
     //TODO generate RSA keys
     public void generateRSAKeys() throws NotLoggedInException {
@@ -194,5 +199,17 @@ public class Login extends Observable {
         ObjectInputStream ois = new ObjectInputStream(is);
 
         return ois.readObject();
+    }
+    
+    private class PublicKey implements Serializable {
+        private String public_key = null;  //for RSA
+
+        public PublicKey(String public_key) {
+            this.public_key = public_key;
+        }
+
+        public String get(){
+            return this.public_key;
+        }
     }
 }

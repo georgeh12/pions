@@ -39,6 +39,7 @@ public class Gmail extends Observable implements Serializable {
     //TODO testing purposes only
     public static void main(String args[]){
         try{
+
             Gmail gmail = new Gmail("pionstest@gmail.com", "PIONSpassword");
             
             //gmail.sendAlert(AlertType.SwapShiftMachine, EmployeeSingleton.getInstance().encryptRSA(new SwapShiftMachine()));
@@ -61,6 +62,7 @@ public class Gmail extends Observable implements Serializable {
     private final static String FOLDER_NAME = "Inbox";
     private final static String SUBJECT = "PIONS Alert";
     private final static String ALERT_HEADER = AlertType.class.getName();
+    private final static int ATTACHMENT_INDEX = 0;
     private String gmail_username;
     private String gmail_password;
     private int received_alerts = 0;
@@ -71,6 +73,19 @@ public class Gmail extends Observable implements Serializable {
 
     public Gmail(String gmail_username, String gmail_password) {
         setGmail(gmail_username, gmail_password);
+    }
+
+    public boolean isValid(){
+        try {
+            connect(getSession());
+            return true;
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } finally {
+            return false;
+        }
     }
 
     public void setGmail(String gmail_username, String gmail_password){
@@ -106,7 +121,7 @@ public class Gmail extends Observable implements Serializable {
             AlertType alert_type = null;
             
             try {
-                alert_type = AlertType.parse(current.getHeader(ALERT_HEADER)[0]);
+                alert_type = AlertType.parse(current.getHeader(ALERT_HEADER)[ATTACHMENT_INDEX]);
 
                 //Retrieves the attachment and decodes it using decryptRSA()
                 Object object = EmployeeSingleton.getInstance().decryptRSA(
@@ -139,7 +154,7 @@ public class Gmail extends Observable implements Serializable {
                         add_alert.set(AlertType.SwapShift);
                         break;
                     default:
-                        break;
+                        throw new UnsupportedOperationException();
                 }
 
                 active_alerts.add(add_alert);
@@ -223,7 +238,7 @@ public class Gmail extends Observable implements Serializable {
         //Add attachment
         BodyPart mail_attachment = new MimeBodyPart();
         mail_attachment.setContent(attachment, "application/octet-stream");
-        multipart.addBodyPart(mail_attachment);
+        multipart.addBodyPart(mail_attachment, ATTACHMENT_INDEX);
 
         //Set content
         message.setContent(multipart);

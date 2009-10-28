@@ -10,9 +10,9 @@ import java.util.Observable;
  * @author George
  */
 public class ContactInfo extends Observable implements Serializable {
-    ArrayList<EmailAddress> email_addresses = new ArrayList<EmailAddress>();
-    ArrayList<PhoneNumber> phone_numbers = new ArrayList<PhoneNumber>();
-    Address address = new Address();
+    private ArrayList<EmailAddress> email_addresses = new ArrayList<EmailAddress>();
+    private ArrayList<PhoneNumber> phone_numbers = new ArrayList<PhoneNumber>();
+    private Address address = new Address();
 
     public void addEmailAddress(String name, String domain){
         email_addresses.add(new EmailAddress(name, domain));
@@ -29,10 +29,25 @@ public class ContactInfo extends Observable implements Serializable {
     public ArrayList<EmailAddress> getEmailAddresses(){
         return (ArrayList<EmailAddress>) email_addresses.clone();
     }
+    
+    public boolean removeEmailAddress(EmailAddress item){
+        return email_addresses.remove(item);
+    }
+
+    public boolean removeEmailAddress(int index){
+        try{
+            email_addresses.remove(index);
+        } catch(IndexOutOfBoundsException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 
     public static class EmailAddress implements Serializable {
-        String name = "";
-        String domain = "";
+        private String name = "";
+        private String domain = "";
 
         public EmailAddress(String name, String domain){
             this.name = name;
@@ -81,6 +96,21 @@ public class ContactInfo extends Observable implements Serializable {
 
     public ArrayList<PhoneNumber> getPhoneNumbers(){
         return (ArrayList<PhoneNumber>) phone_numbers.clone();
+    }
+
+    public boolean removePhoneNumber(PhoneNumber item){
+        return phone_numbers.remove(item);
+    }
+
+    public boolean removePhoneNumber(int index){
+        try{
+            phone_numbers.remove(index);
+        } catch(IndexOutOfBoundsException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
     public static class PhoneNumber implements Serializable {
@@ -210,6 +240,10 @@ public class ContactInfo extends Observable implements Serializable {
         return address.clone();
     }
 
+    public void removeAddress(){
+        address = new Address();
+    }
+
     public static class Address implements Serializable {
         private String street_address = "";
         private String city = "";
@@ -248,7 +282,7 @@ public class ContactInfo extends Observable implements Serializable {
             WV("West Virginia"), WI("Wisconsin"), WY("Wyoming"),
             Other("Outside USA"), None("");
 
-            String state;
+            private String state;
             
             State(String state){
                 this.state = state;
@@ -268,8 +302,9 @@ public class ContactInfo extends Observable implements Serializable {
         public String toString(){
             return street_address + "\n" +
                     city +
-                    (state != State.Other && state != State.None ? ", " + state + " " + zip : "") +
-                    " " + country;
+                    (state != State.None ? ", " + state : "") +
+                    (zip != 0 ? " " + zip : "") +
+                    (country.length() > 0 ? " " + country : "");
         }
 
         @Override

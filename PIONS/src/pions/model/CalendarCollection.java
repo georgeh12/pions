@@ -17,7 +17,8 @@ import java.util.TimeZone;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
- *
+ * This class is completely dependent on the Gmail class. If the Gmail class
+ * has not been initialized properly, neither will this class.
  * @author George
  */
 //TODO implement iterator
@@ -39,19 +40,34 @@ public class CalendarCollection extends Observable implements Serializable {
             "http://www.google.com/calendar/feeds/default/owncalendars/full";
     private final static String ALL_CALENDARS =
             "http://www.google.com/calendar/feeds/default/allcalendars/full";
+    private String calendar_name;
     private ArrayList<CalendarEntry> archive = new ArrayList<CalendarEntry>();
     private String gmail_username;
     private String gmail_password;
     private CalendarEntry active_calendar;
 
-    CalendarCollection() { }
-
-    public CalendarCollection(String calendar_name) throws AuthenticationException,
-            MalformedURLException, ServiceException, IOException, NotLoggedInException {
-        set(calendar_name);
+    public CalendarCollection(String calendar_name) {
+        this.calendar_name = calendar_name;
     }
 
-    public void set(String calendar_name) throws AuthenticationException,
+    /**
+     * Creates and initializes a calendar if init is true. The variable init
+     * should only be true if the Gmail class has been tested using isValid().
+     * @param calendar_name
+     * @param init
+     * @throws AuthenticationException
+     * @throws MalformedURLException
+     * @throws ServiceException
+     * @throws IOException
+     * @throws pions.model.ModelException.NotLoggedInException
+     */
+    public CalendarCollection(String calendar_name, boolean init) throws AuthenticationException,
+            MalformedURLException, ServiceException, IOException, NotLoggedInException {
+        this(calendar_name);
+        if(init) create();
+    }
+
+    private void create() throws AuthenticationException,
             MalformedURLException, ServiceException, IOException, NotLoggedInException {
         gmail_username = EmployeeSingleton.getInstance().getGmail().getUsername();
         gmail_password = EmployeeSingleton.getInstance().getGmail().getPassword();
@@ -79,6 +95,6 @@ public class CalendarCollection extends Observable implements Serializable {
     public void archiveCalendar(String new_calendar) throws AuthenticationException,
             MalformedURLException, ServiceException, IOException, NotLoggedInException {
         archive.add(active_calendar);
-        set(new_calendar);
+        create();
     }
 }
