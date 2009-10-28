@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
@@ -37,17 +39,80 @@ public class Employee extends Login implements Serializable {
     }
 
     public CalendarCollection getAvailability(){
-        if(availability == null) availability = new CalendarCollection();
+        if(availability == null){
+            try {
+                if(gmail.isValid()){
+                        availability = new CalendarCollection(AVAILABILITY, true);
+                }
+            } catch (AuthenticationException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NotLoggedInException e) {
+                e.printStackTrace();
+            } finally {
+                //If an exception occurred, availability is set to default
+                if(availability == null)
+                    availability = new CalendarCollection(AVAILABILITY);
+            }
+        }
+        
         return availability;
     }
 
     public CalendarCollection getWorkSchedule(){
-        if(work_schedule == null) work_schedule = new CalendarCollection();
+        if(work_schedule == null){
+            try {
+                if(gmail.isValid()){
+                        work_schedule = new CalendarCollection(WORK_SCHEDULE, true);
+                }
+            } catch (AuthenticationException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NotLoggedInException e) {
+                e.printStackTrace();
+            } finally {
+                //If an exception occurred, work_schedule is set to default
+                if(work_schedule == null)
+                    work_schedule = new CalendarCollection(WORK_SCHEDULE);
+            }
+        }
+        
         return work_schedule;
     }
 
     public CalendarCollection getSubordinateSchedule(){
-        if(subordinate_schedule == null) subordinate_schedule = new CalendarCollection();
+        if(subordinate_schedule == null){
+            try {
+                if(gmail.isValid()){
+                        subordinate_schedule = new CalendarCollection(SUBORDINATE_SCHEDULE, true);
+                }
+            } catch (AuthenticationException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NotLoggedInException e) {
+                e.printStackTrace();
+            } finally {
+                //If an exception occurred, subordinate_schedule is set to default
+                if(subordinate_schedule == null)
+                    subordinate_schedule = new CalendarCollection(SUBORDINATE_SCHEDULE);
+            }
+        }
+
         return subordinate_schedule;
     }
 
@@ -59,14 +124,6 @@ public class Employee extends Login implements Serializable {
             throws AuthenticationException, MalformedURLException,
             ServiceException, IOException, NotLoggedInException {
         gmail = new Gmail(gmail_username, gmail_password);
-        availability = new CalendarCollection(AVAILABILITY);
-        work_schedule = new CalendarCollection(WORK_SCHEDULE);
-        subordinate_schedule = new CalendarCollection(SUBORDINATE_SCHEDULE);
-    }
-
-    //TODO fix once public key is done
-    public String getPublicKey(){
-        return public_key.get();
     }
 
     public void addPosition(String title, boolean hourly, double rate){
