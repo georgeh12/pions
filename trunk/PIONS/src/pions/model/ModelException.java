@@ -1,7 +1,7 @@
 
 package pions.model;
 
-import pions.model.alerts.Alert.AlertType;
+import pions.model.Alert.AlertType;
 
 /**
  *

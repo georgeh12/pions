@@ -25,12 +25,8 @@ import javax.mail.NoSuchProviderException;
 import javax.mail.MessagingException;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
-import pions.model.alerts.Alert.AlertType;
+import pions.model.Alert.AlertType;
 import pions.model.ModelException.MessageParserException;
-import pions.model.alerts.Alert;
-import pions.model.alerts.EmployeeAlert;
-import pions.model.alerts.SwapShiftAlert;
-import pions.model.alerts.WorkScheduleAlert;
 import pions.model.swapshift.SwapShift;
 
 /**
@@ -137,21 +133,21 @@ public class Gmail extends Observable implements Serializable {
 
                 switch (alert_type) {
                     case AddSubordinate:
-                        add_alert = new EmployeeAlert((Employee)object, AlertType.AddSubordinate);
+                        add_alert = new Alert((Employee)object, AlertType.AddSubordinate);
                         active_alerts.add(add_alert);
                         break;
                     case AddManager:
-                        add_alert = new EmployeeAlert((Employee)object, AlertType.AddManager);
+                        add_alert = new Alert((Employee)object, AlertType.AddManager);
                         active_alerts.add(add_alert);
                         break;
                     case NewWorkSchedule:
-                        add_alert = new WorkScheduleAlert((CalendarCollection)object, AlertType.NewWorkSchedule);
+                        add_alert = new Alert((CalendarCollection)object, AlertType.NewWorkSchedule);
                         break;
                     case UpdatedWorkSchedule:
-                        add_alert = new WorkScheduleAlert((CalendarCollection)object, AlertType.UpdatedWorkSchedule);
+                        add_alert = new Alert((CalendarCollection)object, AlertType.UpdatedWorkSchedule);
                         break;
                     case SwapShift:
-                        add_alert = new SwapShiftAlert((SwapShift)object, AlertType.SwapShift);
+                        add_alert = new Alert((SwapShift)object, AlertType.SwapShift);
                         break;
                     default:
                         throw new UnsupportedOperationException();
