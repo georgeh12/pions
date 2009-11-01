@@ -24,27 +24,36 @@ public final class SwapShift implements Serializable {
         this.current = current;
     }
 
-    boolean isAccepted() {
+    public boolean isAccepted() {
         return machine.isAccepted();
     }
 
-    boolean isRejected() {
+    public boolean isRejected() {
         return machine.isRejected();
     }
 
-    boolean isIgnored() {
+    public boolean isIgnored() {
         return machine.isIgnored();
     }
 
-    void accept() {
+    /**
+     * Sets the decorator to accepted and advances the state.
+     */
+    public void accept() {
         machine.accept();
     }
 
-    void reject() {
+    /**
+     * Sets the decorator to rejected and advances the state.
+     */
+    public void reject() {
         machine.reject();
     }
 
-    void ignore() {
+    /**
+     * Sets the decorator to ignored and advances the state.
+     */
+    public void ignore() {
         machine.ignore();
     }
 
