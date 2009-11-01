@@ -4,19 +4,35 @@ package pions.model;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Observable;
+import pions.model.ContactInfo.EmailAddress;
+import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
+import pions.model.swapshift.SwapShift;
 
 /**
- *
+ * This class acts as a Mediator between the model.Gmail class and all the
+ * Objects which can be stored in an Alert.
  * @author George
  */
 public class Alert extends Observable implements Serializable {
+    private EmailAddress sender = null;
     private AlertType type = null;
     private Object object = null;
 
-    public Alert(Object object, AlertType type){
+    public Alert(EmailAddress sender, Object object, AlertType type)
+            throws AlertClassException{
+        if(type.getAssociatedClass() != object.getClass()){
+            throw new AlertClassException(type.getAssociatedClass(), object.getClass());
+        }
+
+        this.sender = sender;
         this.object = object;
         this.type = type;
+    }
+
+    public Alert(Object object, AlertType type) throws AlertClassException, NotLoggedInException{
+        this(EmployeeSingleton.getInstance().getGmail().getGmailAddress(),
+                object, type);
     }
 
     public Object get(){
@@ -34,26 +50,45 @@ public class Alert extends Observable implements Serializable {
         return EmployeeSingleton.getInstance().encryptRSA(object);
     }
 
+    public EmailAddress getAddress(){
+        return sender.clone();
+    }
+
     public AlertType getType(){
         return type;
     }
 
     @Override
     public String toString(){
-        return type.toString();
+        return type.toString() + ":\n" + object.toString();
     }
 
     //TODO add an alert to transfer an EmployeeSingleton's data file
     public enum AlertType{
-        AddSubordinate, AddManager, NewWorkSchedule, UpdatedWorkSchedule,
+        AddManager, AddSubordinate, NewWorkSchedule, UpdatedWorkSchedule,
         SwapShift;
 
-        public static AlertType parse(String type){
-            if(type.equals(AddSubordinate.toString())){
-                return AddSubordinate;
+        public Class getAssociatedClass(){
+            switch(this){
+                case AddManager:
+                case AddSubordinate:
+                    return Employee.class.getClass();
+                case NewWorkSchedule:
+                case UpdatedWorkSchedule:
+                    return CalendarCollection.class.getClass();
+                case SwapShift:
+                    return SwapShift.class.getClass();
+                default:
+                    return null;
             }
-            else if(type.equals(AddManager.toString())){
+        }
+
+        public static AlertType parse(String type){
+            if(type.equals(AddManager.toString())){
                 return AddManager;
+            }
+            else if(type.equals(AddSubordinate.toString())){
+                return AddSubordinate;
             }
             else if(type.equals(NewWorkSchedule.toString())){
                 return NewWorkSchedule;
@@ -73,9 +108,9 @@ public class Alert extends Observable implements Serializable {
         @Override
         public String toString(){
             switch(this){
-                case AddSubordinate:
-                    break;
                 case AddManager:
+                    break;
+                case AddSubordinate:
                     break;
                 case NewWorkSchedule:
                     break;

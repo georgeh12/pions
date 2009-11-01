@@ -75,7 +75,7 @@ public class CalendarCollection extends Observable implements Serializable {
         
         // Create a CalenderService and authenticate
         CalendarService service = new CalendarService(CALENDAR_SERVICE);
-        service.setUserCredentials(gmail_address.toString(), gmail_password);
+        service.setUserCredentials(gmail_address.getAddress(), gmail_password);
 
         // Create the calendar
         active_calendar = new CalendarEntry();

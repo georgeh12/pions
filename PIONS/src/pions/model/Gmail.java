@@ -5,9 +5,9 @@ import com.sun.mail.util.BASE64DecoderStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Properties;
-import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -76,6 +76,14 @@ public class Gmail extends Observable implements Serializable {
         }
 
         return gmail;
+    }
+
+    public Iterator<Alert> getActiveAlerts(){
+        return active_alerts.iterator();
+    }
+
+    public Iterator<Alert> getSavedAlerts(){
+        return saved_alerts.iterator();
     }
 
     public boolean isValid(){
@@ -180,7 +188,7 @@ public class Gmail extends Observable implements Serializable {
     private Store connect(Session session) throws NoSuchProviderException, MessagingException{
         //Connect to Gmail server
         Store new_store = session.getStore(STORE);
-        new_store.connect(HOST, gmail_address.toString(), gmail_password);
+        new_store.connect(HOST, gmail_address.getAddress(), gmail_password);
         
         return new_store;
     }
@@ -220,7 +228,7 @@ public class Gmail extends Observable implements Serializable {
      * @param attachment
      * @param isSuperior
      */
-    public void sendAlert(ArrayList<EmailAddress> email_addresses, Alert alert)
+    public void sendAlert(ArrayList<EmailAddress> recipients, Alert alert)
             throws AddressException, NoSuchProviderException,
             MessagingException, NotLoggedInException, IOException {
         //Encrypt the message contents
@@ -230,9 +238,10 @@ public class Gmail extends Observable implements Serializable {
         MimeMessage message = new MimeMessage(session);
 
         //Add message content
-        for(EmailAddress email_address: email_addresses){
-            message.addRecipient(RecipientType.TO, new InternetAddress(email_address.toString()));
+        for(EmailAddress email_address: recipients){
+            message.addRecipient(RecipientType.TO, new InternetAddress(email_address.getAddress()));
         }
+        message.setFrom(new InternetAddress(alert.getAddress().getAddress()));
         message.setSubject(SUBJECT);
         Multipart multipart = new MimeMultipart();
 
@@ -250,7 +259,7 @@ public class Gmail extends Observable implements Serializable {
         //Send message
         Transport transport = session.getTransport("smtps");
         try {
-            transport.connect(HOST, gmail_address.toString(), gmail_password);
+            transport.connect(HOST, gmail_address.getAddress(), gmail_password);
             transport.sendMessage(message, message.getAllRecipients());
         } finally {
             transport.close();

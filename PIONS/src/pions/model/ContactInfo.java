@@ -2,8 +2,11 @@
 package pions.model;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Observable;
+import javax.mail.internet.InternetAddress;
+import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
@@ -44,42 +47,38 @@ public class ContactInfo implements Serializable {
     }
 
     public static class EmailAddress extends Observable implements Serializable {
-        private String name = "";
-        private String domain = "";
+        private String address = "";
+        private String personal = "";
 
-        public EmailAddress(String name, String domain){
-            this.name = name;
-            this.domain = domain;
+        public EmailAddress(String address, String personal){
+            this.address = address;
+            this.personal = personal;
+        }
+        
+        public EmailAddress(String address) throws NotLoggedInException {
+            this(address, EmployeeSingleton.getInstance().getName());
         }
 
-        /**
-         * Throws IndexOutOfBoundsException if the e-mail address is not valid.
-         * Either there is no '@' character, or there is no domain specified
-         * after the '@' character.
-         * @param email_address
-         * @throws IndexOutOfBoundsException
-         */
-        public EmailAddress(String email_address) throws IndexOutOfBoundsException {
-            this(email_address.substring(0, email_address.indexOf('@')),
-                    email_address.substring(email_address.indexOf('@') + 1));
+        public InternetAddress getInternetAddress() throws UnsupportedEncodingException{
+            return new InternetAddress(address, personal);
         }
 
-        public String getName(){
-            return name;
+        public String getAddress(){
+            return address;
         }
 
-        public String getDomain(){
-            return domain;
+        public String getPersonal(){
+            return personal;
         }
 
         @Override
         public String toString(){
-            return name + "@" + domain;
+            return personal + "<" + address + ">";
         }
 
         @Override
         public EmailAddress clone(){
-            return new EmailAddress(name, domain);
+            return new EmailAddress(address, personal);
         }
     }
 
