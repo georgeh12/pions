@@ -9,18 +9,8 @@ import pions.model.Employee;
  * @author George
  */
 public class EmployeeAlert extends Alert implements Serializable {
-    private Employee employee = null;
-
-    public EmployeeAlert(Employee employee){
+    public EmployeeAlert(Employee employee, AlertType type) {
+        super(type);
         set(employee);
-    }
-
-    public void set(Employee employee) {
-        this.employee = employee;
-    }
-
-    @Override
-    public Object get() {
-        return employee;
     }
 }

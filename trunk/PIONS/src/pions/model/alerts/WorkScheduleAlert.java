@@ -10,18 +10,8 @@ import pions.model.CalendarCollection;
  */
 //TODO update to a valid class container. Implement Memento
 public class WorkScheduleAlert extends Alert implements Serializable {
-    private CalendarCollection work_schedule = null;
-
-    public WorkScheduleAlert(CalendarCollection work_schedule){
+    public WorkScheduleAlert(CalendarCollection work_schedule, AlertType type) {
+        super(type);
         set(work_schedule);
-    }
-
-    public void set(CalendarCollection work_schedule) {
-        this.work_schedule = work_schedule;
-    }
-
-    @Override
-    public Object get() {
-        return work_schedule;
     }
 }

@@ -1,9 +1,6 @@
 
 package pions.model;
 
-import pions.model.alerts.SwapShiftAlert;
-import pions.model.alerts.WorkScheduleAlert;
-import pions.model.alerts.EmployeeAlert;
 import com.sun.mail.util.BASE64DecoderStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -26,9 +23,14 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.NoSuchProviderException;
 import javax.mail.MessagingException;
+import pions.model.ContactInfo.EmailAddress;
+import pions.model.ModelException.NotLoggedInException;
 import pions.model.alerts.Alert.AlertType;
 import pions.model.ModelException.MessageParserException;
 import pions.model.alerts.Alert;
+import pions.model.alerts.EmployeeAlert;
+import pions.model.alerts.SwapShiftAlert;
+import pions.model.alerts.WorkScheduleAlert;
 import pions.model.swapshift.SwapShift;
 
 /**
@@ -37,16 +39,16 @@ import pions.model.swapshift.SwapShift;
  */
 public class Gmail extends Observable implements Serializable {
     //TODO testing purposes only
-    public static void main(String args[]){
+    public static void main(String args[]){/*
         try{
-
             Gmail gmail = new Gmail("pionstest@gmail.com", "PIONSpassword");
             
-            //gmail.sendAlert(AlertType.SwapShiftMachine, EmployeeSingleton.getInstance().encryptRSA(new SwapShiftMachine()));
+            //gmail.sendAlert(AlertType.SwapShift, EmployeeSingleton.getInstance().encryptRSA(new SwapShift(new GoogleCalendar())));
 
             //gmail.received_alerts = 1;
             //gmail.received_alerts = 2;
             ArrayList<Exception> errors = gmail.parseAlerts();
+            for(Alert alert: gmail.saved_alerts)
             if(errors.size() > 0){
                 System.out.println(errors);
             }
@@ -55,24 +57,29 @@ public class Gmail extends Observable implements Serializable {
         catch(Exception e){
             e.printStackTrace();
         }
-    }
+    */}
 
+    private static Gmail gmail = null;
     private final static String HOST = "pop.gmail.com";
     private final static String STORE = "pop3s";
     private final static String FOLDER_NAME = "Inbox";
     private final static String SUBJECT = "PIONS Alert";
     private final static String ALERT_HEADER = AlertType.class.getName();
     private final static int ATTACHMENT_INDEX = 0;
-    private String gmail_username;
+    private EmailAddress gmail_address;
     private String gmail_password;
     private int received_alerts = 0;
     private ArrayList<Alert> active_alerts = new ArrayList<Alert>();
     private ArrayList<Alert> saved_alerts = new ArrayList<Alert>();
 
-    public Gmail() { }
+    private Gmail() { }
 
-    public Gmail(String gmail_username, String gmail_password) {
-        setGmail(gmail_username, gmail_password);
+    static Gmail getInstance(){
+        if(gmail == null){
+            gmail = new Gmail();
+        }
+
+        return gmail;
     }
 
     public boolean isValid(){
@@ -88,19 +95,17 @@ public class Gmail extends Observable implements Serializable {
         }
     }
 
-    public void setGmail(String gmail_username, String gmail_password){
-        this.gmail_username = gmail_username;
+    public void setGmail(EmailAddress gmail_username, String gmail_password){
+        this.gmail_address = gmail_username;
         this.gmail_password = gmail_password;
-
-        notifyObservers();
     }
 
-    public String getUsername(){
-        return gmail_username;
+    public EmailAddress getGmailAddress(){
+        return gmail_address;
     }
 
     String getPassword(){
-        return gmail_username;
+        return gmail_password;
     }
 
     /**
@@ -132,26 +137,21 @@ public class Gmail extends Observable implements Serializable {
 
                 switch (alert_type) {
                     case AddSubordinate:
-                        add_alert = new EmployeeAlert((Employee)object);
-                        add_alert.set(AlertType.AddSubordinate);
+                        add_alert = new EmployeeAlert((Employee)object, AlertType.AddSubordinate);
                         active_alerts.add(add_alert);
                         break;
                     case AddManager:
-                        add_alert = new EmployeeAlert((Employee)object);
-                        add_alert.set(AlertType.AddManager);
+                        add_alert = new EmployeeAlert((Employee)object, AlertType.AddManager);
                         active_alerts.add(add_alert);
                         break;
                     case NewWorkSchedule:
-                        add_alert = new WorkScheduleAlert((CalendarCollection)object);
-                        add_alert.set(AlertType.NewWorkSchedule);
+                        add_alert = new WorkScheduleAlert((CalendarCollection)object, AlertType.NewWorkSchedule);
                         break;
                     case UpdatedWorkSchedule:
-                        add_alert = new WorkScheduleAlert((CalendarCollection)object);
-                        add_alert.set(AlertType.UpdatedWorkSchedule);
+                        add_alert = new WorkScheduleAlert((CalendarCollection)object, AlertType.UpdatedWorkSchedule);
                         break;
                     case SwapShift:
-                        add_alert = new SwapShiftAlert((SwapShift)object);
-                        add_alert.set(AlertType.SwapShift);
+                        add_alert = new SwapShiftAlert((SwapShift)object, AlertType.SwapShift);
                         break;
                     default:
                         throw new UnsupportedOperationException();
@@ -167,8 +167,11 @@ public class Gmail extends Observable implements Serializable {
         return message_exceptions;
     }
 
-    public void saveAlert(int index){
-        saved_alerts.add(active_alerts.remove(index));
+    public Alert saveAlert(int index){
+        Alert alert = active_alerts.remove(index);
+        saved_alerts.add(alert);
+
+        return alert;
     }
 
     private Folder getFolder(Store store)
@@ -181,7 +184,7 @@ public class Gmail extends Observable implements Serializable {
     private Store connect(Session session) throws NoSuchProviderException, MessagingException{
         //Connect to Gmail server
         Store new_store = session.getStore(STORE);
-        new_store.connect(HOST, gmail_username, gmail_password);
+        new_store.connect(HOST, gmail_address.toString(), gmail_password);
         
         return new_store;
     }
@@ -221,19 +224,24 @@ public class Gmail extends Observable implements Serializable {
      * @param attachment
      * @param isSuperior
      */
-    public void sendAlert(AlertType type, byte[] attachment)
-            throws AddressException, NoSuchProviderException, MessagingException {
+    public void sendAlert(ArrayList<EmailAddress> email_addresses, Alert alert)
+            throws AddressException, NoSuchProviderException,
+            MessagingException, NotLoggedInException, IOException {
+        //Encrypt the message contents
+        byte[] attachment = alert.getBytes();
+
         Session session = getSession();
         MimeMessage message = new MimeMessage(session);
 
         //Add message content
-        Address recipient = new InternetAddress(gmail_username);
-        message.addRecipient(RecipientType.TO, recipient);
+        for(EmailAddress email_address: email_addresses){
+            message.addRecipient(RecipientType.TO, new InternetAddress(email_address.toString()));
+        }
         message.setSubject(SUBJECT);
         Multipart multipart = new MimeMultipart();
 
         //Add message header
-        message.addHeader(ALERT_HEADER, type.name());
+        message.addHeader(ALERT_HEADER, alert.getType().name());
 
         //Add attachment
         BodyPart mail_attachment = new MimeBodyPart();
@@ -246,7 +254,7 @@ public class Gmail extends Observable implements Serializable {
         //Send message
         Transport transport = session.getTransport("smtps");
         try {
-            transport.connect(HOST, gmail_username, gmail_password);
+            transport.connect(HOST, gmail_address.toString(), gmail_password);
             transport.sendMessage(message, message.getAllRecipients());
         } finally {
             transport.close();

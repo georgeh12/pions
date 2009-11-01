@@ -6,9 +6,9 @@ import com.google.gdata.util.ServiceException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
@@ -16,10 +16,13 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 public class Employee extends Login implements Serializable {
+    Gmail gmail = Gmail.getInstance();
     private final static String AVAILABILITY = "PIONS Availability";
     private final static String WORK_SCHEDULE = "PIONS Work Schedule";
     private final static String SUBORDINATE_SCHEDULE = "PIONS Subordinate Schedule";
-    private Gmail gmail;
+    private byte[] RSA_keys = null;
+    private String name = "";
+    private String display_name = null;
     private ContactInfo contact_info;
     private CalendarCollection availability;
     private CalendarCollection work_schedule;
@@ -28,8 +31,45 @@ public class Employee extends Login implements Serializable {
     private ArrayList<Employee> managers = new ArrayList<Employee>();
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
 
+    public String getName(){
+        return name;
+    }
+
+    /**
+     * Get display name
+     * @return
+     */
+    public String getDisplayName() throws NotLoggedInException {
+        validate();
+
+        if(display_name != null){
+            return display_name;
+        }
+        else{
+            return getUsername();
+        }
+    }
+
+    /**
+     * Set display name
+     * @param display_name
+     * @throws pions.model.ModelException.NotLoggedInException
+     */
+    public void setDisplayName(String display_name) throws NotLoggedInException {
+        validate();
+
+        this.display_name = display_name;
+    }
+
+    @Override
+    public void generateRSAKeys() throws NotLoggedInException,
+            NoSuchAlgorithmException, IOException {
+        super.generateRSAKeys();
+
+        RSA_keys = super.getRSAKeys();
+    }
+
     public Gmail getGmail(){
-        if(gmail == null) gmail = new Gmail();
         return gmail;
     }
 
@@ -38,27 +78,30 @@ public class Employee extends Login implements Serializable {
         return contact_info;
     }
 
+    private CalendarCollection initCalendar(String calendar_name){
+        try {
+            if(gmail.isValid()){
+                    return new CalendarCollection(calendar_name, true);
+            }
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } finally {
+            //If an exception occurred, calendar is set to default
+            return new CalendarCollection(calendar_name);
+        }
+    }
+
     public CalendarCollection getAvailability(){
         if(availability == null){
-            try {
-                if(gmail.isValid()){
-                        availability = new CalendarCollection(AVAILABILITY, true);
-                }
-            } catch (AuthenticationException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NotLoggedInException e) {
-                e.printStackTrace();
-            } finally {
-                //If an exception occurred, availability is set to default
-                if(availability == null)
-                    availability = new CalendarCollection(AVAILABILITY);
-            }
+            initCalendar(AVAILABILITY);
         }
         
         return availability;
@@ -66,25 +109,7 @@ public class Employee extends Login implements Serializable {
 
     public CalendarCollection getWorkSchedule(){
         if(work_schedule == null){
-            try {
-                if(gmail.isValid()){
-                        work_schedule = new CalendarCollection(WORK_SCHEDULE, true);
-                }
-            } catch (AuthenticationException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NotLoggedInException e) {
-                e.printStackTrace();
-            } finally {
-                //If an exception occurred, work_schedule is set to default
-                if(work_schedule == null)
-                    work_schedule = new CalendarCollection(WORK_SCHEDULE);
-            }
+            initCalendar(WORK_SCHEDULE);
         }
         
         return work_schedule;
@@ -92,38 +117,20 @@ public class Employee extends Login implements Serializable {
 
     public CalendarCollection getSubordinateSchedule(){
         if(subordinate_schedule == null){
-            try {
-                if(gmail.isValid()){
-                        subordinate_schedule = new CalendarCollection(SUBORDINATE_SCHEDULE, true);
-                }
-            } catch (AuthenticationException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NotLoggedInException e) {
-                e.printStackTrace();
-            } finally {
-                //If an exception occurred, subordinate_schedule is set to default
-                if(subordinate_schedule == null)
-                    subordinate_schedule = new CalendarCollection(SUBORDINATE_SCHEDULE);
-            }
+            initCalendar(SUBORDINATE_SCHEDULE);
         }
 
         return subordinate_schedule;
     }
 
-    public Employee(String username, String password){
-        super.setLogin(username, password);
+    protected Employee(String name, String username, String password){
+        super(username, password);
+
+        this.name = name;
     }
 
-    public void initGoogle(String gmail_username, String gmail_password)
-            throws AuthenticationException, MalformedURLException,
-            ServiceException, IOException, NotLoggedInException {
-        gmail = new Gmail(gmail_username, gmail_password);
+    public void initGoogle(EmailAddress gmail_username, String gmail_password) {
+        gmail.setGmail(gmail_username, gmail_password);
     }
 
     public void addPosition(String title, boolean hourly, double rate){
@@ -146,15 +153,55 @@ public class Employee extends Login implements Serializable {
         return (ArrayList<Position>) positions.clone();
     }
 
-    public void removeManager(int index){
-        managers.remove(index);
+    private ArrayList<String> getNames(ArrayList<Employee> employees){
+        ArrayList<String> names = new ArrayList<String>();
 
+        for(Employee employee: employees){
+            names.add(employee.getName());
+        }
+
+        return names;
+    }
+
+    public ArrayList<String> getManagerNames(){
+        return (ArrayList<String>)getNames(managers);
+    }
+
+    public ArrayList<String> getSubordinateNames(){
+        return (ArrayList<String>)getNames(subordinates);
+    }
+
+    private ArrayList<EmailAddress> getGmails(ArrayList<Employee> employees){
+        ArrayList<EmailAddress> gmail_addresses = new ArrayList<EmailAddress>();
+
+        for(Employee employee: employees){
+            gmail_addresses.add(employee.getGmail().getGmailAddress());
+        }
+
+        return gmail_addresses;
+    }
+
+    public ArrayList<EmailAddress> getManagerGmails(){
+        return (ArrayList<EmailAddress>)getGmails(managers).clone();
+    }
+
+    public ArrayList<EmailAddress> getSubordinateGmails(){
+        return (ArrayList<EmailAddress>)getGmails(subordinates).clone();
+    }
+
+    public void removeManager(int index){
+        Employee manager = managers.remove(index);
+
+        manager.notifyObservers();
+        manager.deleteObservers();
         notifyObservers();
     }
 
     public void removeSubordinate(int index){
-        subordinates.remove(index);
+        Employee subordinate = subordinates.remove(index);
 
+        subordinate.notifyObservers();
+        subordinate.deleteObservers();
         notifyObservers();
     }
 
@@ -162,20 +209,16 @@ public class Employee extends Login implements Serializable {
      * Adds a new manager for the current Employee.
      * @param new_manager
      */
-    public void addManager(Employee new_manager) {
+    private void addManager(Employee new_manager) {
         managers.add(new_manager);
-
-        notifyObservers();
     }
 
     /**
      * Adds a new subordinate for the current Employee.
      * @param new_subordinate
      */
-    public void addSubordinate(Employee new_subordinate) {
+    private void addSubordinate(Employee new_subordinate) {
         subordinates.add(new_subordinate);
-
-        notifyObservers();
     }
 
     /**
@@ -185,9 +228,7 @@ public class Employee extends Login implements Serializable {
      */
     public void addAbove(Employee manager) {
         managers.clear();
-        managers.add(manager);
-
-        notifyObservers();
+        addManager(manager);
     }
 
     /**
@@ -197,8 +238,6 @@ public class Employee extends Login implements Serializable {
      */
     public void addBelow(Employee subordinate) {
         subordinates.clear();
-        subordinates.add(subordinate);
-
-        notifyObservers();
+        addSubordinate(subordinate);
     }
 }
