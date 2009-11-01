@@ -9,11 +9,31 @@ import pions.model.Alert.AlertType;
  */
 public class ModelException extends Exception {
     /**
+     * Thrown when an alert is made with conflicting AlertType and
+     * class association.
+     */
+    public static class AlertClassException extends ModelException {
+        private Class required;
+        private Class found;
+
+        AlertClassException(Class expected, Class found){
+            this.required = expected;
+            this.found = found;
+        }
+
+        @Override
+        public String getMessage(){
+            return "Conflicting class association.\n" +
+                    "required: " + required + "\nfound: " + found + ".";
+        }
+    }
+
+    /**
      * Thrown when Login has not been validated.
      */
     public static class NotLoggedInException extends ModelException {
         @Override
-        public String toString(){
+        public String getMessage(){
             return "User must be logged in first.";
         }
     }
@@ -32,8 +52,8 @@ public class ModelException extends Exception {
         }
 
         @Override
-        public String toString(){
-            return "error while parsing message: " + alert_id + ", " + type;
+        public String getMessage(){
+            return "Error while parsing message: " + alert_id + ", " + type;
         }
     }
 }

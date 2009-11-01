@@ -1,11 +1,8 @@
 
 package pions.model;
 
-import com.google.gdata.util.AuthenticationException;
-import com.google.gdata.util.ServiceException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.MalformedURLException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import pions.model.ContactInfo.EmailAddress;
@@ -16,21 +13,22 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 public class Employee extends Login implements Serializable {
-    Gmail gmail = Gmail.getInstance();
-    private final static String AVAILABILITY = "PIONS Availability";
-    private final static String WORK_SCHEDULE = "PIONS Work Schedule";
-    private final static String SUBORDINATE_SCHEDULE = "PIONS Subordinate Schedule";
+    private Gmail gmail = Gmail.getInstance();
+    private EmployeeCalendars calendars = new EmployeeCalendars();
     private byte[] RSA_keys = null;
     private String name = "";
     private String display_name = null;
     private ContactInfo contact_info;
-    private CalendarCollection availability;
-    private CalendarCollection work_schedule;
-    private CalendarCollection subordinate_schedule;
     private ArrayList<Position> positions = new ArrayList<Position>();
     private ArrayList<Employee> managers = new ArrayList<Employee>();
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
 
+    //Unable to change name after Employee creation. Solve and implement Observer.
+    public EmployeeCalendars getCalendars(){
+        return calendars;
+    }
+
+    //Unable to change name after Employee creation. Solve and implement Observer.
     public String getName(){
         return name;
     }
@@ -76,51 +74,6 @@ public class Employee extends Login implements Serializable {
     public ContactInfo getContactInfo(){
         if(contact_info == null) contact_info = new ContactInfo();
         return contact_info;
-    }
-
-    private CalendarCollection initCalendar(String calendar_name){
-        try {
-            if(gmail.isValid()){
-                    return new CalendarCollection(calendar_name, true);
-            }
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NotLoggedInException e) {
-            e.printStackTrace();
-        } finally {
-            //If an exception occurred, calendar is set to default
-            return new CalendarCollection(calendar_name);
-        }
-    }
-
-    public CalendarCollection getAvailability(){
-        if(availability == null){
-            initCalendar(AVAILABILITY);
-        }
-        
-        return availability;
-    }
-
-    public CalendarCollection getWorkSchedule(){
-        if(work_schedule == null){
-            initCalendar(WORK_SCHEDULE);
-        }
-        
-        return work_schedule;
-    }
-
-    public CalendarCollection getSubordinateSchedule(){
-        if(subordinate_schedule == null){
-            initCalendar(SUBORDINATE_SCHEDULE);
-        }
-
-        return subordinate_schedule;
     }
 
     protected Employee(String name, String username, String password){
