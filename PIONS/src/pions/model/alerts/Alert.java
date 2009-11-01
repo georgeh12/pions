@@ -1,22 +1,51 @@
 
 package pions.model.alerts;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.Observable;
+import pions.model.EmployeeSingleton;
+import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
  * @author George
  */
-public abstract class Alert implements Serializable {
-    AlertType type = null;
+public abstract class Alert extends Observable implements Serializable {
+    private AlertType type = null;
+    private Object object = null;
 
-    public void set(Object object) { }
-
-    public void set(AlertType type){
+    protected Alert(AlertType type){
         this.type = type;
     }
 
-    public abstract Object get();
+    public void set(Object object){
+        this.object = object;
+    }
+
+    public Object get(){
+        return object;
+    }
+
+    /**
+     * Subclasses should implement their own method for serialization,
+     * if necessary.
+     * @return
+     * @throws pions.model.ModelException.NotLoggedInException
+     * @throws IOException
+     */
+    public byte[] getBytes() throws NotLoggedInException, IOException {
+        return EmployeeSingleton.getInstance().encryptRSA(object);
+    }
+
+    public AlertType getType(){
+        return type;
+    }
+
+    @Override
+    public String toString(){
+        return type.toString();
+    }
 
     //TODO add an alert to transfer an EmployeeSingleton's data file
     public enum AlertType{
@@ -42,6 +71,26 @@ public abstract class Alert implements Serializable {
             else{
                 return null;
             }
+        }
+
+        //TODO add description
+        @Override
+        public String toString(){
+            switch(this){
+                case AddSubordinate:
+                    break;
+                case AddManager:
+                    break;
+                case NewWorkSchedule:
+                    break;
+                case UpdatedWorkSchedule:
+                    break;
+                case SwapShift:
+                    break;
+                default:
+            }
+
+            return this.name();
         }
     }
 }

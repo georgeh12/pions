@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.TimeZone;
+import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
@@ -24,16 +25,16 @@ import pions.model.ModelException.NotLoggedInException;
 //TODO implement iterator
 public class CalendarCollection extends Observable implements Serializable {
     //TODO testing purposes only
-    public static void main(String args[]){
+    public static void main(String args[]){/*
         try {
             EmployeeSingleton.init("george", "password");
-            EmployeeSingleton.getInstance().getGmail().setGmail("pionstest@gmail.com", "PIONSpassword");
+            EmployeeSingleton.getInstance().getGmail().setGmail(new EmailAddress("pionstest@gmail.com"), "PIONSpassword");
             CalendarCollection mine = new CalendarCollection("test");
             mine.update();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    */}
 
     private final static String CALENDAR_SERVICE = "PIONS Calendar";
     private final static String OWN_CALENDARS =
@@ -42,7 +43,7 @@ public class CalendarCollection extends Observable implements Serializable {
             "http://www.google.com/calendar/feeds/default/allcalendars/full";
     private String calendar_name;
     private ArrayList<CalendarEntry> archive = new ArrayList<CalendarEntry>();
-    private String gmail_username;
+    private EmailAddress gmail_address;
     private String gmail_password;
     private CalendarEntry active_calendar;
 
@@ -69,12 +70,12 @@ public class CalendarCollection extends Observable implements Serializable {
 
     private void create() throws AuthenticationException,
             MalformedURLException, ServiceException, IOException, NotLoggedInException {
-        gmail_username = EmployeeSingleton.getInstance().getGmail().getUsername();
+        gmail_address = EmployeeSingleton.getInstance().getGmail().getGmailAddress();
         gmail_password = EmployeeSingleton.getInstance().getGmail().getPassword();
         
         // Create a CalenderService and authenticate
         CalendarService service = new CalendarService(CALENDAR_SERVICE);
-        service.setUserCredentials(gmail_username, gmail_password);
+        service.setUserCredentials(gmail_address.toString(), gmail_password);
 
         // Create the calendar
         active_calendar = new CalendarEntry();

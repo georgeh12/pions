@@ -9,34 +9,32 @@ import java.util.Observable;
  *
  * @author George
  */
-public class ContactInfo extends Observable implements Serializable {
+public class ContactInfo implements Serializable {
     private ArrayList<EmailAddress> email_addresses = new ArrayList<EmailAddress>();
     private ArrayList<PhoneNumber> phone_numbers = new ArrayList<PhoneNumber>();
     private Address address = new Address();
 
-    public void addEmailAddress(String name, String domain){
-        email_addresses.add(new EmailAddress(name, domain));
+    public EmailAddress addEmailAddress(String name, String domain){
+        EmailAddress email_address = new EmailAddress(name, domain);
+        email_addresses.add(email_address);
 
-        notifyObservers();
+        return email_address;
     }
 
     public void setEmailAddress(int index, String name, String domain){
         email_addresses.set(index, new EmailAddress(name, domain));
-
-        notifyObservers();
     }
 
     public ArrayList<EmailAddress> getEmailAddresses(){
         return (ArrayList<EmailAddress>) email_addresses.clone();
     }
-    
-    public boolean removeEmailAddress(EmailAddress item){
-        return email_addresses.remove(item);
-    }
 
     public boolean removeEmailAddress(int index){
         try{
-            email_addresses.remove(index);
+            EmailAddress email_address = email_addresses.remove(index);
+
+            email_address.notifyObservers();
+            email_address.deleteObservers();
         } catch(IndexOutOfBoundsException e){
             e.printStackTrace();
             return false;
@@ -45,7 +43,7 @@ public class ContactInfo extends Observable implements Serializable {
         return true;
     }
 
-    public static class EmailAddress implements Serializable {
+    public static class EmailAddress extends Observable implements Serializable {
         private String name = "";
         private String domain = "";
 
@@ -75,36 +73,39 @@ public class ContactInfo extends Observable implements Serializable {
         }
 
         @Override
+        public String toString(){
+            return name + "@" + domain;
+        }
+
+        @Override
         public EmailAddress clone(){
             return new EmailAddress(name, domain);
         }
     }
 
-    public void addPhoneNumber(PhoneNumber.PhoneType type,
+    public PhoneNumber addPhoneNumber(PhoneNumber.PhoneType type,
             long number, int extension){
-        phone_numbers.add(new PhoneNumber(type, number, extension));
+        PhoneNumber phone_number = new PhoneNumber(type, number, extension);
+        phone_numbers.add(phone_number);
 
-        notifyObservers();
+        return phone_number;
     }
 
     public void setPhoneNumber(int index, PhoneNumber.PhoneType type,
             long number, int extension){
         phone_numbers.set(index, new PhoneNumber(type, number, extension));
-
-        notifyObservers();
     }
 
     public ArrayList<PhoneNumber> getPhoneNumbers(){
         return (ArrayList<PhoneNumber>) phone_numbers.clone();
     }
 
-    public boolean removePhoneNumber(PhoneNumber item){
-        return phone_numbers.remove(item);
-    }
-
     public boolean removePhoneNumber(int index){
         try{
-            phone_numbers.remove(index);
+            PhoneNumber phone_number = phone_numbers.remove(index);
+
+            phone_number.notifyObservers();
+            phone_number.deleteObservers();
         } catch(IndexOutOfBoundsException e){
             e.printStackTrace();
             return false;
@@ -113,7 +114,7 @@ public class ContactInfo extends Observable implements Serializable {
         return true;
     }
 
-    public static class PhoneNumber implements Serializable {
+    public static class PhoneNumber extends Observable implements Serializable {
         private PhoneType type = PhoneType.Home;
         private long number = 0;
         private int extension = 0;
@@ -225,11 +226,11 @@ public class ContactInfo extends Observable implements Serializable {
         }
     }
 
-    public void setAddress(String street_address, String city, Address.State state,
+    public Address setAddress(String street_address, String city, Address.State state,
             int zip, String country){
         address = new Address(street_address, city, state, zip, country);
 
-        notifyObservers();
+        return address;
     }
 
     /**
@@ -242,9 +243,11 @@ public class ContactInfo extends Observable implements Serializable {
 
     public void removeAddress(){
         address = new Address();
+
+        address.notifyObservers();
     }
 
-    public static class Address implements Serializable {
+    public static class Address extends Observable implements Serializable {
         private String street_address = "";
         private String city = "";
         private State state = State.None;

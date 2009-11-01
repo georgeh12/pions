@@ -10,7 +10,7 @@ import pions.model.ModelException.NotLoggedInException;
  *
  * @author George
  */
-public class EmployeeSingleton extends Employee implements Serializable {
+public final class EmployeeSingleton extends Employee implements Serializable {
     //TODO testing purposes only
     public static void main(String args[]){
         try{
@@ -24,12 +24,12 @@ public class EmployeeSingleton extends Employee implements Serializable {
 
     private static EmployeeSingleton employee_singleton;
     
-    private EmployeeSingleton(String username, String password){
-        super(username, password);
+    private EmployeeSingleton(String name, String username, String password){
+        super(name, username, password);
     }
 
-    public static void init(String username, String password){
-        employee_singleton = new EmployeeSingleton(username, password);
+    public static void init(String name, String username, String password){
+        employee_singleton = new EmployeeSingleton(name, username, password);
     }
 
     public static void load(String username, String password)
