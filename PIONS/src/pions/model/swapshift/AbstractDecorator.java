@@ -16,13 +16,6 @@ abstract class AbstractDecorator extends AbstractState implements Serializable {
         this.swap_shift_state = swap_shift_state;
     }
 
-    @Override
-    protected ArrayList<AbstractState> getAttributes(){
-        ArrayList<AbstractState> list = super.getAttributes();
-        list.add(this);
-        return list;
-    }
-
     /**
      * Gets the decorated object.
      * @return

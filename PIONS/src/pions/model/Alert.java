@@ -1,26 +1,22 @@
 
-package pions.model.alerts;
+package pions.model;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Observable;
-import pions.model.EmployeeSingleton;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
  * @author George
  */
-public abstract class Alert extends Observable implements Serializable {
+public class Alert extends Observable implements Serializable {
     private AlertType type = null;
     private Object object = null;
 
-    protected Alert(AlertType type){
-        this.type = type;
-    }
-
-    public void set(Object object){
+    public Alert(Object object, AlertType type){
         this.object = object;
+        this.type = type;
     }
 
     public Object get(){

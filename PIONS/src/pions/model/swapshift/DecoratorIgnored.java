@@ -2,6 +2,9 @@
 package pions.model.swapshift;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import pions.model.ContactInfo.EmailAddress;
+import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
@@ -25,5 +28,25 @@ class DecoratorIgnored extends AbstractDecorator implements Serializable {
     @Override
     protected void ignored() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected ArrayList<EmailAddress> getRecipients() throws NotLoggedInException {
+        return new ArrayList<EmailAddress>();
+    }
+
+    @Override
+    protected boolean isAccepted() {
+        return false;
+    }
+
+    @Override
+    protected boolean isRejected() {
+        return false;
+    }
+
+    @Override
+    protected boolean isIgnored() {
+        return true;
     }
 }

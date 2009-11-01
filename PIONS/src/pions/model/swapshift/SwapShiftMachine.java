@@ -2,6 +2,9 @@
 package pions.model.swapshift;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import pions.model.ContactInfo.EmailAddress;
+import pions.model.ModelException.NotLoggedInException;
 
 /**
  * The machine to handle swap shift states.
@@ -15,8 +18,20 @@ public class SwapShiftMachine implements Serializable {
     AbstractState final_state = new StateFinal(this);
     AbstractState current_state = initial_state;
 
-    void setState(AbstractState state){
-        current_state = state;
+    boolean isAccepted() {
+        return current_state.isAccepted();
+    }
+
+    boolean isRejected() {
+        return current_state.isRejected();
+    }
+
+    boolean isIgnored() {
+        return current_state.isIgnored();
+    }
+
+    ArrayList<EmailAddress> getRecipients() throws NotLoggedInException{
+        return current_state.getRecipients();
     }
 
     void setAccepted(AbstractState state){
@@ -31,15 +46,15 @@ public class SwapShiftMachine implements Serializable {
         current_state = new DecoratorIgnored(state);
     }
 
-    public void accepted(){
+    void accept(){
         current_state.accepted();
     }
 
-    public void rejected(){
+    void reject(){
         current_state.rejected();
     }
 
-    public void ignored(){
+    void ignore(){
         current_state.ignored();
     }
 
