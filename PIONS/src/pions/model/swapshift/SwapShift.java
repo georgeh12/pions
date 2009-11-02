@@ -3,7 +3,7 @@ package pions.model.swapshift;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import pions.model.CalendarCollection;
+import pions.model.CalendarData;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.Employee;
 import pions.model.ModelException.NotLoggedInException;
@@ -16,10 +16,10 @@ import pions.model.ModelException.NotLoggedInException;
 public final class SwapShift implements Serializable {
     private SwapShiftMachine machine = new SwapShiftMachine();
     private Employee creator;
-    private CalendarCollection current;
-    private CalendarCollection proposed;
+    private CalendarData current;
+    private CalendarData proposed;
 
-    public SwapShift(Employee creator, CalendarCollection current){
+    public SwapShift(Employee creator, CalendarData current){
         this.creator = creator;
         this.current = current;
     }
@@ -75,11 +75,11 @@ public final class SwapShift implements Serializable {
         return recipients;
     }
 
-    public CalendarCollection getProposed(){
+    public CalendarData getProposed(){
         return proposed;
     }
 
-    public void setProposed(CalendarCollection proposed){
+    public void setProposed(CalendarData proposed){
         this.proposed = proposed;
     }
 }

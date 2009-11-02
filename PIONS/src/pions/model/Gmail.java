@@ -149,10 +149,10 @@ public class Gmail extends Observable implements Serializable {
                         active_alerts.add(add_alert);
                         break;
                     case NewWorkSchedule:
-                        add_alert = new Alert((CalendarCollection)object, AlertType.NewWorkSchedule);
+                        add_alert = new Alert((CalendarData)object, AlertType.NewWorkSchedule);
                         break;
                     case UpdatedWorkSchedule:
-                        add_alert = new Alert((CalendarCollection)object, AlertType.UpdatedWorkSchedule);
+                        add_alert = new Alert((CalendarData)object, AlertType.UpdatedWorkSchedule);
                         break;
                     case SwapShift:
                         add_alert = new Alert((SwapShift)object, AlertType.SwapShift);

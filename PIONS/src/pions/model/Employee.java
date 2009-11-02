@@ -14,17 +14,17 @@ import pions.model.ModelException.NotLoggedInException;
  */
 public class Employee extends Login implements Serializable {
     private Gmail gmail = Gmail.getInstance();
-    private EmployeeCalendars calendars = new EmployeeCalendars();
+    private Calendars calendars = new Calendars();
     private byte[] RSA_keys = null;
     private String name = "";
     private String display_name = null;
     private ContactInfo contact_info;
-    private ArrayList<Position> positions = new ArrayList<Position>();
+    private Positions positions;
     private ArrayList<Employee> managers = new ArrayList<Employee>();
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
 
     //Unable to change name after Employee creation. Solve and implement Observer.
-    public EmployeeCalendars getCalendars(){
+    public Calendars getCalendars(){
         return calendars;
     }
 
@@ -85,25 +85,9 @@ public class Employee extends Login implements Serializable {
     public void initGoogle(EmailAddress gmail_username, String gmail_password) {
         gmail.setGmail(gmail_username, gmail_password);
     }
-
-    public void addPosition(String title, boolean hourly, double rate){
-        positions.add(new Position(title, hourly, rate));
-
-        notifyObservers();
-    }
-
-    public void setPosition(int index, String title, boolean hourly, double rate){
-        positions.set(index, new Position(title, hourly, rate));
-
-        notifyObservers();
-    }
-
-    /**
-     * Returns a clone of positions.
-     * @return
-     */
-    public ArrayList<Position> getPositions(){
-        return (ArrayList<Position>) positions.clone();
+    
+    public Positions getPositions(){
+        return positions;
     }
 
     private ArrayList<String> getNames(ArrayList<Employee> employees){
@@ -145,17 +129,13 @@ public class Employee extends Login implements Serializable {
     public void removeManager(int index){
         Employee manager = managers.remove(index);
 
-        manager.notifyObservers();
         manager.deleteObservers();
-        notifyObservers();
     }
 
     public void removeSubordinate(int index){
         Employee subordinate = subordinates.remove(index);
 
-        subordinate.notifyObservers();
         subordinate.deleteObservers();
-        notifyObservers();
     }
 
     /**
