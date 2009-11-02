@@ -2,6 +2,7 @@
 package pions.model;
 
 import com.google.gdata.client.calendar.CalendarService;
+import com.google.gdata.data.Link;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.calendar.TimeZoneProperty;
@@ -23,7 +24,7 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 //TODO implement iterator
-public class CalendarCollection extends Observable implements Serializable {
+public class CalendarData extends Observable implements Serializable {
     //TODO testing purposes only
     public static void main(String args[]){/*
         try {
@@ -47,7 +48,7 @@ public class CalendarCollection extends Observable implements Serializable {
     private String gmail_password;
     private CalendarEntry active_calendar;
 
-    public CalendarCollection(String calendar_name) {
+    public CalendarData(String calendar_name) {
         this.calendar_name = calendar_name;
     }
 
@@ -62,7 +63,7 @@ public class CalendarCollection extends Observable implements Serializable {
      * @throws IOException
      * @throws pions.model.ModelException.NotLoggedInException
      */
-    public CalendarCollection(String calendar_name, boolean init) throws AuthenticationException,
+    public CalendarData(String calendar_name, boolean init) throws AuthenticationException,
             MalformedURLException, ServiceException, IOException, NotLoggedInException {
         this(calendar_name);
         if(init) create();
@@ -89,8 +90,8 @@ public class CalendarCollection extends Observable implements Serializable {
         active_calendar = active_calendar.update();
     }
 
-    public CalendarEntry get(){
-        return active_calendar;
+    public Link getLink(){
+        return active_calendar.getEditLink();
     }
 
     public void archiveCalendar(String new_calendar) throws AuthenticationException,

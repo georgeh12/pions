@@ -75,7 +75,7 @@ public class Alert extends Observable implements Serializable {
                     return Employee.class.getClass();
                 case NewWorkSchedule:
                 case UpdatedWorkSchedule:
-                    return CalendarCollection.class.getClass();
+                    return CalendarData.class.getClass();
                 case SwapShift:
                     return SwapShift.class.getClass();
                 default:

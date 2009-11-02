@@ -32,18 +32,8 @@ public class ContactInfo implements Serializable {
         return (ArrayList<EmailAddress>) email_addresses.clone();
     }
 
-    public boolean removeEmailAddress(int index){
-        try{
-            EmailAddress email_address = email_addresses.remove(index);
-
-            email_address.notifyObservers();
-            email_address.deleteObservers();
-        } catch(IndexOutOfBoundsException e){
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
+    public EmailAddress removeEmailAddress(int index){
+        return email_addresses.remove(index);
     }
 
     public static class EmailAddress extends Observable implements Serializable {
@@ -99,18 +89,8 @@ public class ContactInfo implements Serializable {
         return (ArrayList<PhoneNumber>) phone_numbers.clone();
     }
 
-    public boolean removePhoneNumber(int index){
-        try{
-            PhoneNumber phone_number = phone_numbers.remove(index);
-
-            phone_number.notifyObservers();
-            phone_number.deleteObservers();
-        } catch(IndexOutOfBoundsException e){
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
+    public PhoneNumber removePhoneNumber(int index){
+        return phone_numbers.remove(index);
     }
 
     public static class PhoneNumber extends Observable implements Serializable {
@@ -240,10 +220,10 @@ public class ContactInfo implements Serializable {
         return address.clone();
     }
 
-    public void removeAddress(){
+    public Address removeAddress(){
+        Address temp = address;
         address = new Address();
-
-        address.notifyObservers();
+        return temp;
     }
 
     public static class Address extends Observable implements Serializable {

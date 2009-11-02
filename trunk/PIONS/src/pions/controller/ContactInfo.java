@@ -49,15 +49,16 @@ public class ContactInfo {
     }
 
     public boolean removeEmailAddress(int index){
-        boolean removed = false;
-
         try {
-            removed = EmployeeSingleton.getInstance().getContactInfo().removeEmailAddress(index);
+            EmailAddress removed = EmployeeSingleton.getInstance().getContactInfo().removeEmailAddress(index);
+
+            removed.deleteObservers();
+            return true;
         } catch (NotLoggedInException e) {
             //TODO exception
             e.printStackTrace();
         } finally {
-            return removed;
+            return false;
         }
     }
 
@@ -99,15 +100,16 @@ public class ContactInfo {
     }
 
     public boolean removePhoneNumber(int index){
-        boolean removed = false;
-
         try {
-            removed = EmployeeSingleton.getInstance().getContactInfo().removePhoneNumber(index);
+            PhoneNumber removed = EmployeeSingleton.getInstance().getContactInfo().removePhoneNumber(index);
+
+            removed.deleteObservers();
+            return true;
         } catch (NotLoggedInException e) {
             //TODO exception
             e.printStackTrace();
         } finally {
-            return removed;
+            return false;
         }
     }
 
@@ -137,7 +139,9 @@ public class ContactInfo {
 
     public void removeAddress(){
         try {
-            EmployeeSingleton.getInstance().getContactInfo().removeAddress();
+            Address removed = EmployeeSingleton.getInstance().getContactInfo().removeAddress();
+
+            removed.deleteObservers();
         } catch (NotLoggedInException e) {
             //TODO exception
             e.printStackTrace();
