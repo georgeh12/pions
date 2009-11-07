@@ -3,6 +3,7 @@ package pions.model;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.StreamCorruptedException;
 import java.util.Observable;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.AlertClassException;
@@ -17,9 +18,9 @@ import pions.model.swapshift.SwapShift;
 public class Alert extends Observable implements Serializable {
     private EmailAddress sender = null;
     private AlertType type = null;
-    private Object object = null;
+    private AbstractAlert object = null;
 
-    public Alert(EmailAddress sender, Object object, AlertType type)
+    public Alert(EmailAddress sender, AbstractAlert object, AlertType type)
             throws AlertClassException{
         if(type.getAssociatedClass() != object.getClass()){
             throw new AlertClassException(type.getAssociatedClass(), object.getClass());
@@ -30,12 +31,24 @@ public class Alert extends Observable implements Serializable {
         this.type = type;
     }
 
-    public Alert(Object object, AlertType type) throws AlertClassException, NotLoggedInException{
+    public Alert(AbstractAlert object, AlertType type) throws AlertClassException, NotLoggedInException{
         this(EmployeeSingleton.getInstance().getGmail().getGmailAddress(),
                 object, type);
     }
 
-    public Object get(){
+    public void accept() throws NotLoggedInException, AlertClassException {
+        object.acceptAlert(type);
+    }
+
+    public void reject() throws AlertClassException{
+        object.rejectAlert(type);
+    }
+
+    public void ignore() throws AlertClassException{
+        object.ignoreAlert(type);
+    }
+
+    public AbstractAlert get(){
         return object;
     }
 
@@ -46,7 +59,8 @@ public class Alert extends Observable implements Serializable {
      * @throws pions.model.ModelException.NotLoggedInException
      * @throws IOException
      */
-    public byte[] getBytes() throws NotLoggedInException, IOException {
+    public byte[] getBytes() throws NotLoggedInException, IOException,
+            StreamCorruptedException, ClassNotFoundException {
         return EmployeeSingleton.getInstance().encryptRSA(object);
     }
 

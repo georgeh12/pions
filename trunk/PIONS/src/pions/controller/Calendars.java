@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pions.model.CalendarData;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.NotLoggedInException;
@@ -20,11 +17,11 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 public class Calendars {
-    public enum CalendarType {
+    public static enum CalendarType {
         Availability, SubordinateSchedule, WorkSchedule;
     }
     
-    public void openCalendar(CalendarType type){
+    public static void openCalendar(CalendarType type){
         try {
             pions.model.Calendars calendars = EmployeeSingleton.getInstance().getCalendars();
             CalendarData calendar = null;

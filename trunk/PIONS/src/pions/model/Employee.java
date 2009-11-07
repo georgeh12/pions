@@ -3,16 +3,19 @@ package pions.model;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.StreamCorruptedException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
+import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
  * @author George
  */
-public class Employee extends Login implements Serializable {
+public class Employee extends Login implements Serializable, AbstractAlert {
     private Gmail gmail = Gmail.getInstance();
     private Calendars calendars = new Calendars();
     private byte[] RSA_keys = null;
@@ -22,6 +25,7 @@ public class Employee extends Login implements Serializable {
     private Positions positions;
     private ArrayList<Employee> managers = new ArrayList<Employee>();
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
+    private Contacts contacts;
 
     //Unable to change name after Employee creation. Solve and implement Observer.
     public Calendars getCalendars(){
@@ -59,12 +63,15 @@ public class Employee extends Login implements Serializable {
         this.display_name = display_name;
     }
 
-    @Override
-    public void generateRSAKeys() throws NotLoggedInException,
-            NoSuchAlgorithmException, IOException {
-        super.generateRSAKeys();
+    public byte[] encryptRSA(Object object)
+            throws IOException, NotLoggedInException, StreamCorruptedException,
+            ClassNotFoundException {
+        return super.encryptRSA(RSA_keys, object);
+    }
 
-        RSA_keys = super.getRSAKeys();
+    public void initRSAKeys() throws NotLoggedInException,
+            NoSuchAlgorithmException, IOException {
+        RSA_keys = super.generateRSAKeys();
     }
 
     public Gmail getGmail(){
@@ -80,10 +87,6 @@ public class Employee extends Login implements Serializable {
         super(username, password);
 
         this.name = name;
-    }
-
-    public void initGoogle(EmailAddress gmail_username, String gmail_password) {
-        gmail.setGmail(gmail_username, gmail_password);
     }
     
     public Positions getPositions(){
@@ -126,23 +129,19 @@ public class Employee extends Login implements Serializable {
         return (ArrayList<EmailAddress>)getGmails(subordinates).clone();
     }
 
-    public void removeManager(int index){
-        Employee manager = managers.remove(index);
-
-        manager.deleteObservers();
+    public Employee removeManager(int index){
+        return managers.remove(index);
     }
 
-    public void removeSubordinate(int index){
-        Employee subordinate = subordinates.remove(index);
-
-        subordinate.deleteObservers();
+    public Employee removeSubordinate(int index){
+        return subordinates.remove(index);
     }
 
     /**
      * Adds a new manager for the current Employee.
      * @param new_manager
      */
-    private void addManager(Employee new_manager) {
+    public void addManager(Employee new_manager) {
         managers.add(new_manager);
     }
 
@@ -150,7 +149,7 @@ public class Employee extends Login implements Serializable {
      * Adds a new subordinate for the current Employee.
      * @param new_subordinate
      */
-    private void addSubordinate(Employee new_subordinate) {
+    public void addSubordinate(Employee new_subordinate) {
         subordinates.add(new_subordinate);
     }
 
@@ -172,5 +171,44 @@ public class Employee extends Login implements Serializable {
     public void addBelow(Employee subordinate) {
         subordinates.clear();
         addSubordinate(subordinate);
+    }
+
+    public void acceptAlert(AlertType type) throws NotLoggedInException, AlertClassException {
+        switch(type){
+            case AddManager:
+                EmployeeSingleton.getInstance().addManager(this);
+                break;
+            case AddSubordinate:
+                EmployeeSingleton.getInstance().addSubordinate(this);
+                break;
+            default:
+                throw new AlertClassException(this.getClass(), type.getAssociatedClass());
+        }
+    }
+
+    public void rejectAlert(AlertType type) throws AlertClassException {
+        switch(type){
+            case AddManager:
+                //DONOTHING
+                break;
+            case AddSubordinate:
+                //DONOTHING
+                break;
+            default:
+                throw new AlertClassException(this.getClass(), type.getAssociatedClass());
+        }
+    }
+
+    public void ignoreAlert(AlertType type) throws AlertClassException {
+        switch(type){
+            case AddManager:
+                //DONOTHING
+                break;
+            case AddSubordinate:
+                //DONOTHING
+                break;
+            default:
+                throw new AlertClassException(this.getClass(), type.getAssociatedClass());
+        }
     }
 }

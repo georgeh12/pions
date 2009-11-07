@@ -16,8 +16,8 @@ public class ModelException extends Exception {
         private Class required;
         private Class found;
 
-        AlertClassException(Class expected, Class found){
-            this.required = expected;
+        public AlertClassException(Class required, Class found){
+            this.required = required;
             this.found = found;
         }
 
