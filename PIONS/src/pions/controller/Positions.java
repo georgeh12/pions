@@ -14,7 +14,7 @@ import pions.model.Positions.Position;
  * @author George
  */
 public class Positions {
-    public void addPosition(String title, boolean hourly, double rate){
+    public static void addPosition(String title, boolean hourly, double rate){
         try {
             EmployeeSingleton.getInstance().getPositions().add(title, hourly, rate);
         } catch (NotLoggedInException e) {
@@ -22,7 +22,7 @@ public class Positions {
         }
     }
 
-    public void setPosition(int index, String title, boolean hourly, double rate){
+    public static void setPosition(int index, String title, boolean hourly, double rate){
         try {
             EmployeeSingleton.getInstance().getPositions().set(index, title, hourly, rate);
         } catch (NotLoggedInException e) {
@@ -30,7 +30,7 @@ public class Positions {
         }
     }
 
-    public void removePosition(int index){
+    public static void removePosition(int index){
         try {
             Position position = EmployeeSingleton.getInstance().getPositions().remove(index);
             position.deleteObservers();
@@ -39,7 +39,7 @@ public class Positions {
         }
     }
 
-    public ArrayList<String> getPositions(){
+    public static ArrayList<String> getPositions(){
         ArrayList<String> positions = new ArrayList<String>();
 
         try {

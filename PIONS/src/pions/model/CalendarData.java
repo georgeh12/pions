@@ -15,7 +15,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.TimeZone;
+import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
+import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
@@ -24,7 +26,7 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 //TODO implement iterator
-public class CalendarData extends Observable implements Serializable {
+public class CalendarData extends Observable implements Serializable, AbstractAlert {
     //TODO testing purposes only
     public static void main(String args[]){/*
         try {
@@ -98,5 +100,44 @@ public class CalendarData extends Observable implements Serializable {
             MalformedURLException, ServiceException, IOException, NotLoggedInException {
         archive.add(active_calendar);
         create();
+    }
+
+    public void acceptAlert(AlertType type) throws AlertClassException {
+        switch(type){
+            case NewWorkSchedule:
+                //TODO
+                break;
+            case UpdatedWorkSchedule:
+                //TODO
+                break;
+            default:
+                throw new AlertClassException(this.getClass(), type.getAssociatedClass());
+        }
+    }
+
+    public void rejectAlert(AlertType type) throws AlertClassException {
+        switch(type){
+            case NewWorkSchedule:
+                //DONOTHING
+                break;
+            case UpdatedWorkSchedule:
+                //DONOTHING
+                break;
+            default:
+                throw new AlertClassException(this.getClass(), type.getAssociatedClass());
+        }
+    }
+
+    public void ignoreAlert(AlertType type) throws AlertClassException {
+        switch(type){
+            case NewWorkSchedule:
+                //DONOTHING
+                break;
+            case UpdatedWorkSchedule:
+                //DONOTHING
+                break;
+            default:
+                throw new AlertClassException(this.getClass(), type.getAssociatedClass());
+        }
     }
 }

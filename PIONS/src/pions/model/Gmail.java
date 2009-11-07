@@ -4,6 +4,7 @@ package pions.model;
 import com.sun.mail.util.BASE64DecoderStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
@@ -84,6 +85,10 @@ public class Gmail extends Observable implements Serializable {
 
     public Iterator<Alert> getSavedAlerts(){
         return saved_alerts.iterator();
+    }
+
+    public void deleteSavedAlert(int index) {
+        saved_alerts.remove(index);
     }
 
     public boolean isValid(){
@@ -230,7 +235,8 @@ public class Gmail extends Observable implements Serializable {
      */
     public void sendAlert(ArrayList<EmailAddress> recipients, Alert alert)
             throws AddressException, NoSuchProviderException,
-            MessagingException, NotLoggedInException, IOException {
+            MessagingException, NotLoggedInException, IOException,
+            StreamCorruptedException, ClassNotFoundException {
         //Encrypt the message contents
         byte[] attachment = alert.getBytes();
 

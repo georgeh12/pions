@@ -15,6 +15,7 @@ import java.io.StreamCorruptedException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.util.Observable;
 import pions.model.ModelException.NotLoggedInException;
 
@@ -45,30 +46,23 @@ public abstract class Login extends Observable {
      * @throws NoSuchAlgorithmException
      * @throws IOException
      */
-    protected void generateRSAKeys() throws NotLoggedInException,
+    protected byte[] generateRSAKeys() throws NotLoggedInException,
             NoSuchAlgorithmException, IOException {
         validate();
         
         KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
         kpg.initialize(2048); //11 bits
-        RSA_keys = kpg.genKeyPair();
+
+        return encryptAES(kpg.genKeyPair());
     }
 
     //TODO generate RSA keys
-    protected byte[] getRSAKeys() throws NotLoggedInException,
-            NoSuchAlgorithmException, IOException {
-        validate();
-
-        return encryptAES(RSA_keys);
-    }
-
-    //TODO generate RSA keys
-    protected void setRSAKeys(byte[] key_pair) throws NotLoggedInException,
+    protected PublicKey getPublicKey(byte[] key_pair) throws NotLoggedInException,
             NoSuchAlgorithmException, StreamCorruptedException,
             ClassNotFoundException, IOException {
         validate();
 
-        RSA_keys = (KeyPair)decryptAES(new ByteArrayInputStream(key_pair));
+        return ((KeyPair)decryptAES(new ByteArrayInputStream(key_pair))).getPublic();
     }
 
     protected void setUsername(String username){
@@ -165,9 +159,10 @@ public abstract class Login extends Observable {
     }
 
     //TODO use RSA encryption to encryptAES/serialize objects
-    public byte[] encryptRSA(Object object)
-            throws IOException, NotLoggedInException{
-        validate();
+    public byte[] encryptRSA(byte[] key_pair, Object object)
+            throws IOException, NotLoggedInException, StreamCorruptedException,
+            ClassNotFoundException {
+        ((KeyPair)decryptAES(new ByteArrayInputStream(key_pair))).getPrivate();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

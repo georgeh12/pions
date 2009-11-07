@@ -1,10 +1,10 @@
 
 package pions.controller;
 
+import pions.model.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observer;
-import pions.model.Alert;
 
 /**
  * Iterator design implementation.

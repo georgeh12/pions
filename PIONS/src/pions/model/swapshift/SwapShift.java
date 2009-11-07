@@ -3,9 +3,13 @@ package pions.model.swapshift;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import pions.model.AbstractAlert;
+import pions.model.Alert;
 import pions.model.CalendarData;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.Employee;
+import pions.model.EmployeeSingleton;
+import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
@@ -13,7 +17,7 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 //TODO design SwapShift
-public final class SwapShift implements Serializable {
+public final class SwapShift implements Serializable, AbstractAlert {
     private SwapShiftMachine machine = new SwapShiftMachine();
     private Employee creator;
     private CalendarData current;
@@ -34,27 +38,6 @@ public final class SwapShift implements Serializable {
 
     public boolean isIgnored() {
         return machine.isIgnored();
-    }
-
-    /**
-     * Sets the decorator to accepted and advances the state.
-     */
-    public void accept() {
-        machine.accept();
-    }
-
-    /**
-     * Sets the decorator to rejected and advances the state.
-     */
-    public void reject() {
-        machine.reject();
-    }
-
-    /**
-     * Sets the decorator to ignored and advances the state.
-     */
-    public void ignore() {
-        machine.ignore();
     }
 
     public String getCreatorName(){
@@ -81,5 +64,44 @@ public final class SwapShift implements Serializable {
 
     public void setProposed(CalendarData proposed){
         this.proposed = proposed;
+    }
+
+    /**
+     * Sets the decorator to accepted and advances the state.
+     */
+    public void acceptAlert(Alert.AlertType type) throws AlertClassException {
+        switch(type){
+            case SwapShift:
+                machine.accept();
+                break;
+            default:
+                throw new AlertClassException(this.getClass(), type.getAssociatedClass());
+        }
+    }
+
+    /**
+     * Sets the decorator to rejected and advances the state.
+     */
+    public void rejectAlert(Alert.AlertType type) throws AlertClassException {
+        switch(type){
+            case SwapShift:
+                machine.reject();
+                break;
+            default:
+                throw new AlertClassException(this.getClass(), type.getAssociatedClass());
+        }
+    }
+
+    /**
+     * Sets the decorator to ignored and advances the state.
+     */
+    public void ignoreAlert(Alert.AlertType type) throws AlertClassException {
+        switch(type){
+            case SwapShift:
+                machine.ignore();
+                break;
+            default:
+                throw new AlertClassException(this.getClass(), type.getAssociatedClass());
+        }
     }
 }
