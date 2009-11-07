@@ -184,8 +184,8 @@ public class Gmail implements Serializable {
 
     public static void sendNewManager(EmployeeSingleton manager){
         try {
-            sendAlert(EmployeeSingleton.getInstance().getManagerGmails(),
-                    new Alert((Employee)manager, AlertType.AddManager));
+            sendNewSubordinate(EmployeeSingleton.getInstance().getManagerGmails(),
+                    manager);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
@@ -193,15 +193,27 @@ public class Gmail implements Serializable {
         }
     }
 
+    static void sendNewManager(ArrayList<EmailAddress> gmails,
+            EmployeeSingleton manager) throws NotLoggedInException,
+            AlertClassException{
+        sendAlert(gmails, new Alert((Employee)manager, AlertType.AddManager));
+    }
+
     public static void sendNewSubordinate(EmployeeSingleton subordinate){
         try {
-            sendAlert(EmployeeSingleton.getInstance().getSubordinateGmails(),
-                    new Alert((Employee)subordinate, AlertType.AddSubordinate));
+            sendNewSubordinate(EmployeeSingleton.getInstance().getSubordinateGmails(),
+                    subordinate);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
             e.printStackTrace();
         }
+    }
+
+    static void sendNewSubordinate(ArrayList<EmailAddress> gmails,
+            EmployeeSingleton subordinate) throws NotLoggedInException,
+            AlertClassException{
+        sendAlert(gmails, new Alert((Employee)subordinate, AlertType.AddSubordinate));
     }
 
     public static void sendNewWorkSchedule(boolean[] indices){
@@ -238,6 +250,8 @@ public class Gmail implements Serializable {
             e.printStackTrace();
         }
     }
+
+    //TODO send contact request
 
     private static void sendAlert(ArrayList<EmailAddress> gmail_addresses, Alert alert)
             throws NotLoggedInException {

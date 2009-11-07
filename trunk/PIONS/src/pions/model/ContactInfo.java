@@ -61,6 +61,10 @@ public class ContactInfo implements Serializable {
             return personal;
         }
 
+        public boolean equals(EmailAddress email_address){
+            return this.address.compareToIgnoreCase(email_address.getAddress()) == 0;
+        }
+
         @Override
         public String toString(){
             return personal + "<" + address + ">";
