@@ -27,6 +27,7 @@ import javax.mail.MessagingException;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.Alert.AlertType;
+import pions.model.Contacts.Contact;
 import pions.model.ModelException.MessageParserException;
 import pions.model.swapshift.SwapShift;
 
@@ -138,33 +139,13 @@ public class Gmail extends Observable implements Serializable {
                 alert_type = AlertType.parse(current.getHeader(ALERT_HEADER)[ATTACHMENT_INDEX]);
 
                 //Retrieves the attachment and decodes it using decryptRSA()
-                Object object = EmployeeSingleton.getInstance().decryptRSA(
+                Object object = Alert.decryptAlert(alert_type,
                         (BASE64DecoderStream)((Multipart) current.getContent()).getBodyPart(0).getContent());
 
-                //Strategy design pattern at work.
-                Alert add_alert = null;
-
-                switch (alert_type) {
-                    case AddSubordinate:
-                        add_alert = new Alert((Employee)object, AlertType.AddSubordinate);
-                        active_alerts.add(add_alert);
-                        break;
-                    case AddManager:
-                        add_alert = new Alert((Employee)object, AlertType.AddManager);
-                        active_alerts.add(add_alert);
-                        break;
-                    case NewWorkSchedule:
-                        add_alert = new Alert((CalendarData)object, AlertType.NewWorkSchedule);
-                        break;
-                    case UpdatedWorkSchedule:
-                        add_alert = new Alert((CalendarData)object, AlertType.UpdatedWorkSchedule);
-                        break;
-                    case SwapShift:
-                        add_alert = new Alert((SwapShift)object, AlertType.SwapShift);
-                        break;
-                    default:
-                        throw new UnsupportedOperationException();
-                }
+                //Strategy design pattern at work. Providing an alternative to subclassing
+                Alert add_alert =
+                        new Alert((AbstractAlert)alert_type.getAssociatedClass().cast(object),
+                        AlertType.AddSubordinate);
 
                 active_alerts.add(add_alert);
             } catch (Exception e) {

@@ -2,10 +2,12 @@
 package pions.model;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.util.Observable;
 import pions.model.ContactInfo.EmailAddress;
+import pions.model.Contacts.Contact;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.swapshift.SwapShift;
@@ -52,6 +54,15 @@ public class Alert extends Observable implements Serializable {
         return object;
     }
 
+    public static Object decryptAlert(AlertType type, InputStream is) throws NotLoggedInException, StreamCorruptedException, ClassNotFoundException, IOException{
+        if(type == AlertType.ContactRequest){
+            return null;
+        }
+        else{
+            return EmployeeSingleton.getInstance().decryptRSA(is);
+        }
+    }
+
     /**
      * Subclasses should implement their own method for serialization,
      * if necessary.
@@ -61,7 +72,12 @@ public class Alert extends Observable implements Serializable {
      */
     public byte[] getBytes() throws NotLoggedInException, IOException,
             StreamCorruptedException, ClassNotFoundException {
-        return EmployeeSingleton.getInstance().encryptRSA(object);
+        if(type == AlertType.ContactRequest){
+            return Login.getBytes(object);
+        }
+        else{
+            return EmployeeSingleton.getInstance().encryptRSA(object);
+        }
     }
 
     public EmailAddress getAddress(){
@@ -79,7 +95,9 @@ public class Alert extends Observable implements Serializable {
 
     //TODO add an alert to transfer an EmployeeSingleton's data file
     public enum AlertType{
-        AddManager, AddSubordinate, NewWorkSchedule, UpdatedWorkSchedule,
+        AddManager, AddSubordinate,
+        ContactRequest,
+        NewWorkSchedule, UpdatedWorkSchedule,
         SwapShift;
 
         public Class getAssociatedClass(){
@@ -87,6 +105,8 @@ public class Alert extends Observable implements Serializable {
                 case AddManager:
                 case AddSubordinate:
                     return Employee.class.getClass();
+                case ContactRequest:
+                    return Contact.class.getClass();
                 case NewWorkSchedule:
                 case UpdatedWorkSchedule:
                     return CalendarData.class.getClass();
@@ -103,6 +123,9 @@ public class Alert extends Observable implements Serializable {
             }
             else if(type.equals(AddSubordinate.toString())){
                 return AddSubordinate;
+            }
+            else if(type.equals(ContactRequest.toString())){
+                return ContactRequest;
             }
             else if(type.equals(NewWorkSchedule.toString())){
                 return NewWorkSchedule;
@@ -125,6 +148,8 @@ public class Alert extends Observable implements Serializable {
                 case AddManager:
                     break;
                 case AddSubordinate:
+                    break;
+                case ContactRequest:
                     break;
                 case NewWorkSchedule:
                     break;

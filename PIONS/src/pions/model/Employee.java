@@ -32,6 +32,10 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         return calendars;
     }
 
+    public Contacts getContacts(){
+        return contacts;
+    }
+
     //Unable to change name after Employee creation. Solve and implement Observer.
     public String getName(){
         return name;
@@ -158,9 +162,9 @@ public class Employee extends Login implements Serializable, AbstractAlert {
      * Clears the current managers.
      * @param manager
      */
-    public void addAbove(Employee manager) {
+    public void addAbove(String name, String username, String password) {
         managers.clear();
-        addManager(manager);
+        addManager(new Employee(name, username, password));
     }
 
     /**
@@ -168,9 +172,9 @@ public class Employee extends Login implements Serializable, AbstractAlert {
      * Clears the current subordinates.
      * @param subordinate
      */
-    public void addBelow(Employee subordinate) {
+    public void addBelow(String name, String username, String password) {
         subordinates.clear();
-        addSubordinate(subordinate);
+        addSubordinate(new Employee(name, username, password));
     }
 
     public void acceptAlert(AlertType type) throws NotLoggedInException, AlertClassException {

@@ -147,15 +147,7 @@ public abstract class Login extends Observable {
     //TODO use AES encryption to encryptAES/serialize objects
     public final static byte[] encryptAES(Object object)
             throws IOException, NotLoggedInException{
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-
-        // write object to bytes
-        oos.writeObject(object);
-        oos.close();
-
-        return baos.toByteArray();
+        return getBytes(object);
     }
 
     //TODO use RSA encryption to encryptAES/serialize objects
@@ -164,8 +156,11 @@ public abstract class Login extends Observable {
             ClassNotFoundException {
         ((KeyPair)decryptAES(new ByteArrayInputStream(key_pair))).getPrivate();
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        return getBytes(object);
+    }
 
+    public static byte[] getBytes(Object object) throws IOException{
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
 
         // write object to bytes
