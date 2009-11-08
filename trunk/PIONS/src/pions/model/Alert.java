@@ -54,12 +54,16 @@ public class Alert extends Observable implements Serializable {
         return object;
     }
 
-    public static Object decryptAlert(AlertType type, InputStream is) throws NotLoggedInException, StreamCorruptedException, ClassNotFoundException, IOException{
+    public static Object decryptAlert(String email_address, AlertType type, InputStream is)
+            throws NotLoggedInException, StreamCorruptedException,
+            ClassNotFoundException, IOException{
         if(type == AlertType.ContactRequest){
-            return null;
+            return Login.getObject(is);
         }
         else{
-            return EmployeeSingleton.getInstance().decryptRSA(is);
+            return EmployeeSingleton.getInstance().decryptRSA(
+                    EmployeeSingleton.getInstance().getPublicKey(email_address),
+                    is);
         }
     }
 
@@ -96,7 +100,7 @@ public class Alert extends Observable implements Serializable {
     //TODO add an alert to transfer an EmployeeSingleton's data file
     public enum AlertType{
         AddManager, AddSubordinate,
-        ContactRequest,
+        ContactRequest, RemoveEmployee,
         NewWorkSchedule, UpdatedWorkSchedule,
         SwapShift;
 
@@ -106,6 +110,7 @@ public class Alert extends Observable implements Serializable {
                 case AddSubordinate:
                     return Employee.class.getClass();
                 case ContactRequest:
+                case RemoveEmployee:
                     return Contact.class.getClass();
                 case NewWorkSchedule:
                 case UpdatedWorkSchedule:
@@ -127,6 +132,9 @@ public class Alert extends Observable implements Serializable {
             else if(type.equals(ContactRequest.toString())){
                 return ContactRequest;
             }
+            else if(type.equals(RemoveEmployee.toString())){
+                return RemoveEmployee;
+            }
             else if(type.equals(NewWorkSchedule.toString())){
                 return NewWorkSchedule;
             }
@@ -141,7 +149,6 @@ public class Alert extends Observable implements Serializable {
             }
         }
 
-        //TODO add description
         @Override
         public String toString(){
             switch(this){
@@ -150,6 +157,8 @@ public class Alert extends Observable implements Serializable {
                 case AddSubordinate:
                     break;
                 case ContactRequest:
+                    break;
+                case RemoveEmployee:
                     break;
                 case NewWorkSchedule:
                     break;

@@ -8,9 +8,15 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import pions.model.Alert;
+import pions.model.Alert.AlertType;
 import pions.model.CalendarData;
+import pions.model.ContactInfo.EmailAddress;
 import pions.model.EmployeeSingleton;
+import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
+import pions.model.swapshift.SwapShift;
 
 /**
  *
@@ -69,6 +75,41 @@ public class Calendars {
         } finally {
             //If an exception occurred, calendar is set to default
             return new CalendarData(calendar_name);
+        }
+    }
+
+    public static void sendNewWorkSchedule(boolean[] indices){
+        try {
+            sendWorkSchedule(Gmail.getSelectedEmails(EmployeeSingleton.getInstance().getSubordinateGmails(), indices),
+                    AlertType.NewWorkSchedule);
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } catch (AlertClassException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendUpdatedWorkSchedule(boolean[] indices){
+        try {
+            sendWorkSchedule(Gmail.getSelectedEmails(EmployeeSingleton.getInstance().getSubordinateGmails(), indices), AlertType.UpdatedWorkSchedule);
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } catch (AlertClassException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void sendWorkSchedule(ArrayList<EmailAddress> gmail_addresses, AlertType alert_type)
+            throws NotLoggedInException, AlertClassException {
+        Gmail.sendAlert(gmail_addresses,
+                new Alert(EmployeeSingleton.getInstance().getCalendars().getWorkSchedule(), alert_type));
+    }
+
+    public static void sendSwapShift(SwapShift swap_shift) throws NotLoggedInException{
+        try {
+            Gmail.sendAlert(swap_shift.getRecipients(), new Alert(swap_shift, AlertType.SwapShift));
+        } catch (AlertClassException e) {
+            e.printStackTrace();
         }
     }
 }

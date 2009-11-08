@@ -18,7 +18,7 @@ public class Contacts {
     public Contact addContact(PublicKey public_key, EmailAddress email_address){
         Contact contact = new Contact(public_key, email_address);
         
-        Contact search = searchContacts(contact.email_address);
+        Contact search = searchContacts(contact.gmail_address);
 
         if(search != null){
             contacts.indexOf(search);
@@ -40,25 +40,21 @@ public class Contacts {
 
     public static class Contact implements AbstractAlert {
         private PublicKey public_key;
-        private EmailAddress email_address;
+        private EmailAddress gmail_address;
 
-        private Contact(PublicKey public_key, EmailAddress email_address){
+        private Contact(PublicKey public_key, EmailAddress gmail_address){
             this.public_key = public_key;
-            this.email_address = email_address;
-        }
-
-        public PublicKey getPublicKey(){
-            return public_key;
+            this.gmail_address = gmail_address;
         }
         
-        public boolean equals(EmailAddress email_address){
-            return this.email_address.equals(email_address);
+        public boolean equals(EmailAddress gmail_address){
+            return this.gmail_address.equals(gmail_address);
         }
 
         public void acceptAlert(AlertType type) throws NotLoggedInException, AlertClassException {
             switch(type){
                 case ContactRequest:
-                    EmployeeSingleton.getInstance().getContacts().addContact(public_key, email_address);
+                    EmployeeSingleton.getInstance().getContacts().addContact(public_key, gmail_address);
                     break;
                 default:
                     throw new AlertClassException(this.getClass(), type.getAssociatedClass());

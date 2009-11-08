@@ -4,7 +4,9 @@ package pions.model;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
@@ -18,14 +20,14 @@ import pions.model.ModelException.NotLoggedInException;
 public class Employee extends Login implements Serializable, AbstractAlert {
     private Gmail gmail = Gmail.getInstance();
     private Calendars calendars = new Calendars();
-    private byte[] RSA_keys = null;
+    private Contacts contacts = new Contacts();
+    private KeyPair key_pair = null;
     private String name = "";
     private String display_name = null;
     private ContactInfo contact_info;
     private Positions positions;
     private ArrayList<Employee> managers = new ArrayList<Employee>();
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
-    private Contacts contacts;
 
     //Unable to change name after Employee creation. Solve and implement Observer.
     public Calendars getCalendars(){
@@ -70,12 +72,12 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     public byte[] encryptRSA(Object object)
             throws IOException, NotLoggedInException, StreamCorruptedException,
             ClassNotFoundException {
-        return super.encryptRSA(RSA_keys, object);
+        return super.encryptRSA(key_pair.getPrivate(), object);
     }
 
     public void initRSAKeys() throws NotLoggedInException,
             NoSuchAlgorithmException, IOException {
-        RSA_keys = super.generateRSAKeys();
+        key_pair = super.generateRSAKeys();
     }
 
     public Gmail getGmail(){
@@ -125,6 +127,41 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         return gmail_addresses;
     }
 
+    public PublicKey getPublicKey(){
+        return key_pair.getPublic();
+    }
+
+    public PublicKey getPublicKey(String gmail_address){
+        return searchEmployees(gmail_address).getPublicKey();
+    }
+
+    private Employee searchManagers(String gmail_address){
+        for(Employee employee: managers){
+            if(employee.getGmail().getGmailAddress().equals(gmail_address)) return employee;
+        }
+
+        return null;
+    }
+
+    private Employee searchSubordinates(String gmail_address){
+        for(Employee employee: subordinates){
+            if(employee.getGmail().getGmailAddress().equals(gmail_address)) return employee;
+        }
+
+        return null;
+    }
+
+    private Employee searchEmployees(String gmail_address){
+        Employee manager = searchManagers(gmail_address);
+
+        if(manager != null){
+            return manager;
+        }
+        else{
+            return searchSubordinates(gmail_address);
+        }
+    }
+
     public ArrayList<EmailAddress> getManagerGmails(){
         return (ArrayList<EmailAddress>)getGmails(managers).clone();
     }
@@ -155,26 +192,6 @@ public class Employee extends Login implements Serializable, AbstractAlert {
      */
     public void addSubordinate(Employee new_subordinate) {
         subordinates.add(new_subordinate);
-    }
-
-    /**
-     * Inserts the manager between this employee and their managers.
-     * Clears the current managers.
-     * @param manager
-     */
-    public void addAbove(String name, String username, String password) {
-        managers.clear();
-        addManager(new Employee(name, username, password));
-    }
-
-    /**
-     * Inserts the subordinate between this employee and their subordinates.
-     * Clears the current subordinates.
-     * @param subordinate
-     */
-    public void addBelow(String name, String username, String password) {
-        subordinates.clear();
-        addSubordinate(new Employee(name, username, password));
     }
 
     public void acceptAlert(AlertType type) throws NotLoggedInException, AlertClassException {

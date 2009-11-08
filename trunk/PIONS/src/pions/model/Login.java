@@ -15,6 +15,7 @@ import java.io.StreamCorruptedException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Observable;
 import pions.model.ModelException.NotLoggedInException;
@@ -46,23 +47,14 @@ public abstract class Login extends Observable {
      * @throws NoSuchAlgorithmException
      * @throws IOException
      */
-    protected byte[] generateRSAKeys() throws NotLoggedInException,
+    protected KeyPair generateRSAKeys() throws NotLoggedInException,
             NoSuchAlgorithmException, IOException {
         validate();
         
         KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
         kpg.initialize(2048); //11 bits
 
-        return encryptAES(kpg.genKeyPair());
-    }
-
-    //TODO generate RSA keys
-    protected PublicKey getPublicKey(byte[] key_pair) throws NotLoggedInException,
-            NoSuchAlgorithmException, StreamCorruptedException,
-            ClassNotFoundException, IOException {
-        validate();
-
-        return ((KeyPair)decryptAES(new ByteArrayInputStream(key_pair))).getPublic();
+        return kpg.genKeyPair();
     }
 
     protected void setUsername(String username){
@@ -151,11 +143,9 @@ public abstract class Login extends Observable {
     }
 
     //TODO use RSA encryption to encryptAES/serialize objects
-    public byte[] encryptRSA(byte[] key_pair, Object object)
+    public byte[] encryptRSA(PrivateKey key_pair, Object object)
             throws IOException, NotLoggedInException, StreamCorruptedException,
             ClassNotFoundException {
-        ((KeyPair)decryptAES(new ByteArrayInputStream(key_pair))).getPrivate();
-
         return getBytes(object);
     }
 
@@ -183,17 +173,20 @@ public abstract class Login extends Observable {
     public final static Object decryptAES(InputStream is)
             throws StreamCorruptedException, IOException,
             ClassNotFoundException, NotLoggedInException {
-        ObjectInputStream ois = new ObjectInputStream(is);
-
-        return ois.readObject();
+        return getObject(is);
     }
 
     //TODO use RSA decryption to decryptAES/deserialize objects
-    public Object decryptRSA(InputStream is)
+    public Object decryptRSA(PublicKey public_key, InputStream is)
             throws StreamCorruptedException, IOException,
             ClassNotFoundException, NotLoggedInException {
         validate();
 
+        return getObject(is);
+    }
+
+    public static Object getObject(InputStream is)
+            throws IOException, ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(is);
 
         return ois.readObject();
