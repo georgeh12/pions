@@ -139,13 +139,14 @@ public class Gmail extends Observable implements Serializable {
                 alert_type = AlertType.parse(current.getHeader(ALERT_HEADER)[ATTACHMENT_INDEX]);
 
                 //Retrieves the attachment and decodes it using decryptRSA()
-                Object object = Alert.decryptAlert(alert_type,
+                Object object = Alert.decryptAlert(
+                        ((InternetAddress)current.getFrom()[0]).getAddress(), alert_type,
                         (BASE64DecoderStream)((Multipart) current.getContent()).getBodyPart(0).getContent());
 
                 //Strategy design pattern at work. Providing an alternative to subclassing
                 Alert add_alert =
                         new Alert((AbstractAlert)alert_type.getAssociatedClass().cast(object),
-                        AlertType.AddSubordinate);
+                        alert_type);
 
                 active_alerts.add(add_alert);
             } catch (Exception e) {

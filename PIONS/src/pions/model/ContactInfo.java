@@ -61,8 +61,8 @@ public class ContactInfo implements Serializable {
             return personal;
         }
 
-        public boolean equals(EmailAddress email_address){
-            return this.address.compareToIgnoreCase(email_address.getAddress()) == 0;
+        public boolean equals(String email_address){
+            return this.address.compareToIgnoreCase(email_address) == 0;
         }
 
         @Override

@@ -8,7 +8,6 @@ import pions.model.Alert;
 import pions.model.CalendarData;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.Employee;
-import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 
@@ -56,6 +55,10 @@ public final class SwapShift implements Serializable, AbstractAlert {
         }
 
         return recipients;
+    }
+
+    public CalendarData getCurrent(){
+        return current;
     }
 
     public CalendarData getProposed(){
