@@ -2,7 +2,6 @@
 package pions.controller;
 
 import java.util.ArrayList;
-import java.util.Observer;
 import pions.model.ContactInfo.Address;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ContactInfo.PhoneNumber;
@@ -14,9 +13,9 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 public class ContactInfo {
-    public static void addEmailAddress(Observer observer, String name, String domain) {
+    public static void addEmailAddress(String name, String domain) {
         try{
-            EmployeeSingleton.getInstance().getContactInfo().addEmailAddress(name, domain).addObserver(observer);
+            EmployeeSingleton.getInstance().getContactInfo().addEmailAddress(name, domain);
         } catch (NotLoggedInException e){
             //TODO exception
             e.printStackTrace();
@@ -32,13 +31,12 @@ public class ContactInfo {
         }
     }
 
-    public static ArrayList<String> getEmailAddresses(Observer observer){
+    public static ArrayList<String> getEmailAddresses(){
         ArrayList<String> email_addresses = new ArrayList<String>();
 
         try{
             for(EmailAddress email_address: EmployeeSingleton.getInstance().getContactInfo().getEmailAddresses()){
                 email_addresses.add(email_address.toString());
-                email_address.addObserver(observer);
             }
         } catch (NotLoggedInException e){
             //TODO exception
@@ -50,9 +48,7 @@ public class ContactInfo {
 
     public static boolean removeEmailAddress(int index){
         try {
-            EmailAddress removed = EmployeeSingleton.getInstance().getContactInfo().removeEmailAddress(index);
-
-            removed.deleteObservers();
+            EmployeeSingleton.getInstance().getContactInfo().removeEmailAddress(index);
             return true;
         } catch (NotLoggedInException e) {
             //TODO exception
@@ -63,10 +59,10 @@ public class ContactInfo {
     }
 
 
-    public static void addPhoneNumber(Observer observer, PhoneNumber.PhoneType type,
+    public static void addPhoneNumber(PhoneNumber.PhoneType type,
             long number, int extension){
         try{
-            EmployeeSingleton.getInstance().getContactInfo().addPhoneNumber(type, number, extension).addObserver(observer);
+            EmployeeSingleton.getInstance().getContactInfo().addPhoneNumber(type, number, extension);
         } catch (NotLoggedInException e){
             //TODO exception
             e.printStackTrace();
@@ -83,13 +79,12 @@ public class ContactInfo {
         }
     }
 
-    public static ArrayList<String> getPhoneNumbers(Observer observer){
+    public static ArrayList<String> getPhoneNumbers(){
         ArrayList<String> phone_numbers = new ArrayList<String>();
 
         try{
             for(PhoneNumber phone_number: EmployeeSingleton.getInstance().getContactInfo().getPhoneNumbers()){
                 phone_numbers.add(phone_number.toString());
-                phone_number.addObserver(observer);
             }
         } catch (NotLoggedInException e){
             //TODO exception
@@ -101,9 +96,7 @@ public class ContactInfo {
 
     public static boolean removePhoneNumber(int index){
         try {
-            PhoneNumber removed = EmployeeSingleton.getInstance().getContactInfo().removePhoneNumber(index);
-
-            removed.deleteObservers();
+            EmployeeSingleton.getInstance().getContactInfo().removePhoneNumber(index);
             return true;
         } catch (NotLoggedInException e) {
             //TODO exception
@@ -113,23 +106,19 @@ public class ContactInfo {
         }
     }
 
-    public static void setAddress(Observer observer, String street_address,
+    public static void setAddress(String street_address,
             String city, Address.State state, int zip, String country){
         try{
-            EmployeeSingleton.getInstance().getContactInfo().setAddress(street_address, city, state, zip, country).addObserver(observer);
+            EmployeeSingleton.getInstance().getContactInfo().setAddress(street_address, city, state, zip, country);
         } catch (NotLoggedInException e){
             //TODO exception
             e.printStackTrace();
         }
     }
     
-    public static String getAddress(Observer observer){
-        Address address;
+    public static String getAddress(){
         try {
-            address = EmployeeSingleton.getInstance().getContactInfo().getAddress();
-            address.addObserver(observer);
-
-            return address.toString();
+            return EmployeeSingleton.getInstance().getContactInfo().getAddress().toString();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } finally {
@@ -139,9 +128,7 @@ public class ContactInfo {
 
     public static void removeAddress(){
         try {
-            Address removed = EmployeeSingleton.getInstance().getContactInfo().removeAddress();
-
-            removed.deleteObservers();
+            EmployeeSingleton.getInstance().getContactInfo().removeAddress();
         } catch (NotLoggedInException e) {
             //TODO exception
             e.printStackTrace();

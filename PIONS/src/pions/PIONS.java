@@ -16,9 +16,7 @@ public class PIONS extends SingleFrameApplication {
      */
     @Override
     protected void startup() {
-        PIONSView main_frame = new PIONSView();
-        setMainFrame(main_frame);
-        show(main_frame);
+        PIONSView.getInstance();
     }
 
     /**

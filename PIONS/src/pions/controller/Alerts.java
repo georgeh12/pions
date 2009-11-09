@@ -4,9 +4,7 @@ package pions.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Observer;
 import javax.mail.MessagingException;
-import pions.model.Alert;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
@@ -15,11 +13,9 @@ import pions.model.ModelException.NotLoggedInException;
  *
  * @author George
  */
-public class Alerts {
-    public static Iterator getActiveAlertIterator(Observer observer) {
+public class Alerts {public static Iterator getActiveAlertIterator() {
         try {
-            return new AlertIterator(EmployeeSingleton.getInstance().getGmail().getActiveAlerts(),
-                    observer);
+            return new AlertIterator(EmployeeSingleton.getInstance().getGmail().getActiveAlerts());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } finally {
@@ -28,10 +24,9 @@ public class Alerts {
         }
     }
 
-    public static Iterator getSavedAlertIterator(Observer observer) {
+    public static Iterator getSavedAlertIterator() {
         try {
-            return new AlertIterator(EmployeeSingleton.getInstance().getGmail().getSavedAlerts(),
-                    observer);
+            return new AlertIterator(EmployeeSingleton.getInstance().getGmail().getSavedAlerts());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } finally {
@@ -44,14 +39,10 @@ public class Alerts {
         ArrayList<String> exceptions = new ArrayList<String>();
 
         try {
-            pions.model.Gmail gmail = EmployeeSingleton.getInstance().getGmail();
-
-            for(Exception exception: gmail.parseAlerts()){
+            for(Exception exception: EmployeeSingleton.getInstance().getGmail().parseAlerts()){
                 exceptions.add(exception.getCause().getMessage());
                 exceptions.add(exception.getMessage());
             }
-
-            gmail.notifyObservers();
         } catch (MessagingException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -71,13 +62,9 @@ public class Alerts {
         }
     }
 
-    public static void acceptActiveAlert(Observer observer, int index){
+    public static void acceptActiveAlert(int index){
         try {
-            Alert alert = EmployeeSingleton.getInstance().getGmail().saveAlert(index);
-
-            alert.accept();
-
-            alert.addObserver(observer);
+            EmployeeSingleton.getInstance().getGmail().saveAlert(index).accept();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
@@ -85,13 +72,9 @@ public class Alerts {
         }
     }
 
-    public static void rejectActiveAlert(Observer observer, int index){
+    public static void rejectActiveAlert(int index){
         try {
-            Alert alert = EmployeeSingleton.getInstance().getGmail().saveAlert(index);
-
-            alert.reject();
-
-            alert.addObserver(observer);
+            EmployeeSingleton.getInstance().getGmail().saveAlert(index).reject();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
@@ -99,13 +82,9 @@ public class Alerts {
         }
     }
 
-    public static void ignoreActiveAlert(Observer observer, int index){
+    public static void ignoreActiveAlert(int index){
         try {
-            Alert alert = EmployeeSingleton.getInstance().getGmail().saveAlert(index);
-
-            alert.ignore();
-
-            alert.addObserver(observer);
+            EmployeeSingleton.getInstance().getGmail().saveAlert(index).ignore();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {

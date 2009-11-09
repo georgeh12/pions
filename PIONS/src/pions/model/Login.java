@@ -1,7 +1,6 @@
 
 package pions.model;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,7 +16,6 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.Observable;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
@@ -25,7 +23,7 @@ import pions.model.ModelException.NotLoggedInException;
  * the PublicKey, will not be saved.
  * @author George
  */
-public abstract class Login extends Observable {
+public abstract class Login {
     private String username = null; //for AES
     private String password = null; //for AES
     private KeyPair RSA_keys = null; //for RSA

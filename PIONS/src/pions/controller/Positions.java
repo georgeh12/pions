@@ -3,8 +3,6 @@ package pions.controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.Positions.Position;
@@ -32,8 +30,7 @@ public class Positions {
 
     public static void removePosition(int index){
         try {
-            Position position = EmployeeSingleton.getInstance().getPositions().remove(index);
-            position.deleteObservers();
+            EmployeeSingleton.getInstance().getPositions().remove(index);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }

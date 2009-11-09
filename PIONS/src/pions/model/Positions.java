@@ -4,7 +4,6 @@ package pions.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Observable;
 
 /**
  *
@@ -31,7 +30,7 @@ public class Positions implements Serializable {
         return positions.iterator();
     }
 
-    public static class Position extends Observable implements Serializable {
+    public static class Position implements Serializable {
         public enum Type{
             Hourly, Yearly;
         }
