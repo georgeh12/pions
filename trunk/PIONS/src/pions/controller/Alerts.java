@@ -15,7 +15,7 @@ import pions.model.ModelException.NotLoggedInException;
  */
 public class Alerts {public static Iterator getActiveAlertIterator() {
         try {
-            return new AlertIterator(EmployeeSingleton.getInstance().getGmail().getActiveAlerts());
+            return new AlertXMLIterator(EmployeeSingleton.getInstance().getGmail().getActiveAlerts());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } finally {
@@ -26,7 +26,7 @@ public class Alerts {public static Iterator getActiveAlertIterator() {
 
     public static Iterator getSavedAlertIterator() {
         try {
-            return new AlertIterator(EmployeeSingleton.getInstance().getGmail().getSavedAlerts());
+            return new AlertXMLIterator(EmployeeSingleton.getInstance().getGmail().getSavedAlerts());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } finally {

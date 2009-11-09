@@ -8,6 +8,9 @@ import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import pions.PIONS;
@@ -21,6 +24,17 @@ public class PIONSView implements Observer {
     private JPanel panel1 = null;
     private JPanel panel2 = null;
 
+    //TODO implement listener classes for menu options
+    private JMenuItem menu_quit;
+    private JMenuItem menu_login;
+    private JMenuItem menu_managers;
+    private JMenuItem menu_subordinates;
+    private JMenuItem menu_calendars;
+    private JMenuItem menu_checkalerts;
+    private JMenuItem menu_activealerts;
+    private JMenuItem menu_savedalerts;
+    private JMenuItem menu_aboutus;
+
     private PIONSView(){
         JFrame main_frame = getFrame();
 
@@ -28,11 +42,35 @@ public class PIONSView implements Observer {
         main_frame.getContentPane().setLayout(new GridLayout(1,2));
         main_frame.addWindowListener(new PIONSWindowListener());
 
+        initMenu();
+
         //setPanel1(new Login());
-        setPanel1(new EmployeeDetails());
+        setPanel1(new Login());
         setPanel2(new IdleScreen());
 
         PIONS.getApplication().show(main_frame);
+    }
+
+    private void initMenu(){
+        JMenuBar menu = new JMenuBar();
+        JMenu file = new JMenu("File");
+        menu_quit = file.add(new JMenuItem("Quit"));
+        JMenu alerts = new JMenu("Alert");
+        menu_checkalerts = alerts.add(new JMenuItem("Check For New Alerts"));
+        menu_activealerts = alerts.add(new JMenuItem("Active Alerts"));
+        menu_savedalerts = alerts.add(new JMenuItem("Saved Alerts"));
+        JMenu window = new JMenu("Window");
+        menu_login = window.add(new JMenuItem("Login"));
+        menu_managers = window.add(new JMenuItem("Managers"));
+        menu_subordinates = window.add(new JMenuItem("Subordinates"));
+        menu_calendars = window.add(new JMenuItem("Calendars"));
+        JMenu help = new JMenu("Help");
+        menu_aboutus = help.add(new JMenuItem("About Us"));
+        menu.add(file);
+        menu.add(alerts);
+        menu.add(window);
+        menu.add(help);
+        getFrame().setJMenuBar(menu);
     }
 
     public static PIONSView getInstance(){
@@ -61,7 +99,7 @@ public class PIONSView implements Observer {
         }
     }
 
-    public void setPanel1(JPanel panel){
+    private void setPanel1(JPanel panel){
         JFrame main_frame = getFrame();
 
         if(main_frame.getContentPane().getComponentCount() > 0)main_frame.getContentPane().remove(0);
@@ -72,7 +110,7 @@ public class PIONSView implements Observer {
         main_frame.transferFocus();
     }
 
-    public void setPanel2(JPanel panel){
+    private void setPanel2(JPanel panel){
         JFrame main_frame = getFrame();
 
         if(main_frame.getContentPane().getComponentCount() > 1)main_frame.getContentPane().remove(1);

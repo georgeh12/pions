@@ -1,7 +1,6 @@
 
 package pions.controller;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,14 +12,20 @@ import pions.model.Alert;
  * Iterator design implementation.
  * @author George
  */
-public class AlertIterator extends XMLIterator {
+public class AlertXMLIterator implements Iterator {
     public static final String ALERT = "ALERT";
     public static final String SENDER = "SENDER";
     public static final String TYPE = "TYPE";
     public static final String DESCRIPTION = "DESCRIPTION";
+    private Document xml;
+    private Iterator<?> iter;
 
-    public AlertIterator(Iterator<Alert> iter) {
-        super(iter);
+    public AlertXMLIterator(Iterator<Alert> iter) {
+        this.iter = iter;
+    }
+
+    public boolean hasNext() {
+        return iter.hasNext();
     }
     
     @Override
@@ -48,6 +53,10 @@ public class AlertIterator extends XMLIterator {
             e.printStackTrace();
         }
         
-        return super.next();
+        return xml;
+    }
+
+    public void remove() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

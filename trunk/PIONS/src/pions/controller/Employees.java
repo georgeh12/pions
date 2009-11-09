@@ -22,19 +22,48 @@ public class Employees {
      * @param password
      * @param gmail_username
      * @param gmail_password
-     * @throws pions.model.ModelException.NotLoggedInException
-     * @throws pions.model.ModelException.AlertClassException
      */
     public static void createEmployee(String name, String username, String password,
-            String gmail_username, String gmail_password)
-            throws NotLoggedInException, AlertClassException{
-        EmployeeSingleton.init(name, username, password);
-        EmployeeSingleton.getInstance().getGmail().setGmail(new EmailAddress(gmail_username, name), gmail_password);
+            String gmail_username, String gmail_password){
+        try {
+            EmployeeSingleton.init(name, username, password);
+            EmployeeSingleton.getInstance().getGmail().setGmail(new EmailAddress(gmail_username, name), gmail_password);
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static ArrayList<String> getSubordinates(){
+    public static void logout(){
         try {
-            return EmployeeSingleton.getInstance().getSubordinateNames();
+            EmployeeSingleton.getInstance().logout();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static EmployeeXML getManagerXML(int index){
+        try {
+            return new EmployeeXML(EmployeeSingleton.getInstance().getManager(index));
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } finally {
+            return null;
+        }
+    }
+
+    public static EmployeeXML getSubordinateXML(int index){
+        try {
+            return new EmployeeXML(EmployeeSingleton.getInstance().getSubordinate(index));
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } finally {
+            return null;
+        }
+    }
+
+    public static ArrayList<String> getManagers(){
+        try {
+            return EmployeeSingleton.getInstance().getManagerNames();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } finally {
@@ -42,9 +71,9 @@ public class Employees {
         }
     }
 
-    public static ArrayList<String> getManagers(){
+    public static ArrayList<String> getSubordinates(){
         try {
-            return EmployeeSingleton.getInstance().getManagerNames();
+            return EmployeeSingleton.getInstance().getSubordinateNames();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } finally {

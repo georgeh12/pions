@@ -26,18 +26,6 @@ import pions.model.ModelException.NotLoggedInException;
  */
 //TODO implement iterator
 public class CalendarData implements Serializable, AbstractAlert {
-    //TODO testing purposes only
-    public static void main(String args[]){/*
-        try {
-            EmployeeSingleton.init("george", "password");
-            EmployeeSingleton.getInstance().getGmail().setGmail(new EmailAddress("pionstest@gmail.com"), "PIONSpassword");
-            CalendarCollection mine = new CalendarCollection("test");
-            mine.update();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    */}
-
     private final static String CALENDAR_SERVICE = "PIONS Calendar";
     private final static String OWN_CALENDARS =
             "http://www.google.com/calendar/feeds/default/owncalendars/full";

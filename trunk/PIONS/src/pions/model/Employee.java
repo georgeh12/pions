@@ -8,7 +8,6 @@ import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Iterator;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.AlertClassException;
@@ -99,12 +98,12 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         return positions;
     }
 
-    public Iterator<Employee> getManagers(){
-        return managers.iterator();
+    public Employee getManager(int index){
+        return managers.get(index);
     }
 
-    public Iterator<Employee> getSubordinates(){
-        return subordinates.iterator();
+    public Employee getSubordinate(int index){
+        return subordinates.get(index);
     }
 
     private ArrayList<String> getNames(ArrayList<Employee> employees){

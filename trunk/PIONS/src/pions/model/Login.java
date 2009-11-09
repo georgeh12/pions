@@ -93,7 +93,6 @@ public abstract class Login {
      * @throws ClassNotFoundException
      * @throws pions.model.ModelException.NotLoggedInException
      */
-    //TODO add valid exceptions
     protected boolean authenticate(String username, String password)
             throws IOException, ClassNotFoundException, FileNotFoundException,
             StreamCorruptedException, ClassNotFoundException, NotLoggedInException {
@@ -111,7 +110,7 @@ public abstract class Login {
      * Logout the user.
      */
     public void logout(){
-        //TODO
+        //TODO save the user file
     }
 
     //TODO add file header and encryption
