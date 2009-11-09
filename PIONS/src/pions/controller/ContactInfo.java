@@ -17,7 +17,6 @@ public class ContactInfo {
         try{
             EmployeeSingleton.getInstance().getContactInfo().addEmailAddress(name, domain);
         } catch (NotLoggedInException e){
-            //TODO exception
             e.printStackTrace();
         }
     }
@@ -26,7 +25,6 @@ public class ContactInfo {
         try{
             EmployeeSingleton.getInstance().getContactInfo().setEmailAddress(index, name, domain);
         } catch (NotLoggedInException e){
-            //TODO exception
             e.printStackTrace();
         }
     }
@@ -39,7 +37,6 @@ public class ContactInfo {
                 email_addresses.add(email_address.toString());
             }
         } catch (NotLoggedInException e){
-            //TODO exception
             e.printStackTrace();
         } finally {
             return email_addresses;
@@ -51,7 +48,6 @@ public class ContactInfo {
             EmployeeSingleton.getInstance().getContactInfo().removeEmailAddress(index);
             return true;
         } catch (NotLoggedInException e) {
-            //TODO exception
             e.printStackTrace();
         } finally {
             return false;
@@ -64,7 +60,6 @@ public class ContactInfo {
         try{
             EmployeeSingleton.getInstance().getContactInfo().addPhoneNumber(type, number, extension);
         } catch (NotLoggedInException e){
-            //TODO exception
             e.printStackTrace();
         }
     }
@@ -74,7 +69,6 @@ public class ContactInfo {
         try{
             EmployeeSingleton.getInstance().getContactInfo().setPhoneNumber(index, type, number, extension);
         } catch (NotLoggedInException e){
-            //TODO exception
             e.printStackTrace();
         }
     }
@@ -87,7 +81,6 @@ public class ContactInfo {
                 phone_numbers.add(phone_number.toString());
             }
         } catch (NotLoggedInException e){
-            //TODO exception
             e.printStackTrace();
         } finally {
             return phone_numbers;
@@ -99,7 +92,6 @@ public class ContactInfo {
             EmployeeSingleton.getInstance().getContactInfo().removePhoneNumber(index);
             return true;
         } catch (NotLoggedInException e) {
-            //TODO exception
             e.printStackTrace();
         } finally {
             return false;
@@ -111,7 +103,6 @@ public class ContactInfo {
         try{
             EmployeeSingleton.getInstance().getContactInfo().setAddress(street_address, city, state, zip, country);
         } catch (NotLoggedInException e){
-            //TODO exception
             e.printStackTrace();
         }
     }
@@ -130,7 +121,6 @@ public class ContactInfo {
         try {
             EmployeeSingleton.getInstance().getContactInfo().removeAddress();
         } catch (NotLoggedInException e) {
-            //TODO exception
             e.printStackTrace();
         }
     }

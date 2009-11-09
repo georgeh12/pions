@@ -34,27 +34,6 @@ import pions.model.ModelException.MessageParserException;
  * @author George
  */
 public class Gmail extends Observable implements Serializable {
-    //TODO testing purposes only
-    public static void main(String args[]){/*
-        try{
-            Gmail gmail = new Gmail("pionstest@gmail.com", "PIONSpassword");
-            
-            //gmail.sendAlert(AlertType.SwapShift, EmployeeSingleton.getInstance().encryptRSA(new SwapShift(new GoogleCalendar())));
-
-            //gmail.received_alerts = 1;
-            //gmail.received_alerts = 2;
-            ArrayList<Exception> errors = gmail.parseAlerts();
-            for(Alert alert: gmail.saved_alerts)
-            if(errors.size() > 0){
-                System.out.println(errors);
-            }
-            System.out.println(gmail.active_alerts.get(0));
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    */}
-
     private static Gmail gmail = null;
     private final static String HOST = "pop.gmail.com";
     private final static String STORE = "pop3s";

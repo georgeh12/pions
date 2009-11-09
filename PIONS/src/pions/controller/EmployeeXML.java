@@ -1,6 +1,7 @@
 
 package pions.controller;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,7 +18,7 @@ import pions.model.Positions.Position;
  * Iterator design implementation.
  * @author George
  */
-public class EmployeeIterator extends XMLIterator {
+public class EmployeeXML {
     public static final String EMPLOYEE = "EMPLOYEE";
     public static final String NAME = "NAME";
     public static final String IS_CONTACT = "IS_CONTACT";
@@ -29,70 +30,68 @@ public class EmployeeIterator extends XMLIterator {
     public static final String PHONE_NUMBERS = "PHONE_NUMBERS";
     public static final String PHONE_NUMBER = "PHONE_NUMBER";
     public static final String ADDRESS = "ADDRESS";
+    private Employee employee;
 
-    public EmployeeIterator(Iterator<Employee> iter) throws ParserConfigurationException {
-        super(iter);
+    public EmployeeXML(Employee employee) {
+        this.employee = employee;
     }
 
-    @Override
-    public Document next(){
-        xml = null;
+    public Document get(){
+        Document xml = null;
         
         try {
             //create a new document
             xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation().createDocument(null, null, null);
-
-            Element employee = xml.createElement(EMPLOYEE);
-            xml.appendChild(employee);
+            
+            Element root = xml.createElement(EMPLOYEE);
+            xml.appendChild(root);
 
             Element positions = xml.createElement(POSITIONS);
             Element email_addresses = xml.createElement(EMAIL_ADDRESSES);
             Element phone_numbers = xml.createElement(PHONE_NUMBERS);
-            employee.appendChild(positions);
-            employee.appendChild(email_addresses);
-            employee.appendChild(phone_numbers);
-
-            Employee current = (Employee)iter.next();
+            root.appendChild(positions);
+            root.appendChild(email_addresses);
+            root.appendChild(phone_numbers);
             
             //Set name
-            employee.setAttribute(NAME, current.getName());
+            root.setAttribute(NAME, employee.getName());
 
             //Set isContact
-            employee.setAttribute(IS_CONTACT, (EmployeeSingleton.getInstance().getContacts().searchContacts(current.getGmail().getGmailAddress()) == null ? "yes" : "no"));
+            root.setAttribute(IS_CONTACT, (EmployeeSingleton.getInstance().getContacts().searchContacts(employee.getGmail().getGmailAddress()) == null ? "yes" : "no"));
 
             //Set positions
             int count = 0;
-            Iterator<Position> position_iter = current.getPositions().iterator();
+            Iterator<Position> position_iter = employee.getPositions().iterator();
             while (position_iter.hasNext()) {
                 positions.setAttribute(POSITION + count, position_iter.next().toString());
                 count++;
             }
 
             //Set gmail address
-            employee.setAttribute(GMAIL_ADDRESS, current.getGmail().getGmailAddress().getAddress());
+            root.setAttribute(GMAIL_ADDRESS, employee.getGmail().getGmailAddress().getAddress());
             
             //Set email addresses
             count = 0;
-            for (EmailAddress email : current.getContactInfo().getEmailAddresses()) {
+            for (EmailAddress email : employee.getContactInfo().getEmailAddresses()) {
                 email_addresses.setAttribute(EMAIL_ADDRESS + count, email.getAddress());
                 count++;
             }
 
             //Set phone numbers
             count = 0;
-            for (PhoneNumber phone : current.getContactInfo().getPhoneNumbers()) {
+            for (PhoneNumber phone : employee.getContactInfo().getPhoneNumbers()) {
                 phone_numbers.setAttribute(PHONE_NUMBER + count, phone.toString());
                 count++;
             }
 
             //Set address
-            employee.setAttribute(ADDRESS, current.getContactInfo().getAddress().toString());
+            root.setAttribute(ADDRESS, employee.getContactInfo().getAddress().toString());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
 
-        return super.next();
+        return xml;
     }
 }

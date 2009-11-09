@@ -4,7 +4,7 @@ package pions.view;
 import javax.swing.JPanel;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import pions.controller.EmployeeIterator;
+import pions.controller.EmployeeXML;
 
 /**
  *
@@ -34,31 +34,31 @@ public class EmployeeDetails extends JPanel {
         buffer_phonenumbers = new StringBuffer();
         buffer_address = new StringBuffer();
 
-        buffer_name.append(xml.getElementById(EmployeeIterator.NAME).getNodeValue());
+        buffer_name.append(xml.getElementById(EmployeeXML.NAME).getNodeValue());
 
-        buffer_iscontact.append(xml.getElementById(EmployeeIterator.IS_CONTACT).getNodeValue());
+        buffer_iscontact.append(xml.getElementById(EmployeeXML.IS_CONTACT).getNodeValue());
 
-        NodeList positions = xml.getElementById(EmployeeIterator.POSITIONS).getChildNodes();
+        NodeList positions = xml.getElementById(EmployeeXML.POSITIONS).getChildNodes();
         for(int i = 0; i < positions.getLength(); i ++){
             buffer_positions.append(positions.item(i).getNodeValue());
             buffer_positions.append("\n");
         }
 
-        buffer_gmailaddress.append(xml.getElementById(EmployeeIterator.GMAIL_ADDRESS).getNodeValue());
+        buffer_gmailaddress.append(xml.getElementById(EmployeeXML.GMAIL_ADDRESS).getNodeValue());
 
-        NodeList email_addresses = xml.getElementById(EmployeeIterator.EMAIL_ADDRESSES).getChildNodes();
+        NodeList email_addresses = xml.getElementById(EmployeeXML.EMAIL_ADDRESSES).getChildNodes();
         for(int i = 0; i < email_addresses.getLength(); i ++){
             buffer_emailaddresses.append(email_addresses.item(i).getNodeValue());
             buffer_emailaddresses.append("\n");
         }
 
-        NodeList phone_numbers = xml.getElementById(EmployeeIterator.PHONE_NUMBERS).getChildNodes();
+        NodeList phone_numbers = xml.getElementById(EmployeeXML.PHONE_NUMBERS).getChildNodes();
         for(int i = 0; i < phone_numbers.getLength(); i ++){
             buffer_phonenumbers.append(phone_numbers.item(i).getNodeValue());
             buffer_phonenumbers.append("\n");
         }
 
-        buffer_address.append(xml.getElementById(EmployeeIterator.ADDRESS).getNodeValue());
+        buffer_address.append(xml.getElementById(EmployeeXML.ADDRESS).getNodeValue());
 
         print();
     }
@@ -116,6 +116,8 @@ public class EmployeeDetails extends JPanel {
         jCheckBox5 = new javax.swing.JCheckBox();
         jCheckBox6 = new javax.swing.JCheckBox();
         jCheckBox7 = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setName("Form"); // NOI18N
 
@@ -199,50 +201,62 @@ public class EmployeeDetails extends JPanel {
             }
         });
 
+        jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox4)
-                .addContainerGap(93, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCheckBox5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox3)
-                .addContainerGap(86, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCheckBox2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jCheckBox6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jCheckBox5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jCheckBox2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox1)))
+                .addContainerGap(61, Short.MAX_VALUE))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox6)
                     .addComponent(jCheckBox7)
                     .addComponent(jCheckBox4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox5)
-                    .addComponent(jCheckBox3))
+                    .addComponent(jCheckBox3)
+                    .addComponent(jCheckBox5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox2)
                     .addComponent(jCheckBox1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -283,6 +297,8 @@ public class EmployeeDetails extends JPanel {
     private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JCheckBox jCheckBox6;
     private javax.swing.JCheckBox jCheckBox7;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables

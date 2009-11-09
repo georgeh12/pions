@@ -96,7 +96,6 @@ public class Alert implements Serializable {
         return type.toString() + ":\n" + object.toString();
     }
 
-    //TODO add an alert to transfer an EmployeeSingleton's data file
     public enum AlertType{
         AddManager, AddSubordinate,
         ContactRequest, RemoveEmployee,
