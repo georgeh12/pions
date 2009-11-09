@@ -4,7 +4,6 @@ package pions.model;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Observable;
 import javax.mail.internet.InternetAddress;
 import pions.model.ModelException.NotLoggedInException;
 
@@ -17,11 +16,8 @@ public class ContactInfo implements Serializable {
     private ArrayList<PhoneNumber> phone_numbers = new ArrayList<PhoneNumber>();
     private Address address = new Address();
 
-    public EmailAddress addEmailAddress(String name, String domain){
-        EmailAddress email_address = new EmailAddress(name, domain);
-        email_addresses.add(email_address);
-
-        return email_address;
+    public void addEmailAddress(String name, String domain){
+        email_addresses.add(new EmailAddress(name, domain));
     }
 
     public void setEmailAddress(int index, String name, String domain){
@@ -36,7 +32,7 @@ public class ContactInfo implements Serializable {
         return email_addresses.remove(index);
     }
 
-    public static class EmailAddress extends Observable implements Serializable {
+    public static class EmailAddress implements Serializable {
         private String address = "";
         private String personal = "";
 
@@ -76,12 +72,10 @@ public class ContactInfo implements Serializable {
         }
     }
 
-    public PhoneNumber addPhoneNumber(PhoneNumber.PhoneType type,
+    public void addPhoneNumber(PhoneNumber.PhoneType type,
             long number, int extension){
         PhoneNumber phone_number = new PhoneNumber(type, number, extension);
         phone_numbers.add(phone_number);
-
-        return phone_number;
     }
 
     public void setPhoneNumber(int index, PhoneNumber.PhoneType type,
@@ -97,7 +91,7 @@ public class ContactInfo implements Serializable {
         return phone_numbers.remove(index);
     }
 
-    public static class PhoneNumber extends Observable implements Serializable {
+    public static class PhoneNumber implements Serializable {
         private PhoneType type = PhoneType.Home;
         private long number = 0;
         private int extension = 0;
@@ -168,13 +162,13 @@ public class ContactInfo implements Serializable {
         }
 
         /**
-         * Returns a string containing the phone number followed by
+         * Returns a string containing the type, then phone number followed by
          * ' x' + extension.
          * @return
          */
         @Override
         public String toString(){
-            return toStringPhone() +
+            return type + ": " + toStringPhone() +
                     (toStringExtension().isEmpty() ? "" : " x" + toStringExtension());
         }
 
@@ -209,11 +203,9 @@ public class ContactInfo implements Serializable {
         }
     }
 
-    public Address setAddress(String street_address, String city, Address.State state,
+    public void setAddress(String street_address, String city, Address.State state,
             int zip, String country){
         address = new Address(street_address, city, state, zip, country);
-
-        return address;
     }
 
     /**
@@ -230,7 +222,7 @@ public class ContactInfo implements Serializable {
         return temp;
     }
 
-    public static class Address extends Observable implements Serializable {
+    public static class Address implements Serializable {
         private String street_address = "";
         private String city = "";
         private State state = State.None;

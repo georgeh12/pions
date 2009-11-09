@@ -8,6 +8,7 @@ import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Iterator;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.AlertClassException;
@@ -29,7 +30,6 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     private ArrayList<Employee> managers = new ArrayList<Employee>();
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
 
-    //Unable to change name after Employee creation. Solve and implement Observer.
     public Calendars getCalendars(){
         return calendars;
     }
@@ -38,7 +38,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         return contacts;
     }
 
-    //Unable to change name after Employee creation. Solve and implement Observer.
+    //Unable to change name after Employee creation
     public String getName(){
         return name;
     }
@@ -97,6 +97,14 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     
     public Positions getPositions(){
         return positions;
+    }
+
+    public Iterator<Employee> getManagers(){
+        return managers.iterator();
+    }
+
+    public Iterator<Employee> getSubordinates(){
+        return subordinates.iterator();
     }
 
     private ArrayList<String> getNames(ArrayList<Employee> employees){

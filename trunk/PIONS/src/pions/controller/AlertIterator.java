@@ -1,50 +1,53 @@
 
 package pions.controller;
 
-import pions.model.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Observer;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import pions.model.Alert;
 
 /**
  * Iterator design implementation.
  * @author George
  */
-public class AlertIterator implements Iterator {
-    private Iterator<Alert> iter;
-    private Alert alert = null;
-    private Observer observer;
+public class AlertIterator extends XMLIterator {
+    public static final String ALERT = "ALERT";
+    public static final String SENDER = "SENDER";
+    public static final String TYPE = "TYPE";
+    public static final String DESCRIPTION = "DESCRIPTION";
 
-    public AlertIterator(Iterator<Alert> iter, Observer observer) {
-        this.iter = iter;
-        this.observer = observer;
+    public AlertIterator(Iterator<Alert> iter) {
+        super(iter);
     }
+    
+    @Override
+    public Document next() {
+        xml = null;
+        
+        try {
+            //create a new document
+            xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation().createDocument(null, null, null);
 
-    public boolean hasNext() {
-        return iter.hasNext();
-    }
+            Element alert = xml.createElement(ALERT);
+            xml.appendChild(alert);
 
-    /**
-     * Each alert returns 3 strings:
-     * The first is the toString() method of the EmailAddress
-     * The second is the toString() method of the AlertType
-     * The third is the toString() method of the alert object
-     * @return
-     */
-    public ArrayList<String> next() {
-        ArrayList<String> alerts = new ArrayList<String>();
+            Alert current = (Alert) iter.next();
 
-        alert = iter.next();
-        alert.addObserver(observer);
+            //Set sender
+            alert.setAttribute(SENDER, current.getAddress().toString());
 
-        alerts.add(alert.getAddress().toString());
-        alerts.add(alert.getType().toString());
-        alerts.add(alert.get().toString());
+            //Set type
+            alert.setAttribute(TYPE, current.getType().toString());
 
-        return alerts;
-    }
-
-    public void remove() {
-        throw new UnsupportedOperationException("Not supported.");
+            //Set description
+            alert.setAttribute(DESCRIPTION, current.get().toString());
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        
+        return super.next();
     }
 }

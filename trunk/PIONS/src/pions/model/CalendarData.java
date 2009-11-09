@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.TimeZone;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
@@ -26,7 +25,7 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 //TODO implement iterator
-public class CalendarData extends Observable implements Serializable, AbstractAlert {
+public class CalendarData implements Serializable, AbstractAlert {
     //TODO testing purposes only
     public static void main(String args[]){/*
         try {

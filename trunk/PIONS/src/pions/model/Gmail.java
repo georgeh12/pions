@@ -27,12 +27,10 @@ import javax.mail.MessagingException;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.Alert.AlertType;
-import pions.model.Contacts.Contact;
 import pions.model.ModelException.MessageParserException;
-import pions.model.swapshift.SwapShift;
 
 /**
- *
+ * Implements Observer design pattern
  * @author George
  */
 public class Gmail extends Observable implements Serializable {
@@ -154,6 +152,10 @@ public class Gmail extends Observable implements Serializable {
                 message_exceptions.add(e);
             }
         }
+
+        //Observer design pattern
+        if(active_alerts.size() > 0)
+            notifyObservers("You have " + active_alerts.size() + " active alerts!");
         
         return message_exceptions;
     }

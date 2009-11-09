@@ -2,6 +2,9 @@
 package pions.view;
 
 import javax.swing.JPanel;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import pions.controller.EmployeeIterator;
 
 /**
  *
@@ -9,9 +12,90 @@ import javax.swing.JPanel;
  */
 public class EmployeeDetails extends JPanel {
 
+    StringBuffer buffer_name = null;
+    StringBuffer buffer_iscontact = null;
+    StringBuffer buffer_positions = null;
+    StringBuffer buffer_gmailaddress = null;
+    StringBuffer buffer_emailaddresses = null;
+    StringBuffer buffer_phonenumbers = null;
+    StringBuffer buffer_address = null;
+
     /** Creates new form EmployeeDetails */
     public EmployeeDetails() {
         initComponents();
+    }
+
+    public void set(Document xml){
+        buffer_name = new StringBuffer();
+        buffer_iscontact = new StringBuffer();
+        buffer_positions = new StringBuffer();
+        buffer_gmailaddress = new StringBuffer();
+        buffer_emailaddresses = new StringBuffer();
+        buffer_phonenumbers = new StringBuffer();
+        buffer_address = new StringBuffer();
+
+        buffer_name.append(xml.getElementById(EmployeeIterator.NAME).getNodeValue());
+
+        buffer_iscontact.append(xml.getElementById(EmployeeIterator.IS_CONTACT).getNodeValue());
+
+        NodeList positions = xml.getElementById(EmployeeIterator.POSITIONS).getChildNodes();
+        for(int i = 0; i < positions.getLength(); i ++){
+            buffer_positions.append(positions.item(i).getNodeValue());
+            buffer_positions.append("\n");
+        }
+
+        buffer_gmailaddress.append(xml.getElementById(EmployeeIterator.GMAIL_ADDRESS).getNodeValue());
+
+        NodeList email_addresses = xml.getElementById(EmployeeIterator.EMAIL_ADDRESSES).getChildNodes();
+        for(int i = 0; i < email_addresses.getLength(); i ++){
+            buffer_emailaddresses.append(email_addresses.item(i).getNodeValue());
+            buffer_emailaddresses.append("\n");
+        }
+
+        NodeList phone_numbers = xml.getElementById(EmployeeIterator.PHONE_NUMBERS).getChildNodes();
+        for(int i = 0; i < phone_numbers.getLength(); i ++){
+            buffer_phonenumbers.append(phone_numbers.item(i).getNodeValue());
+            buffer_phonenumbers.append("\n");
+        }
+
+        buffer_address.append(xml.getElementById(EmployeeIterator.ADDRESS).getNodeValue());
+
+        print();
+    }
+
+    /**
+     * Parses XML from the document and displays it in the text area.
+     */
+    private void print(){
+        StringBuffer buffer = new StringBuffer();
+
+        if(jCheckBox6.isSelected()){
+            buffer.append(buffer_name);
+            buffer.append("\n");
+        }
+        if(jCheckBox7.isSelected()){
+            buffer.append(buffer_iscontact);
+            buffer.append("\n");
+        }
+        if(jCheckBox4.isSelected()){
+            buffer.append(buffer_positions);
+        }
+        if(jCheckBox5.isSelected()){
+            buffer.append(buffer_gmailaddress);
+            buffer.append("\n");
+        }
+        if(jCheckBox3.isSelected()){
+            buffer.append(buffer_emailaddresses);
+        }
+        if(jCheckBox2.isSelected()){
+            buffer.append(buffer_phonenumbers);
+        }
+        if(jCheckBox1.isSelected()){
+            buffer.append(buffer_address);
+            buffer.append("\n");
+        }
+        
+        jTextArea1.setText(buffer.toString());
     }
 
     /** This method is called from within the constructor to
@@ -23,22 +107,184 @@ public class EmployeeDetails extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
+        jCheckBox7 = new javax.swing.JCheckBox();
+
         setName("Form"); // NOI18N
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setName("jTextArea1"); // NOI18N
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jCheckBox1.setSelected(true);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(EmployeeDetails.class);
+        jCheckBox1.setText(resourceMap.getString("jCheckBox1.text")); // NOI18N
+        jCheckBox1.setToolTipText(resourceMap.getString("jCheckBox1.toolTipText")); // NOI18N
+        jCheckBox1.setName("jCheckBox1"); // NOI18N
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox2.setSelected(true);
+        jCheckBox2.setText(resourceMap.getString("jCheckBox2.text")); // NOI18N
+        jCheckBox2.setToolTipText(resourceMap.getString("jCheckBox2.toolTipText")); // NOI18N
+        jCheckBox2.setName("jCheckBox2"); // NOI18N
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox3.setSelected(true);
+        jCheckBox3.setText(resourceMap.getString("jCheckBox3.text")); // NOI18N
+        jCheckBox3.setToolTipText(resourceMap.getString("jCheckBox3.toolTipText")); // NOI18N
+        jCheckBox3.setName("jCheckBox3"); // NOI18N
+        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox3ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox4.setSelected(true);
+        jCheckBox4.setText(resourceMap.getString("jCheckBox4.text")); // NOI18N
+        jCheckBox4.setToolTipText(resourceMap.getString("jCheckBox4.toolTipText")); // NOI18N
+        jCheckBox4.setName("jCheckBox4"); // NOI18N
+        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox4ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox5.setSelected(true);
+        jCheckBox5.setText(resourceMap.getString("jCheckBox5.text")); // NOI18N
+        jCheckBox5.setToolTipText(resourceMap.getString("jCheckBox5.toolTipText")); // NOI18N
+        jCheckBox5.setName("jCheckBox5"); // NOI18N
+        jCheckBox5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox5ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox6.setSelected(true);
+        jCheckBox6.setText(resourceMap.getString("jCheckBox6.text")); // NOI18N
+        jCheckBox6.setToolTipText(resourceMap.getString("jCheckBox6.toolTipText")); // NOI18N
+        jCheckBox6.setName("jCheckBox6"); // NOI18N
+        jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox6ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox7.setSelected(true);
+        jCheckBox7.setText(resourceMap.getString("jCheckBox7.text")); // NOI18N
+        jCheckBox7.setToolTipText(resourceMap.getString("jCheckBox7.toolTipText")); // NOI18N
+        jCheckBox7.setName("jCheckBox7"); // NOI18N
+        jCheckBox7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox4)
+                .addContainerGap(93, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox3)
+                .addContainerGap(86, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox1)
+                .addContainerGap(118, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBox6)
+                    .addComponent(jCheckBox7)
+                    .addComponent(jCheckBox4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBox5)
+                    .addComponent(jCheckBox3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBox2)
+                    .addComponent(jCheckBox1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox6ActionPerformed
+        print();
+    }//GEN-LAST:event_jCheckBox6ActionPerformed
+
+    private void jCheckBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox7ActionPerformed
+        print();
+    }//GEN-LAST:event_jCheckBox7ActionPerformed
+
+    private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
+        print();
+    }//GEN-LAST:event_jCheckBox4ActionPerformed
+
+    private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
+        print();
+    }//GEN-LAST:event_jCheckBox5ActionPerformed
+
+    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+        print();
+    }//GEN-LAST:event_jCheckBox3ActionPerformed
+
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        print();
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        print();
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jCheckBox7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
 }
