@@ -48,7 +48,7 @@ public class NewAlerts extends JPanel {
 
         display_area = new javax.swing.JScrollPane();
         label_title = new javax.swing.JLabel();
-        label_instructions = new javax.swing.JLabel();
+        label_directions = new javax.swing.JLabel();
         button_accept = new javax.swing.JButton();
         button_reject = new javax.swing.JButton();
         button_ignore = new javax.swing.JButton();
@@ -68,9 +68,9 @@ public class NewAlerts extends JPanel {
         label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
         label_title.setName("label_title"); // NOI18N
 
-        label_instructions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_instructions.setText(resourceMap.getString("label_instructions.text")); // NOI18N
-        label_instructions.setName("label_instructions"); // NOI18N
+        label_directions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
+        label_directions.setName("label_directions"); // NOI18N
 
         button_accept.setText(resourceMap.getString("button_accept.text")); // NOI18N
         button_accept.setName("button_accept"); // NOI18N
@@ -100,7 +100,7 @@ public class NewAlerts extends JPanel {
             .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(label_instructions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(label_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -127,7 +127,7 @@ public class NewAlerts extends JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(label_title)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(label_instructions)
+                .addComponent(label_directions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_view)
@@ -153,7 +153,7 @@ public class NewAlerts extends JPanel {
     private javax.swing.JButton button_select_none;
     private javax.swing.JButton button_view;
     private javax.swing.JScrollPane display_area;
-    private javax.swing.JLabel label_instructions;
+    private javax.swing.JLabel label_directions;
     private javax.swing.JLabel label_select;
     private javax.swing.JLabel label_title;
     // End of variables declaration//GEN-END:variables

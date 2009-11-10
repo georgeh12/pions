@@ -40,12 +40,12 @@ public class PIONSView implements Observer {
 
         main_frame.setPreferredSize(new Dimension(600,400));
         main_frame.getContentPane().setLayout(new GridLayout(1,2));
-        //TODO main_frame.addWindowListener(new PIONSWindowListener());
+        main_frame.addWindowListener(new PIONSWindowListener());
 
         initMenu();
 
         //setPanel1(new Login());
-        setPanel1(new Login());
+        setPanel1(new Login2());
         setPanel2(new IdleScreen());
 
         PIONS.getApplication().show(main_frame);
@@ -131,12 +131,10 @@ public class PIONSView implements Observer {
         JOptionPane.showMessageDialog(getFrame(), arg, "System Message", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    //TODO implement PIONSPanel (another todo) interface to give panels a window closing function.
-    /**
     private class PIONSWindowListener extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e){
+            //TODO implement PIONSPanel (another todo) interface to give panels a window closing function.
         }
     }
-     */
 }
