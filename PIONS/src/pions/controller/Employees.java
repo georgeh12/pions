@@ -1,6 +1,8 @@
 
 package pions.controller;
 
+import java.io.IOException;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
@@ -30,6 +32,22 @@ public class Employees {
             EmployeeSingleton.getInstance().getGmail().setGmail(new EmailAddress(gmail_username, name), gmail_password);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static boolean login(String username, String password){
+        try {
+            EmployeeSingleton.login(username, password);
+
+            return true;
+        } catch (StreamCorruptedException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return false;
         }
     }
 

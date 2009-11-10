@@ -22,7 +22,7 @@
           <Component id="label_title" alignment="0" pref="300" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="label_instructions" pref="280" max="32767" attributes="0"/>
+              <Component id="label_directions" pref="280" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
@@ -55,7 +55,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="label_title" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="label_instructions" min="-2" max="-2" attributes="0"/>
+              <Component id="label_directions" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="button_view" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -92,11 +92,11 @@
         <Property name="name" type="java.lang.String" value="label_title" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="label_instructions">
+    <Component class="javax.swing.JLabel" name="label_directions">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" resourceKey="label_instructions.text"/>
-        <Property name="name" type="java.lang.String" value="label_instructions" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="label_directions.text"/>
+        <Property name="name" type="java.lang.String" value="label_directions" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="button_accept">

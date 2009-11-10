@@ -37,8 +37,8 @@ public final class EmployeeSingleton extends Employee implements Serializable {
         singleton = new EmployeeSingleton(name, username, password);
     }
 
-    public static void load(String username, String password)
-            throws NotLoggedInException, StreamCorruptedException,
+    public static void login(String username, String password)
+            throws StreamCorruptedException,
             ClassNotFoundException, IOException{
         singleton = Login.loadFile(username, password);
     }

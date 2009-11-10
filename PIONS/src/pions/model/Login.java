@@ -30,8 +30,12 @@ public abstract class Login {
     private boolean validated = false;
 
     protected Login(String username, String password) {
-        setUsername(username);
-        setPassword(password);
+        setCredentials(username, password);
+    }
+
+    protected void setCredentials(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     protected String getUsername(){
@@ -53,14 +57,6 @@ public abstract class Login {
         kpg.initialize(2048); //11 bits
 
         return kpg.genKeyPair();
-    }
-
-    protected void setUsername(String username){
-        this.username = username;
-    }
-
-    protected void setPassword(String password){
-        this.password = password;
     }
 
     /**
@@ -122,7 +118,7 @@ public abstract class Login {
 
     //TODO add file header and encryption
     public static EmployeeSingleton loadFile(String username, String password) throws IOException,
-            NotLoggedInException, StreamCorruptedException, ClassNotFoundException {
+            StreamCorruptedException, ClassNotFoundException {
         return (EmployeeSingleton)decryptAES(new FileInputStream(getFile(username)));
     }
     
@@ -169,7 +165,7 @@ public abstract class Login {
     //TODO use AES decryption to decryptAES/deserialize objects
     public final static Object decryptAES(InputStream is)
             throws StreamCorruptedException, IOException,
-            ClassNotFoundException, NotLoggedInException {
+            ClassNotFoundException {
         return getObject(is);
     }
 
