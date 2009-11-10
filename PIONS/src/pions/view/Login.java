@@ -10,10 +10,10 @@ import pions.controller.Gmail;
  *
  * @author George
  */
-public class Login2 extends JPanel {
+public class Login extends JPanel {
 
     /** Creates new form Login */
-    public Login2() {
+    public Login() {
         initComponents();
     }
 
@@ -43,7 +43,7 @@ public class Login2 extends JPanel {
 
         field_password.setName("field_password"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(Login2.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(Login.class);
         label_username.setText(resourceMap.getString("label_username.text")); // NOI18N
         label_username.setName("label_username"); // NOI18N
 

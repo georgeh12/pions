@@ -45,7 +45,7 @@ public class PIONSView implements Observer {
         initMenu();
 
         //setPanel1(new Login());
-        setPanel1(new Login2());
+        setPanel1(new Login());
         setPanel2(new IdleScreen());
 
         PIONS.getApplication().show(main_frame);
