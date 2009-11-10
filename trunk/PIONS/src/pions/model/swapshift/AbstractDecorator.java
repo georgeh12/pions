@@ -2,7 +2,6 @@
 package pions.model.swapshift;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Contains a new constructor, and overrides some methods.
@@ -23,5 +22,20 @@ abstract class AbstractDecorator extends AbstractState implements Serializable {
     @Override
     protected AbstractState get(){
         return swap_shift_state;
+    }
+
+    @Override
+    protected void accepted() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected void rejected() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected void ignored() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -18,7 +18,7 @@ public class AlertXMLIterator implements Iterator {
     public static final String TYPE = "TYPE";
     public static final String DESCRIPTION = "DESCRIPTION";
     private Document xml;
-    private Iterator<?> iter;
+    private Iterator<Alert> iter;
 
     public AlertXMLIterator(Iterator<Alert> iter) {
         this.iter = iter;
@@ -39,7 +39,7 @@ public class AlertXMLIterator implements Iterator {
             Element alert = xml.createElement(ALERT);
             xml.appendChild(alert);
 
-            Alert current = (Alert) iter.next();
+            Alert current = iter.next();
 
             //Set sender
             alert.setAttribute(SENDER, current.getAddress().toString());

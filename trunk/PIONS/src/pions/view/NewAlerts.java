@@ -2,6 +2,8 @@
 package pions.view;
 
 import javax.swing.JPanel;
+import org.w3c.dom.Document;
+import pions.controller.AlertXMLIterator;
 
 /**
  *
@@ -9,9 +11,30 @@ import javax.swing.JPanel;
  */
 public class NewAlerts extends JPanel {
 
+    private AlertXMLIterator iter = null;
+
     /** Creates new form NewAlerts */
     public NewAlerts() {
         initComponents();
+    }
+
+    public void set(AlertXMLIterator iter){
+        this.iter = iter;
+
+        StringBuffer buffer = new StringBuffer();
+
+        while(iter.hasNext()){
+            Document xml = iter.next();
+
+            buffer.append("Sender: \n");
+            buffer.append(xml.getElementById(AlertXMLIterator.SENDER).getNodeValue());
+
+            buffer.append("Type: \n");
+            buffer.append(xml.getElementById(AlertXMLIterator.TYPE).getNodeValue());
+
+            buffer.append("Description: \n");
+            buffer.append(xml.getElementById(AlertXMLIterator.DESCRIPTION).getNodeValue());
+        }
     }
 
     /** This method is called from within the constructor to
@@ -23,117 +46,116 @@ public class NewAlerts extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        display_area = new javax.swing.JScrollPane();
+        label_title = new javax.swing.JLabel();
+        label_instructions = new javax.swing.JLabel();
+        button_accept = new javax.swing.JButton();
+        button_reject = new javax.swing.JButton();
+        button_ignore = new javax.swing.JButton();
+        button_select_all = new javax.swing.JButton();
+        button_select_none = new javax.swing.JButton();
+        label_select = new javax.swing.JLabel();
+        button_view = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
 
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
+        display_area.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        display_area.setName("display_area"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(NewAlerts.class);
-        jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
+        label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
+        label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
+        label_title.setName("label_title"); // NOI18N
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
+        label_instructions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_instructions.setText(resourceMap.getString("label_instructions.text")); // NOI18N
+        label_instructions.setName("label_instructions"); // NOI18N
 
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
+        button_accept.setText(resourceMap.getString("button_accept.text")); // NOI18N
+        button_accept.setName("button_accept"); // NOI18N
 
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
+        button_reject.setText(resourceMap.getString("button_reject.text")); // NOI18N
+        button_reject.setName("button_reject"); // NOI18N
 
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setName("jButton3"); // NOI18N
+        button_ignore.setText(resourceMap.getString("button_ignore.text")); // NOI18N
+        button_ignore.setName("button_ignore"); // NOI18N
 
-        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
-        jButton4.setName("jButton4"); // NOI18N
+        button_select_all.setText(resourceMap.getString("button_select_all.text")); // NOI18N
+        button_select_all.setName("button_select_all"); // NOI18N
 
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setName("jButton5"); // NOI18N
+        button_select_none.setText(resourceMap.getString("button_select_none.text")); // NOI18N
+        button_select_none.setName("button_select_none"); // NOI18N
 
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
+        label_select.setText(resourceMap.getString("label_select.text")); // NOI18N
+        label_select.setName("label_select"); // NOI18N
 
-        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
-        jButton6.setName("jButton6"); // NOI18N
+        button_view.setText(resourceMap.getString("button_view.text")); // NOI18N
+        button_view.setName("button_view"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(label_instructions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(label_select)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
+                        .addComponent(button_select_all)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(button_select_none))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton6)
+                        .addComponent(button_view)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addComponent(button_accept)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(button_reject)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(button_ignore)))
                 .addContainerGap(12, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(display_area, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(label_title)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(label_instructions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(button_view)
+                    .addComponent(button_accept)
+                    .addComponent(button_reject)
+                    .addComponent(button_ignore))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(label_select)
+                    .addComponent(button_select_all)
+                    .addComponent(button_select_none))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
+                .addComponent(display_area, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton button_accept;
+    private javax.swing.JButton button_ignore;
+    private javax.swing.JButton button_reject;
+    private javax.swing.JButton button_select_all;
+    private javax.swing.JButton button_select_none;
+    private javax.swing.JButton button_view;
+    private javax.swing.JScrollPane display_area;
+    private javax.swing.JLabel label_instructions;
+    private javax.swing.JLabel label_select;
+    private javax.swing.JLabel label_title;
     // End of variables declaration//GEN-END:variables
 
 }
