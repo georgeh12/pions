@@ -5,7 +5,7 @@ import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
- *
+ * Implements the strategy design pattern.
  * @author George
  */
 public interface AbstractAlert {

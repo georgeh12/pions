@@ -27,26 +27,6 @@ public final class SwapShift implements Serializable, AbstractAlert {
         this.current = current;
     }
 
-    public boolean isAccepted() {
-        return machine.isAccepted();
-    }
-
-    public boolean isRejected() {
-        return machine.isRejected();
-    }
-
-    public boolean isIgnored() {
-        return machine.isIgnored();
-    }
-
-    public String getCreatorName(){
-        return creator.getName();
-    }
-
-    public EmailAddress getCreatorGmail(){
-        return creator.getGmail().getGmailAddress();
-    }
-
     public ArrayList<EmailAddress> getRecipients() throws NotLoggedInException{
         ArrayList<EmailAddress> recipients = machine.getRecipients();
         if(recipients == null) {

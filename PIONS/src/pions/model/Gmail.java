@@ -120,7 +120,6 @@ public class Gmail extends Observable implements Serializable {
                         ((InternetAddress)current.getFrom()[0]).getAddress(), alert_type,
                         (BASE64DecoderStream)((Multipart) current.getContent()).getBodyPart(0).getContent());
 
-                //Strategy design pattern at work. Providing an alternative to subclassing
                 Alert add_alert =
                         new Alert((AbstractAlert)alert_type.getAssociatedClass().cast(object),
                         alert_type);
