@@ -22,26 +22,31 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="label_gmail_directions" alignment="1" pref="280" max="32767" attributes="0"/>
                   <Component id="label_directions2" alignment="0" pref="280" max="32767" attributes="0"/>
                   <Component id="label_directions" alignment="0" pref="280" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="label_gmail_username" alignment="0" pref="80" max="32767" attributes="1"/>
-                          <Component id="label_gmail_password" alignment="0" max="32767" attributes="1"/>
-                          <Component id="label_password" alignment="0" max="32767" attributes="1"/>
-                          <Component id="label_username" alignment="0" max="32767" attributes="1"/>
                           <Component id="label_name" alignment="0" max="32767" attributes="1"/>
+                          <Component id="label_username" alignment="0" max="32767" attributes="1"/>
+                          <Component id="label_password" alignment="0" max="32767" attributes="1"/>
+                          <Component id="label_password2" alignment="0" max="32767" attributes="1"/>
+                          <Component id="label_gmail_username" alignment="0" max="32767" attributes="1"/>
+                          <Component id="label_gmail_password" alignment="0" max="32767" attributes="1"/>
+                          <Component id="label_gmail_password2" alignment="0" max="32767" attributes="1"/>
                       </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="field_name" alignment="0" pref="196" max="32767" attributes="0"/>
-                          <Component id="field_password" alignment="1" pref="196" max="32767" attributes="1"/>
-                          <Component id="field_username" alignment="0" pref="196" max="32767" attributes="0"/>
-                          <Component id="field_gmail_password" alignment="1" pref="196" max="32767" attributes="1"/>
-                          <Component id="field_gmail_username" alignment="1" pref="196" max="32767" attributes="1"/>
+                          <Component id="field_name" alignment="0" pref="186" max="32767" attributes="0"/>
+                          <Component id="field_gmail_password" alignment="1" pref="186" max="32767" attributes="1"/>
+                          <Component id="field_gmail_username" alignment="0" pref="186" max="32767" attributes="1"/>
+                          <Component id="field_username" alignment="0" pref="186" max="32767" attributes="0"/>
+                          <Component id="field_password" alignment="1" pref="186" max="32767" attributes="1"/>
+                          <Component id="field_password2" alignment="0" pref="186" max="32767" attributes="1"/>
+                          <Component id="field_gmail_password2" alignment="1" pref="186" max="32767" attributes="1"/>
                       </Group>
                   </Group>
                   <Component id="button_create_account" alignment="0" pref="280" max="32767" attributes="0"/>
@@ -60,8 +65,8 @@
               <Component id="label_directions2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="field_name" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="label_name" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_name" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -75,19 +80,31 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="field_gmail_username" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="label_gmail_username" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="label_password2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_password2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="label_gmail_password" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="field_gmail_password" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="label_gmail_username" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_gmail_username" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="field_gmail_password" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="label_gmail_password" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="label_gmail_password2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_gmail_password2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="label_gmail_directions" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Component id="button_create_account" min="-2" pref="50" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="button_clear" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="104" max="32767" attributes="0"/>
+              <EmptySpace pref="34" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -113,30 +130,35 @@
     </Component>
     <Component class="javax.swing.JLabel" name="label_name">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" resourceKey="label_name.text"/>
         <Property name="name" type="java.lang.String" value="label_name" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="label_username">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" resourceKey="label_username.text"/>
         <Property name="name" type="java.lang.String" value="label_username" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="label_password">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" resourceKey="label_password.text"/>
         <Property name="name" type="java.lang.String" value="label_password" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="label_gmail_username">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" resourceKey="label_gmail_username.text"/>
         <Property name="name" type="java.lang.String" value="label_gmail_username" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="label_gmail_password">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" resourceKey="label_gmail_password.text"/>
         <Property name="name" type="java.lang.String" value="label_gmail_password" noResource="true"/>
       </Properties>
@@ -183,6 +205,37 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_clearActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="label_gmail_directions">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" resourceKey="label_gmail_directions.text"/>
+        <Property name="name" type="java.lang.String" value="label_gmail_directions" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="field_password2">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="field_password2" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="label_password2">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="11"/>
+        <Property name="text" type="java.lang.String" resourceKey="label_password2.text"/>
+        <Property name="name" type="java.lang.String" value="label_password2" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="label_gmail_password2">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="11"/>
+        <Property name="text" type="java.lang.String" resourceKey="label_gmail_password2.text"/>
+        <Property name="name" type="java.lang.String" value="label_gmail_password2" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="field_gmail_password2">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="field_gmail_password2" noResource="true"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
