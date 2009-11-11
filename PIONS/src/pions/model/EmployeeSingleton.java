@@ -11,7 +11,7 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 public final class EmployeeSingleton extends Employee implements Serializable {
-    public static void main(String args[]){
+    /*public static void main(String args[]){
         try{
             EmployeeSingleton.getInstance().saveFile();
             EmployeeSingleton.getInstance().authenticate("george", "password");
@@ -19,7 +19,7 @@ public final class EmployeeSingleton extends Employee implements Serializable {
         catch(Exception e){
             e.printStackTrace();
         }
-    }
+    }*/
 
     private static EmployeeSingleton singleton = null;
     
@@ -27,13 +27,15 @@ public final class EmployeeSingleton extends Employee implements Serializable {
         super(name, username, password);
     }
 
-    @Override
+    /**
+     * Removes the EmployeeSingleton.
+     */
     public void logout(){
-        super.logout();
         singleton = null;
     }
 
-    public static void init(String name, String username, String password){
+    public static void init(String name, String username, String password)
+            throws NotLoggedInException, IOException{
         singleton = new EmployeeSingleton(name, username, password);
     }
 

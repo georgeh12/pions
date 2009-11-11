@@ -25,13 +25,20 @@ public class Employees {
      * @param gmail_username
      * @param gmail_password
      */
-    public static void createEmployee(String name, String username, String password,
+    public static boolean createEmployee(String name, String username, String password,
             String gmail_username, String gmail_password){
         try {
             EmployeeSingleton.init(name, username, password);
             EmployeeSingleton.getInstance().getGmail().setGmail(new EmailAddress(gmail_username, name), gmail_password);
+            EmployeeSingleton.getInstance().saveFile();
+
+            return true;
         } catch (NotLoggedInException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return false;
         }
     }
 
@@ -51,11 +58,18 @@ public class Employees {
         }
     }
 
-    public static void logout(){
+    public static boolean logout() {
         try {
+            EmployeeSingleton.getInstance().saveFile();
             EmployeeSingleton.getInstance().logout();
+
+            return true;
         } catch (NotLoggedInException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return false;
         }
     }
 
@@ -131,5 +145,15 @@ public class Employees {
             EmployeeSingleton subordinate) throws NotLoggedInException,
             AlertClassException{
         Gmail.sendAlert(gmails, new Alert((Employee)subordinate, AlertType.AddSubordinate));
+    }
+
+    public static String getDisplayName() {
+        try {
+            return EmployeeSingleton.getInstance().getDisplayName();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } finally {
+            return "User";
+        }
     }
 }

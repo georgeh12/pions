@@ -12,6 +12,8 @@ import pions.controller.Gmail;
  */
 public class Login extends JPanel {
 
+    private CreateEmployee create_employee = null;
+
     /** Creates new form Login */
     public Login() {
         initComponents();
@@ -137,7 +139,8 @@ public class Login extends JPanel {
 
     private void button_create_accountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_create_accountActionPerformed
         if(button_create_account.isSelected()){
-            PIONSView.getInstance().setOtherPanel(this, new CreateEmployee());
+            if(create_employee == null) create_employee = new CreateEmployee();
+            PIONSView.getInstance().setOtherPanel(this, create_employee);
         }
         else{
             PIONSView.getInstance().setOtherPanel(this, new IdleScreen());
@@ -151,11 +154,11 @@ public class Login extends JPanel {
 
     private void button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_loginActionPerformed
         if(Employees.login(field_username.getText(), String.valueOf(field_password.getPassword()))){
-            //Gmail.subscribeGmail(PIONSView.getInstance());
+            Gmail.subscribeGmail(PIONSView.getInstance());
             PIONSView.getInstance().setThisPanel(this, new LoginSuccess());
         }
         else{
-            JOptionPane.showMessageDialog(this, "Login failed.\nPlease enter a valid username and password.");
+            JOptionPane.showMessageDialog(this, "Please enter a valid username and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_button_loginActionPerformed
 
