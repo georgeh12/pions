@@ -1,6 +1,7 @@
 
 package pions.model;
 
+import java.io.Serializable;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import pions.model.Alert.AlertType;
@@ -12,7 +13,7 @@ import pions.model.ModelException.NotLoggedInException;
  *
  * @author George
  */
-public class Contacts {
+public class Contacts implements Serializable {
     private ArrayList<Contact> contacts = new ArrayList<Contact>();
 
     public Contact addContact(PublicKey public_key, EmailAddress email_address){
@@ -38,7 +39,7 @@ public class Contacts {
         return null;
     }
 
-    public static class Contact implements AbstractAlert {
+    public static class Contact implements Serializable, AbstractAlert {
         private PublicKey public_key;
         private EmailAddress gmail_address;
 

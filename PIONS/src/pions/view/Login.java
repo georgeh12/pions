@@ -12,7 +12,7 @@ import pions.controller.Gmail;
  */
 public class Login extends JPanel {
 
-    private CreateEmployee create_employee = null;
+    private static CreateEmployee create_employee = null;
 
     /** Creates new form Login */
     public Login() {

@@ -14,6 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import pions.PIONS;
+import pions.controller.Employees;
 
 /**
  * Implements the Observer and Singleton design pattern
@@ -45,7 +46,7 @@ public class PIONSView implements Observer {
         initMenu();
 
         //setPanel1(new Login());
-        setPanel1(new LoginSuccess());
+        setPanel1(new Login());
         setPanel2(new IdleScreen());
 
         PIONS.getApplication().show(main_frame);
@@ -107,6 +108,7 @@ public class PIONSView implements Observer {
         panel1 = panel;
 
         main_frame.validate();
+        main_frame.repaint();
         main_frame.transferFocus();
     }
 
@@ -118,6 +120,7 @@ public class PIONSView implements Observer {
         panel2 = panel;
 
         main_frame.validate();
+        main_frame.repaint();
         main_frame.transferFocus();
     }
 
@@ -131,10 +134,14 @@ public class PIONSView implements Observer {
         JOptionPane.showMessageDialog(getFrame(), arg, "System Message", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    //TODO implement PIONSPanel interface to give panels a window closing function.
+    /**
+     * This listener will logout the employee before the window closes.
+     */
     private class PIONSWindowListener extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e){
-            //TODO implement PIONSPanel (another todo) interface to give panels a window closing function.
+            if(Employees.isLoggedIn()) Employees.logout();
         }
     }
 }

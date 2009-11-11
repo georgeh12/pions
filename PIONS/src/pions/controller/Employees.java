@@ -29,7 +29,7 @@ public class Employees {
             String gmail_username, String gmail_password){
         try {
             EmployeeSingleton.init(name, username, password);
-            EmployeeSingleton.getInstance().getGmail().setGmail(new EmailAddress(gmail_username, name), gmail_password);
+            Gmail.setGmail(gmail_username, gmail_password);
             EmployeeSingleton.getInstance().saveFile();
 
             return true;
@@ -60,6 +60,7 @@ public class Employees {
 
     public static boolean logout() {
         try {
+            EmployeeSingleton.getInstance().deleteFile();
             EmployeeSingleton.getInstance().saveFile();
             EmployeeSingleton.getInstance().logout();
 
@@ -69,6 +70,16 @@ public class Employees {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            return false;
+        }
+    }
+
+    public static boolean isLoggedIn(){
+        try {
+            EmployeeSingleton.getInstance();
+
+            return true;
+        } catch (NotLoggedInException e) {
             return false;
         }
     }
