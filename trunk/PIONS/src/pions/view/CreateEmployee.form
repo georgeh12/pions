@@ -25,26 +25,27 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel7" alignment="0" pref="280" max="32767" attributes="0"/>
-                  <Component id="jLabel6" alignment="0" pref="280" max="32767" attributes="0"/>
+                  <Component id="label_directions2" alignment="0" pref="280" max="32767" attributes="0"/>
+                  <Component id="label_directions" alignment="0" pref="280" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel4" alignment="0" pref="80" max="32767" attributes="1"/>
-                          <Component id="jLabel5" alignment="0" max="32767" attributes="1"/>
-                          <Component id="jLabel3" alignment="0" max="32767" attributes="1"/>
-                          <Component id="jLabel2" alignment="0" max="32767" attributes="1"/>
-                          <Component id="jLabel1" alignment="0" max="32767" attributes="1"/>
+                          <Component id="label_gmail_username" alignment="0" pref="80" max="32767" attributes="1"/>
+                          <Component id="label_gmail_password" alignment="0" max="32767" attributes="1"/>
+                          <Component id="label_password" alignment="0" max="32767" attributes="1"/>
+                          <Component id="label_username" alignment="0" max="32767" attributes="1"/>
+                          <Component id="label_name" alignment="0" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jTextField1" alignment="0" pref="196" max="32767" attributes="0"/>
-                          <Component id="jPasswordField1" alignment="1" pref="196" max="32767" attributes="1"/>
-                          <Component id="jTextField2" alignment="0" pref="196" max="32767" attributes="0"/>
-                          <Component id="jPasswordField2" alignment="1" pref="196" max="32767" attributes="1"/>
-                          <Component id="jTextField4" alignment="1" pref="196" max="32767" attributes="1"/>
+                          <Component id="field_name" alignment="0" pref="196" max="32767" attributes="0"/>
+                          <Component id="field_password" alignment="1" pref="196" max="32767" attributes="1"/>
+                          <Component id="field_username" alignment="0" pref="196" max="32767" attributes="0"/>
+                          <Component id="field_gmail_password" alignment="1" pref="196" max="32767" attributes="1"/>
+                          <Component id="field_gmail_username" alignment="1" pref="196" max="32767" attributes="1"/>
                       </Group>
                   </Group>
-                  <Component id="jButton1" alignment="0" pref="280" max="32767" attributes="0"/>
+                  <Component id="button_create_account" alignment="0" pref="280" max="32767" attributes="0"/>
+                  <Component id="button_clear" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -54,120 +55,134 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+              <Component id="label_directions" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+              <Component id="label_directions2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_name" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="label_name" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_username" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="label_username" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jPasswordField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="label_password" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_password" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_gmail_username" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="label_gmail_username" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jPasswordField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="label_gmail_password" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="field_gmail_password" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="50" max="-2" attributes="0"/>
-              <EmptySpace pref="145" max="32767" attributes="0"/>
+              <Component id="button_create_account" min="-2" pref="50" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="button_clear" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="104" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="field_name">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jTextField1.text"/>
-        <Property name="name" type="java.lang.String" value="jTextField1" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="field_name.text"/>
+        <Property name="name" type="java.lang.String" value="field_name" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField2">
+    <Component class="javax.swing.JTextField" name="field_username">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jTextField2.text"/>
-        <Property name="name" type="java.lang.String" value="jTextField2" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="field_username.text"/>
+        <Property name="name" type="java.lang.String" value="field_username" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField4">
+    <Component class="javax.swing.JTextField" name="field_gmail_username">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jTextField4.text"/>
-        <Property name="name" type="java.lang.String" value="jTextField4" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="field_gmail_username.text"/>
+        <Property name="name" type="java.lang.String" value="field_gmail_username" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="label_name">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
-        <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="label_name.text"/>
+        <Property name="name" type="java.lang.String" value="label_name" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="label_username">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jLabel2.text"/>
-        <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="label_username.text"/>
+        <Property name="name" type="java.lang.String" value="label_username" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="label_password">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jLabel3.text"/>
-        <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="label_password.text"/>
+        <Property name="name" type="java.lang.String" value="label_password" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="label_gmail_username">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jLabel4.text"/>
-        <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="label_gmail_username.text"/>
+        <Property name="name" type="java.lang.String" value="label_gmail_username" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
+    <Component class="javax.swing.JLabel" name="label_gmail_password">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jLabel5.text"/>
-        <Property name="name" type="java.lang.String" value="jLabel5" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="label_gmail_password.text"/>
+        <Property name="name" type="java.lang.String" value="label_gmail_password" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="jPasswordField1">
+    <Component class="javax.swing.JPasswordField" name="field_password">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jPasswordField1.text"/>
-        <Property name="name" type="java.lang.String" value="jPasswordField1" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="field_password.text"/>
+        <Property name="name" type="java.lang.String" value="field_password" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="jPasswordField2">
+    <Component class="javax.swing.JPasswordField" name="field_gmail_password">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jPasswordField2.text"/>
-        <Property name="name" type="java.lang.String" value="jPasswordField2" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="field_gmail_password.text"/>
+        <Property name="name" type="java.lang.String" value="field_gmail_password" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="button_create_account">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jButton1.text"/>
-        <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="button_create_account.text"/>
+        <Property name="name" type="java.lang.String" value="button_create_account" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_create_accountActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="label_directions">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="label_directions.text"/>
+        <Property name="name" type="java.lang.String" value="label_directions" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
+    <Component class="javax.swing.JLabel" name="label_directions2">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jLabel6.text"/>
-        <Property name="name" type="java.lang.String" value="jLabel6" noResource="true"/>
+        <Property name="font" type="java.awt.Font" resourceKey="label_directions2.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="label_directions2.text"/>
+        <Property name="name" type="java.lang.String" value="label_directions2" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
+    <Component class="javax.swing.JButton" name="button_clear">
       <Properties>
-        <Property name="font" type="java.awt.Font" resourceKey="jLabel7.font"/>
-        <Property name="text" type="java.lang.String" resourceKey="jLabel7.text"/>
-        <Property name="name" type="java.lang.String" value="jLabel7" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="button_clear.text"/>
+        <Property name="name" type="java.lang.String" value="button_clear" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_clearActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

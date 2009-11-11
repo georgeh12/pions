@@ -102,13 +102,6 @@ public abstract class Login {
         }
     }
 
-    /**
-     * Logout the user.
-     */
-    public void logout(){
-        //TODO save the user file
-    }
-
     //TODO add file header and encryption
     public void saveFile() throws IOException, NotLoggedInException {
         FileOutputStream fos = new FileOutputStream(getFile());

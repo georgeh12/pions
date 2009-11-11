@@ -53,7 +53,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
             return display_name;
         }
         else{
-            return getUsername();
+            return getName();
         }
     }
 
