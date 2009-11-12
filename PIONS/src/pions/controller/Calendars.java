@@ -72,10 +72,10 @@ public class Calendars {
             e.printStackTrace();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            //If an exception occurred, calendar is set to default
-            return new CalendarData(calendar_name);
         }
+
+        //If an exception occurred, calendar is set to default
+        return new CalendarData(calendar_name);
     }
 
     public static void sendNewWorkSchedule(boolean[] indices){

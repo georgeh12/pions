@@ -1,6 +1,7 @@
 
 package pions.model;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
@@ -88,9 +89,11 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         return contact_info;
     }
 
-    protected Employee(String name, String username, String password){
-        super(username, password);
-
+    protected Employee(String name, String username, String password)
+            throws FileNotFoundException, StreamCorruptedException,
+            ClassNotFoundException, IOException{
+        this.authenticate(username, password);
+        
         this.name = name;
     }
     

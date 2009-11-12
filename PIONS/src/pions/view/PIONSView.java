@@ -5,8 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.Observable;
 import java.util.Observer;
@@ -18,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jdesktop.application.Application.ExitListener;
 import pions.PIONS;
+import pions.controller.Alerts;
 import pions.controller.Employees;
 
 /**
@@ -35,7 +35,7 @@ public class PIONSView implements Observer {
     private JMenuItem menu_managers;
     private JMenuItem menu_subordinates;
     private JMenuItem menu_calendars;
-    private JMenuItem menu_checkalerts;
+    private JMenuItem menu_updatealerts;
     private JMenuItem menu_activealerts;
     private JMenuItem menu_savedalerts;
     private JMenuItem menu_aboutus;
@@ -88,10 +88,10 @@ public class PIONSView implements Observer {
         //Alert Menu
         JMenu alerts = new JMenu("Alert");
 
-        menu_checkalerts = alerts.add(new JMenuItem("Check For New Alerts"));
-        menu_checkalerts.addActionListener(new ActionListener() {
+        menu_updatealerts = alerts.add(new JMenuItem("Update Alerts"));
+        menu_updatealerts.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                menu_checkalertsActionPerformed(evt);
+                menu_updatealertsActionPerformed(evt);
             }
         });
 
@@ -221,8 +221,9 @@ public class PIONSView implements Observer {
     }
 
     //TODO implement the following methods
-    private void menu_checkalertsActionPerformed(ActionEvent evt){
-
+    private void menu_updatealertsActionPerformed(ActionEvent evt){
+        setPanel1(new UpdateAlerts());
+        setPanel2(new IdleScreen());
     }
 
     private void menu_activealertsActionPerformed(ActionEvent evt){
@@ -234,7 +235,8 @@ public class PIONSView implements Observer {
     }
 
     private void menu_loginActionPerformed(ActionEvent evt){
-
+        setPanel1(new Login());
+        setPanel2(new IdleScreen());
     }
 
     private void menu_managersActionPerformed(ActionEvent evt){

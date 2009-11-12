@@ -1,6 +1,7 @@
 
 package pions.model;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
@@ -23,7 +24,9 @@ public final class EmployeeSingleton extends Employee implements Serializable {
 
     private static EmployeeSingleton singleton = null;
     
-    private EmployeeSingleton(String name, String username, String password){
+    private EmployeeSingleton(String name, String username, String password)
+            throws FileNotFoundException, StreamCorruptedException,
+            ClassNotFoundException, IOException{
         super(name, username, password);
     }
 
@@ -35,7 +38,8 @@ public final class EmployeeSingleton extends Employee implements Serializable {
     }
 
     public static void init(String name, String username, String password)
-            throws NotLoggedInException, IOException{
+            throws FileNotFoundException, StreamCorruptedException,
+            ClassNotFoundException, IOException{
         singleton = new EmployeeSingleton(name, username, password);
     }
 

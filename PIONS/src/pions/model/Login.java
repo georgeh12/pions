@@ -29,15 +29,6 @@ public abstract class Login {
     private KeyPair RSA_keys = null; //for RSA
     private boolean validated = false;
 
-    protected Login(String username, String password) {
-        setCredentials(username, password);
-    }
-
-    protected void setCredentials(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     protected String getUsername(){
         return username;
     }
@@ -90,8 +81,8 @@ public abstract class Login {
      * @throws pions.model.ModelException.NotLoggedInException
      */
     protected boolean authenticate(String username, String password)
-            throws IOException, ClassNotFoundException, FileNotFoundException,
-            StreamCorruptedException, ClassNotFoundException, NotLoggedInException {
+            throws FileNotFoundException, StreamCorruptedException,
+            ClassNotFoundException, IOException{
         if(decryptAES(new FileInputStream(getFile())).getClass() == EmployeeSingleton.class){
             this.username = username;
             this.password = password;
@@ -114,9 +105,14 @@ public abstract class Login {
     }
 
     //TODO add file header and encryption
-    public static EmployeeSingleton loadFile(String username, String password) throws IOException,
-            StreamCorruptedException, ClassNotFoundException {
-        return (EmployeeSingleton)decryptAES(new FileInputStream(getFile(username)));
+    public static EmployeeSingleton loadFile(String username, String password)
+            throws FileNotFoundException, StreamCorruptedException,
+            ClassNotFoundException, IOException {
+        EmployeeSingleton singleton =
+                (EmployeeSingleton)decryptAES(new FileInputStream(getFile(username)));
+        singleton.authenticate(username, password);
+
+        return singleton;
     }
     
     /**

@@ -77,9 +77,9 @@ public class Gmail extends Observable implements Serializable {
             e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
-        } finally {
-            return false;
         }
+
+        return false;
     }
 
     public void setGmail(EmailAddress gmail_username, String gmail_password){
