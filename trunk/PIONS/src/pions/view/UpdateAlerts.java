@@ -1,11 +1,15 @@
 
 package pions.view;
 
+import pions.controller.Alerts;
+
 /**
  *
  * @author George
  */
 public class UpdateAlerts extends javax.swing.JPanel {
+
+    private Thread update_thread = null;
 
     /** Creates new form RetrieveAlerts */
     public UpdateAlerts() {
@@ -21,88 +25,123 @@ public class UpdateAlerts extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jLabel3 = new javax.swing.JLabel();
+        label_title = new javax.swing.JLabel();
+        label_directions = new javax.swing.JLabel();
+        scrollpane_errors = new javax.swing.JScrollPane();
+        textarea_errors = new javax.swing.JTextArea();
+        togglebutton_update = new javax.swing.JToggleButton();
+        label_errors = new javax.swing.JLabel();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(UpdateAlerts.class);
-        jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
+        label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
+        label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
+        label_title.setName("label_title"); // NOI18N
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
+        label_directions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
+        label_directions.setName("label_directions"); // NOI18N
 
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
+        scrollpane_errors.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollpane_errors.setName("scrollpane_errors"); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setWrapStyleWord(true);
-        jTextArea1.setName("jTextArea1"); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
+        textarea_errors.setColumns(20);
+        textarea_errors.setLineWrap(true);
+        textarea_errors.setRows(5);
+        textarea_errors.setWrapStyleWord(true);
+        textarea_errors.setName("textarea_errors"); // NOI18N
+        scrollpane_errors.setViewportView(textarea_errors);
 
-        jToggleButton1.setText(resourceMap.getString("jToggleButton1.text")); // NOI18N
-        jToggleButton1.setName("jToggleButton1"); // NOI18N
+        togglebutton_update.setText(resourceMap.getString("togglebutton_update.text")); // NOI18N
+        togglebutton_update.setName("togglebutton_update"); // NOI18N
+        togglebutton_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                togglebutton_updateActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
+        label_errors.setText(resourceMap.getString("label_errors.text")); // NOI18N
+        label_errors.setName("label_errors"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(label_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(togglebutton_update, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(label_errors, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(scrollpane_errors, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(label_title)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(label_directions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(togglebutton_update, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(label_errors)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                .addComponent(scrollpane_errors, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void togglebutton_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglebutton_updateActionPerformed
+        if(togglebutton_update.isSelected()){
+            update_thread = new UpdateThread();
+            update_thread.start();
+        }
+        else{
+            update_thread.interrupt();
+            togglebutton_update.setText(org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(UpdateAlerts.class).getString("togglebutton_update.text"));
+        }
+    }//GEN-LAST:event_togglebutton_updateActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel label_directions;
+    private javax.swing.JLabel label_errors;
+    private javax.swing.JLabel label_title;
+    private javax.swing.JScrollPane scrollpane_errors;
+    private javax.swing.JTextArea textarea_errors;
+    private javax.swing.JToggleButton togglebutton_update;
     // End of variables declaration//GEN-END:variables
 
+    private class UpdateThread extends Thread {
+        @Override
+        public void interrupt(){
+            togglebutton_update.setText(org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(UpdateAlerts.class).getString("togglebutton_update.text"));
+            super.interrupt();
+        }
+
+        @Override
+        public void run() {
+            togglebutton_update.setText("Updating Alerts... (click here to stop)");
+
+            for(String exception: Alerts.parseAlerts()){
+                textarea_errors.setText(textarea_errors.getText() + exception + "\n" + "\n");
+            }
+
+            togglebutton_update.setSelected(false);
+            interrupt();
+        }
+    }
 }
