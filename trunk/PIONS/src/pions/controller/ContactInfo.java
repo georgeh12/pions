@@ -49,9 +49,9 @@ public class ContactInfo {
             return true;
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            return false;
         }
+
+        return false;
     }
 
 
@@ -93,9 +93,9 @@ public class ContactInfo {
             return true;
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            return false;
         }
+
+        return false;
     }
 
     public static void setAddress(String street_address,
@@ -112,9 +112,9 @@ public class ContactInfo {
             return EmployeeSingleton.getInstance().getContactInfo().getAddress().toString();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            return "";
         }
+
+        return "";
     }
 
     public static void removeAddress(){

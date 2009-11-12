@@ -9,12 +9,12 @@ import pions.controller.AlertXMLIterator;
  *
  * @author George
  */
-public class NewAlerts extends JPanel {
+public class ActiveAlerts extends JPanel {
 
     private AlertXMLIterator iter = null;
 
     /** Creates new form NewAlerts */
-    public NewAlerts() {
+    public ActiveAlerts() {
         initComponents();
     }
 
@@ -62,7 +62,7 @@ public class NewAlerts extends JPanel {
         display_area.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         display_area.setName("display_area"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(NewAlerts.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(ActiveAlerts.class);
         label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
         label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
@@ -120,7 +120,10 @@ public class NewAlerts extends JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(button_ignore)))
                 .addContainerGap(12, Short.MAX_VALUE))
-            .addComponent(display_area, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(display_area, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +143,8 @@ public class NewAlerts extends JPanel {
                     .addComponent(button_select_all)
                     .addComponent(button_select_none))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(display_area, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
+                .addComponent(display_area, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

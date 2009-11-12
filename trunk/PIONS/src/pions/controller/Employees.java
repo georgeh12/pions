@@ -1,6 +1,7 @@
 
 package pions.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
@@ -35,11 +36,17 @@ public class Employees {
             return true;
         } catch (NotLoggedInException e) {
             e.printStackTrace();
+        } catch (StreamCorruptedException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            return false;
         }
+
+        return false;
     }
 
     public static boolean login(String username, String password){
@@ -53,9 +60,9 @@ public class Employees {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            return false;
         }
+
+        return false;
     }
 
     public static boolean logout() {
@@ -69,9 +76,9 @@ public class Employees {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            return false;
         }
+
+        return false;
     }
 
     public static boolean isLoggedIn(){
@@ -89,9 +96,9 @@ public class Employees {
             return new EmployeeXML(EmployeeSingleton.getInstance().getManager(index));
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            return null;
         }
+
+        return null;
     }
 
     public static EmployeeXML getSubordinateXML(int index){
@@ -99,9 +106,9 @@ public class Employees {
             return new EmployeeXML(EmployeeSingleton.getInstance().getSubordinate(index));
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            return null;
         }
+
+        return null;
     }
 
     public static ArrayList<String> getManagers(){
@@ -109,9 +116,9 @@ public class Employees {
             return EmployeeSingleton.getInstance().getManagerNames();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            return new ArrayList<String>();
         }
+
+        return new ArrayList<String>();
     }
 
     public static ArrayList<String> getSubordinates(){
@@ -119,9 +126,9 @@ public class Employees {
             return EmployeeSingleton.getInstance().getSubordinateNames();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            return new ArrayList<String>();
         }
+
+        return new ArrayList<String>();
     }
 
     public static void sendNewManager(EmployeeSingleton manager){
@@ -163,8 +170,8 @@ public class Employees {
             return EmployeeSingleton.getInstance().getDisplayName();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            return "User";
         }
+
+        return "User";
     }
 }

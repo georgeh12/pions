@@ -18,10 +18,10 @@ public class Alerts {public static Iterator getActiveAlertIterator() {
             return new AlertXMLIterator(EmployeeSingleton.getInstance().getGmail().getActiveAlerts());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            //might cause cascading View exception
-            return null;
         }
+
+        //might cause cascading View exception
+        return null;
     }
 
     public static Iterator getSavedAlertIterator() {
@@ -29,10 +29,10 @@ public class Alerts {public static Iterator getActiveAlertIterator() {
             return new AlertXMLIterator(EmployeeSingleton.getInstance().getGmail().getSavedAlerts());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } finally {
-            //might cause cascading View exception
-            return null;
         }
+
+        //might cause cascading View exception
+        return null;
     }
 
     public static ArrayList<String> parseAlerts() {
