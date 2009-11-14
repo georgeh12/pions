@@ -39,6 +39,16 @@ public class ModelException extends Exception {
     }
 
     /**
+     * Thrown when Login has not been validated.
+     */
+    public static class ContactNotFoundException extends ModelException {
+        @Override
+        public String getMessage(){
+            return "Add recipient as a contact before sending requests.";
+        }
+    }
+
+    /**
      * Used when the message parser receives an error while opening messages.
      * Holds useful information to diagnose the source of the exception.
      */

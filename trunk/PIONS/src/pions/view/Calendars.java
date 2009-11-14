@@ -27,11 +27,6 @@ public class Calendars extends javax.swing.JPanel {
         button_availability = new javax.swing.JButton();
         button_subordinate = new javax.swing.JButton();
         button_swapshift_create = new javax.swing.JButton();
-        label_swapshift_name = new javax.swing.JLabel();
-        textfield_swapshift = new javax.swing.JTextField();
-        combobox_swapshift = new javax.swing.JComboBox();
-        label_swapshift_choose = new javax.swing.JLabel();
-        button_swapshift_send = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
@@ -78,49 +73,10 @@ public class Calendars extends javax.swing.JPanel {
             }
         });
 
-        label_swapshift_name.setText(resourceMap.getString("label_swapshift_name.text")); // NOI18N
-        label_swapshift_name.setName("label_swapshift_name"); // NOI18N
-
-        textfield_swapshift.setText(resourceMap.getString("textfield_swapshift.text")); // NOI18N
-        textfield_swapshift.setName("textfield_swapshift"); // NOI18N
-
-        combobox_swapshift.setName("combobox_swapshift"); // NOI18N
-
-        label_swapshift_choose.setText(resourceMap.getString("label_swapshift_choose.text")); // NOI18N
-        label_swapshift_choose.setName("label_swapshift_choose"); // NOI18N
-
-        button_swapshift_send.setText(resourceMap.getString("button_swapshift_send.text")); // NOI18N
-        button_swapshift_send.setName("button_swapshift_send"); // NOI18N
-        button_swapshift_send.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_swapshift_sendActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(button_subordinate, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(label_swapshift_name)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textfield_swapshift, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_swapshift_create))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(label_swapshift_choose)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(combobox_swapshift, 0, 169, Short.MAX_VALUE))
-                            .addComponent(button_swapshift_send, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))))
-                .addContainerGap())
             .addComponent(label_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -131,6 +87,12 @@ public class Calendars extends javax.swing.JPanel {
                 .addComponent(button_work, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button_swapshift_create, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addComponent(button_subordinate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,17 +107,8 @@ public class Calendars extends javax.swing.JPanel {
                 .addGap(11, 11, 11)
                 .addComponent(button_subordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_swapshift_name)
-                    .addComponent(textfield_swapshift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_swapshift_create))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_swapshift_choose)
-                    .addComponent(combobox_swapshift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_swapshift_send, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addComponent(button_swapshift_create, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(73, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -175,23 +128,14 @@ public class Calendars extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_button_swapshift_createActionPerformed
 
-    private void button_swapshift_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_swapshift_sendActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button_swapshift_sendActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_availability;
     private javax.swing.JButton button_subordinate;
     private javax.swing.JButton button_swapshift_create;
-    private javax.swing.JButton button_swapshift_send;
     private javax.swing.JButton button_work;
-    private javax.swing.JComboBox combobox_swapshift;
     private javax.swing.JLabel label_directions;
-    private javax.swing.JLabel label_swapshift_choose;
-    private javax.swing.JLabel label_swapshift_name;
     private javax.swing.JLabel label_title;
-    private javax.swing.JTextField textfield_swapshift;
     // End of variables declaration//GEN-END:variables
 
 }

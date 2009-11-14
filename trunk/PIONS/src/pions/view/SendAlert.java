@@ -12,6 +12,8 @@ public class SendAlert extends javax.swing.JPanel {
         initComponents();
     }
 
+    //TODO add a method to tell if an alert has been modified so the same alert will not be sent twice.
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -27,6 +29,7 @@ public class SendAlert extends javax.swing.JPanel {
         button_request_subordinate = new javax.swing.JButton();
         button_request_contact = new javax.swing.JButton();
         label_directions = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
@@ -53,6 +56,9 @@ public class SendAlert extends javax.swing.JPanel {
         label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
         label_directions.setName("label_directions"); // NOI18N
 
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,6 +81,10 @@ public class SendAlert extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(button_request_contact, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,7 +100,9 @@ public class SendAlert extends javax.swing.JPanel {
                 .addComponent(button_request_subordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button_request_contact, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -100,6 +112,7 @@ public class SendAlert extends javax.swing.JPanel {
     private javax.swing.JButton button_request_manager;
     private javax.swing.JButton button_request_subordinate;
     private javax.swing.JButton button_subordinate;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel label_directions;
     private javax.swing.JLabel label_title;
     // End of variables declaration//GEN-END:variables

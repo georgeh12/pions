@@ -5,6 +5,7 @@ import com.sun.mail.util.BASE64DecoderStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
@@ -27,6 +28,7 @@ import javax.mail.MessagingException;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.Alert.AlertType;
+import pions.model.Contacts.Contact;
 import pions.model.ModelException.MessageParserException;
 
 /**
@@ -203,10 +205,10 @@ public class Gmail extends Observable implements Serializable {
      * @param attachment
      * @param isSuperior
      */
-    public void sendAlert(ArrayList<EmailAddress> recipients, Alert alert)
-            throws AddressException, NoSuchProviderException,
-            MessagingException, NotLoggedInException, IOException,
-            StreamCorruptedException, ClassNotFoundException {
+    public void sendAlert(EmailAddress recipient, Alert alert)
+            throws AddressException, UnsupportedEncodingException,
+            NoSuchProviderException, MessagingException, NotLoggedInException,
+            IOException, StreamCorruptedException, ClassNotFoundException {
         //Encrypt the message contents
         byte[] attachment = alert.getBytes();
 
@@ -214,9 +216,7 @@ public class Gmail extends Observable implements Serializable {
         MimeMessage message = new MimeMessage(session);
 
         //Add message content
-        for(EmailAddress email_address: recipients){
-            message.addRecipient(RecipientType.TO, new InternetAddress(email_address.getAddress()));
-        }
+        message.addRecipient(RecipientType.TO, recipient.getInternetAddress());
         message.setFrom(new InternetAddress(alert.getAddress().getAddress()));
         message.setSubject(SUBJECT);
         Multipart multipart = new MimeMultipart();

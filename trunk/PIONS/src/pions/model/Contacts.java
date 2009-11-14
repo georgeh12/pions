@@ -31,6 +31,14 @@ public class Contacts implements Serializable {
         return contact;
     }
 
+    public Contact searchContacts(String email_address){
+        for(Contact contact: contacts){
+            if(contact.getAddress().equals(email_address)) return contact;
+        }
+
+        return null;
+    }
+
     public Contact searchContacts(EmailAddress email_address){
         for(Contact contact: contacts){
             if(contact.equals(email_address)) return contact;
@@ -43,9 +51,13 @@ public class Contacts implements Serializable {
         private PublicKey public_key;
         private EmailAddress gmail_address;
 
-        private Contact(PublicKey public_key, EmailAddress gmail_address){
+        Contact(PublicKey public_key, EmailAddress gmail_address){
             this.public_key = public_key;
             this.gmail_address = gmail_address;
+        }
+
+        public EmailAddress getAddress() {
+            return gmail_address;
         }
         
         public boolean equals(EmailAddress gmail_address){
