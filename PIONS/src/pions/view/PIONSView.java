@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.Observable;
 import java.util.Observer;
@@ -31,15 +30,15 @@ public class PIONSView implements Observer {
     private JPanel idle = new IdleScreen();
     private JPanel loading = new LoadingScreen();
 
-    //TODO implement listener classes for menu options
-    private JMenuItem menu_quit;
     private JMenuItem menu_login;
-    private JMenuItem menu_managers;
-    private JMenuItem menu_subordinates;
-    private JMenuItem menu_calendars;
+    private JMenuItem menu_quit;
+    private JMenuItem menu_sendalert;
     private JMenuItem menu_updatealerts;
     private JMenuItem menu_activealerts;
     private JMenuItem menu_savedalerts;
+    private JMenuItem menu_managers;
+    private JMenuItem menu_subordinates;
+    private JMenuItem menu_calendars;
     private JMenuItem menu_aboutus;
 
     private PIONSView(){
@@ -80,6 +79,13 @@ public class PIONSView implements Observer {
         //File Menu
         JMenu file = new JMenu("File");
 
+        menu_login = file.add(new JMenuItem("Login"));
+        menu_login.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                menu_loginActionPerformed(evt);
+            }
+        });
+
         menu_quit = file.add(new JMenuItem("Quit"));
         menu_quit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -89,6 +95,13 @@ public class PIONSView implements Observer {
 
         //Alert Menu
         JMenu alerts = new JMenu("Alert");
+
+        menu_sendalert = alerts.add(new JMenuItem("Send Alert"));
+        menu_sendalert.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                menu_sendalertActionPerformed(evt);
+            }
+        });
 
         menu_updatealerts = alerts.add(new JMenuItem("Update Alerts"));
         menu_updatealerts.addActionListener(new ActionListener() {
@@ -113,13 +126,6 @@ public class PIONSView implements Observer {
 
         //Window Menu
         JMenu window = new JMenu("Window");
-
-        menu_login = window.add(new JMenuItem("Login"));
-        menu_login.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                menu_loginActionPerformed(evt);
-            }
-        });
 
         menu_managers = window.add(new JMenuItem("Managers"));
         menu_managers.addActionListener(new ActionListener() {
@@ -213,11 +219,18 @@ public class PIONSView implements Observer {
         JOptionPane.showMessageDialog(getFrame(), arg, "System Message", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    private void menu_loginActionPerformed(ActionEvent evt){
+        setMain(new Login());
+    }
+
     private void menu_quitActionPerformed(ActionEvent evt){
         PIONS.getApplication().exit(evt);
     }
 
-    //TODO implement the following methods
+    private void menu_sendalertActionPerformed(ActionEvent evt){
+        setMain(new SendAlert());
+    }
+    
     private void menu_updatealertsActionPerformed(ActionEvent evt){
         setMain(new UpdateAlerts());
     }
@@ -228,10 +241,6 @@ public class PIONSView implements Observer {
 
     private void menu_savedalertsActionPerformed(ActionEvent evt){
         setMain(new SavedAlerts(Alerts.getSavedAlertIterator()));
-    }
-
-    private void menu_loginActionPerformed(ActionEvent evt){
-        setMain(new Login());
     }
 
     private void menu_managersActionPerformed(ActionEvent evt){

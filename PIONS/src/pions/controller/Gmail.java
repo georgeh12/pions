@@ -30,7 +30,9 @@ public class Gmail implements Serializable {
 
     public static void setGmail(String gmail_username, String gmail_password){
         try {
-            EmployeeSingleton.getInstance().getGmail().setGmail(new EmailAddress(gmail_username), gmail_password);
+            EmployeeSingleton.getInstance().getGmail().setGmail(
+                    new EmailAddress(gmail_username, EmployeeSingleton.getInstance().getName()),
+                    gmail_password);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }
@@ -63,11 +65,10 @@ public class Gmail implements Serializable {
         }
     }
 
-    static void sendAlert(ArrayList<EmailAddress> gmail_addresses, Alert alert)
+    static void sendAlert(EmailAddress recipient, Alert alert)
             throws NotLoggedInException {
         try {
-            EmployeeSingleton.getInstance().getGmail().sendAlert(gmail_addresses,
-                    alert);
+            EmployeeSingleton.getInstance().getGmail().sendAlert(recipient, alert);
         } catch (AddressException e) {
             e.printStackTrace();
         } catch (NoSuchProviderException e) {

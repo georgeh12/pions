@@ -135,6 +135,7 @@
     <Container class="javax.swing.JScrollPane" name="scrollpane_display">
       <Properties>
         <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
+        <Property name="verticalScrollBarPolicy" type="int" value="22"/>
         <Property name="name" type="java.lang.String" value="scrollpane_display" noResource="true"/>
       </Properties>
 

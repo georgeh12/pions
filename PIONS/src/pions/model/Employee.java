@@ -11,6 +11,7 @@ import java.security.PublicKey;
 import java.util.ArrayList;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
+import pions.model.Contacts.Contact;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 
@@ -82,6 +83,10 @@ public class Employee extends Login implements Serializable, AbstractAlert {
 
     public Gmail getGmail(){
         return gmail;
+    }
+
+    public Contact getContact() throws NotLoggedInException{
+        return new Contact(getPublicKey(), getGmail().getGmailAddress());
     }
 
     public ContactInfo getContactInfo(){

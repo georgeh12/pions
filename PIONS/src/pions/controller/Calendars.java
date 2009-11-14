@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.CalendarData;
@@ -16,7 +15,6 @@ import pions.model.ContactInfo.EmailAddress;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
-import pions.model.swapshift.SwapShift;
 
 /**
  *
@@ -80,8 +78,10 @@ public class Calendars {
 
     public static void sendNewWorkSchedule(boolean[] indices){
         try {
-            sendWorkSchedule(Gmail.getSelectedEmails(EmployeeSingleton.getInstance().getSubordinateGmails(), indices),
-                    AlertType.NewWorkSchedule);
+            for(EmailAddress email_address: Gmail.getSelectedEmails(
+                    EmployeeSingleton.getInstance().getSubordinateGmails(), indices)){
+                sendWorkSchedule(email_address, AlertType.NewWorkSchedule);
+            }
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
@@ -91,7 +91,10 @@ public class Calendars {
 
     public static void sendUpdatedWorkSchedule(boolean[] indices){
         try {
-            sendWorkSchedule(Gmail.getSelectedEmails(EmployeeSingleton.getInstance().getSubordinateGmails(), indices), AlertType.UpdatedWorkSchedule);
+            for(EmailAddress email_address: Gmail.getSelectedEmails(
+                    EmployeeSingleton.getInstance().getSubordinateGmails(), indices)){
+                sendWorkSchedule(email_address, AlertType.UpdatedWorkSchedule);
+            }
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
@@ -99,9 +102,9 @@ public class Calendars {
         }
     }
 
-    static void sendWorkSchedule(ArrayList<EmailAddress> gmail_addresses, AlertType alert_type)
+    static void sendWorkSchedule(EmailAddress gmail_address, AlertType alert_type)
             throws NotLoggedInException, AlertClassException {
-        Gmail.sendAlert(gmail_addresses,
+        Gmail.sendAlert(gmail_address,
                 new Alert(EmployeeSingleton.getInstance().getCalendars().getWorkSchedule(), alert_type));
     }
 }

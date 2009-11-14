@@ -12,6 +12,7 @@ import pions.model.ContactInfo.EmailAddress;
 import pions.model.Employee;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
+import pions.model.ModelException.ContactNotFoundException;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
@@ -132,38 +133,43 @@ public class Employees {
         return new ArrayList<String>();
     }
 
-    public static void sendNewManager(EmployeeSingleton manager){
+    public static void sendNewManager(String email) {
         try {
-            sendNewSubordinate(EmployeeSingleton.getInstance().getManagerGmails(),
-                    manager);
+            sendNewEmployee(email, AlertType.AddManager);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
             e.printStackTrace();
+        } catch (ContactNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
-    static void sendNewManager(ArrayList<EmailAddress> gmails,
-            EmployeeSingleton manager) throws NotLoggedInException,
-            AlertClassException{
-        Gmail.sendAlert(gmails, new Alert((Employee)manager, AlertType.AddManager));
-    }
-
-    public static void sendNewSubordinate(EmployeeSingleton subordinate){
+    public static void sendNewSubordinate(String email) {
         try {
-            sendNewSubordinate(EmployeeSingleton.getInstance().getSubordinateGmails(),
-                    subordinate);
+            sendNewEmployee(email, AlertType.AddSubordinate);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
             e.printStackTrace();
+        } catch (ContactNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
-    static void sendNewSubordinate(ArrayList<EmailAddress> gmails,
-            EmployeeSingleton subordinate) throws NotLoggedInException,
-            AlertClassException{
-        Gmail.sendAlert(gmails, new Alert((Employee)subordinate, AlertType.AddSubordinate));
+    private static void sendNewEmployee(String email, AlertType type)
+            throws NotLoggedInException, AlertClassException,
+            ContactNotFoundException {
+        EmailAddress recipient = EmployeeSingleton.getInstance().getContacts()
+                .searchContacts(email).getAddress();
+        if(recipient != null){
+            Gmail.sendAlert(recipient,
+                    new Alert((Employee)EmployeeSingleton.getInstance(),
+                    type));
+        }
+        else{
+            throw new ContactNotFoundException();
+        }
     }
 
     public static String getDisplayName() {
