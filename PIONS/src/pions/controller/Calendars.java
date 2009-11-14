@@ -104,12 +104,4 @@ public class Calendars {
         Gmail.sendAlert(gmail_addresses,
                 new Alert(EmployeeSingleton.getInstance().getCalendars().getWorkSchedule(), alert_type));
     }
-
-    public static void sendSwapShift(SwapShift swap_shift) throws NotLoggedInException{
-        try {
-            Gmail.sendAlert(swap_shift.getRecipients(), new Alert(swap_shift, AlertType.SwapShift));
-        } catch (AlertClassException e) {
-            e.printStackTrace();
-        }
-    }
 }

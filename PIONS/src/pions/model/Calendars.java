@@ -11,6 +11,7 @@ public class Calendars implements Serializable {
     private final static String AVAILABILITY = "PIONS Availability";
     private final static String WORK_SCHEDULE = "PIONS Work Schedule";
     private final static String SUBORDINATE_SCHEDULE = "PIONS Subordinate Schedule";
+    private final static String SWAP_SHIFT = "PIONS Swap Shift";
     private CalendarData availability;
     private CalendarData work_schedule;
     private CalendarData subordinate_schedule;

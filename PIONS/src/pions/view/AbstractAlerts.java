@@ -22,7 +22,7 @@ public abstract class AbstractAlerts extends JPanel {
     private ArrayList<JTextArea> text_areas = null;
     protected JPanel panel_display = null;
 
-    public void set(AlertXMLIterator iter){
+    protected void set(AlertXMLIterator iter){
         this.iter = iter;
         check_boxes = new ArrayList<JCheckBox>();
         text_areas = new ArrayList<JTextArea>();
