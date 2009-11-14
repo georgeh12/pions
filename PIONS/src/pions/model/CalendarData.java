@@ -127,4 +127,9 @@ public class CalendarData implements Serializable, AbstractAlert {
                 throw new AlertClassException(this.getClass(), type.getAssociatedClass());
         }
     }
+
+    //TODO getDetails()
+    public String getDetails() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

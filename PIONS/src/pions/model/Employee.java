@@ -242,4 +242,9 @@ public class Employee extends Login implements Serializable, AbstractAlert {
                 throw new AlertClassException(this.getClass(), type.getAssociatedClass());
         }
     }
+
+    //TODO getDetails()
+    public String getDetails() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

@@ -227,11 +227,15 @@ public class PIONSView implements Observer {
     }
 
     private void menu_activealertsActionPerformed(ActionEvent evt){
-
+        ActiveAlerts panel = new ActiveAlerts();
+        panel.set(Alerts.getActiveAlertIterator());
+        setPanel1(panel);
     }
 
     private void menu_savedalertsActionPerformed(ActionEvent evt){
-
+        SavedAlerts panel = new SavedAlerts();
+        panel.set(Alerts.getSavedAlertIterator());
+        setPanel1(panel);
     }
 
     private void menu_loginActionPerformed(ActionEvent evt){
