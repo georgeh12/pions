@@ -57,6 +57,14 @@ public class Gmail extends Observable implements Serializable {
         return gmail;
     }
 
+    public Alert getActiveAlert(int index){
+        return active_alerts.get(index);
+    }
+
+    public Alert getSavedAlert(int index){
+        return saved_alerts.get(index);
+    }
+
     public Iterator<Alert> getActiveAlerts(){
         return active_alerts.iterator();
     }

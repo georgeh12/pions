@@ -40,16 +40,16 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="button_accept" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="button_reject" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="button_ignore" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="button_reject" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="display_area" pref="280" max="32767" attributes="0"/>
+              <Component id="scrollpane_display" pref="280" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -64,8 +64,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="button_view" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="button_accept" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="button_reject" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="button_ignore" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="button_reject" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -74,20 +74,41 @@
                   <Component id="button_select_none" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="display_area" pref="242" max="32767" attributes="0"/>
+              <Component id="scrollpane_display" min="-2" pref="242" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="display_area">
+    <Container class="javax.swing.JScrollPane" name="scrollpane_display">
       <Properties>
         <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-        <Property name="name" type="java.lang.String" value="display_area" noResource="true"/>
+        <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+        <Property name="name" type="java.lang.String" value="scrollpane_display" noResource="true"/>
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="panel_display">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="panel_display" noResource="true"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="278" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="240" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+        </Container>
+      </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="label_title">
       <Properties>
@@ -109,30 +130,45 @@
         <Property name="text" type="java.lang.String" resourceKey="button_accept.text"/>
         <Property name="name" type="java.lang.String" value="button_accept" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_acceptActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="button_reject">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="button_reject.text"/>
         <Property name="name" type="java.lang.String" value="button_reject" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_rejectActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="button_ignore">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="button_ignore.text"/>
         <Property name="name" type="java.lang.String" value="button_ignore" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_ignoreActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="button_select_all">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="button_select_all.text"/>
         <Property name="name" type="java.lang.String" value="button_select_all" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_select_allActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="button_select_none">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="button_select_none.text"/>
         <Property name="name" type="java.lang.String" value="button_select_none" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_select_noneActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="label_select">
       <Properties>
@@ -145,6 +181,9 @@
         <Property name="text" type="java.lang.String" resourceKey="button_view.text"/>
         <Property name="name" type="java.lang.String" value="button_view" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_viewActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

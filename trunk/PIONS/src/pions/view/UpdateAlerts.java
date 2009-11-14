@@ -125,6 +125,8 @@ public class UpdateAlerts extends javax.swing.JPanel {
     private javax.swing.JToggleButton togglebutton_update;
     // End of variables declaration//GEN-END:variables
 
+
+    //TODO extends SwingWorker
     private class UpdateThread extends Thread {
         @Override
         public void interrupt(){
@@ -135,7 +137,8 @@ public class UpdateAlerts extends javax.swing.JPanel {
         @Override
         public void run() {
             togglebutton_update.setText("Updating Alerts... (click here to stop)");
-
+            
+            //try{sleep(5000);}catch(Exception e){}
             for(String exception: Alerts.parseAlerts()){
                 textarea_errors.setText(textarea_errors.getText() + exception + "\n" + "\n");
             }
