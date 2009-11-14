@@ -21,56 +21,81 @@ public class Calendars extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
-        jLabel4 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        label_title = new javax.swing.JLabel();
+        label_directions = new javax.swing.JLabel();
+        button_work = new javax.swing.JButton();
+        button_availability = new javax.swing.JButton();
+        button_subordinate = new javax.swing.JButton();
+        button_swapshift_create = new javax.swing.JButton();
+        label_swapshift_name = new javax.swing.JLabel();
+        textfield_swapshift = new javax.swing.JTextField();
+        combobox_swapshift = new javax.swing.JComboBox();
+        label_swapshift_choose = new javax.swing.JLabel();
+        button_swapshift_send = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(Calendars.class);
-        jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
+        label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
+        label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
+        label_title.setName("label_title"); // NOI18N
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
+        label_directions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
+        label_directions.setName("label_directions"); // NOI18N
 
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
+        button_work.setText(resourceMap.getString("button_work.text")); // NOI18N
+        button_work.setName("button_work"); // NOI18N
+        button_work.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_workActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
+        button_availability.setText(resourceMap.getString("button_availability.text")); // NOI18N
+        button_availability.setName("button_availability"); // NOI18N
+        button_availability.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_availabilityActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setName("jButton3"); // NOI18N
+        button_subordinate.setText(resourceMap.getString("button_subordinate.text")); // NOI18N
+        button_subordinate.setName("button_subordinate"); // NOI18N
+        button_subordinate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_subordinateActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
-        jButton4.setName("jButton4"); // NOI18N
+        button_swapshift_create.setText(resourceMap.getString("button_swapshift_create.text")); // NOI18N
+        button_swapshift_create.setName("button_swapshift_create"); // NOI18N
+        button_swapshift_create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_swapshift_createActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
+        label_swapshift_name.setText(resourceMap.getString("label_swapshift_name.text")); // NOI18N
+        label_swapshift_name.setName("label_swapshift_name"); // NOI18N
 
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
+        textfield_swapshift.setText(resourceMap.getString("textfield_swapshift.text")); // NOI18N
+        textfield_swapshift.setName("textfield_swapshift"); // NOI18N
 
-        jComboBox1.setName("jComboBox1"); // NOI18N
+        combobox_swapshift.setName("combobox_swapshift"); // NOI18N
 
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
+        label_swapshift_choose.setText(resourceMap.getString("label_swapshift_choose.text")); // NOI18N
+        label_swapshift_choose.setName("label_swapshift_choose"); // NOI18N
 
-        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
-        jButton5.setName("jButton5"); // NOI18N
+        button_swapshift_send.setText(resourceMap.getString("button_swapshift_send.text")); // NOI18N
+        button_swapshift_send.setName("button_swapshift_send"); // NOI18N
+        button_swapshift_send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_swapshift_sendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -78,74 +103,95 @@ public class Calendars extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+                        .addComponent(button_subordinate, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addComponent(label_swapshift_name)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addComponent(textfield_swapshift, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4))
+                                .addComponent(button_swapshift_create))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addComponent(label_swapshift_choose)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, 0, 169, Short.MAX_VALUE))
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))))
+                                .addComponent(combobox_swapshift, 0, 169, Short.MAX_VALUE))
+                            .addComponent(button_swapshift_send, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))))
                 .addContainerGap())
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(label_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(button_availability, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(button_work, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(label_title)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(label_directions)
                 .addGap(16, 16, 16)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(button_work, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(button_availability, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(button_subordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(label_swapshift_name)
+                    .addComponent(textfield_swapshift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_swapshift_create))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label_swapshift_choose)
+                    .addComponent(combobox_swapshift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(button_swapshift_send, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void button_workActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_workActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button_workActionPerformed
+
+    private void button_availabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_availabilityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button_availabilityActionPerformed
+
+    private void button_subordinateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_subordinateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button_subordinateActionPerformed
+
+    private void button_swapshift_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_swapshift_createActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button_swapshift_createActionPerformed
+
+    private void button_swapshift_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_swapshift_sendActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button_swapshift_sendActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton button_availability;
+    private javax.swing.JButton button_subordinate;
+    private javax.swing.JButton button_swapshift_create;
+    private javax.swing.JButton button_swapshift_send;
+    private javax.swing.JButton button_work;
+    private javax.swing.JComboBox combobox_swapshift;
+    private javax.swing.JLabel label_directions;
+    private javax.swing.JLabel label_swapshift_choose;
+    private javax.swing.JLabel label_swapshift_name;
+    private javax.swing.JLabel label_title;
+    private javax.swing.JTextField textfield_swapshift;
     // End of variables declaration//GEN-END:variables
 
 }

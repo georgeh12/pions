@@ -1,25 +1,15 @@
 
 package pions.view;
 
-import javax.swing.Icon;
-
 /**
  *
  * @author George
  */
-public class DisplayAlert extends javax.swing.JPanel {
+public class AboutUs extends javax.swing.JPanel {
 
-    /** Creates new form DisplayAlert */
-    public DisplayAlert() {
+    /** Creates new form AboutUs */
+    public AboutUs() {
         initComponents();
-    }
-
-    public void setText(String label_text){
-        label_display.setText(label_text);
-    }
-
-    public void setIcon(Icon label_icon){
-        label_display.setIcon(label_icon);
     }
 
     /** This method is called from within the constructor to
@@ -31,30 +21,23 @@ public class DisplayAlert extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        label_display = new javax.swing.JLabel();
-
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
-
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(DisplayAlert.class);
-        label_display.setText(resourceMap.getString("label_display.text")); // NOI18N
-        label_display.setName("label_display"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_display, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_display, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel label_display;
     // End of variables declaration//GEN-END:variables
 
 }

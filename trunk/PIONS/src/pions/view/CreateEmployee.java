@@ -335,8 +335,7 @@ public class CreateEmployee extends JPanel {
                 String.valueOf(field_gmail_password.getPassword()))){
             JOptionPane.showMessageDialog(this, "Employee created successfully.");
             clearFields();
-            PIONSView.getInstance().setOtherPanel(this, new LoginSuccess());
-            PIONSView.getInstance().setThisPanel(this, new IdleScreen());
+            PIONSView.getInstance().setMain(new LoginSuccess());
         }
         else{
             JOptionPane.showMessageDialog(this,

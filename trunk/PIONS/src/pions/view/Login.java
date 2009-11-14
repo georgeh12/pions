@@ -140,10 +140,10 @@ public class Login extends JPanel {
     private void button_create_accountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_create_accountActionPerformed
         if(button_create_account.isSelected()){
             if(create_employee == null) create_employee = new CreateEmployee();
-            PIONSView.getInstance().setOtherPanel(this, create_employee);
+            PIONSView.getInstance().setAux(create_employee);
         }
         else{
-            PIONSView.getInstance().setOtherPanel(this, new IdleScreen());
+            PIONSView.getInstance().resetAux();
         }
     }//GEN-LAST:event_button_create_accountActionPerformed
 
@@ -155,7 +155,7 @@ public class Login extends JPanel {
     private void button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_loginActionPerformed
         if(Employees.login(field_username.getText(), String.valueOf(field_password.getPassword()))){
             Gmail.subscribeGmail(PIONSView.getInstance());
-            PIONSView.getInstance().setThisPanel(this, new LoginSuccess());
+            PIONSView.getInstance().setMain(new LoginSuccess());
         }
         else{
             JOptionPane.showMessageDialog(this, "Please enter a valid username and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);

@@ -102,7 +102,7 @@ public class LoginSuccess extends javax.swing.JPanel {
 
     private void button_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_logoutActionPerformed
         if(Employees.logout()){
-            PIONSView.getInstance().setThisPanel(this, new Login());
+            PIONSView.getInstance().setMain(new Login());
         }
         else{
             JOptionPane.showMessageDialog(this, "Logout was unsuccessful.", "Logout Failed", JOptionPane.ERROR_MESSAGE);

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
+import org.w3c.dom.Document;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
@@ -91,9 +92,9 @@ public class Employees {
         }
     }
 
-    public static EmployeeXML getManagerXML(int index){
+    public static Document getManagerXML(int index){
         try {
-            return new EmployeeXML(EmployeeSingleton.getInstance().getManager(index));
+            return new EmployeeXML(EmployeeSingleton.getInstance().getManager(index)).get();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }
@@ -101,9 +102,9 @@ public class Employees {
         return null;
     }
 
-    public static EmployeeXML getSubordinateXML(int index){
+    public static Document getSubordinateXML(int index){
         try {
-            return new EmployeeXML(EmployeeSingleton.getInstance().getSubordinate(index));
+            return new EmployeeXML(EmployeeSingleton.getInstance().getSubordinate(index)).get();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }

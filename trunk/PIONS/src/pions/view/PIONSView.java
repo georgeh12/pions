@@ -28,6 +28,8 @@ public class PIONSView implements Observer {
     private static PIONSView instance = new PIONSView();
     private JPanel panel1 = null;
     private JPanel panel2 = null;
+    private JPanel idle = new IdleScreen();
+    private JPanel loading = new LoadingScreen();
 
     //TODO implement listener classes for menu options
     private JMenuItem menu_quit;
@@ -164,22 +166,17 @@ public class PIONSView implements Observer {
         return PIONS.getApplication().getMainFrame();
     }
 
-    public void setOtherPanel(JPanel this_panel, JPanel other_panel){
-        if(panel1 == this_panel){
-            setPanel2(other_panel);
-        }
-        else if(panel2 == this_panel){
-            setPanel1(other_panel);
-        }
+    public void setMain(JPanel panel){
+        setPanel1(panel);
+        setPanel2(idle);
     }
 
-    public void setThisPanel(JPanel this_panel, JPanel other_panel){
-        if(panel1 == this_panel){
-            setPanel1(other_panel);
-        }
-        else if(panel2 == this_panel){
-            setPanel2(other_panel);
-        }
+    public void resetAux(){
+        setPanel2(idle);
+    }
+
+    public void setAux(JPanel panel){
+        setPanel2(panel);
     }
 
     private void setPanel1(JPanel panel){
@@ -222,40 +219,34 @@ public class PIONSView implements Observer {
 
     //TODO implement the following methods
     private void menu_updatealertsActionPerformed(ActionEvent evt){
-        setPanel1(new UpdateAlerts());
-        setPanel2(new IdleScreen());
+        setMain(new UpdateAlerts());
     }
 
     private void menu_activealertsActionPerformed(ActionEvent evt){
-        ActiveAlerts panel = new ActiveAlerts();
-        panel.set(Alerts.getActiveAlertIterator());
-        setPanel1(panel);
+        setMain(new ActiveAlerts(Alerts.getActiveAlertIterator()));
     }
 
     private void menu_savedalertsActionPerformed(ActionEvent evt){
-        SavedAlerts panel = new SavedAlerts();
-        panel.set(Alerts.getSavedAlertIterator());
-        setPanel1(panel);
+        setMain(new SavedAlerts(Alerts.getSavedAlertIterator()));
     }
 
     private void menu_loginActionPerformed(ActionEvent evt){
-        setPanel1(new Login());
-        setPanel2(new IdleScreen());
+        setMain(new Login());
     }
 
     private void menu_managersActionPerformed(ActionEvent evt){
-
+        setMain(new Managers(Employees.getManagers()));
     }
 
     private void menu_subordinatesActionPerformed(ActionEvent evt){
-
+        setMain(new Subordinates(Employees.getSubordinates()));
     }
 
     private void menu_calendarsActionPerformed(ActionEvent evt){
-
+        setMain(new Calendars());
     }
 
     private void menu_aboutusActionPerformed(ActionEvent evt){
-
+        setMain(new AboutUs());
     }
 }

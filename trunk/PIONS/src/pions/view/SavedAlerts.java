@@ -3,6 +3,7 @@ package pions.view;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import pions.controller.AlertXMLIterator;
 import pions.controller.Alerts;
 
 /**
@@ -12,10 +13,11 @@ import pions.controller.Alerts;
 public class SavedAlerts extends AbstractAlerts {
 
     /** Creates new form SavedAlerts */
-    public SavedAlerts() {
+    public SavedAlerts(AlertXMLIterator iter) {
         initComponents();
 
         super.panel_display = panel_display;
+        super.set(iter);
     }
 
     /** This method is called from within the constructor to
