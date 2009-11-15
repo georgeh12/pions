@@ -25,14 +25,16 @@ import pions.controller.Employees;
  */
 public class PIONSView implements Observer {
     private static PIONSView instance = new PIONSView();
-    private JPanel panel1 = null;
-    private JPanel panel2 = null;
     private JPanel idle = new IdleScreen();
-    private JPanel loading = new LoadingScreen();
+
+    private JMenu file = new JMenu("File");
+    private JMenu alerts = new JMenu("Alert");
+    private JMenu window = new JMenu("Window");
+    private JMenu help = new JMenu("Help");
 
     private JMenuItem menu_login;
     private JMenuItem menu_quit;
-    private JMenuItem menu_sendalert;
+    private JMenuItem menu_contacts;
     private JMenuItem menu_updatealerts;
     private JMenuItem menu_activealerts;
     private JMenuItem menu_savedalerts;
@@ -77,7 +79,6 @@ public class PIONSView implements Observer {
         JMenuBar menu = new JMenuBar();
 
         //File Menu
-        JMenu file = new JMenu("File");
 
         menu_login = file.add(new JMenuItem("Login"));
         menu_login.addActionListener(new ActionListener() {
@@ -94,14 +95,6 @@ public class PIONSView implements Observer {
         });
 
         //Alert Menu
-        JMenu alerts = new JMenu("Alert");
-
-        menu_sendalert = alerts.add(new JMenuItem("Send Alert"));
-        menu_sendalert.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                menu_sendalertActionPerformed(evt);
-            }
-        });
 
         menu_updatealerts = alerts.add(new JMenuItem("Update Alerts"));
         menu_updatealerts.addActionListener(new ActionListener() {
@@ -125,7 +118,13 @@ public class PIONSView implements Observer {
         });
 
         //Window Menu
-        JMenu window = new JMenu("Window");
+
+        menu_contacts = window.add(new JMenuItem("Contacts"));
+        menu_contacts.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                menu_contactsActionPerformed(evt);
+            }
+        });
 
         menu_managers = window.add(new JMenuItem("Managers"));
         menu_managers.addActionListener(new ActionListener() {
@@ -149,7 +148,7 @@ public class PIONSView implements Observer {
         });
 
         //Help Menu
-        JMenu help = new JMenu("Help");
+
         menu_aboutus = help.add(new JMenuItem("About Us"));
         menu_aboutus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -190,7 +189,6 @@ public class PIONSView implements Observer {
 
         if(main_frame.getContentPane().getComponentCount() > 0)main_frame.getContentPane().remove(0);
         main_frame.getContentPane().add(panel, 0);
-        panel1 = panel;
 
         main_frame.validate();
         main_frame.repaint();
@@ -202,7 +200,6 @@ public class PIONSView implements Observer {
 
         if(main_frame.getContentPane().getComponentCount() > 1)main_frame.getContentPane().remove(1);
         main_frame.getContentPane().add(panel, 1);
-        panel2 = panel;
 
         main_frame.validate();
         main_frame.repaint();
@@ -226,10 +223,6 @@ public class PIONSView implements Observer {
     private void menu_quitActionPerformed(ActionEvent evt){
         PIONS.getApplication().exit(evt);
     }
-
-    private void menu_sendalertActionPerformed(ActionEvent evt){
-        setMain(new SendAlert());
-    }
     
     private void menu_updatealertsActionPerformed(ActionEvent evt){
         setMain(new UpdateAlerts());
@@ -241,6 +234,10 @@ public class PIONSView implements Observer {
 
     private void menu_savedalertsActionPerformed(ActionEvent evt){
         setMain(new SavedAlerts(Alerts.getSavedAlertIterator()));
+    }
+
+    private void menu_contactsActionPerformed(ActionEvent evt){
+        setMain(new Contacts());
     }
 
     private void menu_managersActionPerformed(ActionEvent evt){

@@ -43,6 +43,8 @@ public class Subordinates extends AbstractEmployees {
         label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
         label_directions.setName("label_directions"); // NOI18N
 
+        scrollpane_display.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollpane_display.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollpane_display.setName("scrollpane_display"); // NOI18N
 
         panel_display.setName("panel_display"); // NOI18N
