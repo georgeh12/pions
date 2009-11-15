@@ -39,6 +39,8 @@ public class Managers extends AbstractEmployees {
         label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
         label_title.setName("label_title"); // NOI18N
 
+        scrollpane_display.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollpane_display.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollpane_display.setName("scrollpane_display"); // NOI18N
 
         panel_display.setName("panel_display"); // NOI18N
