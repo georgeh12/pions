@@ -1,6 +1,10 @@
 
 package pions.controller;
 
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
@@ -20,6 +24,14 @@ public class SwapShifts {
         try {
             swap_shift = new SwapShift(EmployeeSingleton.getInstance(),
                     EmployeeSingleton.getInstance().getCalendars().getWorkSchedule());
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }

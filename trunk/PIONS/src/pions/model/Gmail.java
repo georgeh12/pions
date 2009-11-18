@@ -28,14 +28,13 @@ import javax.mail.MessagingException;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.Alert.AlertType;
-import pions.model.Contacts.Contact;
 import pions.model.ModelException.MessageParserException;
 
 /**
  * Implements Observer design pattern
  * @author George
  */
-public class Gmail extends Observable implements Serializable {
+public class Gmail implements Serializable {
     private static Gmail gmail = null;
     private final static String HOST = "pop.gmail.com";
     private final static String STORE = "pop3s";
@@ -141,10 +140,6 @@ public class Gmail extends Observable implements Serializable {
             }
         }
 
-        //Observer design pattern
-        if(active_alerts.size() > 0)
-            notifyObservers("You have " + active_alerts.size() + " active alerts!");
-        
         return message_exceptions;
     }
 

@@ -342,6 +342,7 @@ public class CreateEmployee extends JPanel {
                     "Employee with that username already exists.",
                     "Duplicate User",
                     JOptionPane.ERROR_MESSAGE);
+            markLabel(label_username);
         }
     }//GEN-LAST:event_button_create_accountActionPerformed
 

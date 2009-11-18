@@ -48,9 +48,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
      * Get display name
      * @return
      */
-    public String getDisplayName() throws NotLoggedInException {
-        validate();
-
+    public String getDisplayName() {
         if(display_name != null){
             return display_name;
         }
@@ -64,28 +62,27 @@ public class Employee extends Login implements Serializable, AbstractAlert {
      * @param display_name
      * @throws pions.model.ModelException.NotLoggedInException
      */
-    public void setDisplayName(String display_name) throws NotLoggedInException {
-        validate();
-
+    public void setDisplayName(String display_name) {
         this.display_name = display_name;
     }
 
     public byte[] encryptRSA(Object object)
-            throws IOException, NotLoggedInException, StreamCorruptedException,
+            throws IOException, StreamCorruptedException,
             ClassNotFoundException {
         return super.encryptRSA(key_pair.getPrivate(), object);
-    }
-
-    public void initRSAKeys() throws NotLoggedInException,
-            NoSuchAlgorithmException, IOException {
-        key_pair = super.generateRSAKeys();
     }
 
     public Gmail getGmail(){
         return gmail;
     }
 
-    public Contact getContact() throws NotLoggedInException{
+    //TODO Let user change his RSA Key, and send a request to contacts.
+    private void initContact() throws NoSuchAlgorithmException, IOException {
+        key_pair = super.generateRSAKeys();
+    }
+
+    public Contact getContact() throws NoSuchAlgorithmException, IOException{
+        if(key_pair == null) initContact();
         return new Contact(getPublicKey(), getGmail().getGmailAddress());
     }
 
@@ -97,7 +94,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     protected Employee(String name, String username, String password)
             throws FileNotFoundException, StreamCorruptedException,
             ClassNotFoundException, IOException{
-        this.authenticate(username, password);
+        super.init(username, password);
         
         this.name = name;
     }

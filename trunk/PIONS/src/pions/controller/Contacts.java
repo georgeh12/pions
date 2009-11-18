@@ -1,6 +1,8 @@
 
 package pions.controller;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
@@ -19,6 +21,10 @@ public class Contacts {
                     new Alert(EmployeeSingleton.getInstance().getContact(),
                     AlertType.ContactRequest));
         } catch (AlertClassException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         } catch (NotLoggedInException e) {
             e.printStackTrace();

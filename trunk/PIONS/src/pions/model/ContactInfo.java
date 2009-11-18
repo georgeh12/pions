@@ -41,7 +41,7 @@ public class ContactInfo implements Serializable {
             this.personal = personal;
         }
         
-        public EmailAddress(String address) throws NotLoggedInException {
+        public EmailAddress(String address) {
             this(address, "");
         }
 
