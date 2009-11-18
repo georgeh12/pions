@@ -49,6 +49,10 @@ public final class EmployeeSingleton extends Employee implements Serializable {
         singleton = Login.loadFile(username, password);
     }
 
+    public static boolean isLoggedIn(){
+        return singleton != null;
+    }
+
     public static EmployeeSingleton getInstance() throws NotLoggedInException{
         if(singleton == null){
             throw new NotLoggedInException();

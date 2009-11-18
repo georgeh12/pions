@@ -19,15 +19,6 @@ import pions.model.Alert;
  * @author George
  */
 public class Gmail implements Serializable {
-    //Implements Observer design pattern
-    public static void subscribeGmail(Observer observer){
-        try {
-            EmployeeSingleton.getInstance().getGmail().addObserver(observer);
-        } catch (NotLoggedInException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void setGmail(String gmail_username, String gmail_password){
         try {
             EmployeeSingleton.getInstance().getGmail().setGmail(
@@ -39,7 +30,7 @@ public class Gmail implements Serializable {
     }
 
     static ArrayList<EmailAddress> getSelectedEmails(ArrayList<EmailAddress> gmail_addresses,
-            boolean[] indices) throws NotLoggedInException {
+            boolean[] indices) {
         ArrayList<EmailAddress> selected = new ArrayList<EmailAddress>();
 
         for(int i = 0; i < gmail_addresses.size(); i++){

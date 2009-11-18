@@ -31,8 +31,8 @@ class StateFinal extends AbstractState implements Serializable {
     }
 
     @Override
-    protected ArrayList<EmailAddress> getRecipients() throws NotLoggedInException {
-        return null;
+    protected ArrayList<EmailAddress> getRecipients() {
+        return new ArrayList<EmailAddress>();
     }
 
     @Override

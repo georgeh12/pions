@@ -4,7 +4,6 @@ package pions.view;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import pions.controller.Employees;
-import pions.controller.Gmail;
 
 /**
  *
@@ -154,7 +153,6 @@ public class Login extends JPanel {
 
     private void button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_loginActionPerformed
         if(Employees.login(field_username.getText(), String.valueOf(field_password.getPassword()))){
-            Gmail.subscribeGmail(PIONSView.getInstance());
             PIONSView.getInstance().setMain(new LoginSuccess());
         }
         else{

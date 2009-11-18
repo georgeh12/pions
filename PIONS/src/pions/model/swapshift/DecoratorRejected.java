@@ -31,8 +31,8 @@ class DecoratorRejected extends AbstractDecorator implements Serializable {
     }
 
     @Override
-    protected ArrayList<EmailAddress> getRecipients() throws NotLoggedInException {
-        return null;
+    protected ArrayList<EmailAddress> getRecipients() {
+        return new ArrayList<EmailAddress>();
     }
 
     @Override

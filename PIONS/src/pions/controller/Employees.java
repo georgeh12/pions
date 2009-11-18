@@ -84,13 +84,7 @@ public class Employees {
     }
 
     public static boolean isLoggedIn(){
-        try {
-            EmployeeSingleton.getInstance();
-
-            return true;
-        } catch (NotLoggedInException e) {
-            return false;
-        }
+        return EmployeeSingleton.isLoggedIn();
     }
 
     public static Document getManagerXML(int index){

@@ -1,7 +1,12 @@
 
 package pions.model;
 
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
@@ -16,25 +21,31 @@ public class Calendars implements Serializable {
     private CalendarData work_schedule;
     private CalendarData subordinate_schedule;
 
-    public CalendarData getAvailability(){
+    public CalendarData getAvailability()
+            throws AuthenticationException, MalformedURLException,
+            ServiceException, IOException, NotLoggedInException{
         if(availability == null){
-            pions.controller.Calendars.initCalendar(AVAILABILITY);
+            availability = new CalendarData(AVAILABILITY);
         }
 
         return availability;
     }
 
-    public CalendarData getWorkSchedule(){
+    public CalendarData getWorkSchedule()
+            throws AuthenticationException, MalformedURLException,
+            ServiceException, IOException, NotLoggedInException{
         if(work_schedule == null){
-            pions.controller.Calendars.initCalendar(WORK_SCHEDULE);
+            work_schedule = new CalendarData(WORK_SCHEDULE);
         }
 
         return work_schedule;
     }
 
-    public CalendarData getSubordinateSchedule(){
+    public CalendarData getSubordinateSchedule()
+            throws AuthenticationException, MalformedURLException,
+            ServiceException, IOException, NotLoggedInException{
         if(subordinate_schedule == null){
-            pions.controller.Calendars.initCalendar(SUBORDINATE_SCHEDULE);
+            subordinate_schedule = new CalendarData(SUBORDINATE_SCHEDULE);
         }
 
         return subordinate_schedule;

@@ -37,10 +37,6 @@ public class CalendarData implements Serializable, AbstractAlert {
     private String gmail_password;
     private CalendarEntry active_calendar;
 
-    public CalendarData(String calendar_name) {
-        this.calendar_name = calendar_name;
-    }
-
     /**
      * Creates and initializes a calendar if init is true. The variable init
      * should only be true if the Gmail class has been tested using isValid().
@@ -52,10 +48,10 @@ public class CalendarData implements Serializable, AbstractAlert {
      * @throws IOException
      * @throws pions.model.ModelException.NotLoggedInException
      */
-    public CalendarData(String calendar_name, boolean init) throws AuthenticationException,
+    public CalendarData(String calendar_name) throws AuthenticationException,
             MalformedURLException, ServiceException, IOException, NotLoggedInException {
-        this(calendar_name);
-        if(init) create();
+        this.calendar_name = calendar_name;
+        create();
     }
 
     private void create() throws AuthenticationException,

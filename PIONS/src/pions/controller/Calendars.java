@@ -43,7 +43,12 @@ public class Calendars {
                 default:
             }
 
+            //TODO should NOT actually view the calendar
             Desktop.getDesktop().browse(new URI(calendar.getLink().getHref()));
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        } catch (ServiceException e) {
+            e.printStackTrace();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -55,10 +60,11 @@ public class Calendars {
         }
     }
 
-    public static CalendarData initCalendar(String calendar_name){
+    public static void sendNewWorkSchedule(boolean[] indices){
         try {
-            if(EmployeeSingleton.getInstance().getGmail().isValid()){
-                    return new CalendarData(calendar_name, true);
+            for(EmailAddress email_address: Gmail.getSelectedEmails(
+                    EmployeeSingleton.getInstance().getSubordinateGmails(), indices)){
+                sendWorkSchedule(email_address, AlertType.NewWorkSchedule);
             }
         } catch (AuthenticationException e) {
             e.printStackTrace();
@@ -68,20 +74,6 @@ public class Calendars {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NotLoggedInException e) {
-            e.printStackTrace();
-        }
-
-        //If an exception occurred, calendar is set to default
-        return new CalendarData(calendar_name);
-    }
-
-    public static void sendNewWorkSchedule(boolean[] indices){
-        try {
-            for(EmailAddress email_address: Gmail.getSelectedEmails(
-                    EmployeeSingleton.getInstance().getSubordinateGmails(), indices)){
-                sendWorkSchedule(email_address, AlertType.NewWorkSchedule);
-            }
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
@@ -95,6 +87,14 @@ public class Calendars {
                     EmployeeSingleton.getInstance().getSubordinateGmails(), indices)){
                 sendWorkSchedule(email_address, AlertType.UpdatedWorkSchedule);
             }
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
@@ -103,7 +103,9 @@ public class Calendars {
     }
 
     static void sendWorkSchedule(EmailAddress gmail_address, AlertType alert_type)
-            throws NotLoggedInException, AlertClassException {
+            throws NotLoggedInException, AlertClassException,
+            AuthenticationException, MalformedURLException,
+            ServiceException, IOException {
         Gmail.sendAlert(gmail_address,
                 new Alert(EmployeeSingleton.getInstance().getCalendars().getWorkSchedule(), alert_type));
     }

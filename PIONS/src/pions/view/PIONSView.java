@@ -23,7 +23,7 @@ import pions.controller.Employees;
  * Implements the Observer and Singleton design pattern
  * @author George
  */
-public class PIONSView implements Observer {
+public class PIONSView {
     private static PIONSView instance = new PIONSView();
     private JPanel idle = new IdleScreen();
 
@@ -206,18 +206,8 @@ public class PIONSView implements Observer {
         main_frame.transferFocus();
     }
 
-    /**
-     * Implements the observer design pattern. Shows a message to the user
-     * when it is notified by a class it is observing.
-     * @param o
-     * @param arg
-     */
-    public void update(Observable o, Object arg) {
-        JOptionPane.showMessageDialog(getFrame(), arg, "System Message", JOptionPane.INFORMATION_MESSAGE);
-    }
-
     private void menu_loginActionPerformed(ActionEvent evt){
-        setMain(new Login());
+        setMain((Employees.isLoggedIn() ? new Login() : new LoginSuccess()));
     }
 
     private void menu_quitActionPerformed(ActionEvent evt){

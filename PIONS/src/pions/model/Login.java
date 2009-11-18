@@ -26,8 +26,14 @@ import pions.model.ModelException.NotLoggedInException;
 public abstract class Login {
     private String username = null; //for AES
     private String password = null; //for AES
-    private KeyPair RSA_keys = null; //for RSA
     private boolean validated = false;
+
+    protected void init(String username, String password){
+        this.username = username;
+        this.password = password;
+
+        validated = false;
+    }
 
     protected String getUsername(){
         return username;
@@ -40,24 +46,12 @@ public abstract class Login {
      * @throws NoSuchAlgorithmException
      * @throws IOException
      */
-    protected KeyPair generateRSAKeys() throws NotLoggedInException,
-            NoSuchAlgorithmException, IOException {
-        validate();
-        
+    protected KeyPair generateRSAKeys()
+            throws NoSuchAlgorithmException, IOException {
         KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
         kpg.initialize(2048); //11 bits
 
         return kpg.genKeyPair();
-    }
-
-    /**
-     * Throw exception if user is not logged in.
-     * @throws pions.model.ModelException.NotLoggedInException
-     */
-    protected void validate() throws NotLoggedInException {
-        if(validated == false){
-            throw new NotLoggedInException();
-        }
     }
 
     private File getFile(){
@@ -70,6 +64,7 @@ public abstract class Login {
 
     /**
      * Checks that the file storing the Employee's information can be decrypted.
+     * Sets validated equal to true, so this operation will only be done once.
      * @param username
      * @param password
      * @return
@@ -110,7 +105,8 @@ public abstract class Login {
             ClassNotFoundException, IOException {
         EmployeeSingleton singleton =
                 (EmployeeSingleton)decryptAES(new FileInputStream(getFile(username)));
-        singleton.authenticate(username, password);
+
+        singleton.init(username, password);
 
         return singleton;
     }
@@ -124,13 +120,13 @@ public abstract class Login {
      */
     //TODO use AES encryption to encryptAES/serialize objects
     public final static byte[] encryptAES(Object object)
-            throws IOException, NotLoggedInException{
+            throws IOException{
         return getBytes(object);
     }
 
     //TODO use RSA encryption to encryptAES/serialize objects
     public byte[] encryptRSA(PrivateKey key_pair, Object object)
-            throws IOException, NotLoggedInException, StreamCorruptedException,
+            throws IOException, StreamCorruptedException,
             ClassNotFoundException {
         return getBytes(object);
     }
@@ -143,7 +139,11 @@ public abstract class Login {
         oos.writeObject(object);
         oos.close();
 
-        return baos.toByteArray();
+        try{
+            return baos.toByteArray();
+        } finally {
+            baos.close();
+        }
     }
 
     /**
@@ -165,9 +165,7 @@ public abstract class Login {
     //TODO use RSA decryption to decryptAES/deserialize objects
     public Object decryptRSA(PublicKey public_key, InputStream is)
             throws StreamCorruptedException, IOException,
-            ClassNotFoundException, NotLoggedInException {
-        validate();
-
+            ClassNotFoundException {
         return getObject(is);
     }
 
@@ -175,6 +173,10 @@ public abstract class Login {
             throws IOException, ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(is);
 
-        return ois.readObject();
+        try{
+            return ois.readObject();
+        } finally{
+            ois.close();
+        }
     }
 }
