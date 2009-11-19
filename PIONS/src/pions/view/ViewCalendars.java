@@ -1,14 +1,20 @@
 
 package pions.view;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import pions.controller.Calendars;
+import pions.controller.Calendars.CalendarType;
+
 /**
  *
  * @author George
  */
-public class Calendars extends javax.swing.JPanel {
+public class ViewCalendars extends javax.swing.JPanel {
 
     /** Creates new form Calendars */
-    public Calendars() {
+    public ViewCalendars() {
         initComponents();
     }
 
@@ -26,12 +32,12 @@ public class Calendars extends javax.swing.JPanel {
         button_work = new javax.swing.JButton();
         button_availability = new javax.swing.JButton();
         button_subordinate = new javax.swing.JButton();
-        button_swapshift_create = new javax.swing.JButton();
+        button_swapshift = new javax.swing.JToggleButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(Calendars.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(ViewCalendars.class);
         label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
         label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
@@ -65,11 +71,11 @@ public class Calendars extends javax.swing.JPanel {
             }
         });
 
-        button_swapshift_create.setText(resourceMap.getString("button_swapshift_create.text")); // NOI18N
-        button_swapshift_create.setName("button_swapshift_create"); // NOI18N
-        button_swapshift_create.addActionListener(new java.awt.event.ActionListener() {
+        button_swapshift.setText(resourceMap.getString("button_swapshift.text")); // NOI18N
+        button_swapshift.setName("button_swapshift"); // NOI18N
+        button_swapshift.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_swapshift_createActionPerformed(evt);
+                button_swapshiftActionPerformed(evt);
             }
         });
 
@@ -89,9 +95,11 @@ public class Calendars extends javax.swing.JPanel {
             .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button_swapshift_create, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                    .addComponent(button_subordinate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+                .addComponent(button_subordinate, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(button_swapshift, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -107,32 +115,47 @@ public class Calendars extends javax.swing.JPanel {
                 .addGap(11, 11, 11)
                 .addComponent(button_subordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(button_swapshift_create, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(button_swapshift, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(73, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_workActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_workActionPerformed
-        // TODO add your handling code here:
+        try{
+            URI link = Calendars.getLink(CalendarType.WorkSchedule);
+            if(link != null) Desktop.getDesktop().browse(link);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_button_workActionPerformed
 
     private void button_availabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_availabilityActionPerformed
-        // TODO add your handling code here:
+        try{
+            URI link = Calendars.getLink(CalendarType.Availability);
+            if(link != null) Desktop.getDesktop().browse(link);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_button_availabilityActionPerformed
 
     private void button_subordinateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_subordinateActionPerformed
-        // TODO add your handling code here:
+        try{
+            URI link = Calendars.getLink(CalendarType.SubordinateSchedule);
+            if(link != null) Desktop.getDesktop().browse(link);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_button_subordinateActionPerformed
 
-    private void button_swapshift_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_swapshift_createActionPerformed
+    private void button_swapshiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_swapshiftActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_button_swapshift_createActionPerformed
+    }//GEN-LAST:event_button_swapshiftActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_availability;
     private javax.swing.JButton button_subordinate;
-    private javax.swing.JButton button_swapshift_create;
+    private javax.swing.JToggleButton button_swapshift;
     private javax.swing.JButton button_work;
     private javax.swing.JLabel label_directions;
     private javax.swing.JLabel label_title;

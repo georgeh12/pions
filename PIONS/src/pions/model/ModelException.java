@@ -29,6 +29,23 @@ public class ModelException extends Exception {
     }
 
     /**
+     * When a calendar cannot be created automatically, this exception is thrown.
+     * In order to initialize such a calendar, it must be received via an alert.
+     */
+    public static class ScheduleNotFoundException extends ModelException {
+        private String calendar_name;
+
+        public ScheduleNotFoundException(String calendar_name){
+            this.calendar_name = calendar_name;
+        }
+
+        @Override
+        public String getMessage(){
+            return "The calendar \"" + calendar_name + "\" does not exist.";
+        }
+    }
+
+    /**
      * Thrown when Login has not been validated.
      */
     public static class NotLoggedInException extends ModelException {

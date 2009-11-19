@@ -240,7 +240,7 @@ public class PIONSView {
     }
 
     private void menu_calendarsActionPerformed(ActionEvent evt){
-        setMain(new Calendars());
+        setMain(new ViewCalendars());
     }
 
     private void menu_aboutusActionPerformed(ActionEvent evt){

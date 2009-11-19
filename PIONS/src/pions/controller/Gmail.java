@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
-import java.util.Observer;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.internet.AddressException;

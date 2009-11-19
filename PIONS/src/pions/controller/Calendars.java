@@ -15,6 +15,7 @@ import pions.model.ContactInfo.EmailAddress;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
+import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  *
@@ -25,26 +26,25 @@ public class Calendars {
         Availability, SubordinateSchedule, WorkSchedule;
     }
     
-    public static void openCalendar(CalendarType type){
+    public static URI getLink(CalendarType type){
         try {
-            pions.model.Calendars calendars = EmployeeSingleton.getInstance().getCalendars();
             CalendarData calendar = null;
 
             switch (type) {
                 case Availability:
-                    calendar = calendars.getAvailability();
+                    calendar = EmployeeSingleton.getInstance().getCalendars().getAvailability();
                     break;
                 case SubordinateSchedule:
-                    calendar = calendars.getSubordinateSchedule();
+                    calendar = EmployeeSingleton.getInstance().getCalendars().getSubordinateSchedule();
                     break;
                 case WorkSchedule:
-                    calendar = calendars.getWorkSchedule();
+                    calendar = EmployeeSingleton.getInstance().getCalendars().getWorkSchedule();
                     break;
                 default:
             }
 
-            //TODO should NOT actually view the calendar
-            Desktop.getDesktop().browse(new URI(calendar.getLink().getHref()));
+            //TODO getlink returns null
+            return new URI(calendar.getLink().getHref());
         } catch (AuthenticationException e) {
             e.printStackTrace();
         } catch (ServiceException e) {
@@ -57,7 +57,11 @@ public class Calendars {
             e.printStackTrace();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
+        } catch (ScheduleNotFoundException e){
+            e.printStackTrace();
         }
+
+        return null;
     }
 
     public static void sendNewWorkSchedule(boolean[] indices){
@@ -77,6 +81,8 @@ public class Calendars {
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
+            e.printStackTrace();
+        } catch (ScheduleNotFoundException e){
             e.printStackTrace();
         }
     }
@@ -99,13 +105,15 @@ public class Calendars {
             e.printStackTrace();
         } catch (AlertClassException e) {
             e.printStackTrace();
+        } catch (ScheduleNotFoundException e){
+            e.printStackTrace();
         }
     }
 
-    static void sendWorkSchedule(EmailAddress gmail_address, AlertType alert_type)
+    private static void sendWorkSchedule(EmailAddress gmail_address, AlertType alert_type)
             throws NotLoggedInException, AlertClassException,
             AuthenticationException, MalformedURLException,
-            ServiceException, IOException {
+            ServiceException, IOException, ScheduleNotFoundException {
         Gmail.sendAlert(gmail_address,
                 new Alert(EmployeeSingleton.getInstance().getCalendars().getWorkSchedule(), alert_type));
     }
