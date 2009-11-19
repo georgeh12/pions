@@ -3,7 +3,7 @@ package pions.view;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import pions.controller.AlertXMLIterator;
+import pions.controller.AlertIterator;
 import pions.controller.Alerts;
 
 
@@ -11,10 +11,10 @@ import pions.controller.Alerts;
  *
  * @author George
  */
-public class ActiveAlerts extends AbstractAlerts {
+public class ActiveAlerts extends AbstractList<AlertIterator> {
 
     /** Creates new form NewAlerts */
-    public ActiveAlerts(AlertXMLIterator iter) {
+    public ActiveAlerts(AlertIterator iter) {
         initComponents();
 
         super.panel_display = panel_display;
@@ -183,7 +183,7 @@ public class ActiveAlerts extends AbstractAlerts {
         int index = super.getFirstIndex();
 
         if(index != -1){
-            new DisplayAlert().setText(Alerts.getActiveAlert(index));
+            new DisplayAlert(Alerts.getActiveAlert(index));
         }
         else{
             JOptionPane.showMessageDialog(this, "Please select an index.", "No Index Selected", JOptionPane.ERROR_MESSAGE);

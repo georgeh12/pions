@@ -1,15 +1,29 @@
 
 package pions.view;
 
+import javax.swing.JOptionPane;
+import pions.controller.ContactIterator;
+import pions.controller.Contacts;
+
 /**
  *
  * @author George
  */
-public class Contacts extends javax.swing.JPanel {
+public class ContactList extends AbstractList {
 
     /** Creates new form Contacts */
-    public Contacts() {
+    public ContactList(ContactIterator iter) {
         initComponents();
+
+        super.panel_display = panel_display;
+        super.set(iter);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled){
+        button_select_all.setEnabled(enabled);
+        button_select_none.setEnabled(enabled);
+        scrollpane_display.setEnabled(enabled);
     }
 
     /** This method is called from within the constructor to
@@ -23,21 +37,18 @@ public class Contacts extends javax.swing.JPanel {
 
         label_title = new javax.swing.JLabel();
         label_directions = new javax.swing.JLabel();
-        checkbox_managers = new javax.swing.JCheckBox();
-        checkbox_subordinates = new javax.swing.JCheckBox();
-        checkbox_other = new javax.swing.JCheckBox();
         button_select_all = new javax.swing.JButton();
         label_select = new javax.swing.JLabel();
         button_select_none = new javax.swing.JButton();
         scrollpane_display = new javax.swing.JScrollPane();
         panel_display = new javax.swing.JPanel();
-        label_show = new javax.swing.JLabel();
         button_sendalert = new javax.swing.JToggleButton();
+        button_contactrequest = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(Contacts.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(ContactList.class);
         label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
         label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
@@ -46,30 +57,6 @@ public class Contacts extends javax.swing.JPanel {
         label_directions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
         label_directions.setName("label_directions"); // NOI18N
-
-        checkbox_managers.setText(resourceMap.getString("checkbox_managers.text")); // NOI18N
-        checkbox_managers.setName("checkbox_managers"); // NOI18N
-        checkbox_managers.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkbox_managersActionPerformed(evt);
-            }
-        });
-
-        checkbox_subordinates.setText(resourceMap.getString("checkbox_subordinates.text")); // NOI18N
-        checkbox_subordinates.setName("checkbox_subordinates"); // NOI18N
-        checkbox_subordinates.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkbox_subordinatesActionPerformed(evt);
-            }
-        });
-
-        checkbox_other.setText(resourceMap.getString("checkbox_other.text")); // NOI18N
-        checkbox_other.setName("checkbox_other"); // NOI18N
-        checkbox_other.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkbox_otherActionPerformed(evt);
-            }
-        });
 
         button_select_all.setText(resourceMap.getString("button_select_all.text")); // NOI18N
         button_select_all.setName("button_select_all"); // NOI18N
@@ -102,19 +89,24 @@ public class Contacts extends javax.swing.JPanel {
         );
         panel_displayLayout.setVerticalGroup(
             panel_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 253, Short.MAX_VALUE)
+            .addGap(0, 245, Short.MAX_VALUE)
         );
 
         scrollpane_display.setViewportView(panel_display);
-
-        label_show.setText(resourceMap.getString("label_show.text")); // NOI18N
-        label_show.setName("label_show"); // NOI18N
 
         button_sendalert.setText(resourceMap.getString("button_sendalert.text")); // NOI18N
         button_sendalert.setName("button_sendalert"); // NOI18N
         button_sendalert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_sendalertActionPerformed(evt);
+            }
+        });
+
+        button_contactrequest.setText(resourceMap.getString("button_contactrequest.text")); // NOI18N
+        button_contactrequest.setName("button_contactrequest"); // NOI18N
+        button_contactrequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_contactrequestActionPerformed(evt);
             }
         });
 
@@ -131,26 +123,20 @@ public class Contacts extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(button_sendalert)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(button_contactrequest)
+                .addContainerGap(56, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(label_select)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button_select_all)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button_select_none)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(label_show)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkbox_managers)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkbox_subordinates)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkbox_other)
-                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,61 +147,58 @@ public class Contacts extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_sendalert)
+                    .addComponent(button_contactrequest))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_select)
                     .addComponent(button_select_all)
                     .addComponent(button_select_none))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_show)
-                    .addComponent(checkbox_managers)
-                    .addComponent(checkbox_subordinates)
-                    .addComponent(checkbox_other))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_select_allActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_select_allActionPerformed
-        // TODO add your handling code here:
+        super.selectAll();
     }//GEN-LAST:event_button_select_allActionPerformed
 
     private void button_select_noneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_select_noneActionPerformed
-        // TODO add your handling code here:
+        super.selectNone();
     }//GEN-LAST:event_button_select_noneActionPerformed
-
-    private void checkbox_managersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_managersActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkbox_managersActionPerformed
-
-    private void checkbox_subordinatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_subordinatesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkbox_subordinatesActionPerformed
-
-    private void checkbox_otherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_otherActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkbox_otherActionPerformed
 
     private void button_sendalertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_sendalertActionPerformed
         if(button_sendalert.isSelected()){
-            PIONSView.getInstance().setAux(new SendAlert());
+            PIONSView.getInstance().setAux(new SendAlert(super.getIndices()));
+            this.setEnabled(false);
         }
         else{
             PIONSView.getInstance().resetAux();
+            this.setEnabled(true);
         }
     }//GEN-LAST:event_button_sendalertActionPerformed
 
+    private void button_contactrequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_contactrequestActionPerformed
+        String gmail = "";
+
+        while(gmail.equals("")){
+            gmail = JOptionPane.showInputDialog(this,
+                "Enter contact's Gmail address.\nRemember to include the @gmail.com suffix.",
+                "Send Contact Request",
+                JOptionPane.OK_CANCEL_OPTION);
+        }
+
+        if(gmail != null) Contacts.sendContactRequest(gmail);
+    }//GEN-LAST:event_button_contactrequestActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_contactrequest;
     private javax.swing.JButton button_select_all;
     private javax.swing.JButton button_select_none;
     private javax.swing.JToggleButton button_sendalert;
-    private javax.swing.JCheckBox checkbox_managers;
-    private javax.swing.JCheckBox checkbox_other;
-    private javax.swing.JCheckBox checkbox_subordinates;
     private javax.swing.JLabel label_directions;
     private javax.swing.JLabel label_select;
-    private javax.swing.JLabel label_show;
     private javax.swing.JLabel label_title;
     private javax.swing.JPanel panel_display;
     private javax.swing.JScrollPane scrollpane_display;

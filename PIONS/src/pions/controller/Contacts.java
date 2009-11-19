@@ -30,4 +30,30 @@ public class Contacts {
             e.printStackTrace();
         }
     }
+
+    public static ContactIterator getContactIterator(){
+        try {
+            return new ContactIterator(EmployeeSingleton.getInstance().getContacts().iterator());
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static void sendContactRequest(int index){
+        try {
+            Gmail.sendAlert(EmployeeSingleton.getInstance().getContacts().get(index).getAddress(),
+                    new Alert(EmployeeSingleton.getInstance().getContact(),
+                    AlertType.ContactRequest));
+        } catch (AlertClassException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
 }
