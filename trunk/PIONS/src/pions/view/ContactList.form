@@ -32,28 +32,22 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="button_sendalert" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="button_contactrequest" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="56" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="label_select" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="button_select_all" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="button_select_none" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="54" max="32767" attributes="0"/>
+              <EmptySpace pref="147" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="scrollpane_display" pref="280" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="label_show" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="checkbox_managers" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="checkbox_subordinates" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="checkbox_other" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,19 +60,16 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="button_sendalert" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="button_contactrequest" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="label_select" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="button_select_all" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="button_select_none" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="label_show" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="checkbox_managers" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="checkbox_subordinates" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="checkbox_other" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="scrollpane_display" pref="255" max="32767" attributes="0"/>
+              <Component id="scrollpane_display" pref="247" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -99,33 +90,6 @@
         <Property name="text" type="java.lang.String" resourceKey="label_directions.text"/>
         <Property name="name" type="java.lang.String" value="label_directions" noResource="true"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="checkbox_managers">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="checkbox_managers.text"/>
-        <Property name="name" type="java.lang.String" value="checkbox_managers" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkbox_managersActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="checkbox_subordinates">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="checkbox_subordinates.text"/>
-        <Property name="name" type="java.lang.String" value="checkbox_subordinates" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkbox_subordinatesActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="checkbox_other">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="checkbox_other.text"/>
-        <Property name="name" type="java.lang.String" value="checkbox_other" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkbox_otherActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="button_select_all">
       <Properties>
@@ -171,19 +135,13 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="253" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="245" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="label_show">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="label_show.text"/>
-        <Property name="name" type="java.lang.String" value="label_show" noResource="true"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JToggleButton" name="button_sendalert">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="button_sendalert.text"/>
@@ -191,6 +149,15 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_sendalertActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="button_contactrequest">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="button_contactrequest.text"/>
+        <Property name="name" type="java.lang.String" value="button_contactrequest" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_contactrequestActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

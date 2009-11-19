@@ -1,14 +1,19 @@
 
 package pions.view;
 
+import java.util.ArrayList;
+import pions.controller.Contacts;
+
 /**
  *
  * @author George
  */
 public class SendAlert extends javax.swing.JPanel {
 
+    private ArrayList<Integer> indices = new ArrayList<Integer>();
+    
     /** Creates new form SendAlert */
-    public SendAlert() {
+    public SendAlert(ArrayList<Integer> indices) {
         initComponents();
     }
 
@@ -144,7 +149,9 @@ public class SendAlert extends javax.swing.JPanel {
     }//GEN-LAST:event_button_request_subordinateActionPerformed
 
     private void button_request_contactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_request_contactActionPerformed
-        // TODO add your handling code here:
+        for(int i: indices){
+            Contacts.sendContactRequest(i);
+        }
     }//GEN-LAST:event_button_request_contactActionPerformed
 
     private void button_request_swapshiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_request_swapshiftActionPerformed

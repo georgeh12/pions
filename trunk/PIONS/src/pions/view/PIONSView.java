@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import org.jdesktop.application.Application.ExitListener;
 import pions.PIONS;
 import pions.controller.Alerts;
+import pions.controller.Contacts;
 import pions.controller.Employees;
 
 /**
@@ -207,7 +208,7 @@ public class PIONSView {
     }
 
     private void menu_loginActionPerformed(ActionEvent evt){
-        setMain((Employees.isLoggedIn() ? new Login() : new LoginSuccess()));
+        setMain((Employees.isLoggedIn() ? new LoginSuccess() : new Login()));
     }
 
     private void menu_quitActionPerformed(ActionEvent evt){
@@ -227,7 +228,7 @@ public class PIONSView {
     }
 
     private void menu_contactsActionPerformed(ActionEvent evt){
-        setMain(new Contacts());
+        setMain(new ContactList(Contacts.getContactIterator()));
     }
 
     private void menu_managersActionPerformed(ActionEvent evt){

@@ -84,7 +84,7 @@ public class Alert implements Serializable {
     }
 
     public EmailAddress getAddress(){
-        return sender.clone();
+        return sender;
     }
 
     public AlertType getType(){
@@ -96,6 +96,7 @@ public class Alert implements Serializable {
         return type.toString() + ":\n" + object.toString();
     }
 
+    //TODO implement RemoveEmployee request
     public enum AlertType{
         AddManager, AddSubordinate,
         ContactRequest, RemoveEmployee,

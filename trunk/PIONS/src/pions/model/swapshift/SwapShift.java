@@ -15,7 +15,6 @@ import pions.model.ModelException.NotLoggedInException;
  *
  * @author George
  */
-//TODO design SwapShift
 public final class SwapShift implements Serializable, AbstractAlert {
     private SwapShiftMachine machine = new SwapShiftMachine();
     private Employee creator;

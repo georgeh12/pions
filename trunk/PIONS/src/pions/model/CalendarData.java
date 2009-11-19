@@ -24,7 +24,6 @@ import pions.model.ModelException.NotLoggedInException;
  * has not been initialized properly, neither will this class.
  * @author George
  */
-//TODO implement iterator
 public class CalendarData implements Serializable, AbstractAlert {
     private final static String CALENDAR_SERVICE = "PIONS Calendar";
     private final static String OWN_CALENDARS =

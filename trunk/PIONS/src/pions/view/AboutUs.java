@@ -10,6 +10,8 @@ public class AboutUs extends javax.swing.JPanel {
     /** Creates new form AboutUs */
     public AboutUs() {
         initComponents();
+
+        PIONSView.getInstance().setAux(new AboutUsAux());
     }
 
     /** This method is called from within the constructor to

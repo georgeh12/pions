@@ -4,6 +4,7 @@ package pions.model;
 import java.io.Serializable;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Iterator;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.AlertClassException;
@@ -31,6 +32,10 @@ public class Contacts implements Serializable {
         return contact;
     }
 
+    public Iterator<Contact> iterator(){
+        return contacts.iterator();
+    }
+
     public Contact searchContacts(String email_address){
         for(Contact contact: contacts){
             if(contact.getAddress().equals(email_address)) return contact;
@@ -45,6 +50,10 @@ public class Contacts implements Serializable {
         }
         
         return null;
+    }
+
+    public Contact get(int index){
+        return contacts.get(index);
     }
 
     public static class Contact implements Serializable, AbstractAlert {

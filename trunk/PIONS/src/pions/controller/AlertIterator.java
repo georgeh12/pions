@@ -12,22 +12,16 @@ import pions.model.Alert;
  * Iterator design implementation.
  * @author George
  */
-public class AlertXMLIterator implements Iterator {
+public class AlertIterator extends XMLIterator<Alert> {
     public static final String ALERT = "ALERT";
     public static final String SENDER = "SENDER";
     public static final String TYPE = "TYPE";
     public static final String DESCRIPTION = "DESCRIPTION";
-    private Document xml;
-    private Iterator<Alert> iter;
 
-    public AlertXMLIterator(Iterator<Alert> iter) {
-        this.iter = iter;
+    public AlertIterator(Iterator<Alert> iter) {
+        super(iter);
     }
 
-    public boolean hasNext() {
-        return iter.hasNext();
-    }
-    
     @Override
     public Document next() {
         xml = null;
@@ -54,9 +48,5 @@ public class AlertXMLIterator implements Iterator {
         }
         
         return xml;
-    }
-
-    public void remove() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

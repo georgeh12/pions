@@ -10,16 +10,10 @@ import javax.swing.Icon;
 public class DisplayAlert extends javax.swing.JPanel {
 
     /** Creates new form DisplayAlert */
-    public DisplayAlert() {
+    public DisplayAlert(String label_text) {
         initComponents();
-    }
 
-    public void setText(String label_text){
         label_display.setText(label_text);
-    }
-
-    public void setIcon(Icon label_icon){
-        label_display.setIcon(label_icon);
     }
 
     /** This method is called from within the constructor to

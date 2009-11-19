@@ -9,20 +9,22 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import org.w3c.dom.Document;
-import pions.controller.AlertXMLIterator;
+import org.w3c.dom.Element;
+import pions.controller.AlertIterator;
+import pions.controller.XMLIterator;
 
 /**
  *
  * @author George
  */
-public abstract class AbstractAlerts extends JPanel {
+public class AbstractList<T extends XMLIterator> extends JPanel {
 
-    private AlertXMLIterator iter = null;
+    private T iter = null;
     private ArrayList<JCheckBox> check_boxes = null;
     private ArrayList<JTextArea> text_areas = null;
     protected JPanel panel_display = null;
 
-    protected void set(AlertXMLIterator iter){
+    protected void set(T iter){
         this.iter = iter;
         check_boxes = new ArrayList<JCheckBox>();
         text_areas = new ArrayList<JTextArea>();
@@ -77,14 +79,16 @@ public abstract class AbstractAlerts extends JPanel {
             buffer = new StringBuffer();
             Document xml = iter.next();
 
+            Element alert = xml.getElementById(AlertIterator.ALERT);
+
             buffer.append("Sender: \n");
-            buffer.append(xml.getElementById(AlertXMLIterator.SENDER).getNodeValue());
+            buffer.append(alert.getAttribute(AlertIterator.SENDER));
 
             buffer.append("Type: \n");
-            buffer.append(xml.getElementById(AlertXMLIterator.TYPE).getNodeValue());
+            buffer.append(alert.getAttribute(AlertIterator.TYPE));
 
             buffer.append("Description: \n");
-            buffer.append(xml.getElementById(AlertXMLIterator.DESCRIPTION).getNodeValue());
+            buffer.append(alert.getAttribute(AlertIterator.DESCRIPTION));
         }
 
         return buffer;
@@ -121,4 +125,5 @@ public abstract class AbstractAlerts extends JPanel {
             check_box.setSelected(set);
         }
     }
+
 }
