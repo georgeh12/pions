@@ -28,7 +28,6 @@ public class AboutUsAux extends javax.swing.JPanel {
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(AboutUsAux.class);
         label_picture.setFont(resourceMap.getFont("label_picture.font")); // NOI18N
-        label_picture.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label_picture.setIcon(resourceMap.getIcon("label_picture.icon")); // NOI18N
         label_picture.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         label_picture.setIconTextGap(0);
@@ -38,11 +37,11 @@ public class AboutUsAux extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_picture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(label_picture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_picture, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(label_picture, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

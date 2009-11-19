@@ -245,5 +245,6 @@ public class PIONSView {
 
     private void menu_aboutusActionPerformed(ActionEvent evt){
         setMain(new AboutUs());
+        setAux(new AboutUsAux());
     }
 }
