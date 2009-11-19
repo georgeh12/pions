@@ -36,10 +36,12 @@
           <Component id="label_title" alignment="0" pref="300" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="button_swapshift_create" alignment="1" pref="280" max="32767" attributes="0"/>
-                  <Component id="button_subordinate" alignment="1" pref="280" max="32767" attributes="0"/>
-              </Group>
+              <Component id="button_subordinate" pref="280" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="button_swapshift" pref="280" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -57,7 +59,7 @@
               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Component id="button_subordinate" min="-2" pref="50" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="button_swapshift_create" min="-2" pref="50" max="-2" attributes="0"/>
+              <Component id="button_swapshift" min="-2" pref="50" max="-2" attributes="0"/>
               <EmptySpace pref="73" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -106,13 +108,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_subordinateActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="button_swapshift_create">
+    <Component class="javax.swing.JToggleButton" name="button_swapshift">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="button_swapshift_create.text"/>
-        <Property name="name" type="java.lang.String" value="button_swapshift_create" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="button_swapshift.text"/>
+        <Property name="name" type="java.lang.String" value="button_swapshift" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_swapshift_createActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_swapshiftActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

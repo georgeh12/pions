@@ -53,8 +53,8 @@ public class CalendarData implements Serializable, AbstractAlert {
         create();
     }
 
-    private void create() throws AuthenticationException,
-            MalformedURLException, ServiceException, IOException, NotLoggedInException {
+    private void create() throws AuthenticationException, MalformedURLException,
+            ServiceException, IOException, NotLoggedInException {
         gmail_address = EmployeeSingleton.getInstance().getGmail().getGmailAddress();
         gmail_password = EmployeeSingleton.getInstance().getGmail().getPassword();
         
