@@ -122,7 +122,7 @@ public class ViewCalendars extends javax.swing.JPanel {
 
     private void button_workActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_workActionPerformed
         try{
-            URI link = Calendars.getLink(CalendarType.WorkSchedule);
+            URI link = Calendars.getReadLink(CalendarType.WorkSchedule);
             if(link != null) Desktop.getDesktop().browse(link);
         } catch (IOException e) {
             e.printStackTrace();
@@ -131,7 +131,7 @@ public class ViewCalendars extends javax.swing.JPanel {
 
     private void button_availabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_availabilityActionPerformed
         try{
-            URI link = Calendars.getLink(CalendarType.Availability);
+            URI link = Calendars.getReadLink(CalendarType.Availability);
             if(link != null) Desktop.getDesktop().browse(link);
         } catch (IOException e) {
             e.printStackTrace();
@@ -140,7 +140,7 @@ public class ViewCalendars extends javax.swing.JPanel {
 
     private void button_subordinateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_subordinateActionPerformed
         try{
-            URI link = Calendars.getLink(CalendarType.SubordinateSchedule);
+            URI link = Calendars.getReadLink(CalendarType.SubordinateSchedule);
             if(link != null) Desktop.getDesktop().browse(link);
         } catch (IOException e) {
             e.printStackTrace();

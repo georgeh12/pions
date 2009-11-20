@@ -96,19 +96,30 @@ public abstract class Login {
     public void saveFile() throws IOException, NotLoggedInException {
         FileOutputStream fos = new FileOutputStream(getFile());
 
-        fos.write(encryptAES(EmployeeSingleton.getInstance()));
+        try {
+            fos.write(encryptAES(EmployeeSingleton.getInstance()));
+            fos.flush();
+        } finally {
+            fos.close();
+        }
     }
 
     //TODO add file header and encryption
     public static EmployeeSingleton loadFile(String username, String password)
             throws FileNotFoundException, StreamCorruptedException,
             ClassNotFoundException, IOException {
-        EmployeeSingleton singleton =
-                (EmployeeSingleton)decryptAES(new FileInputStream(getFile(username)));
+        FileInputStream fis = new FileInputStream(getFile(username));
 
-        singleton.init(username, password);
+        try{
+            EmployeeSingleton singleton =
+                    (EmployeeSingleton)decryptAES(fis);
 
-        return singleton;
+            singleton.init(username, password);
+
+            return singleton;
+        } finally {
+            fis.close();
+        }
     }
     
     /**
@@ -134,16 +145,18 @@ public abstract class Login {
     public static byte[] getBytes(Object object) throws IOException{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
+        byte[] bytes;
 
-        // write object to bytes
-        oos.writeObject(object);
-        oos.close();
-
-        try{
-            return baos.toByteArray();
+        try {
+            // write object to bytes
+            oos.writeObject(object);
+            bytes = baos.toByteArray();
         } finally {
+            oos.close();
             baos.close();
         }
+
+        return bytes;
     }
 
     /**

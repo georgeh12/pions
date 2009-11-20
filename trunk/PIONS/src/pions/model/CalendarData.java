@@ -4,15 +4,21 @@ package pions.model;
 import com.google.gdata.client.calendar.CalendarService;
 import com.google.gdata.data.Link;
 import com.google.gdata.data.PlainTextConstruct;
+import com.google.gdata.data.acl.AclEntry;
+import com.google.gdata.data.acl.AclRole;
+import com.google.gdata.data.acl.AclScope;
+import com.google.gdata.data.calendar.CalendarAclRole;
 import com.google.gdata.data.calendar.CalendarEntry;
+import com.google.gdata.data.calendar.CalendarFeed;
 import com.google.gdata.data.calendar.TimeZoneProperty;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.TimeZone;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
@@ -25,16 +31,15 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 public class CalendarData implements Serializable, AbstractAlert {
-    private final static String CALENDAR_SERVICE = "PIONS Calendar";
-    private final static String OWN_CALENDARS =
-            "http://www.google.com/calendar/feeds/default/owncalendars/full";
-    private final static String ALL_CALENDARS =
-            "http://www.google.com/calendar/feeds/default/allcalendars/full";
+    private final static String OWN_CALENDARS = CalendarService.CALENDAR_ROOT_URL
+            + "default/owncalendars/full";
+    private final static String ACL_LIST = CalendarService.CALENDAR_ROOT_URL
+            + "default/acl/full";
     private String calendar_name;
-    private ArrayList<CalendarEntry> archive = new ArrayList<CalendarEntry>();
     private EmailAddress gmail_address;
     private String gmail_password;
-    private CalendarEntry active_calendar;
+    private URL read_link;
+    private URL edit_link;
 
     /**
      * Creates and initializes a calendar if init is true. The variable init
@@ -55,42 +60,54 @@ public class CalendarData implements Serializable, AbstractAlert {
 
     private void create() throws AuthenticationException, MalformedURLException,
             ServiceException, IOException, NotLoggedInException {
-        gmail_address = EmployeeSingleton.getInstance().getGmail().getGmailAddress();
-        gmail_password = EmployeeSingleton.getInstance().getGmail().getPassword();
         
-        // Create a CalenderService and authenticate
-        CalendarService service = new CalendarService(CALENDAR_SERVICE);
-        service.setUserCredentials(gmail_address.getAddress(), gmail_password);
-
-        // Create the calendar
-        active_calendar = new CalendarEntry();
+        // Create the calendar entry
+        CalendarEntry active_calendar = new CalendarEntry();
         active_calendar.setTitle(new PlainTextConstruct(calendar_name));
         active_calendar.setTimeZone(new TimeZoneProperty(TimeZone.getDefault().getID()));
+        active_calendar.setCanEdit(true);
 
-        service.insert(new URL(OWN_CALENDARS), active_calendar);
+        // GoogleCalendar created
+        active_calendar = Calendars.getService().insert(new URL(OWN_CALENDARS), active_calendar);
+
+        // Valid Link.Rel's: ALTERNATE, ENTRY_EDIT, SELF
+        read_link = new URL(active_calendar.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
     }
 
-    public void update() throws ServiceException, IOException{
-        active_calendar = active_calendar.update();
+    public URI getReadLink()
+            throws NotLoggedInException, AuthenticationException,
+            ServiceException, IOException, URISyntaxException {
+        return new URI(Calendars.getService().getFeed(read_link, CalendarFeed.class)
+                .getLink(Link.Rel.ALTERNATE, Link.Type.HTML).getHref());
     }
 
-    public Link getLink(){
-        return active_calendar.getEditLink();
+    public void shareRead(String gmail_address)
+            throws NotLoggedInException, AuthenticationException,
+            ServiceException, MalformedURLException, IOException {
+        share(gmail_address, CalendarAclRole.READ);
     }
 
-    public void archiveCalendar(String new_calendar) throws AuthenticationException,
-            MalformedURLException, ServiceException, IOException, NotLoggedInException {
-        archive.add(active_calendar);
-        create();
+    public void shareEdit(String gmail_address)
+            throws NotLoggedInException, AuthenticationException,
+            ServiceException, MalformedURLException, IOException {
+        share(gmail_address, CalendarAclRole.EDITOR);
     }
 
-    public void acceptAlert(AlertType type) throws AlertClassException {
+    private void share(String gmail_address, AclRole rights)
+            throws NotLoggedInException, AuthenticationException,
+            ServiceException, MalformedURLException, IOException {
+        AclEntry entry = new AclEntry();
+        entry.setScope(new AclScope(AclScope.Type.USER, gmail_address));
+        entry.setRole(rights);
+
+        Calendars.getService().insert(new URL(ACL_LIST), entry);
+    }
+
+    public void acceptAlert(AlertType type) throws AlertClassException, NotLoggedInException {
         switch(type){
             case NewWorkSchedule:
-                //TODO
-                break;
             case UpdatedWorkSchedule:
-                //TODO
+                EmployeeSingleton.getInstance().getCalendars().setWorkSchedule(this);
                 break;
             default:
                 throw new AlertClassException(this.getClass(), type.getAssociatedClass());

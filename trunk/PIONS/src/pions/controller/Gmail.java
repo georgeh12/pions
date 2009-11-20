@@ -20,7 +20,7 @@ import pions.model.Alert;
 public class Gmail implements Serializable {
     public static void setGmail(String gmail_username, String gmail_password){
         try {
-            EmployeeSingleton.getInstance().getGmail().setGmail(
+            EmployeeSingleton.getInstance().setGmail(
                     new EmailAddress(gmail_username, EmployeeSingleton.getInstance().getName()),
                     gmail_password);
         } catch (NotLoggedInException e) {
