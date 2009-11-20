@@ -20,7 +20,7 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 public class Employee extends Login implements Serializable, AbstractAlert {
-    private Gmail gmail = Gmail.getInstance();
+    private Gmail gmail = null;
     private Calendars calendars = new Calendars();
     private Contacts contacts = new Contacts();
     private KeyPair key_pair = null;
@@ -33,6 +33,10 @@ public class Employee extends Login implements Serializable, AbstractAlert {
 
     public Calendars getCalendars(){
         return calendars;
+    }
+
+    public void setGmail(EmailAddress gmail_address, String gmail_password){
+        gmail = new Gmail(gmail_address, gmail_password);
     }
 
     public Contacts getContacts(){
@@ -49,21 +53,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
      * @return
      */
     public String getDisplayName() {
-        if(display_name != null){
-            return display_name;
-        }
-        else{
-            return getName();
-        }
-    }
-
-    /**
-     * Set display name
-     * @param display_name
-     * @throws pions.model.ModelException.NotLoggedInException
-     */
-    public void setDisplayName(String display_name) {
-        this.display_name = display_name;
+        return display_name;
     }
 
     public byte[] encryptRSA(Object object)

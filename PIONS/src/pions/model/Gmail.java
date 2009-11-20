@@ -8,7 +8,6 @@ import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Observable;
 import java.util.Properties;
 import javax.mail.BodyPart;
 import javax.mail.Folder;
@@ -35,7 +34,6 @@ import pions.model.ModelException.MessageParserException;
  * @author George
  */
 public class Gmail implements Serializable {
-    private static Gmail gmail = null;
     private final static String HOST = "pop.gmail.com";
     private final static String STORE = "pop3s";
     private final static String FOLDER_NAME = "Inbox";
@@ -48,14 +46,9 @@ public class Gmail implements Serializable {
     private ArrayList<Alert> active_alerts = new ArrayList<Alert>();
     private ArrayList<Alert> saved_alerts = new ArrayList<Alert>();
 
-    private Gmail() { }
-
-    static Gmail getInstance(){
-        if(gmail == null){
-            gmail = new Gmail();
-        }
-
-        return gmail;
+    Gmail(EmailAddress gmail_username, String gmail_password) {
+        this.gmail_address = gmail_username;
+        this.gmail_password = gmail_password;
     }
 
     public Alert getActiveAlert(int index){
@@ -89,11 +82,6 @@ public class Gmail implements Serializable {
         }
 
         return false;
-    }
-
-    public void setGmail(EmailAddress gmail_username, String gmail_password){
-        this.gmail_address = gmail_username;
-        this.gmail_password = gmail_password;
     }
 
     public EmailAddress getGmailAddress(){

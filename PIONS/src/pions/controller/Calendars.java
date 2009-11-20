@@ -3,7 +3,6 @@ package pions.controller;
 
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
-import java.awt.Desktop;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -22,11 +21,12 @@ import pions.model.ModelException.ScheduleNotFoundException;
  * @author George
  */
 public class Calendars {
+    
     public static enum CalendarType {
         Availability, SubordinateSchedule, WorkSchedule;
     }
     
-    public static URI getLink(CalendarType type){
+    public static URI getReadLink(CalendarType type){
         try {
             CalendarData calendar = null;
 
@@ -44,7 +44,7 @@ public class Calendars {
             }
 
             //TODO getlink returns null
-            return new URI(calendar.getLink().getHref());
+            return calendar.getReadLink();
         } catch (AuthenticationException e) {
             e.printStackTrace();
         } catch (ServiceException e) {
@@ -114,7 +114,10 @@ public class Calendars {
             throws NotLoggedInException, AlertClassException,
             AuthenticationException, MalformedURLException,
             ServiceException, IOException, ScheduleNotFoundException {
+        CalendarData work_schedule = EmployeeSingleton.getInstance().getCalendars().getWorkSchedule();
+        work_schedule.shareRead(gmail_address.getAddress());
+
         Gmail.sendAlert(gmail_address,
-                new Alert(EmployeeSingleton.getInstance().getCalendars().getWorkSchedule(), alert_type));
+                new Alert(work_schedule, alert_type));
     }
 }
