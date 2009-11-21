@@ -17,7 +17,7 @@ import pions.controller.XMLIterator;
  *
  * @author George
  */
-public class AbstractList<T extends XMLIterator> extends JPanel {
+public class AbstractIList<T extends XMLIterator> extends JPanel {
 
     private T iter = null;
     private ArrayList<JCheckBox> check_boxes = null;

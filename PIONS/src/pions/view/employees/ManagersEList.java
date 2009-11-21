@@ -1,5 +1,5 @@
 
-package pions.view;
+package pions.view.employees;
 
 import java.util.ArrayList;
 
@@ -7,10 +7,10 @@ import java.util.ArrayList;
  *
  * @author George
  */
-public class Managers extends AbstractEmployees {
+public class ManagersEList extends AbstractEList {
 
     /** Creates new form ManagerList */
-    public Managers(ArrayList<String> managers) {
+    public ManagersEList(ArrayList<String> managers) {
         initComponents();
 
         super.panel_display = panel_display;
@@ -33,7 +33,7 @@ public class Managers extends AbstractEmployees {
 
         setName("Form"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(Managers.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(ManagersEList.class);
         label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
         label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_title.setText(resourceMap.getString("label_title.text")); // NOI18N

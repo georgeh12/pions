@@ -1,20 +1,21 @@
 
-package pions.view;
+package pions.view.alerts;
 
+import pions.view.AbstractIList;
+import pions.view.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import pions.controller.AlertIterator;
 import pions.controller.Alerts;
 
-
 /**
  *
  * @author George
  */
-public class ActiveAlerts extends AbstractList<AlertIterator> {
+public class SavedAlertIList extends AbstractIList<AlertIterator> {
 
-    /** Creates new form NewAlerts */
-    public ActiveAlerts(AlertIterator iter) {
+    /** Creates new form SavedAlerts */
+    public SavedAlertIList(AlertIterator iter) {
         initComponents();
 
         super.panel_display = panel_display;
@@ -30,19 +31,62 @@ public class ActiveAlerts extends AbstractList<AlertIterator> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        scrollpane_display = new javax.swing.JScrollPane();
-        panel_display = new javax.swing.JPanel();
         label_title = new javax.swing.JLabel();
         label_directions = new javax.swing.JLabel();
-        button_accept = new javax.swing.JButton();
-        button_reject = new javax.swing.JButton();
-        button_ignore = new javax.swing.JButton();
-        button_select_all = new javax.swing.JButton();
-        button_select_none = new javax.swing.JButton();
-        label_select = new javax.swing.JLabel();
         button_view = new javax.swing.JButton();
+        button_delete = new javax.swing.JButton();
+        button_select_all = new javax.swing.JButton();
+        label_select = new javax.swing.JLabel();
+        button_select_none = new javax.swing.JButton();
+        scrollpane_display = new javax.swing.JScrollPane();
+        panel_display = new javax.swing.JPanel();
 
         setName("Form"); // NOI18N
+
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(SavedAlertIList.class);
+        label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
+        label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
+        label_title.setName("label_title"); // NOI18N
+
+        label_directions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
+        label_directions.setName("label_directions"); // NOI18N
+
+        button_view.setText(resourceMap.getString("button_view.text")); // NOI18N
+        button_view.setName("button_view"); // NOI18N
+        button_view.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_viewActionPerformed(evt);
+            }
+        });
+
+        button_delete.setText(resourceMap.getString("button_delete.text")); // NOI18N
+        button_delete.setName("button_delete"); // NOI18N
+        button_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_deleteActionPerformed(evt);
+            }
+        });
+
+        button_select_all.setText(resourceMap.getString("button_select_all.text")); // NOI18N
+        button_select_all.setName("button_select_all"); // NOI18N
+        button_select_all.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_select_allActionPerformed(evt);
+            }
+        });
+
+        label_select.setText(resourceMap.getString("label_select.text")); // NOI18N
+        label_select.setName("label_select"); // NOI18N
+
+        button_select_none.setText(resourceMap.getString("button_select_none.text")); // NOI18N
+        button_select_none.setName("button_select_none"); // NOI18N
+        button_select_none.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_select_noneActionPerformed(evt);
+            }
+        });
 
         scrollpane_display.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollpane_display.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -63,67 +107,6 @@ public class ActiveAlerts extends AbstractList<AlertIterator> {
 
         scrollpane_display.setViewportView(panel_display);
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(ActiveAlerts.class);
-        label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
-        label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
-        label_title.setName("label_title"); // NOI18N
-
-        label_directions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
-        label_directions.setName("label_directions"); // NOI18N
-
-        button_accept.setText(resourceMap.getString("button_accept.text")); // NOI18N
-        button_accept.setName("button_accept"); // NOI18N
-        button_accept.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_acceptActionPerformed(evt);
-            }
-        });
-
-        button_reject.setText(resourceMap.getString("button_reject.text")); // NOI18N
-        button_reject.setName("button_reject"); // NOI18N
-        button_reject.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_rejectActionPerformed(evt);
-            }
-        });
-
-        button_ignore.setText(resourceMap.getString("button_ignore.text")); // NOI18N
-        button_ignore.setName("button_ignore"); // NOI18N
-        button_ignore.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_ignoreActionPerformed(evt);
-            }
-        });
-
-        button_select_all.setText(resourceMap.getString("button_select_all.text")); // NOI18N
-        button_select_all.setName("button_select_all"); // NOI18N
-        button_select_all.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_select_allActionPerformed(evt);
-            }
-        });
-
-        button_select_none.setText(resourceMap.getString("button_select_none.text")); // NOI18N
-        button_select_none.setName("button_select_none"); // NOI18N
-        button_select_none.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_select_noneActionPerformed(evt);
-            }
-        });
-
-        label_select.setText(resourceMap.getString("label_select.text")); // NOI18N
-        label_select.setName("label_select"); // NOI18N
-
-        button_view.setText(resourceMap.getString("button_view.text")); // NOI18N
-        button_view.setName("button_view"); // NOI18N
-        button_view.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_viewActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -138,19 +121,15 @@ public class ActiveAlerts extends AbstractList<AlertIterator> {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(button_view)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(button_delete))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(label_select)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_select_all)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_select_none))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(button_accept)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(button_ignore)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(button_reject)))
-                .addContainerGap(74, Short.MAX_VALUE))
+                        .addComponent(button_select_none)))
+                .addContainerGap(143, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
@@ -165,14 +144,12 @@ public class ActiveAlerts extends AbstractList<AlertIterator> {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_view)
+                    .addComponent(button_delete))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_select)
                     .addComponent(button_select_all)
                     .addComponent(button_select_none))
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_accept)
-                    .addComponent(button_ignore)
-                    .addComponent(button_reject))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
                 .addContainerGap())
@@ -183,12 +160,20 @@ public class ActiveAlerts extends AbstractList<AlertIterator> {
         int index = super.getFirstIndex();
 
         if(index != -1){
-            new DisplayAlert(Alerts.getActiveAlert(index));
+            new DisplayAlert(Alerts.getSavedAlert(index));
         }
         else{
             JOptionPane.showMessageDialog(this, "Please select an index.", "No Index Selected", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_button_viewActionPerformed
+
+    private void button_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_deleteActionPerformed
+        ArrayList<Integer> indices = super.getIndices();
+
+        for(int i: indices){
+            Alerts.deleteSavedAlert(i);
+        }
+    }//GEN-LAST:event_button_deleteActionPerformed
 
     private void button_select_allActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_select_allActionPerformed
         super.selectAll();
@@ -198,35 +183,9 @@ public class ActiveAlerts extends AbstractList<AlertIterator> {
         super.selectNone();
     }//GEN-LAST:event_button_select_noneActionPerformed
 
-    private void button_acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_acceptActionPerformed
-        ArrayList<Integer> indices = super.getIndices();
-
-        for(int i: indices){
-            Alerts.acceptActiveAlert(i);
-        }
-    }//GEN-LAST:event_button_acceptActionPerformed
-
-    private void button_rejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rejectActionPerformed
-        ArrayList<Integer> indices = super.getIndices();
-
-        for(int i: indices){
-            Alerts.rejectActiveAlert(i);
-        }
-    }//GEN-LAST:event_button_rejectActionPerformed
-
-    private void button_ignoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ignoreActionPerformed
-        ArrayList<Integer> indices = super.getIndices();
-
-        for(int i: indices){
-            Alerts.ignoreActiveAlert(i);
-        }
-    }//GEN-LAST:event_button_ignoreActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton button_accept;
-    private javax.swing.JButton button_ignore;
-    private javax.swing.JButton button_reject;
+    private javax.swing.JButton button_delete;
     private javax.swing.JButton button_select_all;
     private javax.swing.JButton button_select_none;
     private javax.swing.JButton button_view;

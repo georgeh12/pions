@@ -1,6 +1,8 @@
 
 package pions.view;
 
+import pions.view.*;
+import pions.view.alerts.SendAlert;
 import javax.swing.JOptionPane;
 import pions.controller.ContactIterator;
 import pions.controller.Contacts;
@@ -9,7 +11,7 @@ import pions.controller.Contacts;
  *
  * @author George
  */
-public class ContactList extends AbstractList {
+public class ContactList extends AbstractIList<ContactIterator> {
 
     /** Creates new form Contacts */
     public ContactList(ContactIterator iter) {

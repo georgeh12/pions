@@ -1,6 +1,7 @@
 
-package pions.view;
+package pions.view.employees;
 
+import pions.view.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,7 +18,7 @@ import pions.controller.Employees;
  *
  * @author George
  */
-public class AbstractEmployees extends JPanel {
+public class AbstractEList extends JPanel {
 
     private ArrayList<String> names;
     private ArrayList<JRadioButton> radio_buttons = null;
@@ -73,7 +74,7 @@ public class AbstractEmployees extends JPanel {
     }
 
     private void radio_buttonActionPerformed(ActionEvent evt){
-        PIONSView.getInstance().setAux(new EmployeeDetails(Employees.getManagerXML(
+        PIONSView.getInstance().setAux(new DisplayEmployee(Employees.getManagerXML(
                 radio_buttons.indexOf(evt.getSource()))));
     }
 

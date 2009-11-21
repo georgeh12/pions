@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.CalendarData;
@@ -22,6 +23,41 @@ import pions.model.ModelException.ScheduleNotFoundException;
  * @author George
  */
 public class Calendars {
+
+    public static void addAvailabilityEvent(String contact, String details, Date start, Date end){
+        try {
+            EmployeeSingleton.getInstance().getCalendars().getAvailability().addEvent(contact, details, start, end);
+        } catch (AuthenticationException e){
+            e.printStackTrace();
+        } catch (ServiceException e){
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static CalendarIterator getAvailabilityEvents() {
+        try {
+            return new CalendarIterator(EmployeeSingleton.getInstance()
+                    .getCalendars().getAvailability().getEvents().iterator());
+        } catch (AuthenticationException e){
+            e.printStackTrace();
+        } catch (ServiceException e){
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     static CalendarEntry getEvent(int index) {
         try {
