@@ -19,9 +19,9 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 import java.util.TimeZone;
 import pions.model.Alert.AlertType;
-import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 
@@ -36,10 +36,7 @@ public class CalendarData implements Serializable, AbstractAlert {
     private final static String ACL_LIST = CalendarService.CALENDAR_ROOT_URL
             + "default/acl/full";
     private String calendar_name;
-    private EmailAddress gmail_address;
-    private String gmail_password;
-    private URL read_link;
-    private URL edit_link;
+    private URL html_link;
 
     /**
      * Creates and initializes a calendar if init is true. The variable init
@@ -71,13 +68,13 @@ public class CalendarData implements Serializable, AbstractAlert {
         active_calendar = Calendars.getService().insert(new URL(OWN_CALENDARS), active_calendar);
 
         // Valid Link.Rel's: ALTERNATE, ENTRY_EDIT, SELF
-        read_link = new URL(active_calendar.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
+        html_link = new URL(active_calendar.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
     }
 
     public URI getReadLink()
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException, URISyntaxException {
-        return new URI(Calendars.getService().getFeed(read_link, CalendarFeed.class)
+        return new URI(Calendars.getService().getFeed(html_link, CalendarFeed.class)
                 .getLink(Link.Rel.ALTERNATE, Link.Type.HTML).getHref());
     }
 
@@ -100,7 +97,33 @@ public class CalendarData implements Serializable, AbstractAlert {
         entry.setScope(new AclScope(AclScope.Type.USER, gmail_address));
         entry.setRole(rights);
 
-        Calendars.getService().insert(new URL(ACL_LIST), entry);
+        // The function getID should retrieve the ACL list for this calendar's feed.
+        Calendars.getService().insert(new URL(Calendars.getService().getFeed(html_link, CalendarFeed.class).getId()), entry);
+    }
+
+    public void delete(CalendarEntry entry)
+            throws ServiceException, IOException,
+            AuthenticationException, NotLoggedInException {
+        entry.setService(Calendars.getService());
+        entry.delete();
+    }
+
+    public void insert(CalendarEntry entry)
+            throws NotLoggedInException, AuthenticationException,
+            ServiceException, IOException{
+        Calendars.getService().getFeed(html_link, CalendarFeed.class).insert(entry);
+    }
+
+    public List<CalendarEntry> getEvents()
+            throws NotLoggedInException, AuthenticationException,
+            ServiceException, IOException {
+        return Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries();
+    }
+
+    public CalendarEntry getEvent(int index)
+            throws NotLoggedInException, AuthenticationException,
+            ServiceException, IOException {
+        return Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries().get(index);
     }
 
     public void acceptAlert(AlertType type) throws AlertClassException, NotLoggedInException {

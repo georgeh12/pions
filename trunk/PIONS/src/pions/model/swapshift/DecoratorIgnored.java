@@ -16,11 +16,6 @@ class DecoratorIgnored extends AbstractDecorator implements Serializable {
     }
 
     @Override
-    protected ArrayList<EmailAddress> getRecipients() {
-        return new ArrayList<EmailAddress>();
-    }
-
-    @Override
     protected boolean isAccepted() {
         return false;
     }
@@ -33,5 +28,10 @@ class DecoratorIgnored extends AbstractDecorator implements Serializable {
     @Override
     protected boolean isIgnored() {
         return true;
+    }
+
+    @Override
+    protected ArrayList<EmailAddress> getRecipients() {
+        return new ArrayList<EmailAddress>();
     }
 }

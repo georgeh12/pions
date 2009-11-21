@@ -18,17 +18,17 @@ class StatePending extends AbstractState implements Serializable {
 
     @Override
     protected void accepted() {
-        swap_shift.setAccepted(swap_shift.final_state);
+        swap_shift.setAccepted(swap_shift.publish_state);
     }
 
     @Override
     protected void rejected() {
-        swap_shift.setRejected(swap_shift.final_state);
+        swap_shift.setRejected(swap_shift.publish_state);
     }
 
     @Override
     protected void ignored() {
-        swap_shift.setIgnored(swap_shift.final_state);
+        swap_shift.setIgnored(swap_shift.publish_state);
     }
 
     @Override

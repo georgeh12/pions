@@ -1,6 +1,7 @@
 
 package pions.controller;
 
+import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
@@ -21,9 +22,23 @@ import pions.model.ModelException.ScheduleNotFoundException;
  * @author George
  */
 public class Calendars {
-    
-    public static enum CalendarType {
-        Availability, SubordinateSchedule, WorkSchedule;
+
+    static CalendarEntry getEvent(int index) {
+        try {
+            return EmployeeSingleton.getInstance().getCalendars().getWorkSchedule().getEvent(index);
+        } catch (AuthenticationException e){
+            e.printStackTrace();
+        } catch (ServiceException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } catch (ScheduleNotFoundException e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
     
     public static URI getReadLink(CalendarType type){
@@ -119,5 +134,9 @@ public class Calendars {
 
         Gmail.sendAlert(gmail_address,
                 new Alert(work_schedule, alert_type));
+    }
+
+    public static enum CalendarType {
+        Availability, SubordinateSchedule, WorkSchedule;
     }
 }
