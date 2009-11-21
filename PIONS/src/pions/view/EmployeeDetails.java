@@ -3,6 +3,7 @@ package pions.view;
 
 import javax.swing.JPanel;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import pions.controller.EmployeeXML;
 
@@ -12,22 +13,24 @@ import pions.controller.EmployeeXML;
  */
 public class EmployeeDetails extends JPanel {
 
-    StringBuffer buffer_name = null;
-    StringBuffer buffer_iscontact = null;
-    StringBuffer buffer_positions = null;
-    StringBuffer buffer_gmailaddress = null;
-    StringBuffer buffer_emailaddresses = null;
-    StringBuffer buffer_phonenumbers = null;
-    StringBuffer buffer_address = null;
+    protected StringBuffer buffer_name = null;
+    protected StringBuffer buffer_iscontact = null;
+    protected StringBuffer buffer_positions = null;
+    protected StringBuffer buffer_gmailaddress = null;
+    protected StringBuffer buffer_emailaddresses = null;
+    protected StringBuffer buffer_phonenumbers = null;
+    protected StringBuffer buffer_address = null;
+    private Document xml;
 
     /** Creates new form EmployeeDetails */
     public EmployeeDetails(Document xml) {
         initComponents();
 
-        set(xml);
+        this.xml = xml;
+        set();
     }
 
-    private void set(Document xml){
+    private void set(){
         buffer_name = new StringBuffer();
         buffer_iscontact = new StringBuffer();
         buffer_positions = new StringBuffer();
@@ -36,30 +39,25 @@ public class EmployeeDetails extends JPanel {
         buffer_phonenumbers = new StringBuffer();
         buffer_address = new StringBuffer();
 
-        buffer_name.append(xml.getElementById(EmployeeXML.NAME).getNodeValue());
-
-        buffer_iscontact.append(xml.getElementById(EmployeeXML.IS_CONTACT).getNodeValue());
-
-        NodeList positions = xml.getElementById(EmployeeXML.POSITIONS).getChildNodes();
-        for(int i = 0; i < positions.getLength(); i++){
-            buffer_positions.append(positions.item(i).getNodeValue());
-        }
-
-        buffer_gmailaddress.append(xml.getElementById(EmployeeXML.GMAIL_ADDRESS).getNodeValue());
-
-        NodeList email_addresses = xml.getElementById(EmployeeXML.EMAIL_ADDRESSES).getChildNodes();
-        for(int i = 0; i < email_addresses.getLength(); i++){
-            buffer_emailaddresses.append(email_addresses.item(i).getNodeValue());
-        }
-
-        NodeList phone_numbers = xml.getElementById(EmployeeXML.PHONE_NUMBERS).getChildNodes();
-        for(int i = 0; i < email_addresses.getLength(); i++){
-            buffer_phonenumbers.append(phone_numbers.item(i).getNodeValue());
-        }
-
-        buffer_address.append(xml.getElementById(EmployeeXML.ADDRESS).getNodeValue());
+        addElements(buffer_name, EmployeeXML.NAME);
+        addElements(buffer_iscontact, EmployeeXML.IS_CONTACT);
+        addElements(buffer_positions, EmployeeXML.POSITIONS);
+        addElements(buffer_gmailaddress, EmployeeXML.GMAIL_ADDRESS);
+        addElements(buffer_emailaddresses, EmployeeXML.EMAIL_ADDRESSES);
+        addElements(buffer_phonenumbers, EmployeeXML.PHONE_NUMBERS);
+        addElements(buffer_address, EmployeeXML.ADDRESS);
 
         print();
+    }
+
+    private void addElements(StringBuffer buffer, String tag_name){
+        NodeList node_list = xml.getElementsByTagName(tag_name);
+
+        buffer.append(tag_name + ":\n");
+
+        for(int i = 0; i < node_list.getLength(); i++){
+            buffer.append(node_list.item(i).getNodeValue() + "\n");
+        }
     }
 
     /**
