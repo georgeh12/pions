@@ -33,8 +33,7 @@ import pions.model.ModelException.NotLoggedInException;
 public class CalendarData implements Serializable, AbstractAlert {
     private final static String OWN_CALENDARS = CalendarService.CALENDAR_ROOT_URL
             + "default/owncalendars/full";
-    private final static String ACL_LIST = CalendarService.CALENDAR_ROOT_URL
-            + "default/acl/full";
+    private final static String ACL_LIST = "http://schemas.google.com/acl/2007#accessControlList";
     private String calendar_name;
     private URL html_link;
 
@@ -97,8 +96,11 @@ public class CalendarData implements Serializable, AbstractAlert {
         entry.setScope(new AclScope(AclScope.Type.USER, gmail_address));
         entry.setRole(rights);
 
-        // The function getID should retrieve the ACL list for this calendar's feed.
-        Calendars.getService().insert(new URL(Calendars.getService().getFeed(html_link, CalendarFeed.class).getId()), entry);
+        // This algorithm should retrieve the ACL list for this calendar's feed.
+        Calendars.getService().insert(
+                new URL(Calendars.getService().getFeed(html_link, CalendarFeed.class)
+                .getLink(ACL_LIST, Link.Type.ATOM).getHref()
+                ), entry);
     }
 
     public void drop(CalendarEntry entry)
