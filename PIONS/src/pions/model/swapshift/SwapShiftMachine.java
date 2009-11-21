@@ -1,10 +1,14 @@
 
 package pions.model.swapshift;
 
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
+import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  * The machine to handle swap shift states.
@@ -15,8 +19,13 @@ public class SwapShiftMachine implements Serializable {
     AbstractState initial_state = new StateInitial(this);
     AbstractState authorizing_state = new StateAuthorizing(this);
     AbstractState pending_state = new StatePending(this);
+    AbstractState publish_state = new StatePublish(this);
     AbstractState final_state = new StateFinal(this);
     AbstractState current_state = initial_state;
+
+    ArrayList<EmailAddress> getRecipients() throws NotLoggedInException {
+        return current_state.getRecipients();
+    }
 
     boolean isAccepted() {
         return current_state.isAccepted();
@@ -30,11 +39,7 @@ public class SwapShiftMachine implements Serializable {
         return current_state.isIgnored();
     }
 
-    ArrayList<EmailAddress> getRecipients() throws NotLoggedInException{
-        return current_state.getRecipients();
-    }
-
-    void setAccepted(AbstractState state){
+    void setAccepted(AbstractState state) {
         current_state = new DecoratorAccepted(state);
     }
 
@@ -46,15 +51,16 @@ public class SwapShiftMachine implements Serializable {
         current_state = new DecoratorIgnored(state);
     }
 
-    void accept(){
+    void accept() throws NotLoggedInException, ScheduleNotFoundException,
+            AuthenticationException, ServiceException, IOException{
         current_state.accepted();
     }
 
-    void reject(){
+    void reject() {
         current_state.rejected();
     }
 
-    void ignore(){
+    void ignore() {
         current_state.ignored();
     }
 

@@ -1,14 +1,21 @@
 
 package pions.model;
 
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+import java.io.UnsupportedEncodingException;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.internet.AddressException;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.Contacts.Contact;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
+import pions.model.ModelException.ScheduleNotFoundException;
 import pions.model.swapshift.SwapShift;
 
 /**
@@ -37,7 +44,11 @@ public class Alert implements Serializable {
                 object, type);
     }
 
-    public void accept() throws NotLoggedInException, AlertClassException {
+    public void accept() throws NotLoggedInException,
+            ScheduleNotFoundException, AlertClassException, ServiceException,
+            AuthenticationException, IOException, UnsupportedEncodingException,
+            StreamCorruptedException, AddressException, NoSuchProviderException,
+            MessagingException, ClassNotFoundException {
         object.acceptAlert(type);
     }
 

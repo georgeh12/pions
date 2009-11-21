@@ -1,10 +1,14 @@
 
 package pions.model.swapshift;
 
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
+import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  * Contains useful functions and unimplemented functions.
@@ -27,8 +31,7 @@ abstract class AbstractState implements Serializable {
      * @return
      * @throws pions.model.ModelException.NotLoggedInException
      */
-    protected abstract ArrayList<EmailAddress> getRecipients()
-            throws NotLoggedInException;
+    protected abstract ArrayList<EmailAddress> getRecipients() throws NotLoggedInException;
 
     protected abstract boolean isAccepted();
 

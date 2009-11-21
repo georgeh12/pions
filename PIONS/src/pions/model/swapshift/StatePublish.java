@@ -9,29 +9,29 @@ import pions.model.ContactInfo.EmailAddress;
  *
  * @author George
  */
-class StateFinal extends AbstractState implements Serializable {
-    protected StateFinal(SwapShiftMachine swap_shift){
+class StatePublish extends AbstractState implements Serializable {
+    protected StatePublish(SwapShiftMachine swap_shift){
         super(swap_shift);
     }
 
     @Override
     protected void accepted() {
-        throw new UnsupportedOperationException("Final state reached.");
+        swap_shift.setAccepted(swap_shift.final_state);
     }
 
     @Override
     protected void rejected() {
-        throw new UnsupportedOperationException("Final state reached.");
+        swap_shift.setRejected(swap_shift.final_state);
     }
 
     @Override
     protected void ignored() {
-        throw new UnsupportedOperationException("Final state reached.");
+        swap_shift.setIgnored(swap_shift.final_state);
     }
 
     @Override
     protected ArrayList<EmailAddress> getRecipients() {
-        return new ArrayList<EmailAddress>();
+        return null;
     }
 
     @Override

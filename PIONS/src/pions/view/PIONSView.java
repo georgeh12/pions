@@ -47,6 +47,7 @@ public class PIONSView {
 
         main_frame.setPreferredSize(new Dimension(600,400));
         main_frame.getContentPane().setLayout(new GridLayout(1,2));
+        main_frame.setResizable(false);
 
         //TODO implement PIONSPanel interface to give panels a window closing function.
         PIONS.getApplication().addExitListener(new ExitListener(){

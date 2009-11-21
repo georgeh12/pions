@@ -77,6 +77,8 @@ public class ContactList extends AbstractList {
             }
         });
 
+        scrollpane_display.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollpane_display.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollpane_display.setName("scrollpane_display"); // NOI18N
 
         panel_display.setName("panel_display"); // NOI18N
