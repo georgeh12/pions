@@ -58,7 +58,6 @@ public class Calendars {
                 default:
             }
 
-            //TODO getlink returns null
             return calendar.getReadLink();
         } catch (AuthenticationException e) {
             e.printStackTrace();

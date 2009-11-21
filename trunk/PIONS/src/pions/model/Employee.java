@@ -66,13 +66,8 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         return gmail;
     }
 
-    //TODO Let user change his RSA Key, and send a request to contacts.
-    private void initContact() throws NoSuchAlgorithmException, IOException {
-        key_pair = super.generateRSAKeys();
-    }
-
     public Contact getContact() throws NoSuchAlgorithmException, IOException{
-        if(key_pair == null) initContact();
+        if(key_pair == null) super.generateRSAKeys();
         return new Contact(getPublicKey(), getGmail().getGmailAddress());
     }
 

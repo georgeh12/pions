@@ -1,5 +1,5 @@
 
-package pions.model.swapshift;
+package pions.model.dropshift;
 
 import java.io.Serializable;
 
@@ -8,11 +8,11 @@ import java.io.Serializable;
  * @author George
  */
 abstract class AbstractDecorator extends AbstractState implements Serializable {
-    protected AbstractState swap_shift_state;
+    protected AbstractState drop_shift_state;
 
-    protected AbstractDecorator(AbstractState swap_shift_state){
-        super(swap_shift_state.swap_shift);
-        this.swap_shift_state = swap_shift_state;
+    protected AbstractDecorator(AbstractState drop_shift_state){
+        super(drop_shift_state.drop_shift);
+        this.drop_shift_state = drop_shift_state;
     }
 
     /**
@@ -21,7 +21,7 @@ abstract class AbstractDecorator extends AbstractState implements Serializable {
      */
     @Override
     protected AbstractState get(){
-        return swap_shift_state;
+        return drop_shift_state;
     }
 
     @Override

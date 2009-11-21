@@ -1,5 +1,5 @@
 
-package pions.model.swapshift;
+package pions.model.dropshift;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import pions.model.ModelException.NotLoggedInException;
  * @author George
  */
 class DecoratorAccepted extends AbstractDecorator implements Serializable {
-    protected DecoratorAccepted(AbstractState swap_shift_state){
-        super(swap_shift_state);
+    protected DecoratorAccepted(AbstractState drop_shift_state){
+        super(drop_shift_state);
     }
 
     @Override

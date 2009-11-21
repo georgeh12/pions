@@ -16,7 +16,7 @@ import pions.model.Contacts.Contact;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.ModelException.ScheduleNotFoundException;
-import pions.model.swapshift.SwapShift;
+import pions.model.dropshift.DropShift;
 
 /**
  * This class acts as a Mediator between the model.Gmail class and all the
@@ -112,7 +112,7 @@ public class Alert implements Serializable {
         AddManager, AddSubordinate,
         ContactRequest, RemoveEmployee,
         NewWorkSchedule, UpdatedWorkSchedule,
-        SwapShift;
+        DropShift;
 
         public Class getAssociatedClass(){
             switch(this){
@@ -125,8 +125,8 @@ public class Alert implements Serializable {
                 case NewWorkSchedule:
                 case UpdatedWorkSchedule:
                     return CalendarData.class.getClass();
-                case SwapShift:
-                    return SwapShift.class.getClass();
+                case DropShift:
+                    return DropShift.class.getClass();
                 default:
                     return null;
             }
@@ -151,8 +151,8 @@ public class Alert implements Serializable {
             else if(type.equals(UpdatedWorkSchedule.toString())){
                 return UpdatedWorkSchedule;
             }
-            else if(type.equals(SwapShift.toString())){
-                return SwapShift;
+            else if(type.equals(DropShift.toString())){
+                return DropShift;
             }
             else{
                 return null;
@@ -174,7 +174,7 @@ public class Alert implements Serializable {
                     break;
                 case UpdatedWorkSchedule:
                     break;
-                case SwapShift:
+                case DropShift:
                     break;
                 default:
             }

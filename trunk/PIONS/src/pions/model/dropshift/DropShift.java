@@ -1,5 +1,5 @@
 
-package pions.model.swapshift;
+package pions.model.dropshift;
 
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.util.AuthenticationException;
@@ -25,26 +25,16 @@ import pions.model.ModelException.ScheduleNotFoundException;
  *
  * @author George
  */
-public final class SwapShift implements Serializable, AbstractAlert {
-    private SwapShiftMachine machine;
-    private CalendarEntry proposed;
-    private CalendarEntry current;
+public final class DropShift implements Serializable, AbstractAlert {
+    private DropShiftMachine machine;
+    private CalendarEntry shift;
 
-    public SwapShift(CalendarEntry current, CalendarEntry proposed){
-        this.current = current;
-        this.proposed = proposed;
+    public DropShift(CalendarEntry shift){
+        this.shift = shift;
     }
 
     public CalendarEntry getCurrent(){
-        return current;
-    }
-
-    public CalendarEntry getProposed(){
-        return proposed;
-    }
-
-    public void setProposed(CalendarEntry proposed){
-        this.proposed = proposed;
+        return shift;
     }
 
     /**
@@ -56,7 +46,7 @@ public final class SwapShift implements Serializable, AbstractAlert {
             StreamCorruptedException, AddressException, NoSuchProviderException,
             MessagingException, ClassNotFoundException {
         switch(type){
-            case SwapShift:
+            case DropShift:
                 // Before accepting, get the recipients
                 ArrayList<EmailAddress> recipients = machine.getRecipients();
 
@@ -65,12 +55,11 @@ public final class SwapShift implements Serializable, AbstractAlert {
 
                 // If there are no recipients, we must publish the proposed CalendarEntry
                 if(recipients == null){
-                    EmployeeSingleton.getInstance().getCalendars().getWorkSchedule().delete(current);
-                    EmployeeSingleton.getInstance().getCalendars().getWorkSchedule().insert(proposed);
+                    EmployeeSingleton.getInstance().getCalendars().getWorkSchedule().drop(shift);
                 }
                 else {
                     for(EmailAddress email_address: recipients){
-                        EmployeeSingleton.getInstance().getGmail().sendAlert(email_address, new Alert(this, AlertType.SwapShift));
+                        EmployeeSingleton.getInstance().getGmail().sendAlert(email_address, new Alert(this, AlertType.DropShift));
                     }
                 }
                 break;
@@ -84,7 +73,7 @@ public final class SwapShift implements Serializable, AbstractAlert {
      */
     public void rejectAlert(Alert.AlertType type) throws AlertClassException {
         switch(type){
-            case SwapShift:
+            case DropShift:
                 machine.reject();
                 break;
             default:
@@ -97,7 +86,7 @@ public final class SwapShift implements Serializable, AbstractAlert {
      */
     public void ignoreAlert(Alert.AlertType type) throws AlertClassException {
         switch(type){
-            case SwapShift:
+            case DropShift:
                 machine.ignore();
                 break;
             default:

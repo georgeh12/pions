@@ -101,17 +101,11 @@ public class CalendarData implements Serializable, AbstractAlert {
         Calendars.getService().insert(new URL(Calendars.getService().getFeed(html_link, CalendarFeed.class).getId()), entry);
     }
 
-    public void delete(CalendarEntry entry)
+    public void drop(CalendarEntry entry)
             throws ServiceException, IOException,
             AuthenticationException, NotLoggedInException {
         entry.setService(Calendars.getService());
-        entry.delete();
-    }
-
-    public void insert(CalendarEntry entry)
-            throws NotLoggedInException, AuthenticationException,
-            ServiceException, IOException{
-        Calendars.getService().getFeed(html_link, CalendarFeed.class).insert(entry);
+        entry.setContent(new PlainTextConstruct(EmployeeSingleton.getInstance().getGmail().getGmailAddress().toString()));
     }
 
     public List<CalendarEntry> getEvents()

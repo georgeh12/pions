@@ -1,39 +1,37 @@
 
-package pions.model.swapshift;
+package pions.model.dropshift;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import pions.model.ContactInfo.EmailAddress;
-import pions.model.EmployeeSingleton;
-import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
  * @author George
  */
-class StateAuthorizing extends AbstractState implements Serializable {
-    protected StateAuthorizing(SwapShiftMachine swap_shift){
-        super(swap_shift);
+class StateFinal extends AbstractState implements Serializable {
+    protected StateFinal(DropShiftMachine drop_shift){
+        super(drop_shift);
     }
 
     @Override
     protected void accepted() {
-        swap_shift.setAccepted(swap_shift.pending_state);
+        throw new UnsupportedOperationException("Final state reached.");
     }
 
     @Override
     protected void rejected() {
-        swap_shift.setRejected(swap_shift.pending_state);
+        throw new UnsupportedOperationException("Final state reached.");
     }
 
     @Override
     protected void ignored() {
-        swap_shift.setIgnored(swap_shift.pending_state);
+        throw new UnsupportedOperationException("Final state reached.");
     }
 
     @Override
-    protected ArrayList<EmailAddress> getRecipients() throws NotLoggedInException {
-        return EmployeeSingleton.getInstance().getSubordinateGmails();
+    protected ArrayList<EmailAddress> getRecipients() {
+        return new ArrayList<EmailAddress>();
     }
 
     @Override
