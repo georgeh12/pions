@@ -24,9 +24,9 @@ import pions.model.ModelException.ScheduleNotFoundException;
  */
 public class Calendars {
 
-    public static void addAvailabilityEvent(String contact, String details, Date start, Date end){
+    public static void addAvailabilityEvent(String gmail_address, String contact, String details, Date start, Date end){
         try {
-            EmployeeSingleton.getInstance().getCalendars().getAvailability().addEvent(contact, details, start, end);
+            EmployeeSingleton.getInstance().getCalendars().getAvailability().addEvent(gmail_address, contact, details, start, end);
         } catch (AuthenticationException e){
             e.printStackTrace();
         } catch (ServiceException e){
@@ -43,7 +43,7 @@ public class Calendars {
     public static CalendarIterator getAvailabilityEvents() {
         try {
             return new CalendarIterator(EmployeeSingleton.getInstance()
-                    .getCalendars().getAvailability().getEvents().iterator());
+                    .getCalendars().getAvailability().getEvents());
         } catch (AuthenticationException e){
             e.printStackTrace();
         } catch (ServiceException e){

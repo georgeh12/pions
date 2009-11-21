@@ -22,7 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
-import java.util.List;
+import java.util.Iterator;
 import java.util.TimeZone;
 import pions.model.Alert.AlertType;
 import pions.model.ModelException.AlertClassException;
@@ -115,13 +115,7 @@ public class CalendarData implements Serializable, AbstractAlert {
         entry.setContent(new PlainTextConstruct(EmployeeSingleton.getInstance().getGmail().getGmailAddress().toString()));
     }
 
-    public void addEvent(String contact, Date start, Date end)
-            throws NotLoggedInException, AuthenticationException,
-            ServiceException, IOException {
-        addEvent(contact, "", start, end);
-    }
-
-    public void addEvent(String contact, String details, Date start, Date end)
+    public void addEvent(String gmail_address, String contact, String details, Date start, Date end)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
         CalendarEntry entry = new CalendarEntry();
@@ -134,7 +128,18 @@ public class CalendarData implements Serializable, AbstractAlert {
 
         entry.addExtension(when);
 
-        Calendars.getService().insert(html_link, entry);
+        entry = Calendars.getService().insert(html_link, entry);
+
+        URL entry_link = new URL(entry.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
+
+        AclEntry acl_entry = new AclEntry();
+        acl_entry.setScope(new AclScope(AclScope.Type.USER, gmail_address));
+        acl_entry.setRole(CalendarAclRole.RESPOND);
+
+        Calendars.getService().insert(
+                new URL(Calendars.getService().getFeed(entry_link, CalendarFeed.class)
+                .getLink(ACL_LIST, Link.Type.ATOM).getHref()),
+                acl_entry);
     }
 
     public void delete(int index)
@@ -143,10 +148,10 @@ public class CalendarData implements Serializable, AbstractAlert {
         Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries().get(index).delete();
     }
 
-    public List<CalendarEntry> getEvents()
+    public Iterator<CalendarEntry> getEvents()
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
-        return Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries();
+        return Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries().iterator();
     }
 
     public CalendarEntry getEvent(int index)
