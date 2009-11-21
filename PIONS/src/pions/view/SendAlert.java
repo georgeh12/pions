@@ -34,7 +34,7 @@ public class SendAlert extends javax.swing.JPanel {
         button_request_subordinate = new javax.swing.JButton();
         button_request_contact = new javax.swing.JButton();
         label_directions = new javax.swing.JLabel();
-        button_request_swapshift = new javax.swing.JButton();
+        button_request_dropshift = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
@@ -81,11 +81,11 @@ public class SendAlert extends javax.swing.JPanel {
         label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
         label_directions.setName("label_directions"); // NOI18N
 
-        button_request_swapshift.setText(resourceMap.getString("button_request_swapshift.text")); // NOI18N
-        button_request_swapshift.setName("button_request_swapshift"); // NOI18N
-        button_request_swapshift.addActionListener(new java.awt.event.ActionListener() {
+        button_request_dropshift.setText(resourceMap.getString("button_request_dropshift.text")); // NOI18N
+        button_request_dropshift.setName("button_request_dropshift"); // NOI18N
+        button_request_dropshift.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_request_swapshiftActionPerformed(evt);
+                button_request_dropshiftActionPerformed(evt);
             }
         });
 
@@ -113,7 +113,7 @@ public class SendAlert extends javax.swing.JPanel {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(button_request_swapshift, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(button_request_dropshift, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -131,7 +131,7 @@ public class SendAlert extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button_request_contact, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(button_request_swapshift, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(button_request_dropshift, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -154,16 +154,16 @@ public class SendAlert extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_request_contactActionPerformed
 
-    private void button_request_swapshiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_request_swapshiftActionPerformed
+    private void button_request_dropshiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_request_dropshiftActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_button_request_swapshiftActionPerformed
+    }//GEN-LAST:event_button_request_dropshiftActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_request_contact;
+    private javax.swing.JButton button_request_dropshift;
     private javax.swing.JButton button_request_manager;
     private javax.swing.JButton button_request_subordinate;
-    private javax.swing.JButton button_request_swapshift;
     private javax.swing.JButton button_subordinate;
     private javax.swing.JLabel label_directions;
     private javax.swing.JLabel label_title;

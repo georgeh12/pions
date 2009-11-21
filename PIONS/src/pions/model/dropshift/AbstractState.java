@@ -1,24 +1,20 @@
 
-package pions.model.swapshift;
+package pions.model.dropshift;
 
-import com.google.gdata.util.AuthenticationException;
-import com.google.gdata.util.ServiceException;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
-import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  * Contains useful functions and unimplemented functions.
  * @author George
  */
 abstract class AbstractState implements Serializable {
-    protected SwapShiftMachine swap_shift;
+    protected DropShiftMachine drop_shift;
 
-    protected AbstractState(SwapShiftMachine swap_shift){
-        this.swap_shift = swap_shift;
+    protected AbstractState(DropShiftMachine drop_shift){
+        this.drop_shift = drop_shift;
     }
     
     protected AbstractState get() {

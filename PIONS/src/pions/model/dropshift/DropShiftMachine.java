@@ -1,5 +1,5 @@
 
-package pions.model.swapshift;
+package pions.model.dropshift;
 
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
@@ -11,11 +11,11 @@ import pions.model.ModelException.NotLoggedInException;
 import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
- * The machine to handle swap shift states.
+ * The machine to handle drop shift states.
  * Implements state and decorator patterns. BOOYA!
  * @author George
  */
-public class SwapShiftMachine implements Serializable {
+public class DropShiftMachine implements Serializable {
     AbstractState initial_state = new StateInitial(this);
     AbstractState authorizing_state = new StateAuthorizing(this);
     AbstractState pending_state = new StatePending(this);

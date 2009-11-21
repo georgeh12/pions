@@ -1,5 +1,5 @@
 
-package pions.model.swapshift;
+package pions.model.dropshift;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,24 +11,24 @@ import pions.model.ModelException.NotLoggedInException;
  *
  * @author George
  */
-class StatePending extends AbstractState implements Serializable {
-    protected StatePending(SwapShiftMachine swap_shift){
-        super(swap_shift);
+class StateInitial extends AbstractState implements Serializable {
+    protected StateInitial(DropShiftMachine drop_shift){
+        super(drop_shift);
     }
 
     @Override
     protected void accepted() {
-        swap_shift.setAccepted(swap_shift.publish_state);
+        drop_shift.setAccepted(drop_shift.authorizing_state);
     }
 
     @Override
     protected void rejected() {
-        swap_shift.setRejected(swap_shift.publish_state);
+        drop_shift.setRejected(drop_shift.authorizing_state);
     }
 
     @Override
     protected void ignored() {
-        swap_shift.setIgnored(swap_shift.publish_state);
+        drop_shift.setIgnored(drop_shift.authorizing_state);
     }
 
     @Override

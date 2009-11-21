@@ -18,7 +18,7 @@ public class Calendars implements Serializable {
     private final static String CALENDAR_SERVICE = "PIONS Calendar";
     private final static String AVAILABILITY = "PIONS Availability";
     private final static String WORK_SCHEDULE = "PIONS Work Schedule";
-    //private final static String SWAP_SHIFT = "PIONS Swap Shift";
+    //private final static String DROP_SHIFT = "PIONS Drop Shift";
     private transient static CalendarService service = null;
     private CalendarData availability;
     private CalendarData work_schedule;
