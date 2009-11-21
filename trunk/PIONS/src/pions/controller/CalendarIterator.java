@@ -18,7 +18,6 @@ public class CalendarIterator extends XMLIterator<CalendarEntry> {
     public static final String CALENDAR = "CALENDAR";
     public static final String TITLE = "TITLE";
     public static final String TEXT = "TEXT";
-    public static final String EXTENSIONS = "EXTENSIONS";
     public static final String EXTENSION = "EXTENSION";
 
     CalendarIterator(Iterator<CalendarEntry> iter){
@@ -33,23 +32,26 @@ public class CalendarIterator extends XMLIterator<CalendarEntry> {
             //create a new document
             xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation().createDocument(null, null, null);
 
-            Element entry = xml.createElement(CALENDAR);
-            xml.appendChild(entry);
+            Element root = xml.createElement(CALENDAR);
+            Element element;
+            xml.appendChild(root);
 
             CalendarEntry current = iter.next();
 
             // Set title
-            entry.setAttribute(TITLE, current.getTitle().getPlainText());
+            element = xml.createElement(TITLE);
+            element.setNodeValue(current.getTitle().getPlainText());
+            root.appendChild(element);
 
-            entry.setAttribute(TEXT, current.getPlainTextContent());
+            element = xml.createElement(TEXT);
+            element.setNodeValue(current.getPlainTextContent());
+            root.appendChild(element);
 
-            entry.appendChild(xml.createElement(EXTENSIONS));
-
-            int count = 0;
             Iterator<Extension> extensions = current.getExtensions().iterator();
             while(extensions.hasNext()){
-                entry.setAttribute(EXTENSION + count, extensions.next().toString());
-                count++;
+                element = xml.createElement(EXTENSION);
+                element.setNodeValue(extensions.next().toString());
+                root.appendChild(element);
             }
         } catch (ParserConfigurationException e) {
             e.printStackTrace();

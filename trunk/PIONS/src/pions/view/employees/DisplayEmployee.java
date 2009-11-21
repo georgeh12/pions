@@ -1,9 +1,8 @@
 
-package pions.view;
+package pions.view.employees;
 
 import javax.swing.JPanel;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import pions.controller.EmployeeXML;
 
@@ -11,7 +10,7 @@ import pions.controller.EmployeeXML;
  *
  * @author George
  */
-public class EmployeeDetails extends JPanel {
+public class DisplayEmployee extends JPanel {
 
     protected StringBuffer buffer_name = null;
     protected StringBuffer buffer_iscontact = null;
@@ -23,7 +22,7 @@ public class EmployeeDetails extends JPanel {
     private Document xml;
 
     /** Creates new form EmployeeDetails */
-    public EmployeeDetails(Document xml) {
+    public DisplayEmployee(Document xml) {
         initComponents();
 
         this.xml = xml;
@@ -41,10 +40,10 @@ public class EmployeeDetails extends JPanel {
 
         addElements(buffer_name, EmployeeXML.NAME);
         addElements(buffer_iscontact, EmployeeXML.IS_CONTACT);
-        addElements(buffer_positions, EmployeeXML.POSITIONS);
+        addElements(buffer_positions, EmployeeXML.POSITION);
         addElements(buffer_gmailaddress, EmployeeXML.GMAIL_ADDRESS);
-        addElements(buffer_emailaddresses, EmployeeXML.EMAIL_ADDRESSES);
-        addElements(buffer_phonenumbers, EmployeeXML.PHONE_NUMBERS);
+        addElements(buffer_emailaddresses, EmployeeXML.EMAIL_ADDRESS);
+        addElements(buffer_phonenumbers, EmployeeXML.PHONE_NUMBER);
         addElements(buffer_address, EmployeeXML.ADDRESS);
 
         print();
@@ -128,7 +127,7 @@ public class EmployeeDetails extends JPanel {
         scrollpane_display.setViewportView(textarea_display);
 
         checkbox_address.setSelected(true);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(EmployeeDetails.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(DisplayEmployee.class);
         checkbox_address.setText(resourceMap.getString("checkbox_address.text")); // NOI18N
         checkbox_address.setToolTipText(resourceMap.getString("checkbox_address.toolTipText")); // NOI18N
         checkbox_address.setName("checkbox_address"); // NOI18N

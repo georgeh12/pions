@@ -1,5 +1,5 @@
 
-package pions.view;
+package pions.view.alerts;
 
 import pions.controller.Alerts;
 

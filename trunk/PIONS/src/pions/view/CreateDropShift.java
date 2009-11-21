@@ -29,16 +29,13 @@ public class CreateDropShift extends javax.swing.JPanel {
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(CreateDropShift.class);
-        label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
         label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
         label_title.setName("label_title"); // NOI18N
 
         label_directions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
         label_directions.setName("label_directions"); // NOI18N
 
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(CreateDropShift.class);
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
 

@@ -52,16 +52,13 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="label_title">
       <Properties>
-        <Property name="font" type="java.awt.Font" resourceKey="label_title.font"/>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" resourceKey="label_title.text"/>
         <Property name="name" type="java.lang.String" value="label_title" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="label_directions">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" resourceKey="label_directions.text"/>
         <Property name="name" type="java.lang.String" value="label_directions" noResource="true"/>
       </Properties>
     </Component>

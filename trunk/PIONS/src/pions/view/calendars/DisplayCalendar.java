@@ -1,6 +1,8 @@
 
-package pions.view;
+package pions.view.calendars;
 
+import pions.view.CreateDropShift;
+import pions.view.*;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -15,12 +17,12 @@ import pions.controller.DropShifts;
  *
  * @author George
  */
-public class ViewCalendars extends javax.swing.JPanel {
+public class DisplayCalendar extends javax.swing.JPanel {
 
     private JToggleButton button_auxpanel = null;
 
     /** Creates new form Calendars */
-    public ViewCalendars() {
+    public DisplayCalendar() {
         initComponents();
 
         setAllVisible(false);
@@ -98,7 +100,7 @@ public class ViewCalendars extends javax.swing.JPanel {
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(ViewCalendars.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(DisplayCalendar.class);
         label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
         label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
@@ -278,11 +280,13 @@ public class ViewCalendars extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_work_viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_work_viewActionPerformed
-        try{
-            URI link = Calendars.getReadLink(CalendarType.WorkSchedule);
-            if(link != null && browserDialog()) Desktop.getDesktop().browse(link);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(browserDialog()){
+            try{
+                URI link = Calendars.getReadLink(CalendarType.WorkSchedule);
+                if(link != null) Desktop.getDesktop().browse(link);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_button_work_viewActionPerformed
 
@@ -290,7 +294,7 @@ public class ViewCalendars extends javax.swing.JPanel {
         if(browserDialog()){
             try{
                 URI link = Calendars.getReadLink(CalendarType.Availability);
-                if(link != null && browserDialog()) Desktop.getDesktop().browse(link);
+                if(link != null) Desktop.getDesktop().browse(link);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -298,11 +302,13 @@ public class ViewCalendars extends javax.swing.JPanel {
     }//GEN-LAST:event_button_availability_viewActionPerformed
 
     private void button_subordinate_viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_subordinate_viewActionPerformed
-        try{
-            URI link = Calendars.getReadLink(CalendarType.SubordinateSchedule);
-            if(link != null && browserDialog()) Desktop.getDesktop().browse(link);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(browserDialog()){
+            try{
+                URI link = Calendars.getReadLink(CalendarType.SubordinateSchedule);
+                if(link != null) Desktop.getDesktop().browse(link);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_button_subordinate_viewActionPerformed
 

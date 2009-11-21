@@ -2,6 +2,7 @@
 package pions.model;
 
 import com.google.gdata.client.calendar.CalendarService;
+import com.google.gdata.data.DateTime;
 import com.google.gdata.data.Link;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.acl.AclEntry;
@@ -11,6 +12,7 @@ import com.google.gdata.data.calendar.CalendarAclRole;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.calendar.CalendarFeed;
 import com.google.gdata.data.calendar.TimeZoneProperty;
+import com.google.gdata.data.extensions.When;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
@@ -19,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import pions.model.Alert.AlertType;
@@ -60,14 +63,16 @@ public class CalendarData implements Serializable, AbstractAlert {
         // Create the calendar entry
         CalendarEntry active_calendar = new CalendarEntry();
         active_calendar.setTitle(new PlainTextConstruct(calendar_name));
-        active_calendar.setTimeZone(new TimeZoneProperty(TimeZone.getDefault().getID()));
+        active_calendar.setTimeZone(new TimeZoneProperty(TimeZone.getDefault().getDisplayName()));
         active_calendar.setCanEdit(true);
 
+        //TODO testing purposes only
         // GoogleCalendar created
-        active_calendar = Calendars.getService().insert(new URL(OWN_CALENDARS), active_calendar);
+        //active_calendar = Calendars.getService().insert(new URL(OWN_CALENDARS), active_calendar);
 
         // Valid Link.Rel's: ALTERNATE, ENTRY_EDIT, SELF
-        html_link = new URL(active_calendar.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
+        //html_link = new URL(active_calendar.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
+        html_link = new URL("http://www.google.com/calendar/feeds/rn6gae36n49f3o7qbmc97ls7ak%40group.calendar.google.com/private/full");
     }
 
     public URI getReadLink()
@@ -108,6 +113,34 @@ public class CalendarData implements Serializable, AbstractAlert {
             AuthenticationException, NotLoggedInException {
         entry.setService(Calendars.getService());
         entry.setContent(new PlainTextConstruct(EmployeeSingleton.getInstance().getGmail().getGmailAddress().toString()));
+    }
+
+    public void addEvent(String contact, Date start, Date end)
+            throws NotLoggedInException, AuthenticationException,
+            ServiceException, IOException {
+        addEvent(contact, "", start, end);
+    }
+
+    public void addEvent(String contact, String details, Date start, Date end)
+            throws NotLoggedInException, AuthenticationException,
+            ServiceException, IOException {
+        CalendarEntry entry = new CalendarEntry();
+        entry.setTitle(new PlainTextConstruct(contact));
+        entry.setContent(new PlainTextConstruct(details));
+
+        When when = new When();
+        when.setStartTime(new DateTime(start));
+        when.setEndTime(new DateTime(end));
+
+        entry.addExtension(when);
+
+        Calendars.getService().insert(html_link, entry);
+    }
+
+    public void delete(int index)
+            throws NotLoggedInException, AuthenticationException,
+            ServiceException, IOException {
+        Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries().get(index).delete();
     }
 
     public List<CalendarEntry> getEvents()

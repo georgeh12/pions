@@ -1,7 +1,16 @@
 
 package pions.view;
 
-import java.awt.Dimension;
+import pions.view.login.Login;
+import pions.view.login.LoginSuccess;
+import pions.view.employees.ManagersEList;
+import pions.view.employees.SubordinatesEList;
+import pions.view.calendars.DisplayCalendar;
+import pions.view.alerts.SavedAlertIList;
+import pions.view.alerts.UpdateAlerts;
+import pions.view.alerts.ActiveAlertsIList;
+import pions.view.aboutus.AboutUs;
+import pions.view.aboutus.AboutUsAux;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,9 +54,7 @@ public class PIONSView {
     private PIONSView(){
         JFrame main_frame = getFrame();
 
-        main_frame.setPreferredSize(new Dimension(600,400));
-        main_frame.getContentPane().setLayout(new GridLayout(1,2));
-        main_frame.setResizable(false);
+        initMenu();
 
         //TODO implement PIONSPanel interface to give panels a window closing function.
         PIONS.getApplication().addExitListener(new ExitListener(){
@@ -63,13 +70,15 @@ public class PIONSView {
             }
         });
 
-        initMenu();
-
-        //setPanel1(new Login());
         setPanel1(new Login());
         setPanel2(new IdleScreen());
 
         PIONS.getApplication().show(main_frame);
+
+        // Somehow this sets the content pane height to 400
+        main_frame.setSize(600, 400 + main_frame.getHeight() - main_frame.getContentPane().getHeight());
+        main_frame.getContentPane().setLayout(new GridLayout(1,2));
+        main_frame.setResizable(false);
     }
 
     /**
@@ -219,11 +228,11 @@ public class PIONSView {
     }
 
     private void menu_activealertsActionPerformed(ActionEvent evt){
-        setMain(new ActiveAlerts(Alerts.getActiveAlertIterator()));
+        setMain(new ActiveAlertsIList(Alerts.getActiveAlertIterator()));
     }
 
     private void menu_savedalertsActionPerformed(ActionEvent evt){
-        setMain(new SavedAlerts(Alerts.getSavedAlertIterator()));
+        setMain(new SavedAlertIList(Alerts.getSavedAlertIterator()));
     }
 
     private void menu_contactsActionPerformed(ActionEvent evt){
@@ -231,15 +240,15 @@ public class PIONSView {
     }
 
     private void menu_managersActionPerformed(ActionEvent evt){
-        setMain(new Managers(Employees.getManagers()));
+        setMain(new ManagersEList(Employees.getManagers()));
     }
 
     private void menu_subordinatesActionPerformed(ActionEvent evt){
-        setMain(new Subordinates(Employees.getSubordinates()));
+        setMain(new SubordinatesEList(Employees.getSubordinates()));
     }
 
     private void menu_calendarsActionPerformed(ActionEvent evt){
-        setMain(new ViewCalendars());
+        setMain(new DisplayCalendar());
     }
 
     private void menu_aboutusActionPerformed(ActionEvent evt){

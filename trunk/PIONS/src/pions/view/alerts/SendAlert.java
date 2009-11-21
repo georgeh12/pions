@@ -1,5 +1,5 @@
 
-package pions.view;
+package pions.view.alerts;
 
 import java.util.ArrayList;
 import pions.controller.Contacts;

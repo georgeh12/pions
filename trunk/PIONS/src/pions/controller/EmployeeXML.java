@@ -21,12 +21,9 @@ public class EmployeeXML {
     public static final String EMPLOYEE = "EMPLOYEE";
     public static final String NAME = "NAME";
     public static final String IS_CONTACT = "IS_CONTACT";
-    public static final String POSITIONS = "POSITIONS";
     public static final String POSITION = "POSITION";
     public static final String GMAIL_ADDRESS = "GMAIL_ADDRESS";
-    public static final String EMAIL_ADDRESSES = "EMAIL_ADDRESSES";
     public static final String EMAIL_ADDRESS = "EMAIL_ADDRESS";
-    public static final String PHONE_NUMBERS = "PHONE_NUMBERS";
     public static final String PHONE_NUMBER = "PHONE_NUMBER";
     public static final String ADDRESS = "ADDRESS";
     private Employee employee;
@@ -45,13 +42,6 @@ public class EmployeeXML {
             Element root = xml.createElement(EMPLOYEE);
             Element element;
             xml.appendChild(root);
-
-            Element positions = xml.createElement(POSITIONS);
-            Element email_addresses = xml.createElement(EMAIL_ADDRESSES);
-            Element phone_numbers = xml.createElement(PHONE_NUMBERS);
-            root.appendChild(positions);
-            root.appendChild(email_addresses);
-            root.appendChild(phone_numbers);
             
             //Set name
             element = xml.createElement(NAME);
@@ -64,10 +54,10 @@ public class EmployeeXML {
             root.appendChild(element);
 
             //Set positions
-            Iterator<Position> position_iter = employee.getPositions().iterator();
-            while (position_iter.hasNext()) {
+            Iterator<Position> positions = employee.getPositions().iterator();
+            while (positions.hasNext()) {
                 element = xml.createElement(POSITION);
-                element.setNodeValue(position_iter.next().toString());
+                element.setNodeValue(positions.next().toString());
                 root.appendChild(element);
             }
 
@@ -75,7 +65,7 @@ public class EmployeeXML {
             element = xml.createElement(GMAIL_ADDRESS);
             element.setNodeValue(employee.getGmail().getGmailAddress().getAddress());
             root.appendChild(element);
-            
+
             //Set email addresses
             for (EmailAddress email : employee.getContactInfo().getEmailAddresses()) {
                 element = xml.createElement(EMAIL_ADDRESS);

@@ -1,6 +1,7 @@
 
-package pions.view;
+package pions.view.login;
 
+import pions.view.*;
 import javax.swing.JOptionPane;
 import pions.controller.Employees;
 
