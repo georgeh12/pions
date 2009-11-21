@@ -43,6 +43,7 @@ public class EmployeeXML {
             xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation().createDocument(null, null, null);
             
             Element root = xml.createElement(EMPLOYEE);
+            Element element;
             xml.appendChild(root);
 
             Element positions = xml.createElement(POSITIONS);
@@ -53,38 +54,46 @@ public class EmployeeXML {
             root.appendChild(phone_numbers);
             
             //Set name
-            root.setAttribute(NAME, employee.getName());
+            element = xml.createElement(NAME);
+            element.setNodeValue(employee.getName());
+            root.appendChild(element);
 
             //Set isContact
-            root.setAttribute(IS_CONTACT, (EmployeeSingleton.getInstance().getContacts().searchContacts(employee.getGmail().getGmailAddress()) == null ? "yes" : "no"));
+            element = xml.createElement(IS_CONTACT);
+            element.setNodeValue((EmployeeSingleton.getInstance().getContacts().searchContacts(employee.getGmail().getGmailAddress()) == null ? "yes" : "no"));
+            root.appendChild(element);
 
             //Set positions
-            int count = 0;
             Iterator<Position> position_iter = employee.getPositions().iterator();
             while (position_iter.hasNext()) {
-                positions.setAttribute(POSITION + count, position_iter.next().toString());
-                count++;
+                element = xml.createElement(POSITION);
+                element.setNodeValue(position_iter.next().toString());
+                root.appendChild(element);
             }
 
             //Set gmail address
-            root.setAttribute(GMAIL_ADDRESS, employee.getGmail().getGmailAddress().getAddress());
+            element = xml.createElement(GMAIL_ADDRESS);
+            element.setNodeValue(employee.getGmail().getGmailAddress().getAddress());
+            root.appendChild(element);
             
             //Set email addresses
-            count = 0;
             for (EmailAddress email : employee.getContactInfo().getEmailAddresses()) {
-                email_addresses.setAttribute(EMAIL_ADDRESS + count, email.getAddress());
-                count++;
+                element = xml.createElement(EMAIL_ADDRESS);
+                element.setNodeValue(email.getAddress());
+                root.appendChild(element);
             }
 
             //Set phone numbers
-            count = 0;
             for (PhoneNumber phone : employee.getContactInfo().getPhoneNumbers()) {
-                phone_numbers.setAttribute(PHONE_NUMBER + count, phone.toString());
-                count++;
+                element = xml.createElement(PHONE_NUMBER);
+                element.setNodeValue(phone.toString());
+                root.appendChild(element);
             }
 
             //Set address
-            root.setAttribute(ADDRESS, employee.getContactInfo().getAddress().toString());
+            element = xml.createElement(ADDRESS);
+            element.setNodeValue(employee.getContactInfo().getAddress().toString());
+            root.appendChild(element);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {

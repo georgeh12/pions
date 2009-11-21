@@ -41,23 +41,20 @@ public class EmployeeDetails extends JPanel {
         buffer_iscontact.append(xml.getElementById(EmployeeXML.IS_CONTACT).getNodeValue());
 
         NodeList positions = xml.getElementById(EmployeeXML.POSITIONS).getChildNodes();
-        for(int i = 0; i < positions.getLength(); i ++){
+        for(int i = 0; i < positions.getLength(); i++){
             buffer_positions.append(positions.item(i).getNodeValue());
-            buffer_positions.append("\n");
         }
 
         buffer_gmailaddress.append(xml.getElementById(EmployeeXML.GMAIL_ADDRESS).getNodeValue());
 
         NodeList email_addresses = xml.getElementById(EmployeeXML.EMAIL_ADDRESSES).getChildNodes();
-        for(int i = 0; i < email_addresses.getLength(); i ++){
+        for(int i = 0; i < email_addresses.getLength(); i++){
             buffer_emailaddresses.append(email_addresses.item(i).getNodeValue());
-            buffer_emailaddresses.append("\n");
         }
 
         NodeList phone_numbers = xml.getElementById(EmployeeXML.PHONE_NUMBERS).getChildNodes();
-        for(int i = 0; i < phone_numbers.getLength(); i ++){
+        for(int i = 0; i < email_addresses.getLength(); i++){
             buffer_phonenumbers.append(phone_numbers.item(i).getNodeValue());
-            buffer_phonenumbers.append("\n");
         }
 
         buffer_address.append(xml.getElementById(EmployeeXML.ADDRESS).getNodeValue());
