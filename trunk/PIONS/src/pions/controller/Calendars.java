@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import java.util.Date;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
-import pions.model.CalendarData;
+import pions.model.Calendar;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
@@ -82,7 +82,7 @@ public class Calendars {
     
     public static URI getReadLink(CalendarType type){
         try {
-            CalendarData calendar = null;
+            Calendar calendar = null;
 
             switch (type) {
                 case Availability:
@@ -167,7 +167,7 @@ public class Calendars {
             throws NotLoggedInException, AlertClassException,
             AuthenticationException, MalformedURLException,
             ServiceException, IOException, ScheduleNotFoundException {
-        CalendarData work_schedule = EmployeeSingleton.getInstance().getCalendars().getWorkSchedule();
+        Calendar work_schedule = EmployeeSingleton.getInstance().getCalendars().getWorkSchedule();
         work_schedule.shareRead(gmail_address.getAddress());
 
         Gmail.sendAlert(gmail_address,

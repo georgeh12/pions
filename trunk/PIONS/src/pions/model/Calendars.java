@@ -20,9 +20,9 @@ public class Calendars implements Serializable {
     private final static String WORK_SCHEDULE = "PIONS Work Schedule";
     //private final static String DROP_SHIFT = "PIONS Drop Shift";
     private transient static CalendarService service = null;
-    private CalendarData availability;
-    private CalendarData work_schedule;
-    private CalendarData subordinate_schedule;
+    private Calendar availability;
+    private Calendar work_schedule;
+    private Calendar subordinate_schedule;
 
     Calendars() { }
 
@@ -38,17 +38,17 @@ public class Calendars implements Serializable {
         return service;
     }
 
-    public CalendarData getAvailability()
+    public Calendar getAvailability()
             throws AuthenticationException, MalformedURLException,
             ServiceException, IOException, NotLoggedInException{
         if(availability == null){
-            availability = new CalendarData(AVAILABILITY);
+            availability = new Calendar(AVAILABILITY);
         }
 
         return availability;
     }
 
-    public CalendarData getWorkSchedule() throws ScheduleNotFoundException{
+    public Calendar getWorkSchedule() throws ScheduleNotFoundException{
         if(work_schedule == null){
             throw new ScheduleNotFoundException(WORK_SCHEDULE);
         }
@@ -56,15 +56,15 @@ public class Calendars implements Serializable {
         return work_schedule;
     }
 
-    public void setWorkSchedule(CalendarData work_schedule) {
+    public void setWorkSchedule(Calendar work_schedule) {
         this.work_schedule = work_schedule;
     }
 
-    public CalendarData getSubordinateSchedule()
+    public Calendar getSubordinateSchedule()
             throws AuthenticationException, MalformedURLException,
             ServiceException, IOException, NotLoggedInException{
         if(subordinate_schedule == null){
-            subordinate_schedule = new CalendarData(WORK_SCHEDULE);
+            subordinate_schedule = new Calendar(WORK_SCHEDULE);
         }
 
         return subordinate_schedule;

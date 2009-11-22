@@ -127,7 +127,7 @@ public final class Alert implements Serializable {
                     return Contact.class.getClass();
                 case NewWorkSchedule:
                 case UpdatedWorkSchedule:
-                    return CalendarData.class.getClass();
+                    return Calendar.class.getClass();
                 case DropShift:
                     return DropShift.class.getClass();
                 default:
