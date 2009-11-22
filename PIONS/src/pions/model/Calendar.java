@@ -37,7 +37,7 @@ import pions.model.ModelException.NotLoggedInException;
  * has not been initialized properly, neither will this class.
  * @author George
  */
-public class CalendarData implements Serializable, AbstractAlert {
+public class Calendar implements Serializable, AbstractAlert {
     private final static String OWN_CALENDARS = CalendarService.CALENDAR_ROOT_URL
             + "default/owncalendars/full";
     private final static String ACL_LIST = "http://schemas.google.com/acl/2007#accessControlList";
@@ -55,7 +55,7 @@ public class CalendarData implements Serializable, AbstractAlert {
      * @throws IOException
      * @throws pions.model.ModelException.NotLoggedInException
      */
-    public CalendarData(String calendar_name) throws AuthenticationException,
+    public Calendar(String calendar_name) throws AuthenticationException,
             MalformedURLException, ServiceException, IOException, NotLoggedInException {
         this.calendar_name = calendar_name;
         create();
