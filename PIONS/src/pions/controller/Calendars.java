@@ -1,6 +1,7 @@
 
 package pions.controller;
 
+import pions.controller.xml.CalendarIterator;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
@@ -24,9 +25,11 @@ import pions.model.ModelException.ScheduleNotFoundException;
  */
 public class Calendars {
 
-    public static void addAvailabilityEvent(String gmail_address, String position, String details, Date start, Date end){
+    public static void addAvailabilityEvent(String gmail_address,
+            String position, String details, Date start, Date end){
         try {
-            EmployeeSingleton.getInstance().getCalendars().getAvailability().addEvent(new EmailAddress(gmail_address), position, details, start, end);
+            EmployeeSingleton.getInstance().getCalendars().getAvailability()
+                    .addEvent(new EmailAddress(gmail_address), position, details, start, end);
         } catch (AuthenticationException e){
             e.printStackTrace();
         } catch (ServiceException e){

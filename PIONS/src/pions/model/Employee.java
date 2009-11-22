@@ -191,7 +191,8 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         subordinates.add(new_subordinate);
     }
 
-    public void acceptAlert(AlertType type) throws NotLoggedInException, AlertClassException {
+    public void acceptAlert(AlertType type, EmailAddress sender)
+            throws NotLoggedInException, AlertClassException {
         switch(type){
             case AddManager:
                 EmployeeSingleton.getInstance().addManager(this);

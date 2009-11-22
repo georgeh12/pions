@@ -1,10 +1,17 @@
 
 package pions.model;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.StreamCorruptedException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.internet.AddressException;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.AlertClassException;
@@ -73,9 +80,17 @@ public class Contacts implements Serializable {
             return this.gmail_address.equals(gmail_address);
         }
 
-        public void acceptAlert(AlertType type) throws NotLoggedInException, AlertClassException {
+        public void acceptAlert(AlertType type, EmailAddress sender)
+                throws NotLoggedInException, AlertClassException,
+                AddressException, UnsupportedEncodingException,
+                NoSuchProviderException, MessagingException,
+                StreamCorruptedException, ClassNotFoundException, IOException,
+                NoSuchAlgorithmException {
             switch(type){
                 case ContactRequest:
+                    EmployeeSingleton.getInstance().getGmail().sendAlert(sender,
+                            new Alert(EmployeeSingleton.getInstance().getContact(), AlertType.ContactResponse));
+                case ContactResponse:
                     EmployeeSingleton.getInstance().getContacts().addContact(public_key, gmail_address);
                     break;
                 default:

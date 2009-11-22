@@ -4,13 +4,14 @@ package pions.view.employees;
 import javax.swing.JPanel;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import pions.controller.EmployeeXML;
+import pions.controller.xml.EmployeeXMLFactory;
+import pions.view.AbstractXMLList;
 
 /**
  *
  * @author George
  */
-public class DisplayEmployee extends JPanel {
+public class DisplayEmployee extends AbstractXMLList {
 
     protected StringBuffer buffer_name = null;
     protected StringBuffer buffer_iscontact = null;
@@ -19,13 +20,12 @@ public class DisplayEmployee extends JPanel {
     protected StringBuffer buffer_emailaddresses = null;
     protected StringBuffer buffer_phonenumbers = null;
     protected StringBuffer buffer_address = null;
-    private Document xml;
 
     /** Creates new form EmployeeDetails */
     public DisplayEmployee(Document xml) {
         initComponents();
 
-        this.xml = xml;
+        root = xml.getElementById(EmployeeXMLFactory.EMPLOYEE);
         set();
     }
 
@@ -38,25 +38,15 @@ public class DisplayEmployee extends JPanel {
         buffer_phonenumbers = new StringBuffer();
         buffer_address = new StringBuffer();
 
-        addElements(buffer_name, EmployeeXML.NAME);
-        addElements(buffer_iscontact, EmployeeXML.IS_CONTACT);
-        addElements(buffer_positions, EmployeeXML.POSITION);
-        addElements(buffer_gmailaddress, EmployeeXML.GMAIL_ADDRESS);
-        addElements(buffer_emailaddresses, EmployeeXML.EMAIL_ADDRESS);
-        addElements(buffer_phonenumbers, EmployeeXML.PHONE_NUMBER);
-        addElements(buffer_address, EmployeeXML.ADDRESS);
+        appendElement(buffer_name, EmployeeXMLFactory.NAME);
+        appendElement(buffer_iscontact, EmployeeXMLFactory.IS_CONTACT);
+        appendElement(buffer_positions, EmployeeXMLFactory.POSITION);
+        appendElement(buffer_gmailaddress, EmployeeXMLFactory.GMAIL_ADDRESS);
+        appendElement(buffer_emailaddresses, EmployeeXMLFactory.EMAIL_ADDRESS);
+        appendElement(buffer_phonenumbers, EmployeeXMLFactory.PHONE_NUMBER);
+        appendElement(buffer_address, EmployeeXMLFactory.ADDRESS);
 
         print();
-    }
-
-    private void addElements(StringBuffer buffer, String tag_name){
-        NodeList node_list = xml.getElementsByTagName(tag_name);
-
-        buffer.append(tag_name + ":\n");
-
-        for(int i = 0; i < node_list.getLength(); i++){
-            buffer.append(node_list.item(i).getNodeValue() + "\n");
-        }
     }
 
     /**
@@ -75,6 +65,7 @@ public class DisplayEmployee extends JPanel {
         }
         if(checkbox_position.isSelected()){
             buffer.append(buffer_positions);
+            buffer.append("\n");
         }
         if(checkbox_gmail.isSelected()){
             buffer.append(buffer_gmailaddress);
@@ -82,9 +73,11 @@ public class DisplayEmployee extends JPanel {
         }
         if(checkbox_email.isSelected()){
             buffer.append(buffer_emailaddresses);
+            buffer.append("\n");
         }
         if(checkbox_phone.isSelected()){
             buffer.append(buffer_phonenumbers);
+            buffer.append("\n");
         }
         if(checkbox_address.isSelected()){
             buffer.append(buffer_address);

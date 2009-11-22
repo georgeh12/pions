@@ -8,7 +8,6 @@ import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.acl.AclEntry;
 import com.google.gdata.data.acl.AclRole;
 import com.google.gdata.data.acl.AclScope;
-import com.google.gdata.data.calendar.AttendeeEntry;
 import com.google.gdata.data.calendar.CalendarAclRole;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.calendar.CalendarFeed;
@@ -25,7 +24,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.TimeZone;
@@ -164,7 +162,8 @@ public class CalendarData implements Serializable, AbstractAlert {
         return Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries().get(index);
     }
 
-    public void acceptAlert(AlertType type) throws AlertClassException, NotLoggedInException {
+    public void acceptAlert(AlertType type, EmailAddress sender)
+            throws AlertClassException, NotLoggedInException {
         switch(type){
             case NewWorkSchedule:
             case UpdatedWorkSchedule:

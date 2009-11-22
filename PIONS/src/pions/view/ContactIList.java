@@ -2,16 +2,17 @@
 package pions.view;
 
 import javax.swing.JOptionPane;
+import pions.controller.xml.ContactXMLFactory;
 import pions.controller.Contacts;
 
 /**
  *
  * @author George
  */
-public class ContactList extends AbstractIList {
+public class ContactIList extends AbstractIList {
 
     /** Creates new form Contacts */
-    public ContactList() {
+    public ContactIList() {
         initComponents();
 
         super.panel_display = panel_display;
@@ -19,8 +20,20 @@ public class ContactList extends AbstractIList {
     }
 
     @Override
-    protected StringBuffer parseNext() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    protected StringBuffer parseNext(){
+        StringBuffer buffer = null;
+
+        if(hasNext()){
+            buffer = new StringBuffer();
+
+            root = iter.next().getElementById(ContactXMLFactory.CONTACT);
+
+            appendElement(buffer, ContactXMLFactory.PERSONAL);
+
+            appendElement(buffer, ContactXMLFactory.EMAIL);
+        }
+
+        return buffer;
     }
 
     /** This method is called from within the constructor to
@@ -44,7 +57,7 @@ public class ContactList extends AbstractIList {
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(ContactList.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(ContactIList.class);
         label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
         label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_title.setText(resourceMap.getString("label_title.text")); // NOI18N

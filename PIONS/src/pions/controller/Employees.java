@@ -1,10 +1,12 @@
 
 package pions.controller;
 
+import pions.controller.xml.EmployeeXMLFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
+import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
@@ -87,10 +89,13 @@ public class Employees {
         return EmployeeSingleton.isLoggedIn();
     }
 
-    public static Document getManagerXML(int index){
+    public static Document getManagerXML(int index) {
         try {
-            return new EmployeeXML(EmployeeSingleton.getInstance().getManager(index)).get();
+            return new EmployeeXMLFactory()
+                    .newInstance(EmployeeSingleton.getInstance().getManager(index));
         } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
 
@@ -99,8 +104,11 @@ public class Employees {
 
     public static Document getSubordinateXML(int index){
         try {
-            return new EmployeeXML(EmployeeSingleton.getInstance().getSubordinate(index)).get();
+            return new EmployeeXMLFactory()
+                    .newInstance(EmployeeSingleton.getInstance().getSubordinate(index));
         } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
 

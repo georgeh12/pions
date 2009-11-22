@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.internet.AddressException;
@@ -23,7 +24,7 @@ import pions.model.dropshift.DropShift;
  * Objects which can be stored in an Alert.
  * @author George
  */
-public class Alert implements Serializable {
+public final class Alert implements Serializable {
     private EmailAddress sender = null;
     private AlertType type = null;
     private AbstractAlert object = null;
@@ -44,12 +45,13 @@ public class Alert implements Serializable {
                 object, type);
     }
 
-    public void accept() throws NotLoggedInException,
-            ScheduleNotFoundException, AlertClassException, ServiceException,
-            AuthenticationException, IOException, UnsupportedEncodingException,
-            StreamCorruptedException, AddressException, NoSuchProviderException,
-            MessagingException, ClassNotFoundException {
-        object.acceptAlert(type);
+    public void accept()
+            throws NotLoggedInException, ScheduleNotFoundException,
+            AlertClassException, ServiceException, AuthenticationException,
+            IOException, UnsupportedEncodingException, StreamCorruptedException,
+            AddressException, NoSuchProviderException, MessagingException,
+            ClassNotFoundException, NoSuchAlgorithmException {
+        object.acceptAlert(type, sender);
     }
 
     public void reject() throws AlertClassException{
@@ -110,7 +112,7 @@ public class Alert implements Serializable {
     //TODO implement RemoveEmployee request
     public enum AlertType{
         AddManager, AddSubordinate,
-        ContactRequest, RemoveEmployee,
+        ContactRequest, ContactResponse, RemoveEmployee,
         NewWorkSchedule, UpdatedWorkSchedule,
         DropShift;
 
@@ -120,6 +122,7 @@ public class Alert implements Serializable {
                 case AddSubordinate:
                     return Employee.class.getClass();
                 case ContactRequest:
+                case ContactResponse:
                 case RemoveEmployee:
                     return Contact.class.getClass();
                 case NewWorkSchedule:

@@ -1,5 +1,5 @@
 
-package pions.controller;
+package pions.controller.xml;
 
 import com.google.gdata.data.Extension;
 import com.google.gdata.data.calendar.CalendarEntry;
