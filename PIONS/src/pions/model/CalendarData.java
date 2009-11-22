@@ -8,11 +8,15 @@ import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.acl.AclEntry;
 import com.google.gdata.data.acl.AclRole;
 import com.google.gdata.data.acl.AclScope;
+import com.google.gdata.data.calendar.AttendeeEntry;
 import com.google.gdata.data.calendar.CalendarAclRole;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.calendar.CalendarFeed;
 import com.google.gdata.data.calendar.TimeZoneProperty;
 import com.google.gdata.data.extensions.When;
+import com.google.gdata.data.extensions.Who;
+import com.google.gdata.data.extensions.Who.AttendeeStatus;
+import com.google.gdata.data.extensions.Who.AttendeeType;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
@@ -21,10 +25,12 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.TimeZone;
 import pions.model.Alert.AlertType;
+import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 
@@ -85,16 +91,16 @@ public class CalendarData implements Serializable, AbstractAlert {
     public void shareRead(String gmail_address)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, MalformedURLException, IOException {
-        share(gmail_address, CalendarAclRole.READ);
+        share(html_link, gmail_address, CalendarAclRole.READ);
     }
 
     public void shareEdit(String gmail_address)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, MalformedURLException, IOException {
-        share(gmail_address, CalendarAclRole.EDITOR);
+        share(html_link, gmail_address, CalendarAclRole.EDITOR);
     }
 
-    private void share(String gmail_address, AclRole rights)
+    private void share(URL url, String gmail_address, AclRole rights)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, MalformedURLException, IOException {
         AclEntry entry = new AclEntry();
@@ -103,7 +109,7 @@ public class CalendarData implements Serializable, AbstractAlert {
 
         // This algorithm should retrieve the ACL list for this calendar's feed.
         Calendars.getService().insert(
-                new URL(Calendars.getService().getFeed(html_link, CalendarFeed.class)
+                new URL(Calendars.getService().getFeed(url, CalendarFeed.class)
                 .getLink(ACL_LIST, Link.Type.ATOM).getHref()
                 ), entry);
     }
@@ -115,31 +121,29 @@ public class CalendarData implements Serializable, AbstractAlert {
         entry.setContent(new PlainTextConstruct(EmployeeSingleton.getInstance().getGmail().getGmailAddress().toString()));
     }
 
-    public void addEvent(String gmail_address, String contact, String details, Date start, Date end)
+    //TODO implement the positions class, and/or allow multiple employees
+    public void addEvent(EmailAddress gmail_address, String position, String details, Date start, Date end)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
         CalendarEntry entry = new CalendarEntry();
-        entry.setTitle(new PlainTextConstruct(contact));
+        entry.setTitle(new PlainTextConstruct(position));
         entry.setContent(new PlainTextConstruct(details));
+        entry.setTimeZone(new TimeZoneProperty(TimeZone.getDefault().getDisplayName()));
+        entry.setCanEdit(true);
 
         When when = new When();
         when.setStartTime(new DateTime(start));
         when.setEndTime(new DateTime(end));
-
         entry.addExtension(when);
 
+        Who who = new Who();
+        who.setEmail(gmail_address.getAddress());
+        who.setValueString(gmail_address.getPersonal());
+        who.setAttendeeStatus(AttendeeStatus.EVENT_ACCEPTED);
+        who.setAttendeeType(AttendeeType.EVENT_REQUIRED);
+        entry.addExtension(who);
+
         entry = Calendars.getService().insert(html_link, entry);
-
-        URL entry_link = new URL(entry.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
-
-        AclEntry acl_entry = new AclEntry();
-        acl_entry.setScope(new AclScope(AclScope.Type.USER, gmail_address));
-        acl_entry.setRole(CalendarAclRole.RESPOND);
-
-        Calendars.getService().insert(
-                new URL(Calendars.getService().getFeed(entry_link, CalendarFeed.class)
-                .getLink(ACL_LIST, Link.Type.ATOM).getHref()),
-                acl_entry);
     }
 
     public void delete(int index)

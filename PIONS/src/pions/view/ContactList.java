@@ -1,31 +1,26 @@
 
 package pions.view;
 
-import pions.view.*;
-import pions.view.alerts.SendAlert;
 import javax.swing.JOptionPane;
-import pions.controller.ContactIterator;
 import pions.controller.Contacts;
 
 /**
  *
  * @author George
  */
-public class ContactList extends AbstractIList<ContactIterator> {
+public class ContactList extends AbstractIList {
 
     /** Creates new form Contacts */
-    public ContactList(ContactIterator iter) {
+    public ContactList() {
         initComponents();
 
         super.panel_display = panel_display;
-        super.set(iter);
+        super.set(Contacts.getContactIterator());
     }
 
     @Override
-    public void setEnabled(boolean enabled){
-        button_select_all.setEnabled(enabled);
-        button_select_none.setEnabled(enabled);
-        scrollpane_display.setEnabled(enabled);
+    protected StringBuffer parseNext() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** This method is called from within the constructor to
@@ -44,7 +39,6 @@ public class ContactList extends AbstractIList<ContactIterator> {
         button_select_none = new javax.swing.JButton();
         scrollpane_display = new javax.swing.JScrollPane();
         panel_display = new javax.swing.JPanel();
-        button_sendalert = new javax.swing.JToggleButton();
         button_contactrequest = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
@@ -98,14 +92,6 @@ public class ContactList extends AbstractIList<ContactIterator> {
 
         scrollpane_display.setViewportView(panel_display);
 
-        button_sendalert.setText(resourceMap.getString("button_sendalert.text")); // NOI18N
-        button_sendalert.setName("button_sendalert"); // NOI18N
-        button_sendalert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_sendalertActionPerformed(evt);
-            }
-        });
-
         button_contactrequest.setText(resourceMap.getString("button_contactrequest.text")); // NOI18N
         button_contactrequest.setName("button_contactrequest"); // NOI18N
         button_contactrequest.addActionListener(new java.awt.event.ActionListener() {
@@ -125,10 +111,12 @@ public class ContactList extends AbstractIList<ContactIterator> {
                 .addGap(10, 10, 10))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(button_sendalert)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(button_contactrequest)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label_select)
@@ -137,10 +125,6 @@ public class ContactList extends AbstractIList<ContactIterator> {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button_select_none)
                 .addContainerGap(147, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,9 +133,7 @@ public class ContactList extends AbstractIList<ContactIterator> {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_directions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_sendalert)
-                    .addComponent(button_contactrequest))
+                .addComponent(button_contactrequest)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_select)
@@ -171,17 +153,6 @@ public class ContactList extends AbstractIList<ContactIterator> {
         super.selectNone();
     }//GEN-LAST:event_button_select_noneActionPerformed
 
-    private void button_sendalertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_sendalertActionPerformed
-        if(button_sendalert.isSelected()){
-            PIONSView.getInstance().setAux(new SendAlert(super.getIndices()));
-            this.setEnabled(false);
-        }
-        else{
-            PIONSView.getInstance().resetAux();
-            this.setEnabled(true);
-        }
-    }//GEN-LAST:event_button_sendalertActionPerformed
-
     private void button_contactrequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_contactrequestActionPerformed
         String gmail = "";
 
@@ -200,7 +171,6 @@ public class ContactList extends AbstractIList<ContactIterator> {
     private javax.swing.JButton button_contactrequest;
     private javax.swing.JButton button_select_all;
     private javax.swing.JButton button_select_none;
-    private javax.swing.JToggleButton button_sendalert;
     private javax.swing.JLabel label_directions;
     private javax.swing.JLabel label_select;
     private javax.swing.JLabel label_title;
