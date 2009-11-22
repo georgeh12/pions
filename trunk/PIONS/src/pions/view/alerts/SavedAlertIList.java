@@ -1,7 +1,6 @@
 
 package pions.view.alerts;
 
-import pions.view.AbstractIList;
 import pions.view.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -12,7 +11,7 @@ import pions.controller.Alerts;
  *
  * @author George
  */
-public class SavedAlertIList extends AbstractIList<AlertIterator> {
+public class SavedAlertIList extends AbstractAlertsIList {
 
     /** Creates new form SavedAlerts */
     public SavedAlertIList(AlertIterator iter) {

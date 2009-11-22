@@ -24,7 +24,6 @@ import javax.swing.JPanel;
 import org.jdesktop.application.Application.ExitListener;
 import pions.PIONS;
 import pions.controller.Alerts;
-import pions.controller.Contacts;
 import pions.controller.Employees;
 
 /**
@@ -34,8 +33,10 @@ import pions.controller.Employees;
 public class PIONSView {
     private static PIONSView instance = new PIONSView();
     private JPanel idle = new IdleScreen();
+    private volatile JFrame contact_list = null;
 
     private JMenu file = new JMenu("File");
+    private JMenu contact = new JMenu("Contact");
     private JMenu alerts = new JMenu("Alert");
     private JMenu window = new JMenu("Window");
     private JMenu help = new JMenu("Help");
@@ -103,6 +104,15 @@ public class PIONSView {
             }
         });
 
+        //Contact Menu
+
+        menu_contacts = contact.add(new JMenuItem("Contacts"));
+        menu_contacts.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                menu_contactsActionPerformed(evt);
+            }
+        });
+
         //Alert Menu
 
         menu_updatealerts = alerts.add(new JMenuItem("Update Alerts"));
@@ -127,13 +137,6 @@ public class PIONSView {
         });
 
         //Window Menu
-
-        menu_contacts = window.add(new JMenuItem("Contacts"));
-        menu_contacts.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                menu_contactsActionPerformed(evt);
-            }
-        });
 
         menu_managers = window.add(new JMenuItem("Managers"));
         menu_managers.addActionListener(new ActionListener() {
@@ -166,6 +169,7 @@ public class PIONSView {
         });
         
         menu.add(file);
+        menu.add(contact);
         menu.add(alerts);
         menu.add(window);
         menu.add(help);
@@ -215,12 +219,42 @@ public class PIONSView {
         main_frame.transferFocus();
     }
 
+    public ContactList getContactList(){
+        return (ContactList)getContactFrame().getContentPane();
+    }
+
+    private JFrame getContactFrame(){
+        if(contact_list == null){
+            synchronized(JFrame.class){
+                contact_list = new JFrame(){
+                    @Override
+                    public void setVisible(boolean visible){
+                        if(visible){
+                            contact_list.setBounds(getFrame().getX() + getFrame().getWidth(),
+                                    getFrame().getY(),
+                                    300, 400 + getFrame().getHeight() - getFrame().getContentPane().getHeight());
+                        }
+                        super.setVisible(visible);
+                    }
+                };
+                contact_list.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                contact_list.setContentPane(new ContactList());
+            }
+        }
+        
+        return contact_list;
+    }
+
     private void menu_loginActionPerformed(ActionEvent evt){
         setMain((Employees.isLoggedIn() ? new LoginSuccess() : new Login()));
     }
 
     private void menu_quitActionPerformed(ActionEvent evt){
         PIONS.getApplication().exit(evt);
+    }
+
+    private void menu_contactsActionPerformed(ActionEvent evt){
+        getContactFrame().setVisible(!getContactFrame().isVisible());
     }
     
     private void menu_updatealertsActionPerformed(ActionEvent evt){
@@ -233,10 +267,6 @@ public class PIONSView {
 
     private void menu_savedalertsActionPerformed(ActionEvent evt){
         setMain(new SavedAlertIList(Alerts.getSavedAlertIterator()));
-    }
-
-    private void menu_contactsActionPerformed(ActionEvent evt){
-        setMain(new ContactList(Contacts.getContactIterator()));
     }
 
     private void menu_managersActionPerformed(ActionEvent evt){

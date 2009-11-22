@@ -8,23 +8,20 @@ import java.util.ArrayList;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import pions.controller.AlertIterator;
 import pions.controller.XMLIterator;
 
 /**
  *
  * @author George
  */
-public class AbstractIList<T extends XMLIterator> extends JPanel {
+public abstract class AbstractIList extends JPanel {
 
-    private T iter = null;
     private ArrayList<JCheckBox> check_boxes = null;
     private ArrayList<JTextArea> text_areas = null;
     protected JPanel panel_display = null;
+    protected XMLIterator iter = null;
 
-    protected void set(T iter){
+    protected void set(XMLIterator iter){
         this.iter = iter;
         check_boxes = new ArrayList<JCheckBox>();
         text_areas = new ArrayList<JTextArea>();
@@ -66,35 +63,15 @@ public class AbstractIList<T extends XMLIterator> extends JPanel {
         panel_display.setLayout(layout);
     }
 
-    private boolean hasNext(){
+    protected boolean hasNext(){
         if(iter != null) return iter.hasNext();
 
         return false;
     }
 
-    private StringBuffer parseNext(){
-        StringBuffer buffer = null;
+    protected abstract StringBuffer parseNext();
 
-        if(hasNext()){
-            buffer = new StringBuffer();
-            Document xml = iter.next();
-
-            Element alert = xml.getElementById(AlertIterator.ALERT);
-
-            buffer.append("Sender: \n");
-            buffer.append(alert.getAttribute(AlertIterator.SENDER));
-
-            buffer.append("Type: \n");
-            buffer.append(alert.getAttribute(AlertIterator.TYPE));
-
-            buffer.append("Description: \n");
-            buffer.append(alert.getAttribute(AlertIterator.DESCRIPTION));
-        }
-
-        return buffer;
-    }
-
-    protected int getFirstIndex(){
+    public int getFirstIndex(){
         for(int i = 0; i < check_boxes.size(); i++){
             if(check_boxes.get(i).isSelected()) return i;
         }
@@ -102,7 +79,7 @@ public class AbstractIList<T extends XMLIterator> extends JPanel {
         return -1;
     }
 
-    protected ArrayList<Integer> getIndices(){
+    public ArrayList<Integer> getIndices(){
         ArrayList<Integer> selected = new ArrayList<Integer>();
 
         for(int i = 0; i < check_boxes.size(); i++){

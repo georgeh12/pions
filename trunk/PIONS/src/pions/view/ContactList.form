@@ -30,10 +30,13 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="button_sendalert" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="scrollpane_display" pref="280" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="button_contactrequest" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="56" max="32767" attributes="0"/>
+              <EmptySpace pref="149" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -44,11 +47,6 @@
               <Component id="button_select_none" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="147" max="32767" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="scrollpane_display" pref="280" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -58,10 +56,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="label_directions" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="button_sendalert" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="button_contactrequest" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="button_contactrequest" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="label_select" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -144,15 +139,6 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JToggleButton" name="button_sendalert">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="button_sendalert.text"/>
-        <Property name="name" type="java.lang.String" value="button_sendalert" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_sendalertActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="button_contactrequest">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="button_contactrequest.text"/>
