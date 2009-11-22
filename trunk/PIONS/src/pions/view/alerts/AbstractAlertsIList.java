@@ -1,9 +1,7 @@
 
 package pions.view.alerts;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import pions.controller.AlertIterator;
+import pions.controller.xml.AlertXMLFactory;
 import pions.view.AbstractIList;
 
 /**
@@ -16,18 +14,16 @@ public class AbstractAlertsIList extends AbstractIList {
 
         if(hasNext()){
             buffer = new StringBuffer();
-            Document xml = iter.next();
 
-            Element alert = xml.getElementById(AlertIterator.ALERT);
+            root = iter.next().getElementById(AlertXMLFactory.ALERT);
 
-            buffer.append("Sender: \n");
-            buffer.append(alert.getAttribute(AlertIterator.SENDER));
+            appendElement(buffer, AlertXMLFactory.PERSONAL);
 
-            buffer.append("Type: \n");
-            buffer.append(alert.getAttribute(AlertIterator.TYPE));
+            appendElement(buffer, AlertXMLFactory.EMAIL);
 
-            buffer.append("Description: \n");
-            buffer.append(alert.getAttribute(AlertIterator.DESCRIPTION));
+            appendElement(buffer, AlertXMLFactory.TYPE);
+
+            appendElement(buffer, AlertXMLFactory.DESCRIPTION);
         }
 
         return buffer;

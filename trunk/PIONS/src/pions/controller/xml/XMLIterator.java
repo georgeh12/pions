@@ -1,5 +1,5 @@
 
-package pions.controller;
+package pions.controller.xml;
 
 import java.util.Iterator;
 import org.w3c.dom.Document;
@@ -9,8 +9,8 @@ import org.w3c.dom.Document;
  * @author George
  */
 public abstract class XMLIterator<T> implements Iterator {
-    protected Document xml;
     protected Iterator<T> iter;
+    protected Document xml;
 
     public XMLIterator(Iterator<T> iter) {
         this.iter = iter;

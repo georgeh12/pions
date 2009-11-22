@@ -3,10 +3,13 @@ package pions.view.calendars;
 
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerDateModel;
 import org.w3c.dom.Document;
-import pions.controller.CalendarIterator;
+import pions.controller.xml.CalendarIterator;
 import pions.controller.Calendars;
+import pions.controller.Contacts;
+import pions.view.PIONSView;
 
 /**
  *
@@ -52,6 +55,7 @@ public class EditAvailability extends javax.swing.JPanel {
         jTextArea1 = new javax.swing.JTextArea();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
@@ -92,6 +96,14 @@ public class EditAvailability extends javax.swing.JPanel {
         jTextField2.setText(resourceMap.getString("jTextField2.text")); // NOI18N
         jTextField2.setName("jTextField2"); // NOI18N
 
+        jToggleButton1.setText(resourceMap.getString("jToggleButton1.text")); // NOI18N
+        jToggleButton1.setName("jToggleButton1"); // NOI18N
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,7 +124,9 @@ public class EditAvailability extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToggleButton1)
+                .addContainerGap(40, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,12 +152,14 @@ public class EditAvailability extends javax.swing.JPanel {
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)))
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -155,6 +171,25 @@ public class EditAvailability extends javax.swing.JPanel {
         initEventsComboBox();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        if(jToggleButton1.isSelected()){
+            PIONSView.getInstance().getContactList().setVisible(true);
+        }
+        else {
+            int index = PIONSView.getInstance().getContactList().getFirstIndex();
+            if(index == -1){
+                JOptionPane.showConfirmDialog(this,
+                        "Please select a contact from the contact list.",
+                        "Select Contact",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                Contacts.getContact(index);
+            }
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -165,6 +200,7 @@ public class EditAvailability extends javax.swing.JPanel {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel label_title;
     // End of variables declaration//GEN-END:variables
 

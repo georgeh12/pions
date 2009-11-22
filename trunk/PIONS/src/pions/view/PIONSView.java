@@ -219,8 +219,8 @@ public class PIONSView {
         main_frame.transferFocus();
     }
 
-    public ContactList getContactList(){
-        return (ContactList)getContactFrame().getContentPane();
+    public ContactIList getContactList(){
+        return (ContactIList)getContactFrame().getContentPane();
     }
 
     private JFrame getContactFrame(){
@@ -238,7 +238,7 @@ public class PIONSView {
                     }
                 };
                 contact_list.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                contact_list.setContentPane(new ContactList());
+                contact_list.setContentPane(new ContactIList());
             }
         }
         

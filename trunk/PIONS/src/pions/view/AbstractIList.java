@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import pions.controller.XMLIterator;
+import pions.controller.xml.XMLIterator;
 
 /**
  *
  * @author George
  */
-public abstract class AbstractIList extends JPanel {
+public abstract class AbstractIList extends AbstractXMLList {
 
     private ArrayList<JCheckBox> check_boxes = null;
     private ArrayList<JTextArea> text_areas = null;

@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -27,7 +28,9 @@ public class AbstractEList extends JPanel {
     protected JPanel panel_display = null;
 
     protected void set(ArrayList<String> names){
-        this.names = names;
+        //Sorts the contents of names
+        this.names = new ArrayList(new PriorityQueue(names));
+        
         radio_buttons = new ArrayList<JRadioButton>();
         text_areas = new ArrayList<JTextArea>();
 

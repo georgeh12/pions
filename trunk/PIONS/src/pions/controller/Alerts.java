@@ -1,11 +1,13 @@
 
 package pions.controller;
 
+import pions.controller.xml.AlertIterator;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
@@ -113,6 +115,8 @@ public class Alerts {
         } catch (MessagingException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
