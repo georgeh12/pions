@@ -1,14 +1,14 @@
-#summary One-sentence summary of this page.
+#summary Future Changes
 #labels Phase-Support,Featured
 
-= Future Changes =
+= Purpose =
 
-A list of ideas for future changes. Given infinite time and money, what I would include in the project.
+To record any ideas for future changes. Given infinite time and money, what I would include in the project.
 
 
 = Ideas =
 
-  * Connect with Twitter API via Employee's contact cell phone number.
+  * Connect with [http://apiwiki.twitter.com/ Twitter API] via Employee's contact cell phone number.
   * Integrate ContactInfo class with [http://code.google.com/apis/contacts/ GoogleContacts].
   * Increase security against user misuse, especially regarding alerts.
   * Implement AES on desktop storage and RSA encoding on outgoing messages.
