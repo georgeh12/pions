@@ -17,7 +17,7 @@ import pions.model.Alert;
  *
  * @author George
  */
-public class Gmail implements Serializable {
+public final class Gmail implements Serializable {
     public static void setGmail(String gmail_username, String gmail_password){
         try {
             EmployeeSingleton.getInstance().setGmail(

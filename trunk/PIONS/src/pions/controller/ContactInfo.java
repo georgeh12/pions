@@ -12,7 +12,7 @@ import pions.model.ModelException.NotLoggedInException;
  *
  * @author George
  */
-public class ContactInfo {
+public final class ContactInfo {
     public static void addEmailAddress(String name, String domain) {
         try{
             EmployeeSingleton.getInstance().getContactInfo().addEmailAddress(name, domain);

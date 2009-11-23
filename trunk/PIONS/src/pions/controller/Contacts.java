@@ -10,7 +10,6 @@ import org.w3c.dom.Document;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
-import pions.model.Contacts.Contact;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
@@ -19,7 +18,7 @@ import pions.model.ModelException.NotLoggedInException;
  *
  * @author George
  */
-public class Contacts {
+public final class Contacts {
     public static void sendContactRequest(String email_address) {
         try {
             Gmail.sendAlert(new EmailAddress(email_address),

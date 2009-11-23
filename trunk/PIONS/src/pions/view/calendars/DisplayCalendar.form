@@ -30,7 +30,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="21" pref="21" max="21" attributes="0"/>
                       <Component id="button_subordinate_view" min="-2" max="-2" attributes="1"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="togglebutton_subordinate_edit" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="button_subordinate" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -66,7 +66,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="21" pref="21" max="21" attributes="0"/>
-                      <Component id="button_dropshift_create" min="-2" max="-2" attributes="0"/>
+                      <Component id="togglebutton_dropshift_create" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="button_dropshift_delete" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -97,14 +97,14 @@
               <Component id="button_subordinate" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="togglebutton_subordinate_edit" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="button_subordinate_view" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="togglebutton_subordinate_edit" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               <Component id="button_dropshift" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="button_dropshift_create" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="togglebutton_dropshift_create" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="button_dropshift_delete" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="70" max="32767" attributes="0"/>
@@ -213,13 +213,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="togglebutton_availability_editActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JToggleButton" name="button_dropshift_create">
+    <Component class="javax.swing.JToggleButton" name="togglebutton_dropshift_create">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="button_dropshift_create.text"/>
-        <Property name="name" type="java.lang.String" value="button_dropshift_create" noResource="true"/>
+        <Property name="text" type="java.lang.String" resourceKey="togglebutton_dropshift_create.text"/>
+        <Property name="name" type="java.lang.String" value="togglebutton_dropshift_create" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_dropshift_createActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="togglebutton_dropshift_createActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="togglebutton_subordinate_edit">

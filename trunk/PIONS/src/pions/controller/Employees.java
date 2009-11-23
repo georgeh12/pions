@@ -21,7 +21,7 @@ import pions.model.ModelException.NotLoggedInException;
  *
  * @author George
  */
-public class Employees {
+public final class Employees {
     /**
      * Initializes the new employee as the EmployeeSingleton.
      * @param name

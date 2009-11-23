@@ -13,7 +13,7 @@ import org.w3c.dom.Element;
  *
  * @author George
  */
-public class CalendarXMLFactory extends XMLFactory<CalendarEntry> {
+public final class CalendarXMLFactory extends XMLFactory<CalendarEntry> {
     public static final String CALENDAR = "CALENDAR";
     public static final String TITLE = "TITLE";
     public static final String TEXT = "TEXT";
@@ -25,8 +25,7 @@ public class CalendarXMLFactory extends XMLFactory<CalendarEntry> {
         //create a new document
         xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation().createDocument(null, null, null);
 
-        Element root = xml.createElement(CALENDAR);
-        xml.appendChild(root);
+        Element root = getHead(CALENDAR);
 
         // Set title
         addNode(root, TITLE, current.getTitle().getPlainText());

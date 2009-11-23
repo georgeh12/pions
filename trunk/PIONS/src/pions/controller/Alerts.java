@@ -21,7 +21,7 @@ import pions.model.ModelException.ScheduleNotFoundException;
  *
  * @author George
  */
-public class Alerts {
+public final class Alerts {
     public static AlertIterator getActiveAlertIterator() {
         try {
             return new AlertIterator(EmployeeSingleton.getInstance().getGmail().getActiveAlerts());

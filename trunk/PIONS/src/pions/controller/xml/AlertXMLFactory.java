@@ -6,13 +6,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import pions.model.Alert;
-import pions.model.Contacts.Contact;
 
 /**
  *
  * @author George
  */
-public class AlertXMLFactory extends XMLFactory<Alert> {
+public final class AlertXMLFactory extends XMLFactory<Alert> {
     public static final String ALERT = "ALERT";
     public static final String PERSONAL = "PERSONAL";
     public static final String EMAIL = "EMAIL";
@@ -23,8 +22,7 @@ public class AlertXMLFactory extends XMLFactory<Alert> {
         //create a new document
         xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation().createDocument(null, null, null);
 
-        Element root = xml.createElement(ALERT);
-        xml.appendChild(root);
+        Element root = getHead(ALERT);
 
         //Set sender
         addNode(root, PERSONAL, alert.getAddress().getPersonal());

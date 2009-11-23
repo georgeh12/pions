@@ -11,7 +11,7 @@ import pions.model.Contacts.Contact;
  *
  * @author George
  */
-public class ContactXMLFactory extends XMLFactory<Contact> {
+public final class ContactXMLFactory extends XMLFactory<Contact> {
     public static final String CONTACT = "CONTACT";
     public static final String EMAIL = "EMAIL";
     public static final String PERSONAL = "PERSONAL";
@@ -22,8 +22,7 @@ public class ContactXMLFactory extends XMLFactory<Contact> {
         //create a new document
         xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation().createDocument(null, null, null);
 
-        Element root = xml.createElement(CONTACT);
-        xml.appendChild(root);
+        Element root = getHead(CONTACT);
 
         addNode(root, EMAIL, contact.getAddress().getAddress());
         addNode(root, PERSONAL, contact.getAddress().getPersonal());

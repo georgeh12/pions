@@ -1,7 +1,6 @@
 
 package pions.view.calendars;
 
-import pions.view.CreateDropShift;
 import pions.view.*;
 import java.awt.Desktop;
 import java.io.IOException;
@@ -50,7 +49,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
     }
 
     private void setDropShiftVisible(boolean visible){
-        button_dropshift_create.setVisible(visible && !DropShifts.isInit());
+        togglebutton_dropshift_create.setVisible(visible && !DropShifts.isInit());
         button_dropshift_delete.setVisible(visible && DropShifts.isInit());
     }
 
@@ -72,6 +71,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
     private void resetAuxPanel(){
         if(button_auxpanel != null) button_auxpanel.setSelected(false);
         PIONSView.getInstance().setAux(new IdleScreen());
+        button_auxpanel = null;
     }
 
     /** This method is called from within the constructor to
@@ -94,7 +94,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
         button_dropshift = new javax.swing.JRadioButton();
         button_dropshift_delete = new javax.swing.JButton();
         togglebutton_availability_edit = new javax.swing.JToggleButton();
-        button_dropshift_create = new javax.swing.JToggleButton();
+        togglebutton_dropshift_create = new javax.swing.JToggleButton();
         togglebutton_subordinate_edit = new javax.swing.JToggleButton();
 
         setName("Form"); // NOI18N
@@ -186,11 +186,11 @@ public class DisplayCalendar extends javax.swing.JPanel {
             }
         });
 
-        button_dropshift_create.setText(resourceMap.getString("button_dropshift_create.text")); // NOI18N
-        button_dropshift_create.setName("button_dropshift_create"); // NOI18N
-        button_dropshift_create.addActionListener(new java.awt.event.ActionListener() {
+        togglebutton_dropshift_create.setText(resourceMap.getString("togglebutton_dropshift_create.text")); // NOI18N
+        togglebutton_dropshift_create.setName("togglebutton_dropshift_create"); // NOI18N
+        togglebutton_dropshift_create.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_dropshift_createActionPerformed(evt);
+                togglebutton_dropshift_createActionPerformed(evt);
             }
         });
 
@@ -214,7 +214,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(button_subordinate_view)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(togglebutton_subordinate_edit))
                     .addComponent(button_subordinate))
                 .addContainerGap(87, Short.MAX_VALUE))
@@ -241,7 +241,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(button_dropshift_create)
+                        .addComponent(togglebutton_dropshift_create)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(button_dropshift_delete))
                     .addComponent(button_dropshift))
@@ -267,13 +267,13 @@ public class DisplayCalendar extends javax.swing.JPanel {
                 .addComponent(button_subordinate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(togglebutton_subordinate_edit)
-                    .addComponent(button_subordinate_view))
+                    .addComponent(button_subordinate_view)
+                    .addComponent(togglebutton_subordinate_edit))
                 .addGap(7, 7, 7)
                 .addComponent(button_dropshift)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_dropshift_create)
+                    .addComponent(togglebutton_dropshift_create)
                     .addComponent(button_dropshift_delete))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
@@ -330,7 +330,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
 
     private void togglebutton_availability_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglebutton_availability_editActionPerformed
         if(togglebutton_availability_edit.isSelected()){
-            setAuxPanel(new EditAvailability(), togglebutton_availability_edit);
+            setAuxPanel(new Availability(), togglebutton_availability_edit);
         }
         else {
             resetAuxPanel();
@@ -339,31 +339,24 @@ public class DisplayCalendar extends javax.swing.JPanel {
 
     private void togglebutton_subordinate_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglebutton_subordinate_editActionPerformed
         if(togglebutton_subordinate_edit.isSelected()){
-            setAuxPanel(new EditSchedule(), togglebutton_subordinate_edit);
+            //setAuxPanel(new Schedule(), togglebutton_subordinate_edit);
         }
         else {
             resetAuxPanel();
         }
     }//GEN-LAST:event_togglebutton_subordinate_editActionPerformed
 
-    private void button_dropshift_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_dropshift_createActionPerformed
-        if(button_dropshift_create.isSelected()){
-            setAuxPanel(new CreateDropShift(), button_dropshift_create);
+    private void togglebutton_dropshift_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglebutton_dropshift_createActionPerformed
+        if(togglebutton_dropshift_create.isSelected()){
+            setAuxPanel(new DropShift(), togglebutton_dropshift_create);
         }
         else {
             resetAuxPanel();
         }
-    }//GEN-LAST:event_button_dropshift_createActionPerformed
+    }//GEN-LAST:event_togglebutton_dropshift_createActionPerformed
 
     private void button_dropshift_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_dropshift_deleteActionPerformed
-        if(JOptionPane.YES_OPTION ==
-                JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to delete your drop shift?",
-                "Confirm Delete",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.INFORMATION_MESSAGE)){
-            DropShifts.deleteDropShift();
-        }
+        DropShifts.deleteDropShift();
     }//GEN-LAST:event_button_dropshift_deleteActionPerformed
 
 
@@ -371,7 +364,6 @@ public class DisplayCalendar extends javax.swing.JPanel {
     private javax.swing.JRadioButton button_availability;
     private javax.swing.JButton button_availability_view;
     private javax.swing.JRadioButton button_dropshift;
-    private javax.swing.JToggleButton button_dropshift_create;
     private javax.swing.JButton button_dropshift_delete;
     private javax.swing.JRadioButton button_subordinate;
     private javax.swing.JButton button_subordinate_view;
@@ -380,6 +372,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
     private javax.swing.JLabel label_directions;
     private javax.swing.JLabel label_title;
     private javax.swing.JToggleButton togglebutton_availability_edit;
+    private javax.swing.JToggleButton togglebutton_dropshift_create;
     private javax.swing.JToggleButton togglebutton_subordinate_edit;
     // End of variables declaration//GEN-END:variables
 

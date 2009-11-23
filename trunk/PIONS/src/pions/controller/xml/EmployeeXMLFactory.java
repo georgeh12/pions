@@ -17,7 +17,7 @@ import pions.model.Positions.Position;
  * Iterator design implementation.
  * @author George
  */
-public class EmployeeXMLFactory extends XMLFactory<Employee> {
+public final class EmployeeXMLFactory extends XMLFactory<Employee> {
     public static final String EMPLOYEE = "EMPLOYEE";
     public static final String NAME = "NAME";
     public static final String IS_CONTACT = "IS_CONTACT";
@@ -35,8 +35,7 @@ public class EmployeeXMLFactory extends XMLFactory<Employee> {
             xml = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                     .getDOMImplementation().createDocument(null, null, null);
 
-            Element root = xml.createElement(EMPLOYEE);
-            xml.appendChild(root);
+            Element root = getHead(EMPLOYEE);
 
             //Set name
             addNode(root, NAME, employee.getName());

@@ -11,7 +11,7 @@ import pions.model.Positions.Position;
  *
  * @author George
  */
-public class Positions {
+public final class Positions {
     public static void addPosition(String title, boolean hourly, double rate){
         try {
             EmployeeSingleton.getInstance().getPositions().add(title, hourly, rate);
