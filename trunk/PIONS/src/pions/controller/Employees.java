@@ -89,10 +89,10 @@ public final class Employees {
         return EmployeeSingleton.isLoggedIn();
     }
 
-    public static Document getManagerXML(int index) {
+    public static Document getManagerXML() {
         try {
             return new EmployeeXMLFactory()
-                    .newInstance(EmployeeSingleton.getInstance().getManager(index));
+                    .newInstance(EmployeeSingleton.getInstance().getManager());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
@@ -113,16 +113,6 @@ public final class Employees {
         }
 
         return null;
-    }
-
-    public static ArrayList<String> getManagers(){
-        try {
-            return EmployeeSingleton.getInstance().getManagerNames();
-        } catch (NotLoggedInException e) {
-            e.printStackTrace();
-        }
-
-        return new ArrayList<String>();
     }
 
     public static ArrayList<String> getSubordinates(){

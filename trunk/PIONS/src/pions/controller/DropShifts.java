@@ -4,7 +4,6 @@ package pions.controller;
 import com.google.gdata.data.calendar.CalendarEntry;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
-import pions.model.ContactInfo.EmailAddress;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
@@ -37,9 +36,8 @@ public final class DropShifts {
 
     public static void sendDropShift() {
         try{
-            for(EmailAddress email: EmployeeSingleton.getInstance().getManagerGmails()){
-                Gmail.sendAlert(email, new Alert(drop_shift, AlertType.DropShift));
-            }
+            Gmail.sendAlert(EmployeeSingleton.getInstance().getManagerGmail(),
+                    new Alert(drop_shift, AlertType.DropShift));
         } catch(NotLoggedInException e){
             e.printStackTrace();
         } catch(AlertClassException e){

@@ -28,7 +28,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     private String display_name = null;
     private ContactInfo contact_info;
     private Positions positions;
-    private ArrayList<Employee> managers = new ArrayList<Employee>();
+    private Employee manager = null;
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
 
     public Calendars getCalendars(){
@@ -88,40 +88,26 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         return positions;
     }
 
-    public Employee getManager(int index){
-        return managers.get(index);
+    public Employee getManager(){
+        return manager;
     }
 
     public Employee getSubordinate(int index){
         return subordinates.get(index);
     }
 
-    private ArrayList<String> getNames(ArrayList<Employee> employees){
+    public String getManagerNames(){
+        return manager.getName();
+    }
+
+    public ArrayList<String> getSubordinateNames(){
         ArrayList<String> names = new ArrayList<String>();
 
-        for(Employee employee: employees){
+        for(Employee employee: subordinates){
             names.add(employee.getName());
         }
 
         return names;
-    }
-
-    public ArrayList<String> getManagerNames(){
-        return (ArrayList<String>)getNames(managers);
-    }
-
-    public ArrayList<String> getSubordinateNames(){
-        return (ArrayList<String>)getNames(subordinates);
-    }
-
-    private ArrayList<EmailAddress> getGmails(ArrayList<Employee> employees){
-        ArrayList<EmailAddress> gmail_addresses = new ArrayList<EmailAddress>();
-
-        for(Employee employee: employees){
-            gmail_addresses.add(employee.getGmail().getGmailAddress());
-        }
-
-        return gmail_addresses;
     }
 
     public PublicKey getPublicKey(){
@@ -129,46 +115,39 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     }
 
     public PublicKey getPublicKey(String gmail_address){
-        return searchEmployees(gmail_address).getPublicKey();
+        return searchSubordinates(gmail_address).getPublicKey();
     }
 
-    private Employee searchManagers(String gmail_address){
-        for(Employee employee: managers){
-            if(employee.getGmail().getGmailAddress().equals(gmail_address)) return employee;
-        }
-
-        return null;
+    private boolean hasGmailAddress(String gmail_address){
+        return gmail.getGmailAddress().equals(gmail_address);
     }
 
     private Employee searchSubordinates(String gmail_address){
+        if(manager.hasGmailAddress(gmail_address)) return manager;
+
         for(Employee employee: subordinates){
-            if(employee.getGmail().getGmailAddress().equals(gmail_address)) return employee;
+            if(employee.hasGmailAddress(gmail_address)) return employee;
         }
 
         return null;
     }
 
-    private Employee searchEmployees(String gmail_address){
-        Employee manager = searchManagers(gmail_address);
-
-        if(manager != null){
-            return manager;
-        }
-        else{
-            return searchSubordinates(gmail_address);
-        }
-    }
-
-    public ArrayList<EmailAddress> getManagerGmails(){
-        return (ArrayList<EmailAddress>)getGmails(managers).clone();
+    public EmailAddress getManagerGmail(){
+        return manager.getGmail().getGmailAddress();
     }
 
     public ArrayList<EmailAddress> getSubordinateGmails(){
-        return (ArrayList<EmailAddress>)getGmails(subordinates).clone();
+        ArrayList<EmailAddress> gmail_addresses = new ArrayList<EmailAddress>();
+
+        for(Employee employee: subordinates){
+            gmail_addresses.add(employee.getGmail().getGmailAddress());
+        }
+
+        return (ArrayList<EmailAddress>)gmail_addresses.clone();
     }
 
-    public Employee removeManager(int index){
-        return managers.remove(index);
+    public void removeManager(){
+        manager = null;
     }
 
     public Employee removeSubordinate(int index){
@@ -180,7 +159,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
      * @param new_manager
      */
     public void addManager(Employee new_manager) {
-        managers.add(new_manager);
+        manager = new_manager;
     }
 
     /**
