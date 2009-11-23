@@ -3,7 +3,6 @@ package pions.view;
 
 import pions.view.login.Login;
 import pions.view.login.LoginSuccess;
-import pions.view.employees.ManagersEList;
 import pions.view.employees.SubordinatesEList;
 import pions.view.calendars.DisplayCalendar;
 import pions.view.alerts.SavedAlertIList;
@@ -25,6 +24,7 @@ import org.jdesktop.application.Application.ExitListener;
 import pions.PIONS;
 import pions.controller.Alerts;
 import pions.controller.Employees;
+import pions.view.employees.DisplayEmployee;
 
 /**
  * Implements the Observer and Singleton design pattern
@@ -47,7 +47,7 @@ public class PIONSView {
     private JMenuItem menu_updatealerts;
     private JMenuItem menu_activealerts;
     private JMenuItem menu_savedalerts;
-    private JMenuItem menu_managers;
+    private JMenuItem menu_manager;
     private JMenuItem menu_subordinates;
     private JMenuItem menu_calendars;
     private JMenuItem menu_aboutus;
@@ -138,10 +138,10 @@ public class PIONSView {
 
         //Window Menu
 
-        menu_managers = window.add(new JMenuItem("Managers"));
-        menu_managers.addActionListener(new ActionListener() {
+        menu_manager = window.add(new JMenuItem("Managers"));
+        menu_manager.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                menu_managersActionPerformed(evt);
+                menu_managerActionPerformed(evt);
             }
         });
 
@@ -269,8 +269,8 @@ public class PIONSView {
         setMain(new SavedAlertIList(Alerts.getSavedAlertIterator()));
     }
 
-    private void menu_managersActionPerformed(ActionEvent evt){
-        setMain(new ManagersEList(Employees.getManagers()));
+    private void menu_managerActionPerformed(ActionEvent evt){
+        setMain(new DisplayEmployee(Employees.getManagerXML()));
     }
 
     private void menu_subordinatesActionPerformed(ActionEvent evt){

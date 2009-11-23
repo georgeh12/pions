@@ -1,20 +1,81 @@
 
 package pions.view.employees;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import pions.controller.Employees;
+import pions.view.PIONSView;
 
 /**
  *
  * @author George
  */
-public class SubordinatesEList extends AbstractEList {
+public class SubordinatesEList extends javax.swing.JPanel {
+
+    private ArrayList<String> names;
+    private ArrayList<JRadioButton> radio_buttons = null;
+    private ArrayList<JTextArea> text_areas = null;
+    private ButtonGroup button_group = new ButtonGroup();
 
     /** Creates new form SubordinateList */
     public SubordinatesEList(ArrayList<String> subordinates) {
         initComponents();
+        
+        //Sorts the contents of names
+        this.names = new ArrayList(new PriorityQueue(names));
 
-        super.panel_display = panel_display;
-        super.set(subordinates);
+        radio_buttons = new ArrayList<JRadioButton>();
+        text_areas = new ArrayList<JTextArea>();
+
+        display();
+    }
+
+    private void display(){
+        GridBagLayout layout = new GridBagLayout();
+
+        for(String name: names){
+            GridBagConstraints constraints = new GridBagConstraints();
+            constraints.weightx = .5;
+            constraints.weighty = 0;
+            constraints.insets = new Insets(0,0,10,0);
+            constraints.anchor = GridBagConstraints.PAGE_START;
+            constraints.gridy = radio_buttons.size();
+
+            JRadioButton radio_button = new JRadioButton();
+            constraints.gridx = 0;
+            constraints.fill = GridBagConstraints.BOTH;
+            layout.setConstraints(radio_button, constraints);
+
+            JTextArea text_area = new JTextArea(name);
+            text_area.setLineWrap(true);
+            text_area.setWrapStyleWord(true);
+            constraints.gridx = 1;
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            layout.setConstraints(text_area, constraints);
+
+            panel_display.add(radio_button);
+            panel_display.add(text_area);
+
+            radio_button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    PIONSView.getInstance().setAux(new DisplayEmployee(Employees.getSubordinateXML(
+                            radio_buttons.indexOf(evt.getSource()))));
+                }
+            });
+            button_group.add(radio_button);
+            radio_buttons.add(radio_button);
+            text_areas.add(text_area);
+        }
+
+        panel_display.setLayout(layout);
     }
 
     /** This method is called from within the constructor to
