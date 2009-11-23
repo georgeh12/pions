@@ -19,7 +19,7 @@ import pions.controller.Employees;
  *
  * @author George
  */
-public class AbstractEList extends JPanel {
+public abstract class AbstractEList extends JPanel {
 
     private ArrayList<String> names;
     private ArrayList<JRadioButton> radio_buttons = null;

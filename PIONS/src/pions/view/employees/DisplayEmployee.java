@@ -1,9 +1,7 @@
 
 package pions.view.employees;
 
-import javax.swing.JPanel;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import pions.controller.xml.EmployeeXMLFactory;
 import pions.view.AbstractXMLList;
 
@@ -27,6 +25,8 @@ public class DisplayEmployee extends AbstractXMLList {
 
         root = xml.getElementById(EmployeeXMLFactory.EMPLOYEE);
         set();
+
+        print();
     }
 
     private void set(){
@@ -45,8 +45,6 @@ public class DisplayEmployee extends AbstractXMLList {
         appendElement(buffer_emailaddresses, EmployeeXMLFactory.EMAIL_ADDRESS);
         appendElement(buffer_phonenumbers, EmployeeXMLFactory.PHONE_NUMBER);
         appendElement(buffer_address, EmployeeXMLFactory.ADDRESS);
-
-        print();
     }
 
     /**

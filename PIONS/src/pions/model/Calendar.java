@@ -120,26 +120,34 @@ public class Calendar implements Serializable, AbstractAlert {
     }
 
     //TODO implement the positions class, and/or allow multiple employees
-    public void addEvent(EmailAddress gmail_address, String position, String details, Date start, Date end)
+    public void addEvent(EmailAddress gmail_address, String title, String details, Date start, Date end)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
         CalendarEntry entry = new CalendarEntry();
-        entry.setTitle(new PlainTextConstruct(position));
-        entry.setContent(new PlainTextConstruct(details));
+
+        //default values
         entry.setTimeZone(new TimeZoneProperty(TimeZone.getDefault().getDisplayName()));
         entry.setCanEdit(true);
+
+        //user defined values
+        entry.setTitle(new PlainTextConstruct(title));
+        
+        entry.setContent(new PlainTextConstruct(details));
 
         When when = new When();
         when.setStartTime(new DateTime(start));
         when.setEndTime(new DateTime(end));
         entry.addExtension(when);
 
-        Who who = new Who();
-        who.setEmail(gmail_address.getAddress());
-        who.setValueString(gmail_address.getPersonal());
-        who.setAttendeeStatus(AttendeeStatus.EVENT_ACCEPTED);
-        who.setAttendeeType(AttendeeType.EVENT_REQUIRED);
-        entry.addExtension(who);
+        //guest list, optional extension
+        if(gmail_address != null){
+            Who who = new Who();
+            who.setEmail(gmail_address.getAddress());
+            who.setValueString(gmail_address.getPersonal());
+            who.setAttendeeStatus(AttendeeStatus.EVENT_ACCEPTED);
+            who.setAttendeeType(AttendeeType.EVENT_REQUIRED);
+            entry.addExtension(who);
+        }
 
         entry = Calendars.getService().insert(html_link, entry);
     }

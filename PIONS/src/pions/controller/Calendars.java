@@ -1,6 +1,7 @@
 
 package pions.controller;
 
+import javax.xml.parsers.ParserConfigurationException;
 import pions.controller.xml.CalendarIterator;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.util.AuthenticationException;
@@ -10,6 +11,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
+import org.w3c.dom.Document;
+import pions.controller.xml.CalendarXMLFactory;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.Calendar;
@@ -23,7 +26,7 @@ import pions.model.ModelException.ScheduleNotFoundException;
  *
  * @author George
  */
-public class Calendars {
+public final class Calendars {
 
     public static void addAvailabilityEvent(String gmail_address,
             String position, String details, Date start, Date end){
@@ -62,7 +65,99 @@ public class Calendars {
         return null;
     }
 
-    static CalendarEntry getEvent(int index) {
+    public static void deleteAvailabilityEvent(int index) {
+        try {
+            EmployeeSingleton.getInstance().getCalendars().getAvailability().delete(index);
+        } catch (AuthenticationException e){
+            e.printStackTrace();
+        } catch (ServiceException e){
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addScheduleShift(String gmail_address,
+            String title, String details, Date start, Date end){
+        try {
+            EmployeeSingleton.getInstance().getCalendars().getAvailability()
+                    .addEvent((gmail_address == null ? null : new EmailAddress(gmail_address)),
+                    title, details, start, end);
+        } catch (AuthenticationException e){
+            e.printStackTrace();
+        } catch (ServiceException e){
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static CalendarIterator getScheduleShifts() {
+        try {
+            return new CalendarIterator(EmployeeSingleton.getInstance()
+                    .getCalendars().getAvailability().getEvents());
+        } catch (AuthenticationException e){
+            e.printStackTrace();
+        } catch (ServiceException e){
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static void deleteScheduleShift(int index) {
+        try {
+            EmployeeSingleton.getInstance().getCalendars().getAvailability().delete(index);
+        } catch (AuthenticationException e){
+            e.printStackTrace();
+        } catch (ServiceException e){
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Document getWorkShift(int index) {
+        try {
+            return new CalendarXMLFactory()
+                    .newInstance(EmployeeSingleton.getInstance().getCalendars()
+                    .getWorkSchedule().getEvent(index));
+        } catch (ParserConfigurationException e){
+            e.printStackTrace();
+        } catch (AuthenticationException e){
+            e.printStackTrace();
+        } catch (ServiceException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } catch (ScheduleNotFoundException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    static CalendarEntry getWorkEvent(int index) {
         try {
             return EmployeeSingleton.getInstance().getCalendars().getWorkSchedule().getEvent(index);
         } catch (AuthenticationException e){

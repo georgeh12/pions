@@ -8,7 +8,7 @@ import pions.view.AbstractIList;
  *
  * @author George
  */
-public class AbstractAlertsIList extends AbstractIList {
+public abstract class AbstractAlertsIList extends AbstractIList {
     protected StringBuffer parseNext(){
         StringBuffer buffer = null;
 

@@ -1,8 +1,6 @@
 
 package pions.view.alerts;
 
-import javax.swing.Icon;
-
 /**
  *
  * @author George

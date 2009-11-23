@@ -10,7 +10,8 @@ import org.w3c.dom.Document;
  *
  * @author George
  */
-public class CalendarIterator extends XMLIterator<CalendarEntry> {
+public final class CalendarIterator extends XMLIterator<CalendarEntry> {
+    private CalendarXMLFactory factory = new CalendarXMLFactory();
 
     public CalendarIterator(Iterator<CalendarEntry> iter){
         super(iter);
@@ -21,7 +22,7 @@ public class CalendarIterator extends XMLIterator<CalendarEntry> {
         xml = null;
 
         try {
-            return new CalendarXMLFactory().newInstance(iter.next());
+            return factory.newInstance(iter.next());
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
