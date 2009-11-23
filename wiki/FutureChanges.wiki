@@ -13,3 +13,4 @@ To record any ideas for future changes. Given infinite time and money, what I wo
  * Increase security against user misuse, especially regarding alerts.
  * Implement AES on desktop storage and RSA encoding on outgoing messages.
  * Allow for multiple Managers above one Employee.
+ * Allow users to send requests to remove themselves to all of their contacts.
