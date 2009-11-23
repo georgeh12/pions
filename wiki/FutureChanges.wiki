@@ -12,4 +12,4 @@ To record any ideas for future changes. Given infinite time and money, what I wo
  * Integrate ContactInfo class with [http://code.google.com/apis/contacts/ GoogleContacts].
  * Increase security against user misuse, especially regarding alerts.
  * Implement AES on desktop storage and RSA encoding on outgoing messages.
- * Allow all functionality for multiple Managers for one Employee.
+ * Allow for multiple Managers above one Employee.
