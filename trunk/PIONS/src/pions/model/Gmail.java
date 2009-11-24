@@ -115,11 +115,10 @@ public class Gmail implements Serializable {
                 //Retrieves the attachment and decodes it using decryptRSA()
                 Object object = Alert.decryptAlert(
                         ((InternetAddress)current.getFrom()[0]).getAddress(), alert_type,
-                        (BASE64DecoderStream)((Multipart) current.getContent()).getBodyPart(0).getContent());
+                        (BASE64DecoderStream)((MimeMultipart) current.getContent()).getBodyPart(0).getContent());
 
                 Alert add_alert =
-                        new Alert((AbstractAlert)alert_type.getAssociatedClass().cast(object),
-                        alert_type);
+                        new Alert((AbstractAlert)object, alert_type);
 
                 active_alerts.add(add_alert);
             } catch (Exception e) {

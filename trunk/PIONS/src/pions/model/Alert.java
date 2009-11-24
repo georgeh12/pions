@@ -115,16 +115,16 @@ public final class Alert implements Serializable {
             switch(this){
                 case AddManager:
                 case AddSubordinate:
-                    return Employee.class.getClass();
+                    return Employee.class;
                 case ContactRequest:
                 case ContactResponse:
                 case RemoveEmployee:
-                    return Contact.class.getClass();
+                    return Contact.class;
                 case NewWorkSchedule:
                 case UpdatedWorkSchedule:
-                    return Calendar.class.getClass();
+                    return Calendar.class;
                 case DropShift:
-                    return DropShift.class.getClass();
+                    return DropShift.class;
                 default:
                     return null;
             }

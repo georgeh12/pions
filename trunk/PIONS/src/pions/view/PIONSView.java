@@ -291,7 +291,7 @@ public class PIONSView {
     }
 
     private void menu_activealertsActionPerformed(ActionEvent evt){
-        setMain(new ActiveAlertsIList(Alerts.getActiveAlertIterator()));
+        setMain(new ActiveAlertsIList());
     }
 
     private void menu_savedalertsActionPerformed(ActionEvent evt){
