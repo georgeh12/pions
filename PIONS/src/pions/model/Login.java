@@ -184,9 +184,11 @@ public abstract class Login {
 
     public static Object getObject(InputStream is)
             throws IOException, ClassNotFoundException{
-        ObjectInputStream ois = new ObjectInputStream(is);
+        ObjectInputStream ois = null;
 
         try{
+            ois = new ObjectInputStream(is);
+
             return ois.readObject();
         } finally{
             ois.close();

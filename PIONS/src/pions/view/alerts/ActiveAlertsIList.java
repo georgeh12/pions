@@ -14,11 +14,11 @@ import pions.controller.Alerts;
 public class ActiveAlertsIList extends AbstractAlertsIList {
 
     /** Creates new form NewAlerts */
-    public ActiveAlertsIList(AlertIterator iter) {
+    public ActiveAlertsIList() {
         initComponents();
 
         super.panel_display = panel_display;
-        super.set(iter);
+        super.set(Alerts.getActiveAlertIterator());
     }
 
     /** This method is called from within the constructor to
@@ -204,6 +204,8 @@ public class ActiveAlertsIList extends AbstractAlertsIList {
         for(int i: indices){
             Alerts.acceptActiveAlert(i);
         }
+        
+        super.set(Alerts.getActiveAlertIterator());
     }//GEN-LAST:event_button_acceptActionPerformed
 
     private void button_rejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rejectActionPerformed
@@ -212,6 +214,8 @@ public class ActiveAlertsIList extends AbstractAlertsIList {
         for(int i: indices){
             Alerts.rejectActiveAlert(i);
         }
+
+        super.set(Alerts.getActiveAlertIterator());
     }//GEN-LAST:event_button_rejectActionPerformed
 
     private void button_ignoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ignoreActionPerformed
@@ -220,6 +224,8 @@ public class ActiveAlertsIList extends AbstractAlertsIList {
         for(int i: indices){
             Alerts.ignoreActiveAlert(i);
         }
+
+        super.set(Alerts.getActiveAlertIterator());
     }//GEN-LAST:event_button_ignoreActionPerformed
 
 
