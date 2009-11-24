@@ -96,7 +96,7 @@ public class LoginSuccess extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        String name = Employees.getDisplayName();
+        String name = Employees.getName();
         label_name.setText(name);
         label_name.setToolTipText(name);
     }// </editor-fold>//GEN-END:initComponents

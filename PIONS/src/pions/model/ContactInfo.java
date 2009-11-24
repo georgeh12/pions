@@ -15,20 +15,32 @@ public class ContactInfo implements Serializable {
     private ArrayList<PhoneNumber> phone_numbers = new ArrayList<PhoneNumber>();
     private Address address = new Address();
 
-    public void addEmailAddress(String name, String domain){
-        email_addresses.add(new EmailAddress(name, domain));
-    }
-
-    public void setEmailAddress(int index, String name, String domain){
-        email_addresses.set(index, new EmailAddress(name, domain));
-    }
-
     public ArrayList<EmailAddress> getEmailAddresses(){
         return (ArrayList<EmailAddress>) email_addresses.clone();
     }
 
-    public EmailAddress removeEmailAddress(int index){
-        return email_addresses.remove(index);
+    public ArrayList<PhoneNumber> getPhoneNumbers(){
+        return (ArrayList<PhoneNumber>) phone_numbers.clone();
+    }
+
+    /**
+     * Returns a clone of address.
+     * @return
+     */
+    public Address getAddress(){
+        return address.clone();
+    }
+
+    public void setEmailAddress(ArrayList<EmailAddress> email_addresses){
+        this.email_addresses = email_addresses;
+    }
+
+    public void setPhoneNumbers(ArrayList<PhoneNumber> phone_numbers){
+        this.phone_numbers = phone_numbers;
+    }
+
+    public void setAddress(Address address){
+        this.address = address;
     }
 
     public static class EmailAddress implements Serializable {
@@ -75,27 +87,8 @@ public class ContactInfo implements Serializable {
         }
     }
 
-    public void addPhoneNumber(PhoneNumber.PhoneType type,
-            long number, int extension){
-        PhoneNumber phone_number = new PhoneNumber(type, number, extension);
-        phone_numbers.add(phone_number);
-    }
-
-    public void setPhoneNumber(int index, PhoneNumber.PhoneType type,
-            long number, int extension){
-        phone_numbers.set(index, new PhoneNumber(type, number, extension));
-    }
-
-    public ArrayList<PhoneNumber> getPhoneNumbers(){
-        return (ArrayList<PhoneNumber>) phone_numbers.clone();
-    }
-
-    public PhoneNumber removePhoneNumber(int index){
-        return phone_numbers.remove(index);
-    }
-
     public static class PhoneNumber implements Serializable {
-        private PhoneType type = PhoneType.Home;
+        private PhoneType type = null;
         private long number = 0;
         private int extension = 0;
 
@@ -117,7 +110,7 @@ public class ContactInfo implements Serializable {
             return new_string;
         }
 
-        public void formatPhoneNumber(String number_string){
+        public static long formatPhoneNumber(String number_string){
             String new_string = "";
 
             new_string = getDigits(number_string);
@@ -129,10 +122,10 @@ public class ContactInfo implements Serializable {
                 new_string = new_string.substring(0, 10);
             }
 
-            number = Long.parseLong(new_string);
+            return Long.parseLong(new_string);
         }
 
-        public void formatExt(String number_string){
+        public static int formatExt(String number_string){
             String new_string = getDigits(number_string);
 
             if(new_string.length() == 0){
@@ -142,7 +135,7 @@ public class ContactInfo implements Serializable {
                 new_string = new_string.substring(0, 7);
             }
 
-            extension = Integer.parseInt(new_string);
+            return Integer.parseInt(new_string);
         }
 
         public PhoneType getType(){
@@ -184,45 +177,24 @@ public class ContactInfo implements Serializable {
             return this.type.equals(contact.type);
         }
 
+        @Override
+        public PhoneNumber clone(){
+            return new PhoneNumber(type, number, extension);
+        }
+
         public static enum PhoneType {
-            Home, Cell, Work, Fax, Other;
+            Home("Home"), Cell("Cell"), Work("Work"), Fax("Fax");
+
+            String type = null;
+            PhoneType(String type){
+                this.type = type;
+            }
+
             @Override
             public String toString(){
-                if(this.equals(Home)){
-                    return "Home";
-                }
-                else if(this.equals(Cell)){
-                    return "Cell";
-                }
-                else if(this.equals(Work)){
-                    return "Work";
-                }
-                else if(this.equals(Fax)){
-                    return "Fax";
-                }
-
-                return "Other";
+                return type;
             }
         }
-    }
-
-    public void setAddress(String street_address, String city, Address.State state,
-            int zip, String country){
-        address = new Address(street_address, city, state, zip, country);
-    }
-
-    /**
-     * Returns a clone of address.
-     * @return
-     */
-    public Address getAddress(){
-        return address.clone();
-    }
-
-    public Address removeAddress(){
-        Address temp = address;
-        address = new Address();
-        return temp;
     }
 
     public static class Address implements Serializable {
@@ -235,12 +207,39 @@ public class ContactInfo implements Serializable {
         public Address() { }
 
         public Address(String street_address, String city, Address.State state,
-            int zip, String country){
+            int zip){
             this.street_address = street_address;
             this.city = city;
             this.state = state;
             this.zip = zip;
-            this.country = country;
+        }
+
+        public static int parseZip(String zip){
+            String digits = "";
+
+            for(int i = 0; i < zip.length(); i ++){
+                if(Character.isDigit(zip.charAt(i)) && digits.length() < 5){
+                    digits += zip.charAt(i);
+                }
+            }
+
+            return (digits.length() == 0 ? 0 : Integer.parseInt(digits));
+        }
+
+        public String getStreet(){
+            return street_address;
+        }
+
+        public String getCity(){
+            return city;
+        }
+
+        public int getState(){
+            return state.ordinal();
+        }
+
+        public String getZip(){
+            return Integer.toString(zip);
         }
 
         /**
@@ -290,7 +289,7 @@ public class ContactInfo implements Serializable {
 
         @Override
         public Address clone(){
-            return new Address(street_address, city, state, zip, country);
+            return new Address(street_address, city, state, zip);
         }
     }
 }
