@@ -164,9 +164,9 @@ public final class Employees {
         }
     }
 
-    public static String getDisplayName() {
+    public static String getName() {
         try {
-            return EmployeeSingleton.getInstance().getDisplayName();
+            return EmployeeSingleton.getInstance().getName();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }

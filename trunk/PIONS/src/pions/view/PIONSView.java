@@ -43,6 +43,7 @@ public class PIONSView {
 
     private JMenuItem menu_login;
     private JMenuItem menu_quit;
+    private JMenuItem menu_contactinfo;
     private JMenuItem menu_contacts;
     private JMenuItem menu_updatealerts;
     private JMenuItem menu_activealerts;
@@ -101,6 +102,15 @@ public class PIONSView {
         menu_quit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 menu_quitActionPerformed(evt);
+            }
+        });
+
+        //ContactInfo Menu
+
+        menu_contactinfo = contact.add(new JMenuItem("Contact Info"));
+        menu_contactinfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                menu_contactinfoActionPerformed(evt);
             }
         });
 
@@ -193,6 +203,16 @@ public class PIONSView {
         setPanel2(idle);
     }
 
+    public void fullScreen(){
+        JFrame main_frame = getFrame();
+
+        main_frame.getContentPane().remove(1);
+
+        main_frame.validate();
+        main_frame.repaint();
+        main_frame.transferFocus();
+    }
+
     public void setAux(JPanel panel){
         setPanel2(panel);
     }
@@ -253,6 +273,15 @@ public class PIONSView {
         PIONS.getApplication().exit(evt);
     }
 
+    private void menu_contactinfoActionPerformed(ActionEvent evt){
+        setMain(new MyContactInfo());
+        fullScreen();
+    }
+
+    /**
+     * Sets the contact frame visible if it is hidden, or hidden if it is visible.
+     * @param evt
+     */
     private void menu_contactsActionPerformed(ActionEvent evt){
         getContactFrame().setVisible(!getContactFrame().isVisible());
     }
