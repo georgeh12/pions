@@ -24,8 +24,6 @@ public final class Contacts {
             Gmail.sendAlert(new EmailAddress(email_address),
                     new Alert(EmployeeSingleton.getInstance().getContact(),
                     AlertType.ContactRequest));
-        } catch (AlertClassException e) {
-            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -63,8 +61,6 @@ public final class Contacts {
             Gmail.sendAlert(EmployeeSingleton.getInstance().getContacts().get(index).getAddress(),
                     new Alert(EmployeeSingleton.getInstance().getContact(),
                     AlertType.ContactRequest));
-        } catch (AlertClassException e) {
-            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {

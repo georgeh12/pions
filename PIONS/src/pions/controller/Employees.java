@@ -13,7 +13,6 @@ import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.Employee;
 import pions.model.EmployeeSingleton;
-import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.ContactNotFoundException;
 import pions.model.ModelException.NotLoggedInException;
 
@@ -91,8 +90,8 @@ public final class Employees {
 
     public static Document getManagerXML() {
         try {
-            return new EmployeeXMLFactory()
-                    .newInstance(EmployeeSingleton.getInstance().getManager());
+            Employee manager = EmployeeSingleton.getInstance().getManager();
+            if(manager != null) return new EmployeeXMLFactory().newInstance(manager);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
@@ -130,8 +129,6 @@ public final class Employees {
             sendNewEmployee(email, AlertType.AddManager);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } catch (AlertClassException e) {
-            e.printStackTrace();
         } catch (ContactNotFoundException e) {
             e.printStackTrace();
         }
@@ -142,16 +139,13 @@ public final class Employees {
             sendNewEmployee(email, AlertType.AddSubordinate);
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } catch (AlertClassException e) {
-            e.printStackTrace();
         } catch (ContactNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     private static void sendNewEmployee(String email, AlertType type)
-            throws NotLoggedInException, AlertClassException,
-            ContactNotFoundException {
+            throws NotLoggedInException, ContactNotFoundException {
         EmailAddress recipient = EmployeeSingleton.getInstance().getContacts()
                 .searchContacts(email).getAddress();
         if(recipient != null){

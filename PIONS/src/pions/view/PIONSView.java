@@ -43,8 +43,8 @@ public class PIONSView {
 
     private JMenuItem menu_login;
     private JMenuItem menu_quit;
-    private JMenuItem menu_contactinfo;
     private JMenuItem menu_contacts;
+    private JMenuItem menu_contactinfo;
     private JMenuItem menu_updatealerts;
     private JMenuItem menu_activealerts;
     private JMenuItem menu_savedalerts;
@@ -105,21 +105,21 @@ public class PIONSView {
             }
         });
 
-        //ContactInfo Menu
-
-        menu_contactinfo = contact.add(new JMenuItem("Contact Info"));
-        menu_contactinfo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                menu_contactinfoActionPerformed(evt);
-            }
-        });
-
         //Contact Menu
 
         menu_contacts = contact.add(new JMenuItem("Contacts"));
         menu_contacts.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 menu_contactsActionPerformed(evt);
+            }
+        });
+
+        //ContactInfo Menu
+
+        menu_contactinfo = contact.add(new JMenuItem("Contact Info"));
+        menu_contactinfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                menu_contactinfoActionPerformed(evt);
             }
         });
 
@@ -273,17 +273,17 @@ public class PIONSView {
         PIONS.getApplication().exit(evt);
     }
 
-    private void menu_contactinfoActionPerformed(ActionEvent evt){
-        setMain(new MyContactInfo());
-        fullScreen();
-    }
-
     /**
      * Sets the contact frame visible if it is hidden, or hidden if it is visible.
      * @param evt
      */
     private void menu_contactsActionPerformed(ActionEvent evt){
         getContactFrame().setVisible(!getContactFrame().isVisible());
+    }
+
+    private void menu_contactinfoActionPerformed(ActionEvent evt){
+        setMain(new MyContactInfo());
+        fullScreen();
     }
     
     private void menu_updatealertsActionPerformed(ActionEvent evt){

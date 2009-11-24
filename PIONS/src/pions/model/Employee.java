@@ -67,7 +67,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     }
 
     public Contact getContact() throws NoSuchAlgorithmException, IOException{
-        if(key_pair == null) super.generateRSAKeys();
+        if(key_pair == null) key_pair = super.generateRSAKeys();
         return new Contact(getPublicKey(), getGmail().getGmailAddress());
     }
 

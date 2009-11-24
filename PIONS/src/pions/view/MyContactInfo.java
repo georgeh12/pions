@@ -2,7 +2,6 @@
 package pions.view;
 
 import javax.swing.JOptionPane;
-import javax.swing.JToggleButton;
 import pions.controller.ContactInfo;
 
 /**
@@ -16,6 +15,8 @@ public class MyContactInfo extends javax.swing.JPanel {
         initComponents();
 
         ContactInfo.initCache();
+        
+        field_name.setText(ContactInfo.getName());
         initStates();
         initPhoneNumbers();
         initEmailAddresses();

@@ -50,7 +50,6 @@ public final class Alerts {
         try {
             for(Exception exception: EmployeeSingleton.getInstance().getGmail().parseAlerts()){
                 exceptions.add(exception.getCause().getMessage());
-                exceptions.add(exception.getMessage());
             }
         } catch (MessagingException e) {
             e.printStackTrace();
