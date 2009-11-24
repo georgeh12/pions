@@ -80,7 +80,7 @@ public class ModelException extends Exception {
 
         @Override
         public String getMessage(){
-            return "Error while parsing message: " + alert_id + ", " + type;
+            return "Error while parsing alert. ID: " + alert_id + ", Type: " + type;
         }
     }
 }

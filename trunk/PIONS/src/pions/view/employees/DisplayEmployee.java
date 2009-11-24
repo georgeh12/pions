@@ -1,6 +1,7 @@
 
 package pions.view.employees;
 
+import javax.swing.JOptionPane;
 import org.w3c.dom.Document;
 import pions.controller.xml.EmployeeXMLFactory;
 import pions.view.AbstractXMLList;
@@ -23,10 +24,19 @@ public class DisplayEmployee extends AbstractXMLList {
     public DisplayEmployee(Document xml) {
         initComponents();
 
-        root = xml.getElementById(EmployeeXMLFactory.EMPLOYEE);
-        set();
+        if(xml == null){
+            JOptionPane.showConfirmDialog(this,
+                    "Unable to retrieve employee information.",
+                    "Employee Not Found",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            root = xml.getElementById(EmployeeXMLFactory.EMPLOYEE);
+            set();
 
-        print();
+            print();
+        }
     }
 
     private void set(){

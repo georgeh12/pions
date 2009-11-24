@@ -20,7 +20,7 @@ import pions.view.PIONSView;
  */
 public class SubordinatesEList extends javax.swing.JPanel {
 
-    private ArrayList<String> names;
+    private ArrayList<String> names = null;
     private ArrayList<JRadioButton> radio_buttons = null;
     private ArrayList<JTextArea> text_areas = null;
     private ButtonGroup button_group = new ButtonGroup();
@@ -30,7 +30,7 @@ public class SubordinatesEList extends javax.swing.JPanel {
         initComponents();
         
         //Sorts the contents of names
-        this.names = new ArrayList(new PriorityQueue(names));
+        this.names = new ArrayList(new PriorityQueue(subordinates));
 
         radio_buttons = new ArrayList<JRadioButton>();
         text_areas = new ArrayList<JTextArea>();

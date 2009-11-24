@@ -16,6 +16,7 @@ public abstract class XMLFactory<T> {
 
     protected Element getHead(String root_id){
         Element root = xml.createElement(root_id);
+        root.setAttribute(root_id, root_id);
         root.setIdAttribute(root_id, true);
         xml.appendChild(root);
 

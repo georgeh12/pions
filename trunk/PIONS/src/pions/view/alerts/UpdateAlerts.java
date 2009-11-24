@@ -48,7 +48,9 @@ public class UpdateAlerts extends javax.swing.JPanel {
         scrollpane_errors.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollpane_errors.setName("scrollpane_errors"); // NOI18N
 
+        textarea_errors.setBackground(getBackground());
         textarea_errors.setColumns(20);
+        textarea_errors.setEditable(false);
         textarea_errors.setLineWrap(true);
         textarea_errors.setRows(5);
         textarea_errors.setWrapStyleWord(true);
@@ -111,7 +113,6 @@ public class UpdateAlerts extends javax.swing.JPanel {
         }
         else{
             update_thread.interrupt();
-            togglebutton_update.setText(org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(UpdateAlerts.class).getString("togglebutton_update.text"));
         }
     }//GEN-LAST:event_togglebutton_updateActionPerformed
 
@@ -138,7 +139,6 @@ public class UpdateAlerts extends javax.swing.JPanel {
         public void run() {
             togglebutton_update.setText("Updating Alerts... (click here to stop)");
             
-            //try{sleep(5000);}catch(Exception e){}
             for(String exception: Alerts.parseAlerts()){
                 textarea_errors.setText(textarea_errors.getText() + exception + "\n" + "\n");
             }

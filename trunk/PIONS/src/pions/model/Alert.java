@@ -29,18 +29,13 @@ public final class Alert implements Serializable {
     private AlertType type = null;
     private AbstractAlert object = null;
 
-    public Alert(EmailAddress sender, AbstractAlert object, AlertType type)
-            throws AlertClassException{
-        if(type.getAssociatedClass() != object.getClass()){
-            throw new AlertClassException(type.getAssociatedClass(), object.getClass());
-        }
-
+    public Alert(EmailAddress sender, AbstractAlert object, AlertType type){
         this.sender = sender;
         this.object = object;
         this.type = type;
     }
 
-    public Alert(AbstractAlert object, AlertType type) throws AlertClassException, NotLoggedInException{
+    public Alert(AbstractAlert object, AlertType type) throws NotLoggedInException{
         this(EmployeeSingleton.getInstance().getGmail().getGmailAddress(),
                 object, type);
     }

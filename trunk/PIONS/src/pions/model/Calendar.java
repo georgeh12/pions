@@ -70,13 +70,11 @@ public class Calendar implements Serializable, AbstractAlert {
         active_calendar.setTimeZone(new TimeZoneProperty(TimeZone.getDefault().getDisplayName()));
         active_calendar.setCanEdit(true);
 
-        //TODO testing purposes only
         // GoogleCalendar created
-        //active_calendar = Calendars.getService().insert(new URL(OWN_CALENDARS), active_calendar);
+        active_calendar = Calendars.getService().insert(new URL(OWN_CALENDARS), active_calendar);
 
         // Valid Link.Rel's: ALTERNATE, ENTRY_EDIT, SELF
-        //html_link = new URL(active_calendar.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
-        html_link = new URL("http://www.google.com/calendar/feeds/rn6gae36n49f3o7qbmc97ls7ak%40group.calendar.google.com/private/full");
+        html_link = new URL(active_calendar.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
     }
 
     public URI getReadLink()
