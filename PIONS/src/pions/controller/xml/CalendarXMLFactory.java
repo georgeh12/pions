@@ -28,13 +28,13 @@ public final class CalendarXMLFactory extends XMLFactory<CalendarEntry> {
         Element root = getHead(CALENDAR);
 
         // Set title
-        addNode(root, TITLE, current.getTitle().getPlainText());
+        setAttribute(root, TITLE, current.getTitle().getPlainText());
 
-        addNode(root, TEXT, current.getPlainTextContent());
+        setAttribute(root, TEXT, current.getPlainTextContent());
 
         Iterator<Extension> extensions = current.getExtensions().iterator();
         while(extensions.hasNext()){
-            addNode(root, EXTENSION, extensions.next().toString());
+            setAttribute(root, EXTENSION, extensions.next().toString());
         }
 
         return null;

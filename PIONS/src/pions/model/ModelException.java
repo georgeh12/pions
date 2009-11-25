@@ -73,14 +73,14 @@ public class ModelException extends Exception {
         private int alert_id;
         private AlertType type;
 
-        MessageParserException(int alert_id, AlertType type){
+        MessageParserException(AlertType type, int alert_id){
             this.alert_id = alert_id;
             this.type = type;
         }
 
         @Override
         public String getMessage(){
-            return "Error while parsing alert.\nID: " + alert_id + ", Type: " + type;
+            return "Error while parsing alert.\nType: " + type + ", ID: " + alert_id;
         }
     }
 }

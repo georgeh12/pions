@@ -64,7 +64,7 @@ public final class Alert implements Serializable {
     public static Object decryptAlert(String email_address, AlertType type, InputStream is)
             throws NotLoggedInException, StreamCorruptedException,
             ClassNotFoundException, IOException{
-        if(type == AlertType.ContactRequest){
+        if(type.isContactAlert()){
             return Login.getObject(is);
         }
         else{
@@ -83,7 +83,7 @@ public final class Alert implements Serializable {
      */
     public byte[] getBytes() throws NotLoggedInException, IOException,
             StreamCorruptedException, ClassNotFoundException {
-        if(type == AlertType.ContactRequest){
+        if(type.isContactAlert()){
             return Login.getBytes(object);
         }
         else{
@@ -101,7 +101,7 @@ public final class Alert implements Serializable {
 
     @Override
     public String toString(){
-        return type.toString() + ":\n" + object.toString();
+        return type.toString() + ": " + object.toString();
     }
 
     //TODO implement RemoveEmployee request
@@ -130,53 +130,24 @@ public final class Alert implements Serializable {
             }
         }
 
+        public boolean isContactAlert(){
+            return this == ContactRequest || this == ContactResponse;
+        }
+
         public static AlertType parse(String type){
-            if(type.equals(AddManager.toString())){
-                return AddManager;
+            for(AlertType parsed: AlertType.values()){
+                if(parsed.equals(type)) return parsed;
             }
-            else if(type.equals(AddSubordinate.toString())){
-                return AddSubordinate;
-            }
-            else if(type.equals(ContactRequest.toString())){
-                return ContactRequest;
-            }
-            else if(type.equals(RemoveEmployee.toString())){
-                return RemoveEmployee;
-            }
-            else if(type.equals(NewWorkSchedule.toString())){
-                return NewWorkSchedule;
-            }
-            else if(type.equals(UpdatedWorkSchedule.toString())){
-                return UpdatedWorkSchedule;
-            }
-            else if(type.equals(DropShift.toString())){
-                return DropShift;
-            }
-            else{
-                return null;
-            }
+            
+            return null;
+        }
+
+        public boolean equals(String type){
+            return name().equals(type);
         }
 
         @Override
         public String toString(){
-            switch(this){
-                case AddManager:
-                    break;
-                case AddSubordinate:
-                    break;
-                case ContactRequest:
-                    break;
-                case RemoveEmployee:
-                    break;
-                case NewWorkSchedule:
-                    break;
-                case UpdatedWorkSchedule:
-                    break;
-                case DropShift:
-                    break;
-                default:
-            }
-
             return this.name();
         }
     }

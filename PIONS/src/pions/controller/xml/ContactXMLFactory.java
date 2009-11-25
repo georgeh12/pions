@@ -24,9 +24,9 @@ public final class ContactXMLFactory extends XMLFactory<Contact> {
 
         Element root = getHead(CONTACT);
 
-        addNode(root, EMAIL, contact.getAddress().getAddress());
-        addNode(root, PERSONAL, contact.getAddress().getPersonal());
+        setAttribute(root, EMAIL, contact.getAddress().getAddress());
+        setAttribute(root, PERSONAL, contact.getAddress().getPersonal());
 
-        return null;
+        return xml;
     }
 }

@@ -25,14 +25,11 @@ public final class AlertXMLFactory extends XMLFactory<Alert> {
         Element root = getHead(ALERT);
 
         //Set sender
-        addNode(root, PERSONAL, alert.getAddress().getPersonal());
-        addNode(root, EMAIL, alert.getAddress().getAddress());
+        setAttribute(root, PERSONAL, alert.getAddress().getPersonal());
+        setAttribute(root, EMAIL, alert.getAddress().getAddress());
 
         //Set type
-        addNode(root, TYPE, alert.getType().toString());
-
-        //Set description
-        addNode(root, DESCRIPTION, alert.get().toString());
+        setAttribute(root, TYPE, alert.getType().toString());
 
         return xml;
     }

@@ -6,7 +6,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- *
+ * Implements the AbstractFactory design pattern
  * @author George
  */
 public abstract class XMLFactory<T> {
@@ -26,8 +26,12 @@ public abstract class XMLFactory<T> {
     protected Element addNode(Element root, String child, String value){
         Element child_element = xml.createElement(child);
         root.appendChild(child_element);
-        if(value != null) child_element.setNodeValue(value);
+        child_element.setAttribute(child, value);
 
         return child_element;
+    }
+
+    protected void setAttribute(Element root, String child, String value){
+        root.setAttribute(child, value);
     }
 }

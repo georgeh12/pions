@@ -49,6 +49,7 @@ public abstract class AbstractIList extends AbstractXMLList {
             JTextArea text_area = new JTextArea(next.toString());
             text_area.setLineWrap(true);
             text_area.setWrapStyleWord(true);
+            text_area.setEditable(false);
             constraints.gridx = 1;
             constraints.fill = GridBagConstraints.HORIZONTAL;
             layout.setConstraints(text_area, constraints);
@@ -61,6 +62,8 @@ public abstract class AbstractIList extends AbstractXMLList {
         }
 
         panel_display.setLayout(layout);
+        panel_display.revalidate();
+        panel_display.repaint();
     }
 
     protected boolean hasNext(){

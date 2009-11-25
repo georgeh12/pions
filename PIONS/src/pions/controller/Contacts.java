@@ -5,20 +5,28 @@ import pions.controller.xml.ContactXMLFactory;
 import pions.controller.xml.ContactIterator;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Observer;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.EmployeeSingleton;
-import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
- *
+ * Implements Observer design pattern
  * @author George
  */
 public final class Contacts {
+    public static void subscribe(Observer o){
+        try {
+            EmployeeSingleton.getInstance().getContacts().addObserver(o);
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void sendContactRequest(String email_address) {
         try {
             Gmail.sendAlert(new EmailAddress(email_address),
