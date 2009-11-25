@@ -12,7 +12,7 @@ import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  *
- * @author George
+ * 
  */
 public class Calendars implements Serializable {
     private final static String CALENDAR_SERVICE = "PIONS Calendar";

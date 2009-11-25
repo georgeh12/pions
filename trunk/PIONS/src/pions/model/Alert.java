@@ -22,7 +22,7 @@ import pions.model.dropshift.DropShift;
 /**
  * This class acts as a Mediator between the model.Gmail class and all the
  * Objects which can be stored in an Alert.
- * @author George
+ * 
  */
 public final class Alert implements Serializable {
     private EmailAddress sender = null;

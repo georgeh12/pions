@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 /**
  * Contains a new constructor, and overrides some methods.
- * @author George
+ * 
  */
 abstract class AbstractDecorator extends AbstractState implements Serializable {
     protected AbstractState drop_shift_state;

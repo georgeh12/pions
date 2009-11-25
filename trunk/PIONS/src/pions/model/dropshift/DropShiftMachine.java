@@ -13,7 +13,7 @@ import pions.model.ModelException.ScheduleNotFoundException;
 /**
  * The machine to handle drop shift states.
  * Implements state and decorator patterns. BOOYA!
- * @author George
+ * 
  */
 public class DropShiftMachine implements Serializable {
     AbstractState initial_state = new StateInitial(this);

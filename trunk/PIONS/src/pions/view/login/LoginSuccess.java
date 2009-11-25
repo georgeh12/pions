@@ -7,7 +7,7 @@ import pions.controller.Employees;
 
 /**
  *
- * @author George
+ * 
  */
 public class LoginSuccess extends javax.swing.JPanel {
 

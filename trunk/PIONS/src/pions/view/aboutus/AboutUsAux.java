@@ -3,7 +3,7 @@ package pions.view.aboutus;
 
 /**
  *
- * @author George
+ * 
  */
 public class AboutUsAux extends javax.swing.JPanel {
 

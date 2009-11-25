@@ -9,7 +9,7 @@ import pions.model.Positions.Position;
 
 /**
  *
- * @author George
+ * 
  */
 public final class Positions {
     public static void addPosition(String title, boolean hourly, double rate){

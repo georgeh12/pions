@@ -31,7 +31,7 @@ import pions.model.ModelException.MessageParserException;
 
 /**
  * Implements Observer design pattern
- * @author George
+ * 
  */
 public class Gmail implements Serializable {
     private final static String HOST = "pop.gmail.com";

@@ -6,7 +6,7 @@ import org.w3c.dom.Document;
 
 /**
  *
- * @author George
+ * 
  */
 public abstract class XMLIterator<T> implements Iterator {
     protected Iterator<T> iter;

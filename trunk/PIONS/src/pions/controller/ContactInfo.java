@@ -11,7 +11,7 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  * This class does not support multi-threaded applications.
- * @author George
+ * 
  */
 //TODO implement XML (it's already made), ie. universal set and get method
 public final class ContactInfo {

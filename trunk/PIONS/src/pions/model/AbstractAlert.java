@@ -17,7 +17,7 @@ import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  * Implements the strategy design pattern.
- * @author George
+ * 
  */
 public interface AbstractAlert {
     public void acceptAlert(Alert.AlertType type, EmailAddress sender)

@@ -11,7 +11,7 @@ import org.w3c.dom.Element;
 
 /**
  *
- * @author George
+ * 
  */
 public final class CalendarXMLFactory extends XMLFactory<CalendarEntry> {
     public static final String CALENDAR = "CALENDAR";

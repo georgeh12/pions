@@ -9,7 +9,7 @@ import pions.controller.Alerts;
 
 /**
  *
- * @author George
+ * 
  */
 public class SavedAlertIList extends AbstractAlertsIList {
 

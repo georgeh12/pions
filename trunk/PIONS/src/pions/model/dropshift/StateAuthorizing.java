@@ -9,7 +9,7 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
- * @author George
+ * 
  */
 class StateAuthorizing extends AbstractState implements Serializable {
     protected StateAuthorizing(DropShiftMachine drop_shift){

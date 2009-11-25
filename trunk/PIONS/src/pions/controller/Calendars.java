@@ -24,7 +24,7 @@ import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  *
- * @author George
+ * 
  */
 public final class Calendars {
 

@@ -6,7 +6,7 @@ import pions.controller.ContactInfo;
 
 /**
  *
- * @author George
+ * 
  */
 public class MyContactInfo extends javax.swing.JPanel {
 

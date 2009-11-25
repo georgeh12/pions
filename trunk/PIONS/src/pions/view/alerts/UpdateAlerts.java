@@ -5,7 +5,7 @@ import pions.controller.Alerts;
 
 /**
  *
- * @author George
+ * 
  */
 public class UpdateAlerts extends javax.swing.JPanel {
 

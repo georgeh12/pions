@@ -15,7 +15,7 @@ import pions.model.Positions.Position;
 
 /**
  * Iterator design implementation.
- * @author George
+ * 
  */
 public final class EmployeeXMLFactory extends XMLFactory<Employee> {
     public static final String EMPLOYEE = "EMPLOYEE";

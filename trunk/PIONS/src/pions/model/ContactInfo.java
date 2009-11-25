@@ -8,7 +8,7 @@ import javax.mail.internet.InternetAddress;
 
 /**
  *
- * @author George
+ * 
  */
 public class ContactInfo implements Serializable {
     private ArrayList<EmailAddress> email_addresses = new ArrayList<EmailAddress>();

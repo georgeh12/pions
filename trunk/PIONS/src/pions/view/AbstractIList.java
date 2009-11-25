@@ -12,7 +12,7 @@ import pions.controller.xml.XMLIterator;
 
 /**
  *
- * @author George
+ * 
  */
 public abstract class AbstractIList extends AbstractXMLList {
 

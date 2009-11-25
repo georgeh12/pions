@@ -14,7 +14,7 @@ import pions.controller.DropShifts;
 
 /**
  *
- * @author George
+ * 
  */
 public class DisplayCalendar extends javax.swing.JPanel {
 

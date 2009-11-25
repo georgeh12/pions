@@ -9,7 +9,7 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
- * @author George
+ * 
  */
 public final class EmployeeSingleton extends Employee implements Serializable {
     /*public static void main(String args[]){

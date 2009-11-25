@@ -18,7 +18,7 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
- * @author George
+ * 
  */
 public final class Employees {
     /**

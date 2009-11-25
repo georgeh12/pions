@@ -7,7 +7,7 @@ import pions.model.ContactInfo.EmailAddress;
 
 /**
  *
- * @author George
+ * 
  */
 class StatePublish extends AbstractState implements Serializable {
     protected StatePublish(DropShiftMachine drop_shift){

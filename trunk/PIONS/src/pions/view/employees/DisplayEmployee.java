@@ -8,7 +8,7 @@ import pions.view.AbstractXMLList;
 
 /**
  *
- * @author George
+ * 
  */
 public class DisplayEmployee extends AbstractXMLList {
 

@@ -8,7 +8,7 @@ import pions.model.Contacts.Contact;
 
 /**
  *
- * @author George
+ * 
  */
 public final class ContactIterator extends XMLIterator<Contact> {
     private ContactXMLFactory factory = new ContactXMLFactory();

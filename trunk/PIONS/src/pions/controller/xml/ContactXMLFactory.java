@@ -9,7 +9,7 @@ import pions.model.Contacts.Contact;
 
 /**
  *
- * @author George
+ * 
  */
 public final class ContactXMLFactory extends XMLFactory<Contact> {
     public static final String CONTACT = "CONTACT";

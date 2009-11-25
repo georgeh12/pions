@@ -13,7 +13,7 @@ import pions.view.PIONSView;
 
 /**
  *
- * @author George
+ * 
  */
 public class Availability extends AbstractCalendarList {
 

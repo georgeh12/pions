@@ -16,7 +16,7 @@ import pions.view.PIONSView;
 
 /**
  *
- * @author George
+ * 
  */
 public class SubordinatesEList extends javax.swing.JPanel {
 

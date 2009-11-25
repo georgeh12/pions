@@ -9,7 +9,7 @@ import pions.controller.Contacts;
 
 /**
  * Implements Observer design pattern.
- * @author George
+ * 
  */
 public class ContactIList extends AbstractIList implements Observer {
 
