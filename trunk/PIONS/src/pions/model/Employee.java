@@ -76,7 +76,15 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     }
 
     public PublicKey getPublicKey(String gmail_address){
-        return searchEmployees(gmail_address).getPublicKey();
+        Employee target = searchEmployees(gmail_address);
+
+        //Check null to prevent Throwing a NullPointerException
+        if(target == null){
+            return null;
+        }
+        else{
+            return target.getPublicKey();
+        }
     }
 
     public Employee getManager(){

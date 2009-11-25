@@ -15,15 +15,16 @@ public abstract class AbstractAlertsIList extends AbstractIList {
         if(hasNext()){
             buffer = new StringBuffer();
 
-            root = iter.next().getElementById(AlertXMLFactory.ALERT);
+            setHead(iter.next(), AlertXMLFactory.ALERT);
 
             appendElement(buffer, AlertXMLFactory.PERSONAL);
+            buffer.append('\n');
 
             appendElement(buffer, AlertXMLFactory.EMAIL);
+            buffer.append('\n');
 
             appendElement(buffer, AlertXMLFactory.TYPE);
-
-            appendElement(buffer, AlertXMLFactory.DESCRIPTION);
+            buffer.append('\n');
         }
 
         return buffer;

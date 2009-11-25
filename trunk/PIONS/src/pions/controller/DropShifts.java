@@ -40,8 +40,6 @@ public final class DropShifts {
                     new Alert(drop_shift, AlertType.DropShift));
         } catch(NotLoggedInException e){
             e.printStackTrace();
-        } catch(AlertClassException e){
-            e.printStackTrace();
         }
     }
 }

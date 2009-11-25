@@ -1,8 +1,8 @@
 
 package pions.model;
 
-import com.sun.mail.util.BASE64DecoderStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
@@ -114,15 +114,14 @@ public class Gmail implements Serializable {
 
                 //Retrieves the attachment and decodes it using decryptRSA()
                 Object object = Alert.decryptAlert(
-                        ((InternetAddress)current.getFrom()[0]).getAddress(), alert_type,
-                        (BASE64DecoderStream)((MimeMultipart) current.getContent()).getBodyPart(0).getContent());
+                        current.getFrom()[0].toString(), alert_type,
+                        (InputStream)((MimeMultipart) current.getContent()).getBodyPart(0).getContent());
 
-                Alert add_alert =
-                        new Alert((AbstractAlert)object, alert_type);
+                Alert add_alert = new Alert((AbstractAlert)object, alert_type);
 
                 active_alerts.add(add_alert);
             } catch (Exception e) {
-                e.initCause(new MessageParserException(new_alerts.indexOf(current), alert_type));
+                e.initCause(new MessageParserException(alert_type, new_alerts.indexOf(current)));
                 message_exceptions.add(e);
             }
         }

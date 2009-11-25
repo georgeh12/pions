@@ -11,9 +11,9 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  * This class does not support multi-threaded applications.
- * It is an example of how complicated a class can get if you don't use XML :)
  * @author George
  */
+//TODO implement XML (it's already made), ie. universal set and get method
 public final class ContactInfo {
     private static ArrayList<EmailAddress> cached_emailaddresses = null;
     private static ArrayList<PhoneNumber> cached_phonenumbers = null;

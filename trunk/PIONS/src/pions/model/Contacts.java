@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.internet.AddressException;
@@ -18,10 +19,10 @@ import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
- *
+ * Implements Observer design pattern.
  * @author George
  */
-public class Contacts implements Serializable {
+public class Contacts extends Observable implements Serializable {
     private ArrayList<Contact> contacts = new ArrayList<Contact>();
 
     public Contact addContact(PublicKey public_key, EmailAddress email_address){
@@ -29,13 +30,15 @@ public class Contacts implements Serializable {
         
         Contact search = searchContacts(contact.gmail_address);
 
-        if(search != null){
-            contacts.indexOf(search);
-        }
-        else {
+        if(search == null){
             contacts.add(contact);
         }
+        else {
+            contacts.set(contacts.indexOf(search), contact);
+        }
 
+        setChanged();
+        notifyObservers();
         return contact;
     }
 

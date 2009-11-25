@@ -1,21 +1,28 @@
 
 package pions.view;
 
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JOptionPane;
 import pions.controller.xml.ContactXMLFactory;
 import pions.controller.Contacts;
 
 /**
- *
+ * Implements Observer design pattern.
  * @author George
  */
-public class ContactIList extends AbstractIList {
+public class ContactIList extends AbstractIList implements Observer {
 
     /** Creates new form Contacts */
     public ContactIList() {
         initComponents();
 
         super.panel_display = panel_display;
+        Contacts.subscribe(this);
+        refresh();
+    }
+
+    public void refresh(){
         super.set(Contacts.getContactIterator());
     }
 
@@ -26,11 +33,13 @@ public class ContactIList extends AbstractIList {
         if(hasNext()){
             buffer = new StringBuffer();
 
-            root = iter.next().getElementById(ContactXMLFactory.CONTACT);
+            setHead(iter.next(), ContactXMLFactory.CONTACT);
 
             appendElement(buffer, ContactXMLFactory.PERSONAL);
+            buffer.append('\n');
 
             appendElement(buffer, ContactXMLFactory.EMAIL);
+            buffer.append('\n');
         }
 
         return buffer;
@@ -169,7 +178,7 @@ public class ContactIList extends AbstractIList {
     private void button_contactrequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_contactrequestActionPerformed
         String gmail = "";
 
-        while(gmail.equals("")){
+        while("".equals(gmail)){
             gmail = JOptionPane.showInputDialog(this,
                 "Enter contact's Gmail address.\nRemember to include the @gmail.com suffix.",
                 "Send Contact Request",
@@ -191,4 +200,7 @@ public class ContactIList extends AbstractIList {
     private javax.swing.JScrollPane scrollpane_display;
     // End of variables declaration//GEN-END:variables
 
+    public void update(Observable o, Object arg) {
+        refresh();
+    }
 }
