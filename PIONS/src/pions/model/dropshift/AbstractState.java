@@ -8,7 +8,7 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  * Contains useful functions and unimplemented functions.
- * @author George
+ * 
  */
 abstract class AbstractState implements Serializable {
     protected DropShiftMachine drop_shift;

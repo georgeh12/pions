@@ -6,7 +6,7 @@ import pions.view.AbstractIList;
 
 /**
  *
- * @author George
+ * 
  */
 public abstract class AbstractAlertsIList extends AbstractIList {
     protected StringBuffer parseNext(){

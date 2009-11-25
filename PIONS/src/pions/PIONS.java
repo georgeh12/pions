@@ -7,7 +7,7 @@ import pions.view.PIONSView;
 
 /**
  * The main class of the application.
- * @author George
+ * 
  */
 public class PIONS extends SingleFrameApplication {
 

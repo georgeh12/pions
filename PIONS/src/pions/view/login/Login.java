@@ -9,7 +9,7 @@ import pions.controller.Employees;
 
 /**
  *
- * @author George
+ * 
  */
 public class Login extends JPanel {
 

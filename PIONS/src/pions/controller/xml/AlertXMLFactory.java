@@ -9,7 +9,7 @@ import pions.model.Alert;
 
 /**
  *
- * @author George
+ * 
  */
 public final class AlertXMLFactory extends XMLFactory<Alert> {
     public static final String ALERT = "ALERT";

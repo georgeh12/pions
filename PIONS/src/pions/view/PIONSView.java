@@ -28,7 +28,7 @@ import pions.view.employees.DisplayEmployee;
 
 /**
  * Implements the Observer and Singleton design pattern
- * @author George
+ * 
  */
 public class PIONSView {
     private static PIONSView instance = new PIONSView();

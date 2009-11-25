@@ -7,7 +7,7 @@ import org.w3c.dom.Element;
 
 /**
  * Implements the AbstractFactory design pattern
- * @author George
+ * 
  */
 public abstract class XMLFactory<T> {
     protected Document xml;

@@ -8,7 +8,7 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
- * @author George
+ * 
  */
 class DecoratorAccepted extends AbstractDecorator implements Serializable {
     protected DecoratorAccepted(AbstractState drop_shift_state){

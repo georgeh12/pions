@@ -8,7 +8,7 @@ import org.w3c.dom.NodeList;
 
 /**
  *
- * @author George
+ * 
  */
 public abstract class AbstractXMLList extends JPanel {
     protected Element root = null;

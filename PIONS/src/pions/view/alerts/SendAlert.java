@@ -6,7 +6,7 @@ import pions.controller.Contacts;
 
 /**
  *
- * @author George
+ * 
  */
 public class SendAlert extends javax.swing.JPanel {
 

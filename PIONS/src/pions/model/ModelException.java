@@ -5,7 +5,7 @@ import pions.model.Alert.AlertType;
 
 /**
  *
- * @author George
+ * 
  */
 public class ModelException extends Exception {
     /**

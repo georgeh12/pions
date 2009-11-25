@@ -3,7 +3,7 @@ package pions.view;
 
 /**
  *
- * @author George
+ * 
  */
 public class IdleScreen extends javax.swing.JPanel {
 

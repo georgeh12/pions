@@ -8,7 +8,7 @@ import org.w3c.dom.Document;
 
 /**
  *
- * @author George
+ * 
  */
 public final class CalendarIterator extends XMLIterator<CalendarEntry> {
     private CalendarXMLFactory factory = new CalendarXMLFactory();

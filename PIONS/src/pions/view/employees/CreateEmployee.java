@@ -12,7 +12,7 @@ import pions.controller.Employees;
 
 /**
  *
- * @author George
+ * 
  */
 public class CreateEmployee extends JPanel {
 

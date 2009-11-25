@@ -35,7 +35,7 @@ import pions.model.ModelException.NotLoggedInException;
 /**
  * This class is completely dependent on the Gmail class. If the Gmail class
  * has not been initialized properly, neither will this class.
- * @author George
+ * 
  */
 public class Calendar implements Serializable, AbstractAlert {
     private final static String OWN_CALENDARS = CalendarService.CALENDAR_ROOT_URL

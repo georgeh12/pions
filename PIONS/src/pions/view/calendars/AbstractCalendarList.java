@@ -19,7 +19,7 @@ import pions.view.PIONSView;
 
 /**
  *
- * @author George
+ * 
  */
 public abstract class AbstractCalendarList extends AbstractXMLList {
 

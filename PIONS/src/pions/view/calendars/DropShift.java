@@ -11,7 +11,7 @@ import pions.view.AbstractXMLList;
 
 /**
  *
- * @author George
+ * 
  */
 public class DropShift extends AbstractXMLList {
 

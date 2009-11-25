@@ -8,7 +8,7 @@ import pions.model.Alert;
 
 /**
  * Iterator design implementation.
- * @author George
+ * 
  */
 public final class AlertIterator extends XMLIterator<Alert> {
     private AlertXMLFactory factory = new AlertXMLFactory();

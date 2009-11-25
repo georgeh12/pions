@@ -8,7 +8,7 @@ import pions.controller.Alerts;
 
 /**
  *
- * @author George
+ * 
  */
 public class ActiveAlertsIList extends AbstractAlertsIList {
 

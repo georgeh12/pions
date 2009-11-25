@@ -16,7 +16,7 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  * Implements Observer design pattern
- * @author George
+ * 
  */
 public final class Contacts {
     public static void subscribe(Observer o){

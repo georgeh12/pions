@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author George
+ * 
  */
 public class Positions implements Serializable {
     private ArrayList<Position> positions = new ArrayList<Position>();

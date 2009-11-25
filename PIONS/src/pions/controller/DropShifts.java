@@ -11,7 +11,7 @@ import pions.model.dropshift.DropShift;
 
 /**
  *
- * @author George
+ * 
  */
 public final class DropShifts {
     

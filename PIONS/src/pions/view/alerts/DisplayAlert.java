@@ -3,7 +3,7 @@ package pions.view.alerts;
 
 /**
  *
- * @author George
+ * 
  */
 public class DisplayAlert extends javax.swing.JPanel {
 

@@ -21,7 +21,7 @@ import pions.model.ModelException.NotLoggedInException;
 /**
  * This class is not Serializable so the username or passwords, besides
  * the PublicKey, will not be saved.
- * @author George
+ * 
  */
 public abstract class Login {
     private String username = null; //for AES

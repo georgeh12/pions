@@ -17,7 +17,7 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
- * @author George
+ * 
  */
 public class Employee extends Login implements Serializable, AbstractAlert {
     private String name = "";

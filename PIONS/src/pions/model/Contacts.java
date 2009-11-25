@@ -20,7 +20,7 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  * Implements Observer design pattern.
- * @author George
+ * 
  */
 public class Contacts extends Observable implements Serializable {
     private ArrayList<Contact> contacts = new ArrayList<Contact>();

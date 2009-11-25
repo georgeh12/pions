@@ -7,7 +7,7 @@ import pions.model.ContactInfo.EmailAddress;
 
 /**
  *
- * @author George
+ * 
  */
 class DecoratorIgnored extends AbstractDecorator implements Serializable {
     protected DecoratorIgnored(AbstractState drop_shift_state){

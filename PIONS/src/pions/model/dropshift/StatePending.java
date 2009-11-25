@@ -9,7 +9,7 @@ import pions.model.ModelException.NotLoggedInException;
 
 /**
  *
- * @author George
+ * 
  */
 class StatePending extends AbstractState implements Serializable {
     protected StatePending(DropShiftMachine drop_shift){

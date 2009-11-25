@@ -23,7 +23,7 @@ import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  *
- * @author George
+ * 
  */
 public final class DropShift implements Serializable, AbstractAlert {
     private DropShiftMachine machine;
