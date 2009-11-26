@@ -3,7 +3,7 @@ package pions.view.employees;
 
 import javax.swing.JOptionPane;
 import org.w3c.dom.Document;
-import pions.controller.xml.EmployeeXMLFactory;
+import pions.controller.xml.XMLFactory;
 import pions.view.AbstractXMLList;
 
 /**
@@ -32,7 +32,7 @@ public class DisplayEmployee extends AbstractXMLList {
                     JOptionPane.ERROR_MESSAGE);
         }
         else{
-            root = xml.getElementById(EmployeeXMLFactory.EMPLOYEE);
+            root = xml.getElementById(XMLFactory.EMPLOYEE);
             set();
 
             print();
@@ -48,13 +48,13 @@ public class DisplayEmployee extends AbstractXMLList {
         buffer_phonenumbers = new StringBuffer();
         buffer_address = new StringBuffer();
 
-        appendElement(buffer_name, EmployeeXMLFactory.NAME);
-        appendElement(buffer_iscontact, EmployeeXMLFactory.IS_CONTACT);
-        appendElements(buffer_positions, EmployeeXMLFactory.POSITIONS);
-        appendElement(buffer_gmailaddress, EmployeeXMLFactory.GMAIL_ADDRESS);
-        appendElements(buffer_emailaddresses, EmployeeXMLFactory.EMAIL_ADDRESSES);
-        appendElements(buffer_phonenumbers, EmployeeXMLFactory.PHONE_NUMBERS);
-        appendElement(buffer_address, EmployeeXMLFactory.ADDRESS);
+        appendElement(buffer_name, XMLFactory.NAME);
+        appendElement(buffer_iscontact, XMLFactory.IS_CONTACT);
+        appendElements(buffer_positions, XMLFactory.POSITION);
+        appendElement(buffer_gmailaddress, XMLFactory.GMAIL_ADDRESS);
+        appendElements(buffer_emailaddresses, XMLFactory.EMAIL_ADDRESS);
+        appendElements(buffer_phonenumbers, XMLFactory.PHONE_NUMBER);
+        appendElement(buffer_address, XMLFactory.ADDRESS);
     }
 
     /**
@@ -122,6 +122,7 @@ public class DisplayEmployee extends AbstractXMLList {
         scrollpane_display.setName("scrollpane_display"); // NOI18N
 
         textarea_display.setColumns(20);
+        textarea_display.setEditable(false);
         textarea_display.setLineWrap(true);
         textarea_display.setWrapStyleWord(true);
         textarea_display.setName("textarea_display"); // NOI18N

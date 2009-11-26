@@ -1,13 +1,13 @@
 
 package pions.controller;
 
-import pions.controller.xml.ContactXMLFactory;
 import pions.controller.xml.ContactIterator;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Observer;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
+import pions.controller.xml.AbstractXMLFactory;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
@@ -53,7 +53,7 @@ public final class Contacts {
 
     public static Document getContact(int index) {
         try {
-            return new ContactXMLFactory()
+            return AbstractXMLFactory
                     .newInstance(EmployeeSingleton.getInstance().getContacts().get(index));
         } catch (NotLoggedInException e) {
             e.printStackTrace();

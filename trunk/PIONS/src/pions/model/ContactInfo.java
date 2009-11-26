@@ -31,7 +31,7 @@ public class ContactInfo implements Serializable {
         return address.clone();
     }
 
-    public void setEmailAddress(ArrayList<EmailAddress> email_addresses){
+    public void setEmailAddresses(ArrayList<EmailAddress> email_addresses){
         this.email_addresses = email_addresses;
     }
 
@@ -66,6 +66,10 @@ public class ContactInfo implements Serializable {
 
         public String getPersonal(){
             return personal;
+        }
+
+        public void setPersonal(String personal){
+            this.personal = personal;
         }
 
         public boolean equals(EmailAddress email_address){
@@ -202,9 +206,8 @@ public class ContactInfo implements Serializable {
         private String city = "";
         private State state = State.None;
         private int zip = 0;
-        private String country = "";
 
-        public Address() { }
+        private Address() { }
 
         public Address(String street_address, String city, Address.State state,
             int zip){
@@ -234,12 +237,12 @@ public class ContactInfo implements Serializable {
             return city;
         }
 
-        public int getState(){
-            return state.ordinal();
+        public State getState(){
+            return state;
         }
 
-        public String getZip(){
-            return Integer.toString(zip);
+        public int getZip(){
+            return zip;
         }
 
         /**
@@ -283,8 +286,7 @@ public class ContactInfo implements Serializable {
             return street_address + "\n" +
                     city +
                     (state != State.None ? ", " + state : "") +
-                    (zip != 0 ? " " + zip : "") +
-                    (country.length() > 0 ? " " + country : "");
+                    (zip != 0 ? " " + zip : "");
         }
 
         @Override

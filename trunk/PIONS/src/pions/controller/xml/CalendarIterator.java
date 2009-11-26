@@ -11,8 +11,6 @@ import org.w3c.dom.Document;
  * 
  */
 public final class CalendarIterator extends XMLIterator<CalendarEntry> {
-    private CalendarXMLFactory factory = new CalendarXMLFactory();
-
     public CalendarIterator(Iterator<CalendarEntry> iter){
         super(iter);
     }
@@ -22,7 +20,7 @@ public final class CalendarIterator extends XMLIterator<CalendarEntry> {
         xml = null;
 
         try {
-            return factory.newInstance(iter.next());
+            return AbstractXMLFactory.newInstance(iter.next());
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }

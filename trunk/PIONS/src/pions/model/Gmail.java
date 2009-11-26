@@ -8,6 +8,8 @@ import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Properties;
 import javax.mail.BodyPart;
 import javax.mail.Folder;
@@ -49,6 +51,10 @@ public class Gmail implements Serializable {
     Gmail(EmailAddress gmail_username, String gmail_password) {
         this.gmail_address = gmail_username;
         this.gmail_password = gmail_password;
+    }
+
+    public void setGmailAddressPersonal(String name) {
+        gmail_address.setPersonal(name);
     }
 
     public Alert getActiveAlert(int index){

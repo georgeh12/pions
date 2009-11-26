@@ -12,7 +12,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
 import org.w3c.dom.Document;
-import pions.controller.xml.CalendarXMLFactory;
+import pions.controller.xml.AbstractXMLFactory;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.Calendar;
@@ -137,7 +137,7 @@ public final class Calendars {
 
     public static Document getWorkShift(int index) {
         try {
-            return new CalendarXMLFactory()
+            return AbstractXMLFactory
                     .newInstance(EmployeeSingleton.getInstance().getCalendars()
                     .getWorkSchedule().getEvent(index));
         } catch (ParserConfigurationException e){

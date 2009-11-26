@@ -2,146 +2,121 @@
 package pions.controller;
 
 import java.util.ArrayList;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import pions.controller.xml.AbstractXMLFactory;
+import pions.controller.xml.XMLFactory;
 import pions.model.ContactInfo.Address;
 import pions.model.ContactInfo.Address.State;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ContactInfo.PhoneNumber;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.NotLoggedInException;
+import pions.model.Positions.Position;
+import pions.model.Positions.Position.PayType;
 
 /**
  * This class does not support multi-threaded applications.
  * 
  */
-//TODO implement XML (it's already made), ie. universal set and get method
 public final class ContactInfo {
-    private static ArrayList<EmailAddress> cached_emailaddresses = null;
-    private static ArrayList<PhoneNumber> cached_phonenumbers = null;
-    private static Address cached_address = null;
-    private static String cached_name = null;
 
-    /**
-     * This must be called to initialize the cached variables.
-     */
-    public static void initCache(){
+    public static Document newInstance(){
         try {
-            cached_name = EmployeeSingleton.getInstance().getName();
-            cached_emailaddresses = EmployeeSingleton.getInstance().getContactInfo().getEmailAddresses();
-            cached_phonenumbers = EmployeeSingleton.getInstance().getContactInfo().getPhoneNumbers();
-            cached_address = EmployeeSingleton.getInstance().getContactInfo().getAddress();
+            return AbstractXMLFactory.newInstance(EmployeeSingleton.getInstance());
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private static Element getHead(Document xml, String id){
+        return xml.getElementById(id);
+    }
+
+    private static String getElement(Element root, String tag_name){
+        return root.getAttribute(tag_name);
+    }
+
+    private static String getAttr(Node root){
+        return root.getNodeValue();
+    }
+
+    private static NodeList getElements(Element root, String tag_name){
+        return root.getElementsByTagName(tag_name);
+    }
+
+    public static void commit(Document xml){
+        try {
+            Element head = getHead(xml, XMLFactory.EMPLOYEE);
+
+            //Set name
+            EmployeeSingleton.getInstance().setName(getElement(head, XMLFactory.NAME));
+
+            //Set positions
+            ArrayList<Position> position_list = new ArrayList<Position>();
+
+            NodeList position_nodes = getElements(head, XMLFactory.POSITION);
+            for(int i = 0; i < position_nodes.getLength(); i ++){
+                NodeList attrs = position_nodes.item(i).getChildNodes();
+
+                position_list.add(
+                        new Position(
+                        getAttr(attrs.item(0)),
+                        PayType.valueOf(getAttr(attrs.item(1))),
+                        Double.parseDouble(getAttr(attrs.item(2)))));
+            }
+            EmployeeSingleton.getInstance().getPositions().set(position_list);
+
+            //Set e-mail
+            ArrayList<PhoneNumber> phone_list = new ArrayList<PhoneNumber>();
+
+            NodeList phone_nodes = getElements(head, XMLFactory.PHONE_NUMBER);
+            for(int i = 0; i < phone_nodes.getLength(); i ++){
+                NodeList attrs = phone_nodes.item(i).getChildNodes();
+
+                phone_list.add(
+                        new PhoneNumber(
+                        PhoneNumber.PhoneType.valueOf(getAttr(attrs.item(0))),
+                        PhoneNumber.formatPhoneNumber(getAttr(attrs.item(1))),
+                        PhoneNumber.formatExt(getAttr(attrs.item(2)))));
+            }
+
+            //Set phone
+            ArrayList<EmailAddress> email_list = new ArrayList<EmailAddress>();
+
+            NodeList email_nodes = getElements(head, XMLFactory.EMAIL_ADDRESS);
+            for(int i = 0; i < email_nodes.getLength(); i ++){
+                NodeList attrs = email_nodes.item(i).getChildNodes();
+
+                email_list.add(
+                        new EmailAddress(
+                        getAttr(attrs.item(0)),
+                        getAttr(attrs.item(1))));
+            }
+            
+            //Set address
+            NodeList address = getElements(head, XMLFactory.ADDRESS);
+            {
+                //there should only be one address, hence the index 0
+                NodeList attrs = address.item(0).getChildNodes();
+
+                EmployeeSingleton.getInstance().getContactInfo().setAddress(
+                        new Address(
+                        getAttr(attrs.item(0)),
+                        getAttr(attrs.item(1)),
+                        Address.State.valueOf(getAttr(attrs.item(2))),
+                        Address.parseZip(getAttr(attrs.item(3)))));
+            }
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void commit(){
-        try {
-            EmployeeSingleton.getInstance().setName(cached_name);
-            EmployeeSingleton.getInstance().getContactInfo().setEmailAddress(cached_emailaddresses);
-            EmployeeSingleton.getInstance().getContactInfo().setPhoneNumbers(cached_phonenumbers);
-            EmployeeSingleton.getInstance().getContactInfo().setAddress(cached_address);
-        } catch (NotLoggedInException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static String getName(){
-        return cached_name;
-    }
-
-    public static void setName(String name){
-        cached_name = name;
-    }
-
-    public static void addEmailAddress(String name, String domain) {
-        cached_emailaddresses.add(new EmailAddress(name, domain));
-    }
-
-    public static ArrayList<String> getEmailAddresses(){
-        ArrayList<String> email_addresses = new ArrayList<String>();
-        for(EmailAddress email_address: cached_emailaddresses){
-            email_addresses.add(email_address.toString());
-        }
-        return email_addresses;
-    }
-
-    public static void setEmailAddress(int index, String name, String domain){
-        cached_emailaddresses.set(index, new EmailAddress(name, domain));
-    }
-
-    public static void removeEmailAddress(int index){
-        cached_emailaddresses.remove(index);
-    }
-
-    public static String getEmail(int index){
-        return cached_emailaddresses.get(index).getAddress();
-    }
-
-    public static String getPersonal(int index){
-        return cached_emailaddresses.get(index).getPersonal();
-    }
-
-
-    public static void addPhoneNumber(String type, String number, String extension){
-        cached_phonenumbers.add(new PhoneNumber(PhoneNumber.PhoneType.valueOf(type),
-                PhoneNumber.formatPhoneNumber(number),
-                PhoneNumber.formatExt(extension)));
-    }
-
-    public static ArrayList<String> getPhoneNumbers(){
-        ArrayList<String> phone_numbers = new ArrayList<String>();
-        for(PhoneNumber phone_number: cached_phonenumbers){
-            phone_numbers.add(phone_number.toString());
-        }
-        return phone_numbers;
-    }
-
-    public static void setPhoneNumber(int index, String type,
-            String number, String extension){
-        cached_phonenumbers.set(index,
-                new PhoneNumber(PhoneNumber.PhoneType.valueOf(type),
-                PhoneNumber.formatPhoneNumber(number),
-                PhoneNumber.formatExt(extension)));
-    }
-
-    public static void removePhoneNumber(int index){
-        cached_phonenumbers.remove(index);
-    }
-
-    public static String getPhoneType(int index){
-        return cached_phonenumbers.get(index).getType().toString();
-    }
-
-    public static String getPhoneNumber(int index){
-        return cached_phonenumbers.get(index).toStringPhone();
-    }
-
-    public static String getPhoneExtension(int index){
-        return cached_phonenumbers.get(index).toStringExtension();
-    }
-
-    public static void setAddress(String street_address,
-            String city, String state, String zip){
-        cached_address = new Address(street_address,
-                city,
-                Address.State.valueOf(state),
-                Address.parseZip(zip));
-    }
-
-    public static String getStreet(){
-        return cached_address.getStreet();
-    }
-
-    public static String getCity(){
-        return cached_address.getCity();
-    }
-
-    public static String getZip(){
-        return cached_address.getZip();
-    }
-
-    public static int getState(){
-        return cached_address.getState();
     }
 
     public static ArrayList<String> getStates(){

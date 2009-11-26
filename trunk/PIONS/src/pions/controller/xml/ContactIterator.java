@@ -11,7 +11,6 @@ import pions.model.Contacts.Contact;
  * 
  */
 public final class ContactIterator extends XMLIterator<Contact> {
-    private ContactXMLFactory factory = new ContactXMLFactory();
 
     public ContactIterator(Iterator<Contact> iter) {
         super(iter);
@@ -22,7 +21,7 @@ public final class ContactIterator extends XMLIterator<Contact> {
         xml = null;
 
         try {
-            xml = factory.newInstance(iter.next());
+            xml = AbstractXMLFactory.newInstance(iter.next());
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }

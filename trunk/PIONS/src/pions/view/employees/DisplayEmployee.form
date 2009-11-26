@@ -87,6 +87,7 @@
         <Component class="javax.swing.JTextArea" name="textarea_display">
           <Properties>
             <Property name="columns" type="int" value="20"/>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
             <Property name="name" type="java.lang.String" value="textarea_display" noResource="true"/>
