@@ -25,10 +25,10 @@ public abstract class AbstractXMLList extends JPanel {
     protected void appendElements(StringBuffer buffer, String tag_name){
         NodeList node_list = root.getElementsByTagName(tag_name);
 
-        buffer.append(tag_name + ":\n");
+        buffer.append(tag_name + ":");
 
         for(int i = 0; i < node_list.getLength(); i ++){
-            buffer.append(node_list.item(i));
+            buffer.append("\n" + node_list.item(i));
         }
     }
 }

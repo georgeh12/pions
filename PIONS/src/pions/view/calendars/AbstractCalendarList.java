@@ -12,8 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import pions.controller.Contacts;
 import pions.controller.xml.CalendarIterator;
-import pions.controller.xml.CalendarXMLFactory;
-import pions.controller.xml.ContactXMLFactory;
+import pions.controller.xml.XMLFactory;
 import pions.view.AbstractXMLList;
 import pions.view.PIONSView;
 
@@ -82,11 +81,11 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
                         StringBuffer buffer_gmail = new StringBuffer();
 
                         //Gets the contact xml for the given index
-                        root = Contacts.getContact(index).getElementById(ContactXMLFactory.CONTACT);
+                        root = Contacts.getContact(index).getElementById(XMLFactory.CONTACT);
 
-                        appendElement(buffer_name, ContactXMLFactory.PERSONAL);
+                        appendElement(buffer_name, XMLFactory.CONTACT_PERSONAL);
 
-                        appendElement(buffer_gmail, ContactXMLFactory.EMAIL);
+                        appendElement(buffer_gmail, XMLFactory.CONTACT_EMAIL);
 
                         field_name.setText(buffer_name.toString());
                         field_gmail.setText(buffer_gmail.toString());
@@ -102,17 +101,17 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
         while(iter.hasNext()){
             Document xml = iter.next();
 
-            root = xml.getElementById(CalendarXMLFactory.CALENDAR);
+            root = xml.getElementById(XMLFactory.CALENDAR);
 
             StringBuffer buffer = new StringBuffer();
             NodeList node_list = null;
             
-            node_list = root.getElementsByTagName(CalendarXMLFactory.TITLE);
+            node_list = root.getElementsByTagName(XMLFactory.TITLE);
             for(int i = 0; i < node_list.getLength(); i ++){
                 buffer.append(node_list.item(i).getNodeValue());
             }
 
-            node_list = root.getElementsByTagName(CalendarXMLFactory.EXTENSION);
+            node_list = root.getElementsByTagName(XMLFactory.EXTENSION);
             for(int i = 0; i < node_list.getLength(); i ++){
                 buffer.append(node_list.item(i).getNodeValue());
             }

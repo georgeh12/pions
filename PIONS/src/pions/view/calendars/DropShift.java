@@ -6,7 +6,7 @@ import org.w3c.dom.Document;
 import pions.controller.Calendars;
 import pions.controller.DropShifts;
 import pions.controller.xml.CalendarIterator;
-import pions.controller.xml.CalendarXMLFactory;
+import pions.controller.xml.XMLFactory;
 import pions.view.AbstractXMLList;
 
 /**
@@ -26,28 +26,28 @@ public class DropShift extends AbstractXMLList {
         while(iter.hasNext()){
             Document xml = iter.next();
 
-            root = xml.getElementById(CalendarXMLFactory.CALENDAR);
+            root = xml.getElementById(XMLFactory.CALENDAR);
 
             StringBuffer buffer = new StringBuffer();
 
-            appendElement(buffer, CalendarXMLFactory.TITLE + ", ");
+            appendElement(buffer, XMLFactory.TITLE + ", ");
 
-            appendElement(buffer, CalendarXMLFactory.EXTENSION);
+            appendElement(buffer, XMLFactory.EXTENSION);
 
             combobox_shifts.addItem(buffer.toString().replace(":\n", ", "));
         }
     }
 
     private void display(Document xml){
-        root = xml.getElementById(CalendarXMLFactory.CALENDAR);
+        root = xml.getElementById(XMLFactory.CALENDAR);
 
         StringBuffer buffer = new StringBuffer();
 
-        appendElement(buffer, CalendarXMLFactory.TITLE);
+        appendElement(buffer, XMLFactory.TITLE);
 
-        appendElement(buffer, CalendarXMLFactory.TEXT);
+        appendElement(buffer, XMLFactory.TEXT);
 
-        appendElement(buffer, CalendarXMLFactory.EXTENSION);
+        appendElement(buffer, XMLFactory.EXTENSION);
 
         textarea_details.setText(buffer.toString());
     }

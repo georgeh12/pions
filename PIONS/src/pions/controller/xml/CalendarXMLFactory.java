@@ -14,12 +14,7 @@ import org.w3c.dom.Element;
  * 
  */
 public final class CalendarXMLFactory extends XMLFactory<CalendarEntry> {
-    public static final String CALENDAR = "CALENDAR";
-    public static final String TITLE = "TITLE";
-    public static final String TEXT = "TEXT";
-    public static final String EXTENSION = "EXTENSION";
-
-    public Document newInstance(CalendarEntry current) throws ParserConfigurationException{
+    protected Document newInstance(CalendarEntry current) throws ParserConfigurationException{
         xml = null;
 
         //create a new document
@@ -34,7 +29,7 @@ public final class CalendarXMLFactory extends XMLFactory<CalendarEntry> {
 
         Iterator<Extension> extensions = current.getExtensions().iterator();
         while(extensions.hasNext()){
-            setAttribute(root, EXTENSION, extensions.next().toString());
+            setAttribute(addNode(root, EXTENSION), EXTENSION_DEFAULT, extensions.next().toString());
         }
 
         return null;

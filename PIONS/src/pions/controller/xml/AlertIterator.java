@@ -11,8 +11,6 @@ import pions.model.Alert;
  * 
  */
 public final class AlertIterator extends XMLIterator<Alert> {
-    private AlertXMLFactory factory = new AlertXMLFactory();
-
     public AlertIterator(Iterator<Alert> iter) {
         super(iter);
     }
@@ -22,7 +20,7 @@ public final class AlertIterator extends XMLIterator<Alert> {
         xml = null;
         
         try {
-            xml = factory.newInstance(iter.next());
+            xml = AbstractXMLFactory.newInstance(iter.next());
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }

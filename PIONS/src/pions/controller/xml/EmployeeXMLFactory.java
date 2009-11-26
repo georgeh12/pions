@@ -6,6 +6,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import pions.model.ContactInfo.Address;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ContactInfo.PhoneNumber;
 import pions.model.Employee;
@@ -14,20 +15,11 @@ import pions.model.ModelException.NotLoggedInException;
 import pions.model.Positions.Position;
 
 /**
- * Iterator design implementation.
+ *
  * 
  */
 public final class EmployeeXMLFactory extends XMLFactory<Employee> {
-    public static final String EMPLOYEE = "EMPLOYEE";
-    public static final String NAME = "NAME";
-    public static final String IS_CONTACT = "IS_CONTACT";
-    public static final String POSITIONS = "POSITIONS";
-    public static final String GMAIL_ADDRESS = "GMAIL_ADDRESS";
-    public static final String EMAIL_ADDRESSES = "EMAIL_ADDRESSES";
-    public static final String PHONE_NUMBERS = "PHONE_NUMBERS";
-    public static final String ADDRESS = "ADDRESS";
-
-    public Document newInstance(Employee employee) throws ParserConfigurationException{
+    protected Document newInstance(Employee employee) throws ParserConfigurationException{
         xml = null;
         
         try {
@@ -47,7 +39,15 @@ public final class EmployeeXMLFactory extends XMLFactory<Employee> {
             //Set positions
             Iterator<Position> positions = employee.getPositions().iterator();
             while (positions.hasNext()) {
-                addNode(root, POSITIONS, positions.next().toString());
+                Position position = positions.next();
+
+                Element element = addNode(root, POSITION);
+                setAttribute(element, _TITLE, position.getTitle());
+
+                if(employee == EmployeeSingleton.getInstance()){
+                    setAttribute(element, _PAY_TYPE, position.getPayType().name());
+                    setAttribute(element, _RATE, Double.toString(position.getRate()));
+                }
             }
 
             //Set gmail address
@@ -55,17 +55,29 @@ public final class EmployeeXMLFactory extends XMLFactory<Employee> {
 
             //Set email addresses
             for (EmailAddress email : employee.getContactInfo().getEmailAddresses()) {
-                addNode(root, EMAIL_ADDRESSES, email.getAddress());
+                Element element = addNode(root, EMAIL_ADDRESS);
+                setAttribute(element, _EMAIL_ADDRESS, email.getAddress());
+                setAttribute(element, _PERSONAL, email.getPersonal());
             }
 
             //Set phone numbers
             for (PhoneNumber phone : employee.getContactInfo().getPhoneNumbers()) {
-                addNode(root, PHONE_NUMBERS, phone.toString());
+                Element element = addNode(root, PHONE_NUMBER);
+                setAttribute(element, _PHONE_TYPE, phone.getType().name());
+                setAttribute(element, _NUMBER, phone.toStringPhone());
+                setAttribute(element, _EXTENSION, phone.toStringExtension());
             }
 
             //Set address
-            setAttribute(root, ADDRESS, employee.getContactInfo().getAddress().toString());
+            {
+                Address address = employee.getContactInfo().getAddress();
 
+                Element element = addNode(root, ADDRESS);
+                setAttribute(element, _STREET, address.getStreet());
+                setAttribute(element, _CITY, address.getCity());
+                setAttribute(element, _STATE, address.getState().toAbbrev());
+                setAttribute(element, _ZIP, Integer.toString(address.getZip()));
+            }
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }

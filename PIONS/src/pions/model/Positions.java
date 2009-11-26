@@ -12,18 +12,8 @@ import java.util.Iterator;
 public class Positions implements Serializable {
     private ArrayList<Position> positions = new ArrayList<Position>();
 
-    public Position add(String title, boolean hourly, double rate){
-        Position position = new Position(title, hourly, rate);
-        positions.add(position);
-        return position;
-    }
-
-    public void set(int index, String title, boolean hourly, double rate){
-        positions.get(index).set(title, hourly, rate);
-    }
-
-    public Position remove(int index){
-        return positions.remove(index);
+    public void set(ArrayList<Position> positions){
+        this.positions = positions;
     }
 
     public Iterator<Position> iterator(){
@@ -31,22 +21,33 @@ public class Positions implements Serializable {
     }
 
     public static class Position implements Serializable {
-        public enum Type{
-            Hourly, Yearly;
+        public enum PayType{
+            Salary, Hourly;
         }
         private String title;
-        private Type type;
+        private PayType type;
         private double rate;
 
-        private Position(String title, boolean hourly, double rate){
-            set(title, hourly, rate);
+        public Position(String title, PayType type, double rate){
+            set(title, type, rate);
         }
 
-        public void set(String title, boolean hourly, double rate){
+        private void set(String title, PayType type, double rate){
             this.title = title;
-            //If hourly is true, Pay Type is set to Hourly.
-            type = (hourly ? Type.Hourly : Type.Yearly);
+            this.type = type;
             this.rate = rate;
+        }
+
+        public String getTitle(){
+            return title;
+        }
+
+        public PayType getPayType(){
+            return type;
+        }
+
+        public double getRate(){
+            return rate;
         }
 
         @Override

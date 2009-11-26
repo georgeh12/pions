@@ -139,6 +139,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
 
     public void setName(String name){
         this.name = name;
+        gmail.setGmailAddressPersonal(name);
     }
 
     public void setGmail(EmailAddress gmail_address, String gmail_password){
