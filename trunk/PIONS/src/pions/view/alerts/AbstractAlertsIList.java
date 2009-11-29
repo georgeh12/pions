@@ -15,7 +15,7 @@ public abstract class AbstractAlertsIList extends AbstractIList {
         if(hasNext()){
             buffer = new StringBuffer();
 
-            setHead(iter.next(), XMLFactory.ALERT);
+            root = XMLFactory.getHead(iter.next(), XMLFactory.ALERT);
 
             appendElement(buffer, XMLFactory.CONTACT_PERSONAL);
             buffer.append('\n');

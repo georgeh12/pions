@@ -27,7 +27,7 @@ public final class EmployeeXMLFactory extends XMLFactory<Employee> {
             xml = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                     .getDOMImplementation().createDocument(null, null, null);
 
-            Element root = getHead(EMPLOYEE);
+            Element root = setHead(EMPLOYEE);
 
             //Set name
             setAttribute(root, NAME, employee.getName());
@@ -44,7 +44,7 @@ public final class EmployeeXMLFactory extends XMLFactory<Employee> {
                 Element element = addNode(root, POSITION);
                 setAttribute(element, _TITLE, position.getTitle());
 
-                if(employee == EmployeeSingleton.getInstance()){
+                if(employee.equals(EmployeeSingleton.getInstance())){
                     setAttribute(element, _PAY_TYPE, position.getPayType().name());
                     setAttribute(element, _RATE, Double.toString(position.getRate()));
                 }

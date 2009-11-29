@@ -28,7 +28,7 @@ public class MyContactInfo extends javax.swing.JPanel {
 
     private void initXML(){
         xml = ContactInfo.newInstance();
-        head = xml.getElementById(XMLFactory.EMPLOYEE);
+        head = XMLFactory.getHead(xml, XMLFactory.EMPLOYEE);
 
         initName();
         initPositions();
@@ -38,28 +38,28 @@ public class MyContactInfo extends javax.swing.JPanel {
     }
 
     private void initName(){
-        field_name.setText(head.getElementsByTagName(XMLFactory.NAME).item(0).getNodeValue());
+        field_name.setText(XMLFactory.getElements(head, XMLFactory.NAME).item(XMLFactory.NAME_INDEX).getNodeValue());
     }
 
     private void initPositions(){
         combobox_position.removeAllItems();
-        NodeList position_nodes = head.getElementsByTagName(XMLFactory.POSITION);
+        NodeList position_nodes = XMLFactory.getElements(head, XMLFactory.POSITION);
 
         //Displays the position title only
         for(int i = 0; i < position_nodes.getLength(); i ++){
-            combobox_position.addItem(position_nodes.item(i).getChildNodes().item(0).getNodeValue());
+            combobox_position.addItem(position_nodes.item(i).getChildNodes().item(XMLFactory._TITLE_INDEX).getNodeValue());
         }
     }
 
     private void initAddress(){
         initStates();
 
-        NodeList address = head.getElementsByTagName(XMLFactory.POSITION).item(0).getChildNodes();
+        NodeList address = XMLFactory.getElements(head, XMLFactory.POSITION).item(XMLFactory.ADDRESS_INDEX).getChildNodes();
 
-        field_street.setText(address.item(0).getNodeValue());
-        field_city.setText(address.item(1).getNodeValue());
-        combobox_state.setSelectedItem(address.item(2).getNodeValue());
-        field_zip.setText(address.item(3).getNodeValue());
+        field_street.setText(address.item(XMLFactory._STREET_INDEX).getNodeValue());
+        field_city.setText(address.item(XMLFactory._CITY_INDEX).getNodeValue());
+        combobox_state.setSelectedItem(address.item(XMLFactory._STATE_INDEX).getNodeValue());
+        field_zip.setText(address.item(XMLFactory._ZIP_INDEX).getNodeValue());
     }
 
     private void initStates(){
@@ -70,35 +70,35 @@ public class MyContactInfo extends javax.swing.JPanel {
 
     private void initPhoneNumbers(){
         combobox_phone.removeAllItems();
-        NodeList phone_nodes = head.getElementsByTagName(XMLFactory.PHONE_NUMBER);
+        NodeList phone_nodes = XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER);
 
         //Displays the phone number and extension
         for(int i = 0; i < phone_nodes.getLength(); i ++){
             combobox_phone.addItem(
-                    phone_nodes.item(i).getChildNodes().item(0).getNodeValue()
+                    phone_nodes.item(i).getChildNodes().item(XMLFactory._NUMBER_INDEX).getNodeValue()
                     + " x"
-                    + phone_nodes.item(i).getChildNodes().item(1).getNodeValue());
+                    + phone_nodes.item(i).getChildNodes().item(XMLFactory._EXTENSION_INDEX).getNodeValue());
         }
     }
 
     private void initEmailAddresses(){
         combobox_email.removeAllItems();
-        NodeList email_nodes = head.getElementsByTagName(XMLFactory.EMAIL_ADDRESS);
+        NodeList email_nodes = XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS);
 
         //Displays the phone number and extension
         for(int i = 0; i < email_nodes.getLength(); i ++){
             combobox_email.addItem(
-                    "<" + email_nodes.item(i).getChildNodes().item(0).getNodeValue() + ">"
-                    + email_nodes.item(i).getChildNodes().item(1).getNodeValue());
+                    "<" + email_nodes.item(i).getChildNodes().item(XMLFactory._EMAIL_ADDRESS_INDEX).getNodeValue() + ">"
+                    + email_nodes.item(i).getChildNodes().item(XMLFactory._PERSONAL_INDEX).getNodeValue());
         }
     }
 
     private void getPosition(int index){
-        field_title.setText(head.getElementsByTagName(XMLFactory.POSITION)
-                .item(index).getChildNodes().item(0).getNodeValue());
+        field_title.setText(XMLFactory.getElements(head, XMLFactory.POSITION)
+                .item(index).getChildNodes().item(XMLFactory._TITLE_INDEX).getNodeValue());
 
-        String phone_type = head.getElementsByTagName(XMLFactory.POSITION)
-                .item(index).getChildNodes().item(1).getNodeValue();
+        String phone_type = XMLFactory.getElements(head, XMLFactory.POSITION)
+                .item(index).getChildNodes().item(XMLFactory._PAY_TYPE_INDEX).getNodeValue();
         if(phone_type.equals(radio_hourly.getText())){
             radio_hourly.setSelected(true);
         }
@@ -106,13 +106,13 @@ public class MyContactInfo extends javax.swing.JPanel {
             radio_salary.setSelected(true);
         }
 
-        field_rate.setText(head.getElementsByTagName(XMLFactory.POSITION)
-                .item(index).getChildNodes().item(2).getNodeValue());
+        field_rate.setText(XMLFactory.getElements(head, XMLFactory.POSITION)
+                .item(index).getChildNodes().item(XMLFactory._RATE_INDEX).getNodeValue());
     }
 
     private void getPhoneNumber(int index){
-        String phone_type = head.getElementsByTagName(XMLFactory.PHONE_NUMBER)
-                .item(index).getChildNodes().item(0).getNodeValue();
+        String phone_type = XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
+                .item(index).getChildNodes().item(XMLFactory._PHONE_TYPE_INDEX).getNodeValue();
         if(phone_type.equals(radio_home.getText())){
             radio_home.setSelected(true);
         }
@@ -126,17 +126,34 @@ public class MyContactInfo extends javax.swing.JPanel {
             radio_fax.setSelected(true);
         }
 
-        field_number.setText(head.getElementsByTagName(XMLFactory.PHONE_NUMBER)
-                .item(index).getChildNodes().item(1).getNodeValue());
-        field_ext.setText(head.getElementsByTagName(XMLFactory.PHONE_NUMBER)
-                .item(index).getChildNodes().item(2).getNodeValue());
+        field_number.setText(XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
+                .item(index).getChildNodes().item(XMLFactory._NUMBER_INDEX).getNodeValue());
+        field_extension.setText(XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
+                .item(index).getChildNodes().item(XMLFactory._EXTENSION_INDEX).getNodeValue());
     }
 
     private void getEmailAddress(int index){
-        field_email.setText(head.getElementsByTagName(XMLFactory.EMAIL_ADDRESS)
-                .item(index).getChildNodes().item(0).getNodeValue());
-        field_personal.setText(head.getElementsByTagName(XMLFactory.EMAIL_ADDRESS)
-                .item(index).getChildNodes().item(1).getNodeValue());
+        field_email.setText(XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS)
+                .item(index).getChildNodes().item(XMLFactory._EMAIL_ADDRESS_INDEX).getNodeValue());
+        field_personal.setText(XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS)
+                .item(index).getChildNodes().item(XMLFactory._PERSONAL_INDEX).getNodeValue());
+    }
+
+    private void clearPosition(){
+        field_title.setText("");
+        field_rate.setText("");
+        radiogroup_position.clearSelection();
+    }
+
+    private void clearPhone(){
+        radiogroup_phone.clearSelection();
+        field_number.setText("");
+        field_extension.setText("");
+    }
+
+    private void clearEmail(){
+        field_email.setText("");
+        field_personal.setText("");
     }
 
     private void setPositionEnabled(boolean enabled){
@@ -178,6 +195,10 @@ public class MyContactInfo extends javax.swing.JPanel {
         }
     }
 
+    private void removeNode(int index, String node){
+            XMLFactory.removeNode(head, XMLFactory.getElements(head, node).item(index));
+    }
+
     private void showPositionError(){
         JOptionPane.showConfirmDialog(this,
                 "Please select a position from the drop-down list.",
@@ -203,24 +224,21 @@ public class MyContactInfo extends javax.swing.JPanel {
     }
 
     private void setName(){
-        head.getElementsByTagName(XMLFactory.NAME).item(0).setNodeValue(field_title.getText());
+        XMLFactory.getElements(head, XMLFactory.NAME).item(XMLFactory.NAME_INDEX).setNodeValue(field_title.getText());
     }
 
     private void setAddress(){
-        head.getElementsByTagName(XMLFactory.ADDRESS).item(0).getChildNodes()
-                .item(0).setNodeValue(field_street.getText());
-        head.getElementsByTagName(XMLFactory.ADDRESS).item(0).getChildNodes()
-                .item(1).setNodeValue(field_city.getText());
-        head.getElementsByTagName(XMLFactory.ADDRESS).item(0).getChildNodes()
-                .item(2).setNodeValue(combobox_state.getSelectedItem().toString());
-        head.getElementsByTagName(XMLFactory.ADDRESS).item(0).getChildNodes()
-                .item(3).setNodeValue(field_zip.getText());
+        XMLFactory.getElements(head, XMLFactory.ADDRESS).item(XMLFactory.ADDRESS_INDEX).getChildNodes()
+                .item(XMLFactory._STREET_INDEX).setNodeValue(field_street.getText());
+        XMLFactory.getElements(head, XMLFactory.ADDRESS).item(XMLFactory.ADDRESS_INDEX).getChildNodes()
+                .item(XMLFactory._CITY_INDEX).setNodeValue(field_city.getText());
+        XMLFactory.getElements(head, XMLFactory.ADDRESS).item(XMLFactory.ADDRESS_INDEX).getChildNodes()
+                .item(XMLFactory._STATE_INDEX).setNodeValue(combobox_state.getSelectedItem().toString());
+        XMLFactory.getElements(head, XMLFactory.ADDRESS).item(XMLFactory.ADDRESS_INDEX).getChildNodes()
+                .item(XMLFactory._ZIP_INDEX).setNodeValue(field_zip.getText());
     }
 
-    private void setPosition(int index){
-        head.getElementsByTagName(XMLFactory.POSITION)
-                .item(index).getChildNodes().item(0).setNodeValue(field_title.getText());
-
+    private String getPayType(){
         String pay_type = null;
         if(radio_hourly.isSelected()){
             pay_type = radio_hourly.getText();
@@ -228,14 +246,23 @@ public class MyContactInfo extends javax.swing.JPanel {
         else if(radio_salary.isSelected()){
             pay_type = radio_salary.getText();
         }
-        head.getElementsByTagName(XMLFactory.POSITION)
-                .item(index).getChildNodes().item(1).setNodeValue(pay_type);
 
-        head.getElementsByTagName(XMLFactory.POSITION)
-                .item(index).getChildNodes().item(2).setNodeValue(field_rate.getText());
+        return pay_type;
     }
 
-    private void setPhoneNumber(int index){
+    private void setPosition(int index){
+        XMLFactory.getElements(head, XMLFactory.POSITION)
+                .item(index).getChildNodes().item(XMLFactory._TITLE_INDEX).setNodeValue(field_title.getText());
+
+        String pay_type = getPayType();
+        XMLFactory.getElements(head, XMLFactory.POSITION)
+                .item(index).getChildNodes().item(XMLFactory._PAY_TYPE_INDEX).setNodeValue(pay_type);
+
+        XMLFactory.getElements(head, XMLFactory.POSITION)
+                .item(index).getChildNodes().item(XMLFactory._RATE_INDEX).setNodeValue(field_rate.getText());
+    }
+
+    private String getPhoneType(){
         String phone_type = null;
         if(radio_home.isSelected()){
             phone_type = radio_home.getText();
@@ -250,11 +277,28 @@ public class MyContactInfo extends javax.swing.JPanel {
             phone_type = radio_fax.getText();
         }
 
-        //TODO ContactInfo.setPhoneNumber(index, phone_type, field_number.getText(), field_ext.getText());
+        return phone_type;
+    }
+
+    private void setPhoneNumber(int index){
+        String phone_type = getPhoneType();
+
+        XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
+                .item(index).getChildNodes().item(XMLFactory._PHONE_TYPE_INDEX).setNodeValue(phone_type);
+
+        XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
+                .item(index).getChildNodes().item(XMLFactory._NUMBER_INDEX).setNodeValue(field_number.getText());
+
+        XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
+                .item(index).getChildNodes().item(XMLFactory._EXTENSION_INDEX).setNodeValue(field_extension.getText());
     }
 
     private void setEmailAddress(int index){
-        //TODO ContactInfo.setEmailAddress(index, field_email.getText(), field_personal.getText());
+        XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS)
+                .item(index).getChildNodes().item(XMLFactory._EMAIL_ADDRESS_INDEX).setNodeValue(field_email.getText());
+
+        XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS)
+                .item(index).getChildNodes().item(XMLFactory._PERSONAL_INDEX).setNodeValue(field_personal.getText());
     }
 
     /** This method is called from within the constructor to
@@ -267,7 +311,7 @@ public class MyContactInfo extends javax.swing.JPanel {
     private void initComponents() {
 
         radiogroup_phone = new javax.swing.ButtonGroup();
-        radiogroup_positions = new javax.swing.ButtonGroup();
+        radiogroup_position = new javax.swing.ButtonGroup();
         label_title = new javax.swing.JLabel();
         label_firstdirections = new javax.swing.JLabel();
         label_name = new javax.swing.JLabel();
@@ -296,7 +340,7 @@ public class MyContactInfo extends javax.swing.JPanel {
         field_number = new javax.swing.JTextField();
         label_number = new javax.swing.JLabel();
         label_ext = new javax.swing.JLabel();
-        field_ext = new javax.swing.JTextField();
+        field_extension = new javax.swing.JTextField();
         button_phone = new javax.swing.JButton();
         field_email = new javax.swing.JTextField();
         label_email = new javax.swing.JLabel();
@@ -443,9 +487,9 @@ public class MyContactInfo extends javax.swing.JPanel {
         label_ext.setText(resourceMap.getString("label_ext.text")); // NOI18N
         label_ext.setName("label_ext"); // NOI18N
 
-        field_ext.setColumns(5);
-        field_ext.setText(resourceMap.getString("field_ext.text")); // NOI18N
-        field_ext.setName("field_ext"); // NOI18N
+        field_extension.setColumns(5);
+        field_extension.setText(resourceMap.getString("field_extension.text")); // NOI18N
+        field_extension.setName("field_extension"); // NOI18N
 
         button_phone.setText(resourceMap.getString("button_phone.text")); // NOI18N
         button_phone.setName("button_phone"); // NOI18N
@@ -646,7 +690,7 @@ public class MyContactInfo extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(label_ext)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(field_ext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(field_extension, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_phone)))
                 .addContainerGap())
@@ -726,7 +770,7 @@ public class MyContactInfo extends javax.swing.JPanel {
                             .addComponent(label_number)
                             .addComponent(field_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_ext)
-                            .addComponent(field_ext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(field_extension, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(label_emailaddresses)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -783,6 +827,7 @@ public class MyContactInfo extends javax.swing.JPanel {
         else{
             setPhoneNumber(index);
             setPhoneEnabled(true);
+            clearPhone();
         }
     }//GEN-LAST:event_togglebutton_phoneActionPerformed
 
@@ -802,6 +847,7 @@ public class MyContactInfo extends javax.swing.JPanel {
         else{
             setEmailAddress(index);
             setEmailEnabled(true);
+            clearEmail();
         }
     }//GEN-LAST:event_togglebutton_emailActionPerformed
 
@@ -812,7 +858,8 @@ public class MyContactInfo extends javax.swing.JPanel {
             showPhoneError();
         }
         else{
-            head.getElementsByTagName(XMLFactory.PHONE_NUMBER).item(index);
+            removeNode(index, XMLFactory.PHONE_NUMBER);
+            initPhoneNumbers();
         }
     }//GEN-LAST:event_button_phone_deleteActionPerformed
 
@@ -823,30 +870,28 @@ public class MyContactInfo extends javax.swing.JPanel {
             showEmailError();
         }
         else{
-            head.getElementsByTagName(XMLFactory.EMAIL_ADDRESS).item(index);
+            removeNode(index, XMLFactory.EMAIL_ADDRESS);
+            initEmailAddresses();
         }
     }//GEN-LAST:event_button_email_deleteActionPerformed
 
     private void button_phoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_phoneActionPerformed
-        String phone_type = null;
-        if(radio_home.isSelected()){
-            phone_type = radio_home.getText();
-        }
-        else if(radio_cell.isSelected()){
-            phone_type = radio_cell.getText();
-        }
-        else if(radio_work.isSelected()){
-            phone_type = radio_work.getText();
-        }
-        else if(radio_fax.isSelected()){
-            phone_type = radio_fax.getText();
-        }
+        Element phone_number = XMLFactory.addNode(xml, head, XMLFactory.PHONE_NUMBER);
+        XMLFactory.setAttribute(phone_number, XMLFactory._PHONE_TYPE, getPhoneType());
+        XMLFactory.setAttribute(phone_number, XMLFactory._NUMBER, field_number.getText());
+        XMLFactory.setAttribute(phone_number, XMLFactory._EXTENSION, field_extension.getText());
 
-        //TODO ContactInfo.addPhoneNumber(phone_type, field_number.getText(), field_ext.getText());
+        initPhoneNumbers();
+        clearPhone();
     }//GEN-LAST:event_button_phoneActionPerformed
 
     private void button_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_emailActionPerformed
-        //TODO ContactInfo.addEmailAddress(field_email.getText(), field_personal.getText());
+        Element email_address = XMLFactory.addNode(xml, head, XMLFactory.EMAIL_ADDRESS);
+        XMLFactory.setAttribute(email_address, XMLFactory._EMAIL_ADDRESS, field_email.getText());
+        XMLFactory.setAttribute(email_address, XMLFactory._PERSONAL, field_personal.getText());
+
+        initEmailAddresses();
+        clearEmail();
     }//GEN-LAST:event_button_emailActionPerformed
 
     private void togglebutton_positionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglebutton_positionActionPerformed
@@ -865,6 +910,7 @@ public class MyContactInfo extends javax.swing.JPanel {
         else{
             setPosition(index);
             setPositionEnabled(true);
+            clearPosition();
         }
     }//GEN-LAST:event_togglebutton_positionActionPerformed
 
@@ -875,12 +921,19 @@ public class MyContactInfo extends javax.swing.JPanel {
             showPositionError();
         }
         else{
-            head.getElementsByTagName(XMLFactory.POSITION).item(index);
+            removeNode(index, XMLFactory.POSITION);
+            initPositions();
         }
     }//GEN-LAST:event_button_position_deleteActionPerformed
 
     private void button_positionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_positionActionPerformed
-        // TODO add your handling code here:
+        Element position = XMLFactory.addNode(xml, head, XMLFactory.POSITION);
+        XMLFactory.setAttribute(position, XMLFactory._TITLE, field_title.getText());
+        XMLFactory.setAttribute(position, XMLFactory._PAY_TYPE, getPayType());
+        XMLFactory.setAttribute(position, XMLFactory._RATE, field_rate.getText());
+
+        initPositions();
+        clearPosition();
     }//GEN-LAST:event_button_positionActionPerformed
 
     private void button_revertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_revertActionPerformed
@@ -903,7 +956,7 @@ public class MyContactInfo extends javax.swing.JPanel {
     private javax.swing.JComboBox combobox_state;
     private javax.swing.JTextField field_city;
     private javax.swing.JTextField field_email;
-    private javax.swing.JTextField field_ext;
+    private javax.swing.JTextField field_extension;
     private javax.swing.JTextField field_name;
     private javax.swing.JTextField field_number;
     private javax.swing.JTextField field_personal;
@@ -935,7 +988,7 @@ public class MyContactInfo extends javax.swing.JPanel {
     private javax.swing.JRadioButton radio_salary;
     private javax.swing.JRadioButton radio_work;
     private javax.swing.ButtonGroup radiogroup_phone;
-    private javax.swing.ButtonGroup radiogroup_positions;
+    private javax.swing.ButtonGroup radiogroup_position;
     private javax.swing.JToggleButton togglebutton_email;
     private javax.swing.JToggleButton togglebutton_phone;
     private javax.swing.JToggleButton togglebutton_position;

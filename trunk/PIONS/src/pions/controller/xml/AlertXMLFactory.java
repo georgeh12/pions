@@ -16,7 +16,7 @@ public final class AlertXMLFactory extends XMLFactory<Alert> {
         //create a new document
         xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation().createDocument(null, null, null);
 
-        Element root = getHead(ALERT);
+        Element root = setHead(ALERT);
 
         //Set sender
         setAttribute(root, SENDER_PERSONAL, alert.getAddress().getPersonal());
