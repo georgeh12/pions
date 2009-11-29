@@ -18,7 +18,7 @@ public final class ContactXMLFactory extends XMLFactory<Contact> {
         //create a new document
         xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation().createDocument(null, null, null);
 
-        Element root = getHead(CONTACT);
+        Element root = setHead(CONTACT);
 
         setAttribute(root, CONTACT_EMAIL, contact.getAddress().getAddress());
         setAttribute(root, CONTACT_PERSONAL, contact.getAddress().getPersonal());

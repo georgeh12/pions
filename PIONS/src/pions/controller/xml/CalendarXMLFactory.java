@@ -20,7 +20,7 @@ public final class CalendarXMLFactory extends XMLFactory<CalendarEntry> {
         //create a new document
         xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation().createDocument(null, null, null);
 
-        Element root = getHead(CALENDAR);
+        Element root = setHead(CALENDAR);
 
         // Set title
         setAttribute(root, TITLE, current.getTitle().getPlainText());

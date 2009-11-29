@@ -33,7 +33,7 @@ public class ContactIList extends AbstractIList implements Observer {
         if(hasNext()){
             buffer = new StringBuffer();
 
-            setHead(iter.next(), XMLFactory.CONTACT);
+            root = XMLFactory.getHead(iter.next(), XMLFactory.CONTACT);
 
             appendElement(buffer, XMLFactory.CONTACT_PERSONAL);
             buffer.append('\n');
