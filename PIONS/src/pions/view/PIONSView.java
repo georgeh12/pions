@@ -29,7 +29,7 @@ import pions.controller.Employees;
 import pions.view.employees.DisplayEmployee;
 
 /**
- * Implements the Observer and Singleton design pattern
+ * Implements the Singleton design pattern.
  * 
  */
 public class PIONSView {
@@ -59,6 +59,7 @@ public class PIONSView {
         JFrame main_frame = getFrame();
 
         initMenu();
+        setMenuVisible(false);
 
         //TODO implement PIONSPanel interface to give panels a window closing function.
         PIONS.getApplication().addExitListener(new ExitListener(){
@@ -74,15 +75,15 @@ public class PIONSView {
             }
         });
 
-        setPanel1(new Login());
-        setPanel2(new IdleScreen());
-
         PIONS.getApplication().show(main_frame);
 
         // Somehow this sets the content pane height to 400
         main_frame.setSize(600, 400 + main_frame.getHeight() - main_frame.getContentPane().getHeight());
         main_frame.getContentPane().setLayout(new GridLayout(1,2));
         main_frame.setResizable(false);
+
+        setPanel1(new Login());
+        setPanel2(new IdleScreen());
     }
 
     /**
@@ -241,14 +242,25 @@ public class PIONSView {
         main_frame.transferFocus();
     }
 
+    public void setMenuVisible(boolean visible){
+        contact.setVisible(visible);
+        alerts.setVisible(visible);
+        window.setVisible(visible);
+        getContactFrame().setVisible(false);
+    }
+
     public ContactIList getContactList(){
         return (ContactIList)getContactFrame().getContentPane();
     }
 
     public void showContactFrame(){
-        contact_list.setVisible(true);
+        getContactFrame().setVisible(true);
     }
 
+    /**
+     * Uses double-check locking to allow for multiple threads.
+     * @return
+     */
     private JFrame getContactFrame(){
         if(contact_list == null){
             synchronized(JFrame.class){

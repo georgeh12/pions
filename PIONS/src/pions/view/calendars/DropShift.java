@@ -5,8 +5,8 @@ import javax.swing.JOptionPane;
 import org.w3c.dom.Document;
 import pions.controller.Calendars;
 import pions.controller.DropShifts;
-import pions.controller.xml.CalendarIterator;
 import pions.controller.xml.XMLFactory;
+import pions.controller.xml.XMLIterator;
 import pions.view.AbstractXMLList;
 
 /**
@@ -22,32 +22,43 @@ public class DropShift extends AbstractXMLList {
         init(Calendars.getScheduleShifts());
     }
 
-    private void init(CalendarIterator iter){
-        while(iter.hasNext()){
-            Document xml = iter.next();
-
-            root = xml.getElementById(XMLFactory.CALENDAR);
-
-            StringBuffer buffer = new StringBuffer();
-
-            appendAttribute(buffer, XMLFactory.TITLE + ", ");
-
-            appendAttribute(buffer, XMLFactory.EXTENSION);
-
-            combobox_shifts.addItem(buffer.toString().replace(":\n", ", "));
-        }
-    }
-
-    private void display(Document xml){
-        root = xml.getElementById(XMLFactory.CALENDAR);
+    private StringBuffer getBuffer(Document xml){
+        root = XMLFactory.getHead(xml, XMLFactory.CALENDAR);
 
         StringBuffer buffer = new StringBuffer();
 
         appendAttribute(buffer, XMLFactory.TITLE);
+        buffer.append(", ");
+        appendAttribute(buffer, XMLFactory.START_TIME);
+        buffer.append(", ");
+        appendAttribute(buffer, XMLFactory.END_TIME);
 
-        appendAttribute(buffer, XMLFactory.TEXT);
+        return buffer;
+    }
 
-        appendAttribute(buffer, XMLFactory.EXTENSION);
+    private void init(XMLIterator<?> iter){
+        while(iter.hasNext()){
+            Document xml = iter.next();
+
+            root = XMLFactory.getHead(xml, XMLFactory.CALENDAR);
+
+            combobox_shifts.addItem(AbstractCalendarList.getComboBoxBuffer(root));
+        }
+    }
+
+    private void display(Document xml){
+        root = XMLFactory.getHead(xml, XMLFactory.CALENDAR);
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(XMLFactory.TITLE + ": ");
+        buffer.append(XMLFactory.getAttribute(root, XMLFactory.TITLE));
+        buffer.append(XMLFactory.TEXT + ": ");
+        buffer.append(XMLFactory.getAttribute(root, XMLFactory.TEXT));
+        buffer.append(XMLFactory.START_TIME + ": ");
+        buffer.append(XMLFactory.getAttribute(root, XMLFactory.START_TIME).substring(5));
+        buffer.append(XMLFactory.END_TIME + ": ");
+        buffer.append(XMLFactory.getAttribute(root, XMLFactory.END_TIME).substring(11));
 
         textarea_details.setText(buffer.toString());
     }

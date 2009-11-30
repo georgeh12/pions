@@ -12,6 +12,8 @@ import com.google.gdata.data.calendar.CalendarAclRole;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.calendar.CalendarFeed;
 import com.google.gdata.data.calendar.TimeZoneProperty;
+import com.google.gdata.data.extensions.EventEntry;
+import com.google.gdata.data.extensions.EventFeed;
 import com.google.gdata.data.extensions.When;
 import com.google.gdata.data.extensions.Who;
 import com.google.gdata.data.extensions.Who.AttendeeStatus;
@@ -91,12 +93,6 @@ public class Calendar implements Serializable, AbstractAlert {
         share(html_link, gmail_address, CalendarAclRole.READ);
     }
 
-    public void shareEdit(String gmail_address)
-            throws NotLoggedInException, AuthenticationException,
-            ServiceException, MalformedURLException, IOException {
-        share(html_link, gmail_address, CalendarAclRole.EDITOR);
-    }
-
     private void share(URL url, String gmail_address, AclRole rights)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, MalformedURLException, IOException {
@@ -123,7 +119,7 @@ public class Calendar implements Serializable, AbstractAlert {
             String details, Date start, Date end)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
-        CalendarEntry entry = new CalendarEntry();
+        EventEntry entry = new EventEntry();
 
         //default values
         entry.setCanEdit(true);
@@ -136,7 +132,7 @@ public class Calendar implements Serializable, AbstractAlert {
         When when = new When();
         when.setStartTime(new DateTime(start));
         when.setEndTime(new DateTime(end));
-        entry.addExtension(when);
+        entry.addTime(when);
 
         //guest list, optional extension
         if(gmail_address != null){
@@ -145,7 +141,7 @@ public class Calendar implements Serializable, AbstractAlert {
             who.setValueString(gmail_address.getPersonal());
             who.setAttendeeStatus(AttendeeStatus.EVENT_ACCEPTED);
             who.setAttendeeType(AttendeeType.EVENT_REQUIRED);
-            entry.addExtension(who);
+            entry.addParticipant(who);
         }
 
         entry = Calendars.getService().insert(html_link, entry);
@@ -157,10 +153,10 @@ public class Calendar implements Serializable, AbstractAlert {
         Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries().get(index).delete();
     }
 
-    public Iterator<CalendarEntry> getEvents()
+    public Iterator<EventEntry> getEvents()
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
-        return Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries().iterator();
+        return Calendars.getService().getFeed(html_link, EventFeed.class).getEntries().iterator();
     }
 
     public CalendarEntry getEvent(int index)

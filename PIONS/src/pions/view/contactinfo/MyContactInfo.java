@@ -630,15 +630,15 @@ public class MyContactInfo extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(field_title, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(togglebutton_position, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
+                                        .addComponent(togglebutton_position, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(spinner_rate, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(spinner_rate, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(radio_hourly)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(radio_salary)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(button_position, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(button_position, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(combobox_position, 0, 217, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -696,10 +696,8 @@ public class MyContactInfo extends javax.swing.JPanel {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(label_firstdirections, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(182, 182, 182))))
+                        .addContainerGap())))
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -833,6 +831,7 @@ public class MyContactInfo extends javax.swing.JPanel {
             setPhoneNumber(index);
             setPhoneEnabled(true);
             clearPhone();
+            initPhoneNumbers();
         }
     }//GEN-LAST:event_togglebutton_phoneActionPerformed
 
@@ -854,6 +853,7 @@ public class MyContactInfo extends javax.swing.JPanel {
             setEmailAddress(index);
             setEmailEnabled(true);
             clearEmail();
+            initEmailAddresses();
         }
     }//GEN-LAST:event_togglebutton_emailActionPerformed
 
@@ -887,8 +887,8 @@ public class MyContactInfo extends javax.swing.JPanel {
         XMLFactory.setAttribute(phone_number, XMLFactory._NUMBER, field_number.getText());
         XMLFactory.setAttribute(phone_number, XMLFactory._EXTENSION, field_extension.getText());
 
-        initPhoneNumbers();
         clearPhone();
+        initPhoneNumbers();
     }//GEN-LAST:event_button_phoneActionPerformed
 
     private void button_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_emailActionPerformed
@@ -896,8 +896,8 @@ public class MyContactInfo extends javax.swing.JPanel {
         XMLFactory.setAttribute(email_address, XMLFactory._EMAIL_ADDRESS, field_email.getText());
         XMLFactory.setAttribute(email_address, XMLFactory._PERSONAL, field_personal.getText());
 
-        initEmailAddresses();
         clearEmail();
+        initEmailAddresses();
     }//GEN-LAST:event_button_emailActionPerformed
 
     private void togglebutton_positionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglebutton_positionActionPerformed
@@ -918,6 +918,7 @@ public class MyContactInfo extends javax.swing.JPanel {
             setPosition(index);
             setPositionEnabled(true);
             clearPosition();
+            initPositions();
         }
     }//GEN-LAST:event_togglebutton_positionActionPerformed
 
@@ -939,8 +940,8 @@ public class MyContactInfo extends javax.swing.JPanel {
         XMLFactory.setAttribute(position, XMLFactory._PAY_TYPE, getPayType());
         XMLFactory.setAttribute(position, XMLFactory._RATE, spinner_rate.getValue().toString());
 
-        initPositions();
         clearPosition();
+        initPositions();
     }//GEN-LAST:event_button_positionActionPerformed
 
     private void button_revertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_revertActionPerformed

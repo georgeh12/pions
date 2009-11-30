@@ -32,18 +32,18 @@ public abstract class XMLFactory<T> {
     public static final String TITLE = "Title";
     /** XML descriptor for a CALENDAR attribute node. */
     public static final String TEXT = "Text";
-    /** XML descriptor for a CALENDAR element node. Multiplicity: 0..* */
-    public static final String EXTENSION = "Extension";
-    /** XML descriptor for a EXTENSION attribute node. */
-    public static final String EXTENSION_DEFAULT = "EXTENSION_DEFAULT";
+    /** XML descriptor for a CALENDAR element node. */
+    public static final String START_TIME = "Start_Time";
+    /** XML descriptor for a CALENDAR element node. */
+    public static final String END_TIME = "End_Time";
 
     //variables for creating a contact document
     /** XML descriptor for an XML top element node. */
     public static final String CONTACT = "Contact";
     /** XML descriptor for a CONTACT attribute node. */
-    public static final String CONTACT_EMAIL = "ContactEmail";
+    public static final String CONTACT_EMAIL = "Contact_Email";
     /** XML descriptor for a CONTACT attribute node. */
-    public static final String CONTACT_PERSONAL = "ContactName";
+    public static final String CONTACT_PERSONAL = "Contact_Name";
 
     //variables for creating an employee document
     /** XML descriptor for an XML top element node. */
@@ -51,31 +51,31 @@ public abstract class XMLFactory<T> {
     /** XML descriptor for an EMPLOYEE attribute node. */
     public static final String NAME = "Name";
     /** XML descriptor for an EMPLOYEE attribute node. */
-    public static final String IS_CONTACT = "IsContact";
+    public static final String IS_CONTACT = "Is_Contact";
     /** XML descriptor for an EMPLOYEE element node. Multiplicity: 0..* */
     public static final String POSITION = "Position";
     /** XML descriptor for a POSITION attribute node. */
     public static final String _TITLE = "Title";
     /** XML descriptor for a POSITION attribute node. */
-    public static final String _PAY_TYPE = "PayType";
+    public static final String _PAY_TYPE = "Pay_Type";
     /** XML descriptor for a POSITION attribute node. */
     public static final String _RATE = "Rate";
     /** XML descriptor for an EMPLOYEE attribute node. */
-    public static final String GMAIL_ADDRESS = "GmailAddress";
+    public static final String GMAIL_ADDRESS = "Gmail_Address";
     /** XML descriptor for an EMPLOYEE element node. Multiplicity: 0..* */
-    public static final String EMAIL_ADDRESS = "EmailAddress";
+    public static final String EMAIL_ADDRESS = "Email_Address";
     /** XML descriptor for an EMAIL_ADDRESS attribute node. */
     public static final String _EMAIL_ADDRESS = "Email";
     /** XML descriptor for an EMAIL_ADDRESS attribute node. */
-    public static final String _PERSONAL = "PersonalName";
+    public static final String _PERSONAL = "Personal_Name";
     /** XML descriptor for an EMPLOYEE element node. Multiplicity: 0..* */
-    public static final String PHONE_NUMBER = "PhoneNumber";
+    public static final String PHONE_NUMBER = "Phone_Number";
     /** XML descriptor for an PHONE_NUMBER attribute node. */
-    public static final String _PHONE_TYPE = "PhoneType";
+    public static final String _PHONE_TYPE = "Phone_Type";
     /** XML descriptor for an PHONE_NUMBER attribute node. */
-    public static final String _NUMBER = "PhoneNumber";
+    public static final String _NUMBER = "Phone_Number";
     /** XML descriptor for an PHONE_NUMBER attribute node. */
-    public static final String _EXTENSION = "PhoneExtension";
+    public static final String _EXTENSION = "Phone_Extension";
     /** XML descriptor for an EMPLOYEE element node. */
     public static final String ADDRESS = "Address";
     /** XML descriptor for an ADDRESS attribute node. */

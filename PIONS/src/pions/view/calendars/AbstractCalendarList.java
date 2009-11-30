@@ -9,9 +9,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import pions.controller.Contacts;
-import pions.controller.xml.CalendarIterator;
 import pions.controller.xml.XMLFactory;
+import pions.controller.xml.XMLIterator;
 import pions.view.AbstractXMLList;
 import pions.view.PIONSView;
 
@@ -85,26 +86,21 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
                 }
                 else {
                     int index = PIONSView.getInstance().getContactList().getFirstIndex();
-                    if(index == -1){
-                        JOptionPane.showConfirmDialog(PIONSView.getInstance().getContactList(),
-                                "Please select a contact from the contact list.",
-                                "Select Contact",
-                                JOptionPane.DEFAULT_OPTION,
-                                JOptionPane.WARNING_MESSAGE);
-                    }
-                    else{
+                    if(index != -1){
                         //Gets the contact xml for the given index
                         root = Contacts.getContact(index).getElementById(XMLFactory.CONTACT);
 
-                        field_name.setText(getAttribute(XMLFactory.CONTACT_PERSONAL));
-                        field_gmail.setText(getAttribute(XMLFactory.CONTACT_EMAIL));
+                        field_name.setText(XMLFactory.getAttribute(root,
+                                XMLFactory.CONTACT_PERSONAL));
+                        field_gmail.setText(XMLFactory.getAttribute(root,
+                                XMLFactory.CONTACT_EMAIL));
                     }
                 }
             }
         });
     }
 
-    protected void display(CalendarIterator iter){
+    protected void display(XMLIterator<?> iter){
         combobox_delete.removeAllItems();
         
         while(iter.hasNext()){
@@ -112,15 +108,19 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
 
             root = XMLFactory.getHead(xml, XMLFactory.CALENDAR);
 
-            StringBuffer buffer = new StringBuffer();
-            
-            appendAttribute(buffer, XMLFactory.TITLE);
-
-            appendAttribute(buffer, XMLFactory.TEXT);
-
-            appendAttribute(buffer, XMLFactory.EXTENSION);
-
-            combobox_delete.addItem(buffer.toString().replace(":\n", ", "));
+            combobox_delete.addItem(getComboBoxBuffer(root));
         }
+    }
+
+    public final static String getComboBoxBuffer(Element root){
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(XMLFactory.getAttribute(root, XMLFactory.START_TIME).substring(5));
+        buffer.append(" - ");
+        buffer.append(XMLFactory.getAttribute(root, XMLFactory.END_TIME).substring(11));
+        buffer.append(", ");
+        buffer.append(XMLFactory.getAttribute(root, XMLFactory.TITLE));
+
+        return buffer.toString();
     }
 }

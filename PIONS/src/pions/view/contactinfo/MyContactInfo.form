@@ -68,16 +68,16 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="field_title" min="-2" pref="186" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="togglebutton_position" pref="57" max="32767" attributes="1"/>
+                                      <Component id="togglebutton_position" pref="60" max="32767" attributes="1"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="spinner_rate" min="-2" pref="66" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="spinner_rate" min="-2" pref="76" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="radio_hourly" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="radio_salary" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="button_position" pref="57" max="32767" attributes="1"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="button_position" pref="60" max="32767" attributes="1"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -155,12 +155,9 @@
                       <Component id="label_firstdirections" pref="580" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="label_title" min="-2" pref="367" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
-                  </Group>
               </Group>
           </Group>
+          <Component id="label_title" alignment="0" pref="600" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
