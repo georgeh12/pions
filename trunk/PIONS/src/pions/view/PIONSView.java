@@ -35,7 +35,7 @@ import pions.view.employees.DisplayEmployee;
 public class PIONSView {
     private static PIONSView instance = new PIONSView();
     private JPanel idle = new IdleScreen();
-    private volatile JFrame contact_list = null;
+    private transient volatile JFrame contact_list = null;
 
     private JMenu file = new JMenu("File");
     private JMenu contact = new JMenu("Contact");
@@ -246,25 +246,25 @@ public class PIONSView {
         contact.setVisible(visible);
         alerts.setVisible(visible);
         window.setVisible(visible);
-        getContactFrame().setVisible(false);
     }
 
     public ContactIList getContactList(){
         return (ContactIList)getContactFrame().getContentPane();
     }
 
-    public void showContactFrame(){
-        getContactFrame().setVisible(true);
+    public void setContactsVisible(boolean visible){
+        getContactFrame().setVisible(visible);
     }
 
     /**
-     * Uses double-check locking to allow for multiple threads.
+     * Uses double-check locking to allow for multiple threads. Seems like
+     * overkill for a single frame desktop application.
      * @return
      */
     private JFrame getContactFrame(){
         if(contact_list == null){
             synchronized(JFrame.class){
-                contact_list = new JFrame(){
+                contact_list = new JFrame("Contacts"){
                     @Override
                     public void setVisible(boolean visible){
                         if(visible){
@@ -277,6 +277,8 @@ public class PIONSView {
                 };
                 contact_list.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 contact_list.setContentPane(new ContactIList());
+
+                ((ContactIList)contact_list.getContentPane()).subscribe();
             }
         }
         

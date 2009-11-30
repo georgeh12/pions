@@ -30,9 +30,14 @@ public final class CalendarXMLFactory extends XMLFactory<EventEntry> {
         
         //This last part is messy because gdata refused to parse the times
         String xml_blob = current.getXmlBlob().getBlob();
-        int index = xml_blob.indexOf("<gd:when startTime='");
-        setAttribute(root, START_TIME, DateTime.parseDateTime(xml_blob.substring(index + 20, index + 49)).toUiString());
-        setAttribute(root, END_TIME, DateTime.parseDateTime(xml_blob.substring(index + 60, index + 89)).toUiString());
+        String lookup = "";
+        int index = xml_blob.indexOf(lookup = "<gd:when") + lookup.length();
+        int start_index1 = xml_blob.indexOf(lookup = "startTime='", index) + lookup.length();
+        int start_index2 = xml_blob.indexOf(lookup = "'", start_index1);
+        int end_index1 = xml_blob.indexOf(lookup = "endTime='", start_index2) + lookup.length();
+        int end_index2 = xml_blob.indexOf(lookup = "'", end_index1);
+        setAttribute(root, START_TIME, DateTime.parseDateTime(xml_blob.substring(start_index1, start_index2)).toUiString());
+        setAttribute(root, END_TIME, DateTime.parseDateTime(xml_blob.substring(end_index1, end_index2)).toUiString());
 
         return xml;
     }

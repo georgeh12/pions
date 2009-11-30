@@ -19,8 +19,15 @@ public class ContactIList extends AbstractIList implements Observer {
         initComponents();
 
         super.panel_display = panel_display;
-        Contacts.subscribe(this);
         refresh();
+    }
+    
+    public void update(Observable o, Object arg) {
+        refresh();
+    }
+
+    public void subscribe(){
+        Contacts.subscribe(this);
     }
 
     public void refresh(){
@@ -201,7 +208,4 @@ public class ContactIList extends AbstractIList implements Observer {
     private javax.swing.JScrollPane scrollpane_display;
     // End of variables declaration//GEN-END:variables
 
-    public void update(Observable o, Object arg) {
-        refresh();
-    }
 }

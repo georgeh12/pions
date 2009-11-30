@@ -68,7 +68,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="field_title" min="-2" pref="186" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="togglebutton_position" pref="60" max="32767" attributes="1"/>
+                                      <Component id="togglebutton_position" pref="57" max="32767" attributes="1"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="spinner_rate" min="-2" pref="76" max="-2" attributes="0"/>
@@ -77,7 +77,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="radio_salary" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="button_position" pref="60" max="32767" attributes="1"/>
+                                      <Component id="button_position" pref="57" max="32767" attributes="1"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -260,7 +260,7 @@
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="button_revert" max="32767" attributes="1"/>
+                  <Component id="button_revert" min="-2" max="-2" attributes="1"/>
                   <Component id="button_save" alignment="1" min="-2" max="-2" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
