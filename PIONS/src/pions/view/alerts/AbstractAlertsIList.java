@@ -17,13 +17,13 @@ public abstract class AbstractAlertsIList extends AbstractIList {
 
             root = XMLFactory.getHead(iter.next(), XMLFactory.ALERT);
 
-            appendElement(buffer, XMLFactory.CONTACT_PERSONAL);
+            appendAttribute(buffer, XMLFactory.CONTACT_PERSONAL);
             buffer.append('\n');
 
-            appendElement(buffer, XMLFactory.CONTACT_EMAIL);
+            appendAttribute(buffer, XMLFactory.CONTACT_EMAIL);
             buffer.append('\n');
 
-            appendElement(buffer, XMLFactory.TYPE);
+            appendAttribute(buffer, XMLFactory.ALERT_TYPE);
             buffer.append('\n');
         }
 

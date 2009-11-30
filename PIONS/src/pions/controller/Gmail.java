@@ -28,19 +28,6 @@ public final class Gmail implements Serializable {
         }
     }
 
-    static ArrayList<EmailAddress> getSelectedEmails(ArrayList<EmailAddress> gmail_addresses,
-            boolean[] indices) {
-        ArrayList<EmailAddress> selected = new ArrayList<EmailAddress>();
-
-        for(int i = 0; i < gmail_addresses.size(); i++){
-            if(indices[i]) {
-                selected.add(gmail_addresses.get(i));
-            }
-        }
-
-        return selected;
-    }
-
     public static ArrayList<String> getSubordinateGmails(){
         ArrayList<String> email_addresses = new ArrayList<String>();
 

@@ -21,8 +21,8 @@ import pions.model.ModelException.NotLoggedInException;
  */
 public class Employee extends Login implements Serializable, AbstractAlert {
     private String name = "";
-    private Positions positions;
-    private ContactInfo contact_info;
+    private Positions positions = null;
+    private ContactInfo contact_info = null;
     private Gmail gmail = null;
     private Calendars calendars = new Calendars();
     private Contacts contacts = new Contacts();
@@ -46,6 +46,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     }
 
     public Positions getPositions(){
+        if(positions == null) positions = new Positions();
         return positions;
     }
 
@@ -144,12 +145,6 @@ public class Employee extends Login implements Serializable, AbstractAlert {
 
     public void setGmail(EmailAddress gmail_address, String gmail_password){
         gmail = new Gmail(gmail_address, gmail_password);
-    }
-
-    public byte[] encryptRSA(Object object)
-            throws IOException, StreamCorruptedException,
-            ClassNotFoundException {
-        return super.encryptRSA(key_pair.getPrivate(), object);
     }
 
     /**

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import pions.controller.xml.AbstractXMLFactory;
 import pions.controller.xml.XMLFactory;
@@ -35,33 +36,25 @@ public final class ContactInfo {
         return null;
     }
 
-    private static Element getHead(Document xml, String id){
-        return xml.getElementById(id);
-    }
-
-    private static String getElement(Element root, String tag_name){
-        return root.getAttribute(tag_name);
-    }
-
     public final static void commit(Document xml){
         try {
-            Element head = getHead(xml, XMLFactory.EMPLOYEE);
+            Element head = XMLFactory.getHead(xml, XMLFactory.EMPLOYEE);
 
             //Set name
-            EmployeeSingleton.getInstance().setName(getElement(head, XMLFactory.NAME));
+            EmployeeSingleton.getInstance().setName(XMLFactory.getAttribute(head, XMLFactory.NAME));
 
             //Set positions
             ArrayList<Position> position_list = new ArrayList<Position>();
 
             NodeList position_nodes = XMLFactory.getElements(head, XMLFactory.POSITION);
             for(int i = 0; i < position_nodes.getLength(); i ++){
-                NodeList attrs = position_nodes.item(i).getChildNodes();
+                Element root = (Element)position_nodes.item(i);
 
                 position_list.add(
                         new Position(
-                        XMLFactory.getAttr(attrs.item(0)),
-                        PayType.valueOf(XMLFactory.getAttr(attrs.item(1))),
-                        Double.parseDouble(XMLFactory.getAttr(attrs.item(2)))));
+                        XMLFactory.getAttribute(root, XMLFactory._TITLE),
+                        PayType.valueOf(XMLFactory.getAttribute(root, XMLFactory._PAY_TYPE)),
+                        Double.parseDouble(XMLFactory.getAttribute(root, XMLFactory._RATE))));
             }
             EmployeeSingleton.getInstance().getPositions().set(position_list);
 
@@ -70,40 +63,42 @@ public final class ContactInfo {
 
             NodeList phone_nodes = XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER);
             for(int i = 0; i < phone_nodes.getLength(); i ++){
-                NodeList attrs = phone_nodes.item(i).getChildNodes();
+                Node root = phone_nodes.item(i);
 
                 phone_list.add(
                         new PhoneNumber(
-                        PhoneNumber.PhoneType.valueOf(XMLFactory.getAttr(attrs.item(0))),
-                        PhoneNumber.formatPhoneNumber(XMLFactory.getAttr(attrs.item(1))),
-                        PhoneNumber.formatExt(XMLFactory.getAttr(attrs.item(2)))));
+                        PhoneNumber.PhoneType.valueOf(XMLFactory.getAttribute(root, XMLFactory._PHONE_TYPE)),
+                        PhoneNumber.formatPhoneNumber(XMLFactory.getAttribute(root, XMLFactory._NUMBER)),
+                        PhoneNumber.formatExtension(XMLFactory.getAttribute(root, XMLFactory._EXTENSION))));
             }
+            EmployeeSingleton.getInstance().getContactInfo().setPhoneNumbers(phone_list);
 
             //Set phone
             ArrayList<EmailAddress> email_list = new ArrayList<EmailAddress>();
 
             NodeList email_nodes = XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS);
             for(int i = 0; i < email_nodes.getLength(); i ++){
-                NodeList attrs = email_nodes.item(i).getChildNodes();
+                Node root = email_nodes.item(i);
 
                 email_list.add(
                         new EmailAddress(
-                        XMLFactory.getAttr(attrs.item(0)),
-                        XMLFactory.getAttr(attrs.item(1))));
+                        XMLFactory.getAttribute(root, XMLFactory._EMAIL_ADDRESS),
+                        XMLFactory.getAttribute(root, XMLFactory._PERSONAL)));
             }
+            EmployeeSingleton.getInstance().getContactInfo().setEmailAddresses(email_list);
             
             //Set address
             NodeList address = XMLFactory.getElements(head, XMLFactory.ADDRESS);
             {
                 //there should only be one address, hence the index 0
-                NodeList attrs = address.item(0).getChildNodes();
+                Node root = address.item(0);
 
                 EmployeeSingleton.getInstance().getContactInfo().setAddress(
                         new Address(
-                        XMLFactory.getAttr(attrs.item(0)),
-                        XMLFactory.getAttr(attrs.item(1)),
-                        Address.State.valueOf(XMLFactory.getAttr(attrs.item(2))),
-                        Address.parseZip(XMLFactory.getAttr(attrs.item(3)))));
+                        XMLFactory.getAttribute(root, XMLFactory._STREET),
+                        XMLFactory.getAttribute(root, XMLFactory._CITY),
+                        Address.State.valueOf(XMLFactory.getAttribute(root, XMLFactory._STATE)),
+                        XMLFactory.getAttribute(root, XMLFactory._ZIP)));
             }
         } catch (NotLoggedInException e) {
             e.printStackTrace();

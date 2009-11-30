@@ -48,13 +48,13 @@ public class DisplayEmployee extends AbstractXMLList {
         buffer_phonenumbers = new StringBuffer();
         buffer_address = new StringBuffer();
 
-        appendElement(buffer_name, XMLFactory.NAME);
-        appendElement(buffer_iscontact, XMLFactory.IS_CONTACT);
+        appendAttribute(buffer_name, XMLFactory.NAME);
+        appendAttribute(buffer_iscontact, XMLFactory.IS_CONTACT);
         appendElements(buffer_positions, XMLFactory.POSITION);
-        appendElement(buffer_gmailaddress, XMLFactory.GMAIL_ADDRESS);
+        appendAttribute(buffer_gmailaddress, XMLFactory.GMAIL_ADDRESS);
         appendElements(buffer_emailaddresses, XMLFactory.EMAIL_ADDRESS);
         appendElements(buffer_phonenumbers, XMLFactory.PHONE_NUMBER);
-        appendElement(buffer_address, XMLFactory.ADDRESS);
+        appendAttribute(buffer_address, XMLFactory.ADDRESS);
     }
 
     /**

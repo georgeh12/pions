@@ -76,7 +76,7 @@ public final class EmployeeXMLFactory extends XMLFactory<Employee> {
                 setAttribute(element, _STREET, address.getStreet());
                 setAttribute(element, _CITY, address.getCity());
                 setAttribute(element, _STATE, address.getState().toAbbrev());
-                setAttribute(element, _ZIP, Integer.toString(address.getZip()));
+                setAttribute(element, _ZIP, address.getZip());
             }
         } catch (NotLoggedInException e) {
             e.printStackTrace();

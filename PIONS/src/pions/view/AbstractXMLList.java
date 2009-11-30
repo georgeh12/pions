@@ -13,12 +13,16 @@ import pions.controller.xml.XMLFactory;
 public abstract class AbstractXMLList extends JPanel {
     protected Element root = null;
 
-    protected void appendElement(StringBuffer buffer, String tag_name){
+    protected final void appendAttribute(StringBuffer buffer, String tag_name){
         buffer.append(tag_name + ":\n");
-        buffer.append(root.getAttribute(tag_name));
+        buffer.append(getAttribute(tag_name));
     }
 
-    protected void appendElements(StringBuffer buffer, String tag_name){
+    protected final String getAttribute(String tag_name){
+        return XMLFactory.getAttribute(root, tag_name);
+    }
+
+    protected final void appendElements(StringBuffer buffer, String tag_name){
         NodeList node_list = XMLFactory.getElements(root, tag_name);
 
         buffer.append(tag_name + ":");

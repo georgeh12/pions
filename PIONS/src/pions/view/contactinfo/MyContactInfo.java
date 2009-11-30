@@ -1,9 +1,10 @@
 
-package pions.view;
+package pions.view.contactinfo;
 
 import javax.swing.JOptionPane;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import pions.controller.ContactInfo;
 import pions.controller.xml.XMLFactory;
@@ -38,7 +39,7 @@ public class MyContactInfo extends javax.swing.JPanel {
     }
 
     private void initName(){
-        field_name.setText(XMLFactory.getElements(head, XMLFactory.NAME).item(XMLFactory.NAME_INDEX).getNodeValue());
+        field_name.setText(XMLFactory.getAttribute(head, XMLFactory.NAME));
     }
 
     private void initPositions(){
@@ -47,19 +48,19 @@ public class MyContactInfo extends javax.swing.JPanel {
 
         //Displays the position title only
         for(int i = 0; i < position_nodes.getLength(); i ++){
-            combobox_position.addItem(position_nodes.item(i).getChildNodes().item(XMLFactory._TITLE_INDEX).getNodeValue());
+            combobox_position.addItem(XMLFactory.getAttribute(position_nodes.item(i), XMLFactory._TITLE));
         }
     }
 
     private void initAddress(){
         initStates();
 
-        NodeList address = XMLFactory.getElements(head, XMLFactory.POSITION).item(XMLFactory.ADDRESS_INDEX).getChildNodes();
+        Node address = XMLFactory.getElements(head, XMLFactory.ADDRESS).item(XMLFactory.DEFAULT_INDEX);
 
-        field_street.setText(address.item(XMLFactory._STREET_INDEX).getNodeValue());
-        field_city.setText(address.item(XMLFactory._CITY_INDEX).getNodeValue());
-        combobox_state.setSelectedItem(address.item(XMLFactory._STATE_INDEX).getNodeValue());
-        field_zip.setText(address.item(XMLFactory._ZIP_INDEX).getNodeValue());
+        field_street.setText(XMLFactory.getAttribute(address, XMLFactory._STREET));
+        field_city.setText(XMLFactory.getAttribute(address, XMLFactory._CITY));
+        combobox_state.setSelectedItem(XMLFactory.getAttribute(address, XMLFactory._STATE));
+        field_zip.setText(XMLFactory.getAttribute(address, XMLFactory._ZIP));
     }
 
     private void initStates(){
@@ -74,10 +75,13 @@ public class MyContactInfo extends javax.swing.JPanel {
 
         //Displays the phone number and extension
         for(int i = 0; i < phone_nodes.getLength(); i ++){
+            String extension = XMLFactory.getAttribute(phone_nodes.item(i), XMLFactory._EXTENSION);
+
             combobox_phone.addItem(
-                    phone_nodes.item(i).getChildNodes().item(XMLFactory._NUMBER_INDEX).getNodeValue()
-                    + " x"
-                    + phone_nodes.item(i).getChildNodes().item(XMLFactory._EXTENSION_INDEX).getNodeValue());
+                    XMLFactory.getAttribute(phone_nodes.item(i), XMLFactory._PHONE_TYPE)
+                    + ": "
+                    + XMLFactory.getAttribute(phone_nodes.item(i), XMLFactory._NUMBER)
+                    + (extension.isEmpty() ? "" : " x") + extension);
         }
     }
 
@@ -88,17 +92,19 @@ public class MyContactInfo extends javax.swing.JPanel {
         //Displays the phone number and extension
         for(int i = 0; i < email_nodes.getLength(); i ++){
             combobox_email.addItem(
-                    "<" + email_nodes.item(i).getChildNodes().item(XMLFactory._EMAIL_ADDRESS_INDEX).getNodeValue() + ">"
-                    + email_nodes.item(i).getChildNodes().item(XMLFactory._PERSONAL_INDEX).getNodeValue());
+                    "<" + XMLFactory.getAttribute(email_nodes.item(i), XMLFactory._EMAIL_ADDRESS) + "> "
+                    + XMLFactory.getAttribute(email_nodes.item(i), XMLFactory._PERSONAL));
         }
     }
 
     private void getPosition(int index){
-        field_title.setText(XMLFactory.getElements(head, XMLFactory.POSITION)
-                .item(index).getChildNodes().item(XMLFactory._TITLE_INDEX).getNodeValue());
+        field_title.setText(XMLFactory.getAttribute(
+                XMLFactory.getElements(head, XMLFactory.POSITION).item(index),
+                XMLFactory._TITLE));
 
-        String phone_type = XMLFactory.getElements(head, XMLFactory.POSITION)
-                .item(index).getChildNodes().item(XMLFactory._PAY_TYPE_INDEX).getNodeValue();
+        String phone_type = XMLFactory.getAttribute(
+                XMLFactory.getElements(head, XMLFactory.POSITION).item(index),
+                XMLFactory._PAY_TYPE);
         if(phone_type.equals(radio_hourly.getText())){
             radio_hourly.setSelected(true);
         }
@@ -106,13 +112,15 @@ public class MyContactInfo extends javax.swing.JPanel {
             radio_salary.setSelected(true);
         }
 
-        field_rate.setText(XMLFactory.getElements(head, XMLFactory.POSITION)
-                .item(index).getChildNodes().item(XMLFactory._RATE_INDEX).getNodeValue());
+        spinner_rate.getModel().setValue(Double.parseDouble(XMLFactory.getAttribute(
+                XMLFactory.getElements(head, XMLFactory.POSITION).item(index),
+                XMLFactory._RATE)));
     }
 
     private void getPhoneNumber(int index){
-        String phone_type = XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
-                .item(index).getChildNodes().item(XMLFactory._PHONE_TYPE_INDEX).getNodeValue();
+        String phone_type = XMLFactory.getAttribute(
+                XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER).item(index),
+                XMLFactory._PHONE_TYPE);
         if(phone_type.equals(radio_home.getText())){
             radio_home.setSelected(true);
         }
@@ -126,22 +134,26 @@ public class MyContactInfo extends javax.swing.JPanel {
             radio_fax.setSelected(true);
         }
 
-        field_number.setText(XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
-                .item(index).getChildNodes().item(XMLFactory._NUMBER_INDEX).getNodeValue());
-        field_extension.setText(XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
-                .item(index).getChildNodes().item(XMLFactory._EXTENSION_INDEX).getNodeValue());
+        field_number.setText(XMLFactory.getAttribute(
+                XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER).item(index),
+                XMLFactory._NUMBER));
+        field_extension.setText(XMLFactory.getAttribute(
+                XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER).item(index),
+                XMLFactory._EXTENSION));
     }
 
     private void getEmailAddress(int index){
-        field_email.setText(XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS)
-                .item(index).getChildNodes().item(XMLFactory._EMAIL_ADDRESS_INDEX).getNodeValue());
-        field_personal.setText(XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS)
-                .item(index).getChildNodes().item(XMLFactory._PERSONAL_INDEX).getNodeValue());
+        field_email.setText(XMLFactory.getAttribute(
+                XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS).item(index),
+                XMLFactory._EMAIL_ADDRESS));
+        field_personal.setText(XMLFactory.getAttribute(
+                XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS).item(index),
+                XMLFactory._PERSONAL));
     }
 
     private void clearPosition(){
         field_title.setText("");
-        field_rate.setText("");
+        spinner_rate.getModel().setValue(0);
         radiogroup_position.clearSelection();
     }
 
@@ -224,50 +236,42 @@ public class MyContactInfo extends javax.swing.JPanel {
     }
 
     private void setName(){
-        XMLFactory.getElements(head, XMLFactory.NAME).item(XMLFactory.NAME_INDEX).setNodeValue(field_title.getText());
+        XMLFactory.setAttribute(head, XMLFactory.NAME, field_name.getText());
     }
 
     private void setAddress(){
-        XMLFactory.getElements(head, XMLFactory.ADDRESS).item(XMLFactory.ADDRESS_INDEX).getChildNodes()
-                .item(XMLFactory._STREET_INDEX).setNodeValue(field_street.getText());
-        XMLFactory.getElements(head, XMLFactory.ADDRESS).item(XMLFactory.ADDRESS_INDEX).getChildNodes()
-                .item(XMLFactory._CITY_INDEX).setNodeValue(field_city.getText());
-        XMLFactory.getElements(head, XMLFactory.ADDRESS).item(XMLFactory.ADDRESS_INDEX).getChildNodes()
-                .item(XMLFactory._STATE_INDEX).setNodeValue(combobox_state.getSelectedItem().toString());
-        XMLFactory.getElements(head, XMLFactory.ADDRESS).item(XMLFactory.ADDRESS_INDEX).getChildNodes()
-                .item(XMLFactory._ZIP_INDEX).setNodeValue(field_zip.getText());
+        Node address = XMLFactory.getElements(head, XMLFactory.ADDRESS).item(XMLFactory.DEFAULT_INDEX);
+
+        XMLFactory.setAttribute(address, XMLFactory._STREET, field_street.getText());
+        XMLFactory.setAttribute(address, XMLFactory._CITY, field_city.getText());
+        XMLFactory.setAttribute(address, XMLFactory._STATE, combobox_state.getSelectedItem().toString());
+        XMLFactory.setAttribute(address, XMLFactory._ZIP, field_zip.getText());
     }
 
     private String getPayType(){
         String pay_type = null;
-        if(radio_hourly.isSelected()){
-            pay_type = radio_hourly.getText();
-        }
-        else if(radio_salary.isSelected()){
+        if(radio_salary.isSelected()){
             pay_type = radio_salary.getText();
+        }
+        else {
+            //Default pay type
+            pay_type = radio_hourly.getText();
         }
 
         return pay_type;
     }
 
     private void setPosition(int index){
-        XMLFactory.getElements(head, XMLFactory.POSITION)
-                .item(index).getChildNodes().item(XMLFactory._TITLE_INDEX).setNodeValue(field_title.getText());
+        Node position = XMLFactory.getElements(head, XMLFactory.POSITION).item(index);
 
-        String pay_type = getPayType();
-        XMLFactory.getElements(head, XMLFactory.POSITION)
-                .item(index).getChildNodes().item(XMLFactory._PAY_TYPE_INDEX).setNodeValue(pay_type);
-
-        XMLFactory.getElements(head, XMLFactory.POSITION)
-                .item(index).getChildNodes().item(XMLFactory._RATE_INDEX).setNodeValue(field_rate.getText());
+        XMLFactory.setAttribute(position, XMLFactory._TITLE, field_title.getText());
+        XMLFactory.setAttribute(position, XMLFactory._PAY_TYPE, getPayType());
+        XMLFactory.setAttribute(position, XMLFactory._RATE, spinner_rate.getValue().toString());
     }
 
     private String getPhoneType(){
         String phone_type = null;
-        if(radio_home.isSelected()){
-            phone_type = radio_home.getText();
-        }
-        else if(radio_cell.isSelected()){
+        if(radio_cell.isSelected()){
             phone_type = radio_cell.getText();
         }
         else if(radio_work.isSelected()){
@@ -276,29 +280,27 @@ public class MyContactInfo extends javax.swing.JPanel {
         else if(radio_fax.isSelected()){
             phone_type = radio_fax.getText();
         }
+        else{
+            //Default value of Home
+            phone_type = radio_home.getText();
+        }
 
         return phone_type;
     }
 
     private void setPhoneNumber(int index){
-        String phone_type = getPhoneType();
+        Node phone_number = XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER).item(index);
 
-        XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
-                .item(index).getChildNodes().item(XMLFactory._PHONE_TYPE_INDEX).setNodeValue(phone_type);
-
-        XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
-                .item(index).getChildNodes().item(XMLFactory._NUMBER_INDEX).setNodeValue(field_number.getText());
-
-        XMLFactory.getElements(head, XMLFactory.PHONE_NUMBER)
-                .item(index).getChildNodes().item(XMLFactory._EXTENSION_INDEX).setNodeValue(field_extension.getText());
+        XMLFactory.setAttribute(phone_number, XMLFactory._PHONE_TYPE, getPhoneType());
+        XMLFactory.setAttribute(phone_number, XMLFactory._NUMBER, field_number.getText());
+        XMLFactory.setAttribute(phone_number, XMLFactory._EXTENSION, field_extension.getText());
     }
 
     private void setEmailAddress(int index){
-        XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS)
-                .item(index).getChildNodes().item(XMLFactory._EMAIL_ADDRESS_INDEX).setNodeValue(field_email.getText());
+        Node email_address = XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS).item(index);
 
-        XMLFactory.getElements(head, XMLFactory.EMAIL_ADDRESS)
-                .item(index).getChildNodes().item(XMLFactory._PERSONAL_INDEX).setNodeValue(field_personal.getText());
+        XMLFactory.setAttribute(email_address, XMLFactory._EMAIL_ADDRESS, field_email.getText());
+        XMLFactory.setAttribute(email_address, XMLFactory._PERSONAL, field_personal.getText());
     }
 
     /** This method is called from within the constructor to
@@ -356,10 +358,10 @@ public class MyContactInfo extends javax.swing.JPanel {
         radio_hourly = new javax.swing.JRadioButton();
         radio_salary = new javax.swing.JRadioButton();
         label_pay = new javax.swing.JLabel();
-        field_rate = new javax.swing.JTextField();
         label_position_title = new javax.swing.JLabel();
         field_title = new javax.swing.JTextField();
         togglebutton_position = new javax.swing.JToggleButton();
+        spinner_rate = new javax.swing.JSpinner();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(600, 400));
@@ -560,18 +562,17 @@ public class MyContactInfo extends javax.swing.JPanel {
             }
         });
 
+        radiogroup_position.add(radio_hourly);
         radio_hourly.setText(resourceMap.getString("radio_hourly.text")); // NOI18N
         radio_hourly.setName("radio_hourly"); // NOI18N
 
+        radiogroup_position.add(radio_salary);
         radio_salary.setText(resourceMap.getString("radio_salary.text")); // NOI18N
         radio_salary.setName("radio_salary"); // NOI18N
 
         label_pay.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         label_pay.setText(resourceMap.getString("label_pay.text")); // NOI18N
         label_pay.setName("label_pay"); // NOI18N
-
-        field_rate.setText(resourceMap.getString("field_rate.text")); // NOI18N
-        field_rate.setName("field_rate"); // NOI18N
 
         label_position_title.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         label_position_title.setText(resourceMap.getString("label_position_title.text")); // NOI18N
@@ -588,122 +589,117 @@ public class MyContactInfo extends javax.swing.JPanel {
             }
         });
 
+        spinner_rate.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), Double.valueOf(0.0d), null, Double.valueOf(1.0d)));
+        spinner_rate.setName("spinner_rate"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(label_name)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(field_name, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(label_positions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(label_state)
-                            .addComponent(label_city, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_street))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(field_city, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                            .addComponent(field_street, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(combobox_state, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(label_zip)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(field_zip, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(label_address, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(combobox_position, 0, 223, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(label_name)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(field_name, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(label_state)
+                                    .addComponent(label_city, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_street))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(field_city, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                                    .addComponent(field_street, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(combobox_state, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(label_zip)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(field_zip, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(label_address, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(label_position_title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(label_pay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(field_rate, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                                        .addComponent(field_title, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(togglebutton_position, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(spinner_rate, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(radio_hourly)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(radio_salary)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(button_position, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(combobox_position, 0, 217, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_position_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(label_positions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(label_phone, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addComponent(label_number)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(field_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(label_ext)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(field_extension, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(combobox_phone, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(label_email, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(label_personal))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(radio_salary))
-                                    .addComponent(field_title, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(button_position_delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(togglebutton_position, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(button_position, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(label_phone, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(field_personal, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                                            .addComponent(field_email, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
+                                    .addComponent(combobox_email, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(radio_home)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(radio_cell)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(radio_work)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(radio_fax)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(button_email, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(togglebutton_email, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(button_email_delete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(radio_home)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(radio_cell)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(radio_work)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(radio_fax)
-                                                .addGap(43, 43, 43))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(combobox_phone, 0, 227, Short.MAX_VALUE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(button_phone_delete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(togglebutton_phone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(combobox_email, javax.swing.GroupLayout.Alignment.TRAILING, 0, 227, Short.MAX_VALUE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(label_email, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(label_personal))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(field_personal, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                                                    .addComponent(field_email, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(button_email)
-                                            .addComponent(button_email_delete, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                                            .addComponent(togglebutton_email, javax.swing.GroupLayout.Alignment.TRAILING)))
-                                    .addComponent(label_emailaddresses, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(label_number)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(field_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(label_ext)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(field_extension, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_phone)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(button_save, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(button_revert)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(label_firstdirections, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
-                .addContainerGap())
+                                        .addComponent(togglebutton_phone, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addComponent(button_phone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(button_phone_delete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(label_emailaddresses, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
+                        .addGap(8, 8, 8))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(button_save, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(button_revert, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(label_firstdirections, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(182, 182, 182))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -721,8 +717,8 @@ public class MyContactInfo extends javax.swing.JPanel {
                         .addComponent(label_positions)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(button_position_delete)
-                            .addComponent(combobox_position, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(combobox_position, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_position_delete))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(label_position_title)
@@ -730,11 +726,11 @@ public class MyContactInfo extends javax.swing.JPanel {
                             .addComponent(togglebutton_position))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(button_position)
                             .addComponent(label_pay)
-                            .addComponent(radio_hourly)
+                            .addComponent(spinner_rate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_position)
                             .addComponent(radio_salary)
-                            .addComponent(field_rate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(radio_hourly))
                         .addGap(18, 18, 18)
                         .addComponent(label_address)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -759,11 +755,11 @@ public class MyContactInfo extends javax.swing.JPanel {
                             .addComponent(button_phone_delete))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(togglebutton_phone)
                             .addComponent(radio_home)
                             .addComponent(radio_cell)
                             .addComponent(radio_work)
-                            .addComponent(radio_fax)
-                            .addComponent(togglebutton_phone))
+                            .addComponent(radio_fax))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(button_phone)
@@ -788,15 +784,17 @@ public class MyContactInfo extends javax.swing.JPanel {
                             .addComponent(label_personal)
                             .addComponent(button_email))))
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(button_revert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(button_save))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveActionPerformed
-        if(togglebutton_phone.isSelected() || togglebutton_email.isSelected()){
+        if(togglebutton_position.isSelected()
+                || togglebutton_phone.isSelected()
+                || togglebutton_email.isSelected()){
             JOptionPane.showConfirmDialog(this,
                     "Please finish editing before saving.",
                     "Finish Editing",
@@ -804,6 +802,12 @@ public class MyContactInfo extends javax.swing.JPanel {
                     JOptionPane.ERROR_MESSAGE);
         }
         else{
+            JOptionPane.showConfirmDialog(this,
+                    "Your changes have been saved.",
+                    "Success",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE);
+
             setName();
             setAddress();
 
@@ -815,12 +819,13 @@ public class MyContactInfo extends javax.swing.JPanel {
         int index = combobox_phone.getSelectedIndex();
 
         if(togglebutton_phone.isSelected()){
-            setPhoneEnabled(false);
-
             if(index == -1){
+                togglebutton_phone.setSelected(false);
                 showPhoneError();
             }
             else{
+                setPhoneEnabled(false);
+
                 getPhoneNumber(index);
             }
         }
@@ -835,12 +840,13 @@ public class MyContactInfo extends javax.swing.JPanel {
         int index = combobox_email.getSelectedIndex();
         
         if(togglebutton_email.isSelected()){
-            setEmailEnabled(false);
-
             if(index == -1){
+                togglebutton_email.setSelected(false);
                 showEmailError();
             }
             else{
+                setEmailEnabled(false);
+
                 getEmailAddress(index);
             }
         }
@@ -898,12 +904,13 @@ public class MyContactInfo extends javax.swing.JPanel {
         int index = combobox_position.getSelectedIndex();
 
         if(togglebutton_position.isSelected()){
-            setPositionEnabled(false);
-
             if(index == -1){
-                showEmailError();
+                togglebutton_position.setSelected(false);
+                showPositionError();
             }
             else{
+                setPositionEnabled(false);
+
                 getPosition(index);
             }
         }
@@ -930,7 +937,7 @@ public class MyContactInfo extends javax.swing.JPanel {
         Element position = XMLFactory.addNode(xml, head, XMLFactory.POSITION);
         XMLFactory.setAttribute(position, XMLFactory._TITLE, field_title.getText());
         XMLFactory.setAttribute(position, XMLFactory._PAY_TYPE, getPayType());
-        XMLFactory.setAttribute(position, XMLFactory._RATE, field_rate.getText());
+        XMLFactory.setAttribute(position, XMLFactory._RATE, spinner_rate.getValue().toString());
 
         initPositions();
         clearPosition();
@@ -960,7 +967,6 @@ public class MyContactInfo extends javax.swing.JPanel {
     private javax.swing.JTextField field_name;
     private javax.swing.JTextField field_number;
     private javax.swing.JTextField field_personal;
-    private javax.swing.JTextField field_rate;
     private javax.swing.JTextField field_street;
     private javax.swing.JTextField field_title;
     private javax.swing.JTextField field_zip;
@@ -989,6 +995,7 @@ public class MyContactInfo extends javax.swing.JPanel {
     private javax.swing.JRadioButton radio_work;
     private javax.swing.ButtonGroup radiogroup_phone;
     private javax.swing.ButtonGroup radiogroup_position;
+    private javax.swing.JSpinner spinner_rate;
     private javax.swing.JToggleButton togglebutton_email;
     private javax.swing.JToggleButton togglebutton_phone;
     private javax.swing.JToggleButton togglebutton_position;

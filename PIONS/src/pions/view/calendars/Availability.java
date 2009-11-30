@@ -1,15 +1,10 @@
 
 package pions.view.calendars;
 
-import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerDateModel;
-import org.w3c.dom.Document;
-import pions.controller.xml.CalendarIterator;
 import pions.controller.Calendars;
-import pions.controller.Contacts;
-import pions.view.PIONSView;
 
 /**
  *
@@ -22,7 +17,26 @@ public class Availability extends AbstractCalendarList {
         initComponents();
 
         init(field_name, field_gmail, togglebutton_contacts,
-                combobox_delete, button_delete);
+                combobox_delete, button_delete,
+                button_add);
+    }
+
+    @Override
+    protected void clear() {
+        field_title.setText("");
+        textarea_description.setText("");
+    }
+    
+    @Override
+    protected void addEvent() {
+        Date start_date = (Date)((SpinnerDateModel)spinner_start.getModel()).getValue();
+        Date end_date = (Date)((SpinnerDateModel)spinner_end.getModel()).getValue();
+        Calendars.addAvailabilityEvent(field_title.getText(),
+                textarea_description.getText(),
+                start_date,
+                end_date);
+
+        display(Calendars.getAvailabilityEvents());
     }
 
     @Override
@@ -73,11 +87,6 @@ public class Availability extends AbstractCalendarList {
 
         button_add.setText(resourceMap.getString("button_add.text")); // NOI18N
         button_add.setName("button_add"); // NOI18N
-        button_add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_addActionPerformed(evt);
-            }
-        });
 
         spinner_start.setModel(new javax.swing.SpinnerDateModel());
         spinner_start.setName("spinner_start"); // NOI18N
@@ -100,11 +109,6 @@ public class Availability extends AbstractCalendarList {
 
         togglebutton_contacts.setText(resourceMap.getString("togglebutton_contacts.text")); // NOI18N
         togglebutton_contacts.setName("togglebutton_contacts"); // NOI18N
-        togglebutton_contacts.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                togglebutton_contactsActionPerformed(evt);
-            }
-        });
 
         field_name.setEditable(false);
         field_name.setName("field_name"); // NOI18N
@@ -124,6 +128,11 @@ public class Availability extends AbstractCalendarList {
 
         button_send.setText(resourceMap.getString("button_send.text")); // NOI18N
         button_send.setName("button_send"); // NOI18N
+        button_send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_sendActionPerformed(evt);
+            }
+        });
 
         label_add_title.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         label_add_title.setText(resourceMap.getString("label_add_title.text")); // NOI18N
@@ -250,32 +259,15 @@ public class Availability extends AbstractCalendarList {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void button_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_addActionPerformed
-        Date start_date = (Date)((SpinnerDateModel)spinner_start.getModel()).getValue();
-        Date end_date = (Date)((SpinnerDateModel)spinner_end.getModel()).getValue();
-        Calendars.addAvailabilityEvent(null, field_title.getText(), textarea_description.getText(), start_date, end_date);
-
-        display(Calendars.getAvailabilityEvents());
-    }//GEN-LAST:event_button_addActionPerformed
-
-    private void togglebutton_contactsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglebutton_contactsActionPerformed
-        if(togglebutton_contacts.isSelected()){
-            PIONSView.getInstance().getContactList().setVisible(true);
-        }
-        else {
-            int index = PIONSView.getInstance().getContactList().getFirstIndex();
-            if(index == -1){
-                JOptionPane.showConfirmDialog(this,
-                        "Please select a contact from the contact list.",
-                        "Select Contact",
-                        JOptionPane.DEFAULT_OPTION,
-                        JOptionPane.WARNING_MESSAGE);
-            }
-            else{
-                Contacts.getContact(index);
-            }
-        }
-    }//GEN-LAST:event_togglebutton_contactsActionPerformed
+    private void button_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_sendActionPerformed
+        Calendars.sendAvailability(field_gmail.getText(), field_name.getText());
+        JOptionPane.showConfirmDialog(this,
+                "An Availability Alert has been sent to:\n" +
+                "<" + field_gmail.getText() + "> " + field_name.getText(),
+                "Availability Calendar Sent",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+    }//GEN-LAST:event_button_sendActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

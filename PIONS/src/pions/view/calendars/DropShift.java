@@ -30,9 +30,9 @@ public class DropShift extends AbstractXMLList {
 
             StringBuffer buffer = new StringBuffer();
 
-            appendElement(buffer, XMLFactory.TITLE + ", ");
+            appendAttribute(buffer, XMLFactory.TITLE + ", ");
 
-            appendElement(buffer, XMLFactory.EXTENSION);
+            appendAttribute(buffer, XMLFactory.EXTENSION);
 
             combobox_shifts.addItem(buffer.toString().replace(":\n", ", "));
         }
@@ -43,11 +43,11 @@ public class DropShift extends AbstractXMLList {
 
         StringBuffer buffer = new StringBuffer();
 
-        appendElement(buffer, XMLFactory.TITLE);
+        appendAttribute(buffer, XMLFactory.TITLE);
 
-        appendElement(buffer, XMLFactory.TEXT);
+        appendAttribute(buffer, XMLFactory.TEXT);
 
-        appendElement(buffer, XMLFactory.EXTENSION);
+        appendAttribute(buffer, XMLFactory.EXTENSION);
 
         textarea_details.setText(buffer.toString());
     }

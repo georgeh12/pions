@@ -129,7 +129,7 @@ public class ContactInfo implements Serializable {
             return Long.parseLong(new_string);
         }
 
-        public static int formatExt(String number_string){
+        public static int formatExtension(String number_string){
             String new_string = getDigits(number_string);
 
             if(new_string.length() == 0){
@@ -205,12 +205,12 @@ public class ContactInfo implements Serializable {
         private String street_address = "";
         private String city = "";
         private State state = State.None;
-        private int zip = 0;
+        private String zip = "";
 
         private Address() { }
 
         public Address(String street_address, String city, Address.State state,
-            int zip){
+            String zip){
             this.street_address = street_address;
             this.city = city;
             this.state = state;
@@ -241,7 +241,7 @@ public class ContactInfo implements Serializable {
             return state;
         }
 
-        public int getZip(){
+        public String getZip(){
             return zip;
         }
 
@@ -249,7 +249,7 @@ public class ContactInfo implements Serializable {
          * Contains every state in the USA!
          */
         public static enum State{
-            AL("Alabama"), AK("Alaska"), AZ("Arizona"), AR("Arkansas"),
+            None(), AL("Alabama"), AK("Alaska"), AZ("Arizona"), AR("Arkansas"),
             CA("California"), CO("Colorado"), CT("Connecticut"), DE("Delaware"),
             DC("District of Columbia"), FL("Florida"), GA("Georgia"),
             HI("Hawaii"), ID("Idaho"), IL("Illinois"), IN("Indiana"),
@@ -263,9 +263,13 @@ public class ContactInfo implements Serializable {
             SD("South Dakota"), TN("Tennessee"), TX("Texas"), UT("Utah"),
             VT("Vermont"), VA("Virginia"), WA("Washington"),
             WV("West Virginia"), WI("Wisconsin"), WY("Wyoming"),
-            Other("Outside USA"), None("");
+            Other("Outside USA");
 
             private String state;
+
+            State(){
+                this("");
+            }
             
             State(String state){
                 this.state = state;
@@ -285,8 +289,8 @@ public class ContactInfo implements Serializable {
         public String toString(){
             return street_address + "\n" +
                     city +
-                    (state != State.None ? ", " + state : "") +
-                    (zip != 0 ? " " + zip : "");
+                    (state != State.None ? ", " + state + " " : "") +
+                    zip;
         }
 
         @Override

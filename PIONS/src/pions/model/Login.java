@@ -16,7 +16,6 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.Observable;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
@@ -137,7 +136,7 @@ public abstract class Login {
     }
 
     //TODO use RSA encryption to encryptAES/serialize objects
-    public byte[] encryptRSA(PrivateKey key_pair, Object object)
+    public byte[] encryptRSA(PublicKey key_pair, Object object)
             throws IOException, StreamCorruptedException,
             ClassNotFoundException {
         return getBytes(object);

@@ -28,151 +28,138 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="label_title" alignment="1" min="-2" pref="600" max="-2" attributes="0"/>
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="label_name" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="field_name" min="-2" pref="245" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="label_positions" alignment="0" pref="280" max="32767" attributes="1"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="label_state" alignment="1" min="-2" max="-2" attributes="1"/>
-                          <Component id="label_city" alignment="1" min="-2" pref="34" max="-2" attributes="1"/>
-                          <Component id="label_street" alignment="1" min="-2" max="-2" attributes="1"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="field_city" pref="236" max="32767" attributes="0"/>
-                          <Component id="field_street" alignment="0" pref="236" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="combobox_state" min="-2" pref="75" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="label_zip" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="field_zip" min="-2" pref="53" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Component id="label_address" alignment="0" pref="280" max="32767" attributes="1"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="combobox_position" alignment="0" pref="223" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
+                              <Component id="label_name" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="field_name" min="-2" pref="245" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="label_state" alignment="1" min="-2" max="-2" attributes="1"/>
+                                  <Component id="label_city" alignment="1" min="-2" pref="34" max="-2" attributes="1"/>
+                                  <Component id="label_street" alignment="1" min="-2" max="-2" attributes="1"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="field_city" pref="236" max="32767" attributes="0"/>
+                                  <Component id="field_street" alignment="0" pref="236" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="combobox_state" min="-2" pref="75" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="label_zip" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="field_zip" min="-2" pref="53" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Component id="label_address" alignment="0" pref="280" max="32767" attributes="1"/>
+                          <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="label_position_title" max="32767" attributes="1"/>
                                   <Component id="label_pay" alignment="0" max="32767" attributes="1"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="field_rate" pref="74" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="field_title" min="-2" pref="186" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="togglebutton_position" pref="57" max="32767" attributes="1"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="spinner_rate" min="-2" pref="66" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="radio_hourly" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="radio_salary" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="button_position" pref="57" max="32767" attributes="1"/>
                                   </Group>
-                                  <Component id="field_title" pref="192" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="button_position_delete" max="32767" attributes="1"/>
-                          <Component id="togglebutton_position" alignment="1" max="32767" attributes="1"/>
-                          <Component id="button_position" alignment="1" max="32767" attributes="1"/>
-                      </Group>
-                  </Group>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                              <Component id="label_phone" pref="280" max="32767" attributes="1"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="combobox_position" pref="217" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="button_position_delete" min="-2" pref="57" max="-2" attributes="1"/>
                           </Group>
+                          <Component id="label_positions" alignment="0" pref="280" max="32767" attributes="1"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="label_phone" alignment="1" pref="284" max="32767" attributes="1"/>
                           <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="1">
+                                          <Component id="label_number" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="field_number" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="label_ext" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="field_extension" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="combobox_phone" alignment="1" max="32767" attributes="1"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="label_email" alignment="0" min="-2" pref="43" max="-2" attributes="1"/>
+                                          <Component id="label_personal" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="field_personal" pref="172" max="32767" attributes="1"/>
+                                          <Component id="field_email" alignment="0" pref="172" max="32767" attributes="1"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="combobox_email" alignment="0" min="-2" pref="221" max="-2" attributes="1"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="10" pref="10" max="10" attributes="0"/>
+                                      <Component id="radio_home" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="radio_cell" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="radio_work" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="radio_fax" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="radio_home" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="radio_cell" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="radio_work" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="radio_fax" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="combobox_phone" pref="227" max="32767" attributes="1"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="button_phone_delete" alignment="1" max="32767" attributes="1"/>
-                                          <Component id="togglebutton_phone" alignment="1" max="32767" attributes="1"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="combobox_email" alignment="1" pref="227" max="32767" attributes="1"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="label_email" alignment="0" min="-2" pref="43" max="-2" attributes="1"/>
-                                                  <Component id="label_personal" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="field_personal" alignment="0" pref="178" max="32767" attributes="0"/>
-                                                  <Component id="field_email" alignment="0" pref="178" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                      </Group>
+                                  <Component id="button_email" alignment="1" min="-2" pref="57" max="-2" attributes="1"/>
+                                  <Component id="togglebutton_email" alignment="1" min="-2" pref="57" max="-2" attributes="1"/>
+                                  <Component id="button_email_delete" alignment="1" min="-2" pref="57" max="-2" attributes="1"/>
+                                  <Group type="102" alignment="1" attributes="1">
+                                      <Component id="togglebutton_phone" min="-2" pref="57" max="-2" attributes="1"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="button_email" min="-2" max="-2" attributes="1"/>
-                                          <Component id="button_email_delete" alignment="0" pref="51" max="32767" attributes="1"/>
-                                          <Component id="togglebutton_email" alignment="1" min="-2" max="-2" attributes="1"/>
-                                      </Group>
                                   </Group>
-                                  <Component id="label_emailaddresses" alignment="0" pref="284" max="32767" attributes="1"/>
+                                  <Component id="button_phone" alignment="1" min="-2" pref="57" max="-2" attributes="1"/>
+                                  <Component id="button_phone_delete" alignment="1" min="-2" pref="57" max="-2" attributes="1"/>
                               </Group>
                           </Group>
+                          <Component id="label_emailaddresses" alignment="0" pref="284" max="32767" attributes="1"/>
                       </Group>
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="label_number" min="-2" max="-2" attributes="0"/>
+                      <Component id="button_save" pref="497" max="32767" attributes="1"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="button_revert" min="-2" pref="65" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="field_number" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="label_ext" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="label_firstdirections" pref="580" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="field_extension" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="button_phone" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="label_title" min="-2" pref="367" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="button_save" pref="497" max="32767" attributes="1"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="button_revert" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="label_firstdirections" pref="580" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -182,7 +169,7 @@
               <Component id="label_title" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="label_firstdirections" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -193,8 +180,8 @@
                       <Component id="label_positions" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="button_position_delete" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="combobox_position" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="button_position_delete" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -204,11 +191,11 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="button_position" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="label_pay" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="radio_hourly" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spinner_rate" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="button_position" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="radio_salary" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="field_rate" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="radio_hourly" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="label_address" min="-2" max="-2" attributes="0"/>
@@ -239,11 +226,11 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="togglebutton_phone" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="radio_home" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="radio_cell" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="radio_work" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="radio_fax" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="togglebutton_phone" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -275,9 +262,9 @@
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="button_revert" max="32767" attributes="1"/>
-                  <Component id="button_save" alignment="1" max="32767" attributes="1"/>
+                  <Component id="button_save" alignment="1" min="-2" max="-2" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -605,12 +592,18 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="radio_hourly">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="radiogroup_position"/>
+        </Property>
         <Property name="text" type="java.lang.String" resourceKey="radio_hourly.text"/>
         <Property name="name" type="java.lang.String" value="radio_hourly" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="radio_salary">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="radiogroup_position"/>
+        </Property>
         <Property name="text" type="java.lang.String" resourceKey="radio_salary.text"/>
         <Property name="name" type="java.lang.String" value="radio_salary" noResource="true"/>
       </Properties>
@@ -620,12 +613,6 @@
         <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" resourceKey="label_pay.text"/>
         <Property name="name" type="java.lang.String" value="label_pay" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="field_rate">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="field_rate.text"/>
-        <Property name="name" type="java.lang.String" value="field_rate" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="label_position_title">
@@ -649,6 +636,14 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="togglebutton_positionActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="spinner_rate">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0.0" minimum="0.0" numberType="java.lang.Double" stepSize="1.0" type="number"/>
+        </Property>
+        <Property name="name" type="java.lang.String" value="spinner_rate" noResource="true"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

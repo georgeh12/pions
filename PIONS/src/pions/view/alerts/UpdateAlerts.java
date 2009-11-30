@@ -108,6 +108,7 @@ public class UpdateAlerts extends javax.swing.JPanel {
 
     private void togglebutton_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglebutton_updateActionPerformed
         if(togglebutton_update.isSelected()){
+            textarea_errors.setText("");
             update_thread = new UpdateThread();
             update_thread.start();
         }
