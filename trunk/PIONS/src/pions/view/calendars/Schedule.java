@@ -19,6 +19,12 @@ public class Schedule extends AbstractCalendarList {
         init(field_name, field_gmail, togglebutton_contacts,
                 combobox_delete, button_delete,
                 button_add);
+        
+        refresh();
+    }
+
+    private void refresh(){
+        display(Calendars.getScheduleShifts());
     }
 
     @Override
@@ -30,20 +36,31 @@ public class Schedule extends AbstractCalendarList {
 
     @Override
     protected final void addEvent() {
-        Date start_date = (Date)((SpinnerDateModel)spinner_start.getModel()).getValue();
-        Date end_date = (Date)((SpinnerDateModel)spinner_end.getModel()).getValue();
-        Calendars.addScheduleShift(field_gmail.getText(),
-                field_name.getText(),
-                field_position.getText(),
-                start_date,
-                end_date);
+        if(field_gmail.getText().isEmpty()){
+            JOptionPane.showConfirmDialog(this,
+                    "Please click Choose Contact to select an employee.",
+                    "No Employee Selected",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            Date start_date = (Date)((SpinnerDateModel)spinner_start.getModel()).getValue();
+            Date end_date = (Date)((SpinnerDateModel)spinner_end.getModel()).getValue();
+            Calendars.addScheduleShift(field_gmail.getText(),
+                    field_name.getText(),
+                    field_position.getText(),
+                    start_date,
+                    end_date);
 
-        display(Calendars.getScheduleShifts());
+            refresh();
+        }
     }
 
     @Override
     protected final void deleteEvent(int index) {
         Calendars.deleteScheduleShift(index);
+
+        refresh();
     }
 
     /** This method is called from within the constructor to
@@ -186,15 +203,15 @@ public class Schedule extends AbstractCalendarList {
                         .addComponent(button_add))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(label_delete_directions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(combobox_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_delete))))
+                        .addComponent(button_send, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(button_send, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_delete_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(combobox_delete, 0, 235, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_delete)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

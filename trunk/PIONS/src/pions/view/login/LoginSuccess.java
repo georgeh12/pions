@@ -14,6 +14,8 @@ public class LoginSuccess extends javax.swing.JPanel {
     /** Creates new form SplashPage */
     public LoginSuccess() {
         initComponents();
+
+        PIONSView.getInstance().setMenuVisible(true);
     }
 
     /** This method is called from within the constructor to
@@ -104,6 +106,7 @@ public class LoginSuccess extends javax.swing.JPanel {
     private void button_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_logoutActionPerformed
         if(Employees.logout()){
             PIONSView.getInstance().setMain(new Login());
+            PIONSView.getInstance().setMenuVisible(false);
         }
         else{
             JOptionPane.showMessageDialog(this, "Logout was unsuccessful.", "Logout Failed", JOptionPane.ERROR_MESSAGE);

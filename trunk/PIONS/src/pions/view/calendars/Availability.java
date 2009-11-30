@@ -19,6 +19,12 @@ public class Availability extends AbstractCalendarList {
         init(field_name, field_gmail, togglebutton_contacts,
                 combobox_delete, button_delete,
                 button_add);
+
+        refresh();
+    }
+
+    private void refresh(){
+        display(Calendars.getAvailabilityEvents());
     }
 
     @Override
@@ -36,12 +42,14 @@ public class Availability extends AbstractCalendarList {
                 start_date,
                 end_date);
 
-        display(Calendars.getAvailabilityEvents());
+        refresh();
     }
 
     @Override
     protected void deleteEvent(int index) {
         Calendars.deleteAvailabilityEvent(index);
+
+        refresh();
     }
 
     /** This method is called from within the constructor to
@@ -180,35 +188,35 @@ public class Availability extends AbstractCalendarList {
                             .addComponent(label_end, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(field_title, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                            .addComponent(scrollpane_description, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                            .addComponent(field_title, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                            .addComponent(scrollpane_description, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(spinner_start, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                                    .addComponent(spinner_end, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                                    .addComponent(spinner_start, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                                    .addComponent(spinner_end, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_add))))
-                    .addComponent(label_add_directions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(combobox_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_add_directions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(combobox_delete, 0, 235, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_delete))
-                    .addComponent(label_delete_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                    .addComponent(label_contact_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                    .addComponent(label_delete_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addComponent(label_contact_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(label_gmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(label_name, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(field_gmail, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                            .addComponent(field_name, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)))
+                            .addComponent(field_gmail, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                            .addComponent(field_name, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(togglebutton_contacts)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(button_send)))
                 .addContainerGap())
-            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,13 +268,22 @@ public class Availability extends AbstractCalendarList {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_sendActionPerformed
-        Calendars.sendAvailability(field_gmail.getText(), field_name.getText());
-        JOptionPane.showConfirmDialog(this,
-                "An Availability Alert has been sent to:\n" +
-                "<" + field_gmail.getText() + "> " + field_name.getText(),
-                "Availability Calendar Sent",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.WARNING_MESSAGE);
+        if(field_gmail.getText().isEmpty()){
+            JOptionPane.showConfirmDialog(this,
+                    "Please click the Choose Contact button to select a recipient.",
+                    "No Contact Selected",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+        }
+        else {
+            Calendars.sendAvailability(field_gmail.getText(), field_name.getText());
+            JOptionPane.showConfirmDialog(this,
+                    "An Availability Alert has been sent to:\n" +
+                    "<" + field_gmail.getText() + "> " + field_name.getText(),
+                    "Availability Calendar Sent",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_button_sendActionPerformed
 
 

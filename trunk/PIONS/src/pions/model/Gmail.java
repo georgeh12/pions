@@ -30,7 +30,7 @@ import pions.model.Alert.AlertType;
 import pions.model.ModelException.MessageParserException;
 
 /**
- * Implements Observer design pattern
+ * 
  * 
  */
 public class Gmail implements Serializable {

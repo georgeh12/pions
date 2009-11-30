@@ -2,8 +2,8 @@
 package pions.controller;
 
 import javax.xml.parsers.ParserConfigurationException;
-import pions.controller.xml.CalendarIterator;
 import com.google.gdata.data.calendar.CalendarEntry;
+import com.google.gdata.data.extensions.EventEntry;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 import java.util.Date;
 import org.w3c.dom.Document;
 import pions.controller.xml.AbstractXMLFactory;
+import pions.controller.xml.XMLIterator;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.Calendar;
@@ -45,9 +46,9 @@ public final class Calendars {
         }
     }
 
-    public static CalendarIterator getAvailabilityEvents() {
+    public static XMLIterator<EventEntry> getAvailabilityEvents() {
         try {
-            return new CalendarIterator(EmployeeSingleton.getInstance()
+            return new XMLIterator<EventEntry>(EmployeeSingleton.getInstance()
                     .getCalendars().getAvailability().getEvents());
         } catch (AuthenticationException e){
             e.printStackTrace();
@@ -99,10 +100,10 @@ public final class Calendars {
         }
     }
 
-    public static CalendarIterator getScheduleShifts() {
+    public static XMLIterator<EventEntry> getScheduleShifts() {
         try {
-            return new CalendarIterator(EmployeeSingleton.getInstance()
-                    .getCalendars().getAvailability().getEvents());
+            return new XMLIterator<EventEntry>(EmployeeSingleton.getInstance()
+                    .getCalendars().getSubordinateSchedule().getEvents());
         } catch (AuthenticationException e){
             e.printStackTrace();
         } catch (ServiceException e){

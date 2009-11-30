@@ -1,16 +1,17 @@
 
 package pions.controller;
 
-import pions.controller.xml.ContactIterator;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Observer;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import pions.controller.xml.AbstractXMLFactory;
+import pions.controller.xml.XMLIterator;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
+import pions.model.Contacts.Contact;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.NotLoggedInException;
 
@@ -41,9 +42,9 @@ public final class Contacts {
         }
     }
 
-    public static ContactIterator getContactIterator(){
+    public static XMLIterator<Contact> getContactIterator(){
         try {
-            return new ContactIterator(EmployeeSingleton.getInstance().getContacts().iterator());
+            return new XMLIterator<Contact>(EmployeeSingleton.getInstance().getContacts().iterator());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }

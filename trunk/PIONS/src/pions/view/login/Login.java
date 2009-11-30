@@ -4,14 +4,13 @@ package pions.view.login;
 import pions.view.*;
 import pions.view.employees.CreateEmployee;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import pions.controller.Employees;
 
 /**
  *
  * 
  */
-public class Login extends JPanel {
+public class Login extends javax.swing.JPanel {
 
     private static CreateEmployee create_employee = null;
 

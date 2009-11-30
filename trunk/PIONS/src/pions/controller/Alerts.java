@@ -1,7 +1,6 @@
 
 package pions.controller;
 
-import pions.controller.xml.AlertIterator;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
@@ -13,6 +12,8 @@ import java.util.ArrayList;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.internet.AddressException;
+import pions.controller.xml.XMLIterator;
+import pions.model.Alert;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
@@ -23,9 +24,9 @@ import pions.model.ModelException.ScheduleNotFoundException;
  * 
  */
 public final class Alerts {
-    public static AlertIterator getActiveAlertIterator() {
+    public static XMLIterator<Alert> getActiveAlertIterator() {
         try {
-            return new AlertIterator(EmployeeSingleton.getInstance().getGmail().getActiveAlerts());
+            return new XMLIterator<Alert>(EmployeeSingleton.getInstance().getGmail().getActiveAlerts());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }
@@ -34,9 +35,9 @@ public final class Alerts {
         return null;
     }
 
-    public static AlertIterator getSavedAlertIterator() {
+    public static XMLIterator<Alert> getSavedAlertIterator() {
         try {
-            return new AlertIterator(EmployeeSingleton.getInstance().getGmail().getSavedAlerts());
+            return new XMLIterator<Alert>(EmployeeSingleton.getInstance().getGmail().getSavedAlerts());
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }

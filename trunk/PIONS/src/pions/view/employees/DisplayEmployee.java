@@ -50,10 +50,10 @@ public class DisplayEmployee extends AbstractXMLList {
 
         appendAttribute(buffer_name, XMLFactory.NAME);
         appendAttribute(buffer_iscontact, XMLFactory.IS_CONTACT);
-        appendElements(buffer_positions, XMLFactory.POSITION);
+        appendElement(buffer_positions, XMLFactory.POSITION);
         appendAttribute(buffer_gmailaddress, XMLFactory.GMAIL_ADDRESS);
-        appendElements(buffer_emailaddresses, XMLFactory.EMAIL_ADDRESS);
-        appendElements(buffer_phonenumbers, XMLFactory.PHONE_NUMBER);
+        appendElement(buffer_emailaddresses, XMLFactory.EMAIL_ADDRESS);
+        appendElement(buffer_phonenumbers, XMLFactory.PHONE_NUMBER);
         appendAttribute(buffer_address, XMLFactory.ADDRESS);
     }
 
