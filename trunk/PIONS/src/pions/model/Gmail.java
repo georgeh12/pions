@@ -8,8 +8,6 @@ import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Properties;
 import javax.mail.BodyPart;
 import javax.mail.Folder;
@@ -116,7 +114,7 @@ public class Gmail implements Serializable {
             AlertType alert_type = null;
             
             try {
-                alert_type = AlertType.parse(current.getHeader(ALERT_HEADER)[ATTACHMENT_INDEX]);
+                alert_type = AlertType.valueOf(current.getHeader(ALERT_HEADER)[ATTACHMENT_INDEX]);
 
                 //Retrieves the attachment and decodes it using decryptRSA()
                 Object object = Alert.decryptAlert(
@@ -197,7 +195,7 @@ public class Gmail implements Serializable {
             NoSuchProviderException, MessagingException, NotLoggedInException,
             IOException, StreamCorruptedException, ClassNotFoundException {
         //Encrypt the message contents
-        byte[] attachment = alert.getBytes();
+        byte[] attachment = alert.getBytes(recipient.getAddress());
 
         Session session = getSession();
         MimeMessage message = new MimeMessage(session);

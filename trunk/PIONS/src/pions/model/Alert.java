@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
@@ -45,7 +46,7 @@ public final class Alert implements Serializable {
             AlertClassException, ServiceException, AuthenticationException,
             IOException, UnsupportedEncodingException, StreamCorruptedException,
             AddressException, NoSuchProviderException, MessagingException,
-            ClassNotFoundException, NoSuchAlgorithmException {
+            ClassNotFoundException, NoSuchAlgorithmException, URISyntaxException {
         object.acceptAlert(type, sender);
     }
 
@@ -81,13 +82,15 @@ public final class Alert implements Serializable {
      * @throws pions.model.ModelException.NotLoggedInException
      * @throws IOException
      */
-    public byte[] getBytes() throws NotLoggedInException, IOException,
-            StreamCorruptedException, ClassNotFoundException {
+    public byte[] getBytes(String recipient) throws NotLoggedInException,
+            IOException, StreamCorruptedException, ClassNotFoundException {
         if(type.isContactAlert()){
             return Login.getBytes(object);
         }
         else{
-            return EmployeeSingleton.getInstance().encryptRSA(object);
+            return EmployeeSingleton.getInstance().encryptRSA(
+                    EmployeeSingleton.getInstance().getPublicKey(recipient),
+                    object);
         }
     }
 
@@ -108,7 +111,7 @@ public final class Alert implements Serializable {
     public enum AlertType{
         AddManager, AddSubordinate,
         ContactRequest, ContactResponse, RemoveEmployee,
-        NewWorkSchedule, UpdatedWorkSchedule,
+        WorkSchedule, Availability,
         DropShift;
 
         public Class getAssociatedClass(){
@@ -120,8 +123,8 @@ public final class Alert implements Serializable {
                 case ContactResponse:
                 case RemoveEmployee:
                     return Contact.class;
-                case NewWorkSchedule:
-                case UpdatedWorkSchedule:
+                case WorkSchedule:
+                case Availability:
                     return Calendar.class;
                 case DropShift:
                     return DropShift.class;
@@ -132,14 +135,6 @@ public final class Alert implements Serializable {
 
         public boolean isContactAlert(){
             return this == ContactRequest || this == ContactResponse;
-        }
-
-        public static AlertType parse(String type){
-            for(AlertType parsed: AlertType.values()){
-                if(parsed.equals(type)) return parsed;
-            }
-            
-            return null;
         }
 
         public boolean equals(String type){

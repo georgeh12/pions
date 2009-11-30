@@ -1,15 +1,10 @@
 
 package pions.view.calendars;
 
-import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerDateModel;
-import org.w3c.dom.Document;
-import pions.controller.xml.CalendarIterator;
 import pions.controller.Calendars;
-import pions.controller.Contacts;
-import pions.view.PIONSView;
 
 /**
  *
@@ -22,11 +17,32 @@ public class Schedule extends AbstractCalendarList {
         initComponents();
 
         init(field_name, field_gmail, togglebutton_contacts,
-                combobox_delete, button_delete);
+                combobox_delete, button_delete,
+                button_add);
     }
 
     @Override
-    protected void deleteEvent(int index) {
+    protected final void clear(){
+        field_name.setText("");
+        field_gmail.setText("");
+        field_position.setText("");
+    }
+
+    @Override
+    protected final void addEvent() {
+        Date start_date = (Date)((SpinnerDateModel)spinner_start.getModel()).getValue();
+        Date end_date = (Date)((SpinnerDateModel)spinner_end.getModel()).getValue();
+        Calendars.addScheduleShift(field_gmail.getText(),
+                field_name.getText(),
+                field_position.getText(),
+                start_date,
+                end_date);
+
+        display(Calendars.getScheduleShifts());
+    }
+
+    @Override
+    protected final void deleteEvent(int index) {
         Calendars.deleteScheduleShift(index);
     }
 
@@ -56,6 +72,7 @@ public class Schedule extends AbstractCalendarList {
         label_delete_directions = new javax.swing.JLabel();
         label_position = new javax.swing.JLabel();
         field_position = new javax.swing.JTextField();
+        button_send = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
@@ -68,11 +85,6 @@ public class Schedule extends AbstractCalendarList {
 
         button_add.setText(resourceMap.getString("button_add.text")); // NOI18N
         button_add.setName("button_add"); // NOI18N
-        button_add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_addActionPerformed(evt);
-            }
-        });
 
         spinner_start.setModel(new javax.swing.SpinnerDateModel());
         spinner_start.setName("spinner_start"); // NOI18N
@@ -126,6 +138,14 @@ public class Schedule extends AbstractCalendarList {
         field_position.setText(resourceMap.getString("field_position.text")); // NOI18N
         field_position.setName("field_position"); // NOI18N
 
+        button_send.setText(resourceMap.getString("button_send.text")); // NOI18N
+        button_send.setName("button_send"); // NOI18N
+        button_send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_sendActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,7 +175,15 @@ public class Schedule extends AbstractCalendarList {
                         .addComponent(field_position, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(button_add, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(label_end, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label_start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spinner_end, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                            .addComponent(spinner_start, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_add))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -166,13 +194,7 @@ public class Schedule extends AbstractCalendarList {
                                 .addComponent(button_delete))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(label_end, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(label_start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(spinner_start)
-                            .addComponent(spinner_end))))
+                        .addComponent(button_send, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -196,39 +218,42 @@ public class Schedule extends AbstractCalendarList {
                     .addComponent(field_position, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_position))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_start)
-                    .addComponent(spinner_start, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_end)
-                    .addComponent(spinner_end, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_add, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_start)
+                            .addComponent(spinner_start, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_end)
+                            .addComponent(spinner_end, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(button_add, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(label_delete_directions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(combobox_delete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_delete))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(button_send, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void button_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_addActionPerformed
-        Date start_date = (Date)((SpinnerDateModel)spinner_start.getModel()).getValue();
-        Date end_date = (Date)((SpinnerDateModel)spinner_end.getModel()).getValue();
-        Calendars.addScheduleShift(field_gmail.getText(), field_name.getText(), field_position.getText(), start_date, end_date);
-
-        display(Calendars.getAvailabilityEvents());
-
-
-    }//GEN-LAST:event_button_addActionPerformed
+    private void button_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_sendActionPerformed
+        Calendars.sendWorkSchedule();
+        JOptionPane.showConfirmDialog(this,
+                "A Work Schedule Alert has been sent to your subordinates.",
+                "Work Schedule Sent",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+    }//GEN-LAST:event_button_sendActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_add;
     private javax.swing.JButton button_delete;
+    private javax.swing.JButton button_send;
     private javax.swing.JComboBox combobox_delete;
     private javax.swing.JTextField field_gmail;
     private javax.swing.JTextField field_name;

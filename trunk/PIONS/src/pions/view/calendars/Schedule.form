@@ -24,7 +24,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="label_add_directions" pref="280" max="32767" attributes="1"/>
                   </Group>
@@ -54,7 +54,17 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="button_add" pref="280" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="label_end" max="32767" attributes="1"/>
+                          <Component id="label_start" alignment="0" max="32767" attributes="1"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="spinner_end" pref="139" max="32767" attributes="1"/>
+                          <Component id="spinner_start" alignment="0" pref="139" max="32767" attributes="1"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="button_add" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -69,15 +79,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="label_end" max="32767" attributes="1"/>
-                          <Component id="label_start" alignment="0" max="32767" attributes="1"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="spinner_start" max="32767" attributes="1"/>
-                          <Component id="spinner_end" alignment="0" max="32767" attributes="1"/>
-                      </Group>
+                      <Component id="button_send" min="-2" pref="280" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -108,25 +110,30 @@
                   <Component id="label_position" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="label_start" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="spinner_start" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="label_start" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spinner_start" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="label_end" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spinner_end" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="button_add" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="label_end" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="spinner_end" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="button_add" min="-2" pref="50" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Component id="label_delete_directions" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="combobox_delete" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="button_delete" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <Component id="button_send" min="-2" pref="50" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -145,9 +152,6 @@
         <Property name="text" type="java.lang.String" resourceKey="button_add.text"/>
         <Property name="name" type="java.lang.String" value="button_add" noResource="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_addActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JSpinner" name="spinner_start">
       <Properties>
@@ -252,6 +256,15 @@
         <Property name="text" type="java.lang.String" resourceKey="field_position.text"/>
         <Property name="name" type="java.lang.String" value="field_position" noResource="true"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="button_send">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="button_send.text"/>
+        <Property name="name" type="java.lang.String" value="button_send" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_sendActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

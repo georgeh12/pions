@@ -6,6 +6,7 @@ import com.google.gdata.util.ServiceException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
@@ -25,7 +26,7 @@ public interface AbstractAlert {
             AlertClassException, ServiceException, AuthenticationException,
             IOException, UnsupportedEncodingException, StreamCorruptedException,
             AddressException, NoSuchProviderException, MessagingException,
-            ClassNotFoundException, NoSuchAlgorithmException;
+            ClassNotFoundException, NoSuchAlgorithmException, URISyntaxException;
     public void rejectAlert(Alert.AlertType type) throws AlertClassException;
     public void ignoreAlert(Alert.AlertType type) throws AlertClassException;
     public String getDetails();

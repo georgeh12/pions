@@ -152,9 +152,6 @@
         <Property name="text" type="java.lang.String" resourceKey="button_add.text"/>
         <Property name="name" type="java.lang.String" value="button_add" noResource="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_addActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JSpinner" name="spinner_start">
       <Properties>
@@ -205,9 +202,6 @@
         <Property name="text" type="java.lang.String" resourceKey="togglebutton_contacts.text"/>
         <Property name="name" type="java.lang.String" value="togglebutton_contacts" noResource="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="togglebutton_contactsActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="field_name">
       <Properties>
@@ -245,6 +239,9 @@
         <Property name="text" type="java.lang.String" resourceKey="button_send.text"/>
         <Property name="name" type="java.lang.String" value="button_send" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_sendActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="label_add_title">
       <Properties>

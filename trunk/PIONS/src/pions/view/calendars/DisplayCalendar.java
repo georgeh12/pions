@@ -339,7 +339,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
 
     private void togglebutton_subordinate_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglebutton_subordinate_editActionPerformed
         if(togglebutton_subordinate_edit.isSelected()){
-            //setAuxPanel(new Schedule(), togglebutton_subordinate_edit);
+            setAuxPanel(new Schedule(), togglebutton_subordinate_edit);
         }
         else {
             resetAuxPanel();

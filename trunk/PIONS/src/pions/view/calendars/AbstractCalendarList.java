@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import pions.controller.Contacts;
 import pions.controller.xml.CalendarIterator;
 import pions.controller.xml.XMLFactory;
@@ -27,22 +26,35 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
     private JToggleButton togglebutton_contacts = null;
     private JComboBox combobox_delete = null;
     private JButton button_delete = null;
+    private JButton button_add = null;
 
     protected void init(JTextField field_name, JTextField field_gmail,
             JToggleButton togglebutton_contacts, JComboBox combobox_delete,
-            JButton button_delete){
+            JButton button_delete, JButton button_add){
         this.field_name = field_name;
         this.field_gmail = field_gmail;
         this.togglebutton_contacts = togglebutton_contacts;
         this.combobox_delete = combobox_delete;
         this.button_delete = button_delete;
+        this.button_add = button_add;
 
         contactsActionListener();
 
-        eventsActionListener();
+        deleteEventsActionListener();
+
+        addEventsActionListener();
     }
 
-    private void eventsActionListener(){
+    private void addEventsActionListener(){
+        button_add.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                addEvent();
+                clear();
+            }
+        });
+    }
+
+    private void deleteEventsActionListener(){
         button_delete.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 if(combobox_delete.getSelectedIndex() == -1){
@@ -59,13 +71,17 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
         });
     }
 
+    protected abstract void addEvent();
+
+    protected abstract void clear();
+
     protected abstract void deleteEvent(int index);
 
     private void contactsActionListener(){
         togglebutton_contacts.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 if(togglebutton_contacts.isSelected()){
-                    PIONSView.getInstance().getContactList().setVisible(true);
+                    PIONSView.getInstance().showContactFrame();
                 }
                 else {
                     int index = PIONSView.getInstance().getContactList().getFirstIndex();
@@ -77,18 +93,11 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
                                 JOptionPane.WARNING_MESSAGE);
                     }
                     else{
-                        StringBuffer buffer_name = new StringBuffer();
-                        StringBuffer buffer_gmail = new StringBuffer();
-
                         //Gets the contact xml for the given index
                         root = Contacts.getContact(index).getElementById(XMLFactory.CONTACT);
 
-                        appendElement(buffer_name, XMLFactory.CONTACT_PERSONAL);
-
-                        appendElement(buffer_gmail, XMLFactory.CONTACT_EMAIL);
-
-                        field_name.setText(buffer_name.toString());
-                        field_gmail.setText(buffer_gmail.toString());
+                        field_name.setText(getAttribute(XMLFactory.CONTACT_PERSONAL));
+                        field_gmail.setText(getAttribute(XMLFactory.CONTACT_EMAIL));
                     }
                 }
             }
@@ -101,20 +110,15 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
         while(iter.hasNext()){
             Document xml = iter.next();
 
-            root = xml.getElementById(XMLFactory.CALENDAR);
+            root = XMLFactory.getHead(xml, XMLFactory.CALENDAR);
 
             StringBuffer buffer = new StringBuffer();
-            NodeList node_list = null;
             
-            node_list = root.getElementsByTagName(XMLFactory.TITLE);
-            for(int i = 0; i < node_list.getLength(); i ++){
-                buffer.append(node_list.item(i).getNodeValue());
-            }
+            appendAttribute(buffer, XMLFactory.TITLE);
 
-            node_list = root.getElementsByTagName(XMLFactory.EXTENSION);
-            for(int i = 0; i < node_list.getLength(); i ++){
-                buffer.append(node_list.item(i).getNodeValue());
-            }
+            appendAttribute(buffer, XMLFactory.TEXT);
+
+            appendAttribute(buffer, XMLFactory.EXTENSION);
 
             combobox_delete.addItem(buffer.toString().replace(":\n", ", "));
         }

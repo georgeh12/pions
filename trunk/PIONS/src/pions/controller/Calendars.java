@@ -18,7 +18,6 @@ import pions.model.Alert.AlertType;
 import pions.model.Calendar;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.EmployeeSingleton;
-import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.ModelException.ScheduleNotFoundException;
 
@@ -28,11 +27,11 @@ import pions.model.ModelException.ScheduleNotFoundException;
  */
 public final class Calendars {
 
-    public static void addAvailabilityEvent(String gmail_address,
-            String position, String details, Date start, Date end){
+    public static void addAvailabilityEvent(String title, String description,
+            Date start, Date end){
         try {
             EmployeeSingleton.getInstance().getCalendars().getAvailability()
-                    .addEvent(new EmailAddress(gmail_address), position, details, start, end);
+                    .addEvent(null, title, description, start, end);
         } catch (AuthenticationException e){
             e.printStackTrace();
         } catch (ServiceException e){
@@ -82,11 +81,11 @@ public final class Calendars {
     }
 
     public static void addScheduleShift(String gmail_address,
-            String title, String details, Date start, Date end){
+            String name, String position, Date start, Date end){
         try {
             EmployeeSingleton.getInstance().getCalendars().getAvailability()
                     .addEvent((gmail_address == null ? null : new EmailAddress(gmail_address)),
-                    title, details, start, end);
+                    name, position, start, end);
         } catch (AuthenticationException e){
             e.printStackTrace();
         } catch (ServiceException e){
@@ -212,12 +211,30 @@ public final class Calendars {
         return null;
     }
 
-    public static void sendNewWorkSchedule(boolean[] indices){
-        try {
-            for(EmailAddress email_address: Gmail.getSelectedEmails(
-                    EmployeeSingleton.getInstance().getSubordinateGmails(), indices)){
-                sendWorkSchedule(email_address, AlertType.NewWorkSchedule);
+    public static void sendWorkSchedule(){
+        try{
+            for(EmailAddress gmail_address:
+                    EmployeeSingleton.getInstance().getSubordinateGmails()){
+                sendCalendar(gmail_address, AlertType.WorkSchedule);
             }
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendAvailability(String email_address, String personal){
+        sendCalendar(new EmailAddress(email_address, personal),
+                AlertType.Availability);
+    }
+    
+    private static void sendCalendar(EmailAddress email_address, AlertType type){
+        try {
+            Calendar work_schedule =
+                    EmployeeSingleton.getInstance().getCalendars().getWorkSchedule();
+            work_schedule.shareRead(email_address.getAddress());
+
+            Gmail.sendAlert(email_address,
+                    new Alert(work_schedule, type));
         } catch (AuthenticationException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
@@ -228,45 +245,9 @@ public final class Calendars {
             e.printStackTrace();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } catch (AlertClassException e) {
-            e.printStackTrace();
         } catch (ScheduleNotFoundException e){
             e.printStackTrace();
         }
-    }
-
-    public static void sendUpdatedWorkSchedule(boolean[] indices){
-        try {
-            for(EmailAddress email_address: Gmail.getSelectedEmails(
-                    EmployeeSingleton.getInstance().getSubordinateGmails(), indices)){
-                sendWorkSchedule(email_address, AlertType.UpdatedWorkSchedule);
-            }
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NotLoggedInException e) {
-            e.printStackTrace();
-        } catch (AlertClassException e) {
-            e.printStackTrace();
-        } catch (ScheduleNotFoundException e){
-            e.printStackTrace();
-        }
-    }
-
-    private static void sendWorkSchedule(EmailAddress gmail_address, AlertType alert_type)
-            throws NotLoggedInException, AlertClassException,
-            AuthenticationException, MalformedURLException,
-            ServiceException, IOException, ScheduleNotFoundException {
-        Calendar work_schedule = EmployeeSingleton.getInstance().getCalendars().getWorkSchedule();
-        work_schedule.shareRead(gmail_address.getAddress());
-
-        Gmail.sendAlert(gmail_address,
-                new Alert(work_schedule, alert_type));
     }
 
     public static enum CalendarType {

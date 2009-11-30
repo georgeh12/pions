@@ -1,6 +1,7 @@
 
-package pions.view;
+package pions.view.contactinfo;
 
+import pions.view.*;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JOptionPane;
@@ -35,10 +36,10 @@ public class ContactIList extends AbstractIList implements Observer {
 
             root = XMLFactory.getHead(iter.next(), XMLFactory.CONTACT);
 
-            appendElement(buffer, XMLFactory.CONTACT_PERSONAL);
+            appendAttribute(buffer, XMLFactory.CONTACT_PERSONAL);
             buffer.append('\n');
 
-            appendElement(buffer, XMLFactory.CONTACT_EMAIL);
+            appendAttribute(buffer, XMLFactory.CONTACT_EMAIL);
             buffer.append('\n');
         }
 

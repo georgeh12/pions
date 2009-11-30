@@ -1,6 +1,8 @@
 
 package pions.view;
 
+import pions.view.contactinfo.MyContactInfo;
+import pions.view.contactinfo.ContactIList;
 import pions.view.login.Login;
 import pions.view.login.LoginSuccess;
 import pions.view.employees.SubordinatesEList;
@@ -148,7 +150,7 @@ public class PIONSView {
 
         //Window Menu
 
-        menu_manager = window.add(new JMenuItem("Managers"));
+        menu_manager = window.add(new JMenuItem("Manager"));
         menu_manager.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 menu_managerActionPerformed(evt);
@@ -241,6 +243,10 @@ public class PIONSView {
 
     public ContactIList getContactList(){
         return (ContactIList)getContactFrame().getContentPane();
+    }
+
+    public void showContactFrame(){
+        contact_list.setVisible(true);
     }
 
     private JFrame getContactFrame(){

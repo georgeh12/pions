@@ -23,7 +23,7 @@ public final class AlertXMLFactory extends XMLFactory<Alert> {
         setAttribute(root, SENDER_EMAIL, alert.getAddress().getAddress());
 
         //Set type
-        setAttribute(root, TYPE, alert.getType().toString());
+        setAttribute(root, ALERT_TYPE, alert.getType().toString());
 
         return xml;
     }

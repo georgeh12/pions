@@ -7,6 +7,7 @@ import com.google.gdata.util.ServiceException;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import javax.mail.MessagingException;
@@ -118,6 +119,8 @@ public final class Alerts {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
     }

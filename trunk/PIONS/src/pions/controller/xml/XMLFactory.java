@@ -14,116 +14,80 @@ import org.w3c.dom.NodeList;
 public abstract class XMLFactory<T> {
     
     //variables for creating an alert document
-    /** XML descriptor for an XML top node. */
-    public static final String ALERT = "ALERT";
-    /** XML descriptor for an ALERT inner node. */
-    public static final String SENDER_PERSONAL = "SENDER_PERSONAL";
-    /** XML descriptor for an ALERT inner node. */
-    public static final String SENDER_EMAIL = "SENDER_EMAIL";
-    /** XML descriptor for an ALERT inner node. */
-    public static final String TYPE = "TYPE";
-    /** XML descriptor for an ALERT inner node. */
-    public static final String DESCRIPTION = "DESCRIPTION";
+    /** XML descriptor for an XML top element node. */
+    public static final String ALERT = "Alert";
+    /** XML descriptor for an ALERT attribute node. */
+    public static final String SENDER_PERSONAL = "SenderName";
+    /** XML descriptor for an ALERT attribute node. */
+    public static final String SENDER_EMAIL = "SenderEmail";
+    /** XML descriptor for an ALERT attribute node. */
+    public static final String ALERT_TYPE = "AlertType";
+    /** XML descriptor for an ALERT attribute node. */
+    public static final String DESCRIPTION = "Description";
 
     //variables for creating a calendar document
-    /** XML descriptor for an XML top node. */
-    public static final String CALENDAR = "CALENDAR";
-    /** XML descriptor for a CALENDAR 1st inner node. */
-    public static final String TITLE = "TITLE";
-    /** XML descriptor for a CALENDAR 2nd inner node. */
-    public static final String TEXT = "TEXT";
-    /** XML descriptor for a CALENDAR inner node. Multiplicity: 0..* */
-    public static final String EXTENSION = "EXTENSION";
-    /** XML descriptor for a EXTENSION inner node. */
+    /** XML descriptor for an XML top element node. */
+    public static final String CALENDAR = "Calendar";
+    /** XML descriptor for a CALENDAR attribute node. */
+    public static final String TITLE = "Title";
+    /** XML descriptor for a CALENDAR attribute node. */
+    public static final String TEXT = "Text";
+    /** XML descriptor for a CALENDAR element node. Multiplicity: 0..* */
+    public static final String EXTENSION = "Extension";
+    /** XML descriptor for a EXTENSION attribute node. */
     public static final String EXTENSION_DEFAULT = "EXTENSION_DEFAULT";
 
     //variables for creating a contact document
-    /** XML descriptor for an XML top node. */
-    public static final String CONTACT = "CONTACT";
-    /** XML descriptor for a CONTACT 1st inner node. */
-    public static final String CONTACT_EMAIL = "CONTACT_EMAIL";
-    /** XML descriptor for a CONTACT 2nd inner node. */
-    public static final String CONTACT_PERSONAL = "CONTACT_PERSONAL";
+    /** XML descriptor for an XML top element node. */
+    public static final String CONTACT = "Contact";
+    /** XML descriptor for a CONTACT attribute node. */
+    public static final String CONTACT_EMAIL = "ContactEmail";
+    /** XML descriptor for a CONTACT attribute node. */
+    public static final String CONTACT_PERSONAL = "ContactName";
 
     //variables for creating an employee document
-    /** XML descriptor for an XML top node. */
-    public static final String EMPLOYEE = "EMPLOYEE";
-    /** XML descriptor for an EMPLOYEE 1st inner node. */
-    public static final String NAME = "NAME";
-    /** XML index for NAME descriptor. */
-    public static final int NAME_INDEX = 0;
-    /** XML descriptor for an EMPLOYEE 2nd inner node. */
-    public static final String IS_CONTACT = "IS_CONTACT";
-    /** XML index for IS_CONTACT descriptor. */
-    public static final int IS_CONTACT_INDEX = 0;
-    /** XML descriptor for an EMPLOYEE inner node. Multiplicity: 0..* */
-    public static final String POSITION = "POSITION";
-    /** XML index for POSITION descriptor. */
-    public static final int POSITION_INDEX = 0;
-    /** XML descriptor for a POSITION 1st inner node. */
-    public static final String _TITLE = "_TITLE";
-    /** XML index for _TITLE descriptor. */
-    public static final int _TITLE_INDEX = 0;
-    /** XML descriptor for a POSITION 2nd inner node. */
-    public static final String _PAY_TYPE = "_PAY_TYPE";
-    /** XML index for _PAY_TYPE descriptor. */
-    public static final int _PAY_TYPE_INDEX = 1;
-    /** XML descriptor for a POSITION 3rd inner node. */
-    public static final String _RATE = "_RATE";
-    /** XML index for _RATE descriptor. */
-    public static final int _RATE_INDEX = 2;
-    /** XML descriptor for an EMPLOYEE inner node. */
-    public static final String GMAIL_ADDRESS = "GMAIL_ADDRESS";
-    /** XML index for GMAIL_ADDRESS descriptor. */
-    public static final int GMAIL_ADDRESS_INDEX = 0;
-    /** XML descriptor for an EMPLOYEE inner node. Multiplicity: 0..* */
-    public static final String EMAIL_ADDRESS = "EMAIL_ADDRESS";
-    /** XML descriptor for an EMAIL_ADDRESS 1st inner node. */
-    /** XML index for EMAIL_ADDRESS descriptor. */
-    public static final int EMAIL_ADDRESS_INDEX = 0;
-    public static final String _EMAIL_ADDRESS = "_EMAIL_ADDRESS";
-    /** XML index for _EMAIL_ADDRESS descriptor. */
-    public static final int _EMAIL_ADDRESS_INDEX = 0;
-    /** XML descriptor for an EMAIL_ADDRESS 2nd inner node. */
-    public static final String _PERSONAL = "_PERSONAL";
-    /** XML index for _PERSONAL descriptor. */
-    public static final int _PERSONAL_INDEX = 1;
-    /** XML descriptor for an EMPLOYEE inner node. Multiplicity: 0..* */
-    public static final String PHONE_NUMBER = "PHONE_NUMBER";
-    /** XML index for PHONE_NUMBER descriptor. */
-    public static final int PHONE_NUMBER_INDEX = 0;
-    /** XML descriptor for an PHONE_NUMBER 1st inner node. */
-    public static final String _PHONE_TYPE = "_PHONE_TYPE";
-    /** XML index for _PHONE_TYPE descriptor. */
-    public static final int _PHONE_TYPE_INDEX = 0;
-    /** XML descriptor for an PHONE_NUMBER 2nd inner node. */
-    public static final String _NUMBER = "_NUMBER";
-    /** XML index for _NUMBER descriptor. */
-    public static final int _NUMBER_INDEX = 1;
-    /** XML descriptor for an PHONE_NUMBER 3rd inner node. */
-    public static final String _EXTENSION = "_EXTENSION";
-    /** XML index for _EXTENSION descriptor. */
-    public static final int _EXTENSION_INDEX = 2;
-    /** XML descriptor for an EMPLOYEE inner node. */
-    public static final String ADDRESS = "ADDRESS";
-    /** XML index for ADDRESS descriptor. */
-    public static final int ADDRESS_INDEX = 0;
-    /** XML descriptor for an ADDRESS 1st inner node. */
-    public static final String _STREET = "_STREET";
-    /** XML index for _STREET descriptor. */
-    public static final int _STREET_INDEX = 0;
-    /** XML descriptor for an ADDRESS 2nd inner node. */
-    public static final String _CITY = "_CITY";
-    /** XML index for _CITY descriptor. */
-    public static final int _CITY_INDEX = 1;
-    /** XML descriptor for an ADDRESS 3rd inner node. */
-    public static final String _STATE = "_STATE";
-    /** XML index for _STATE descriptor. */
-    public static final int _STATE_INDEX = 2;
-    /** XML descriptor for an ADDRESS 4th inner node. */
-    public static final String _ZIP = "_ZIP";
-    /** XML index for _ZIP descriptor. */
-    public static final int _ZIP_INDEX = 3;
+    /** XML descriptor for an XML top element node. */
+    public static final String EMPLOYEE = "Employee";
+    /** XML descriptor for an EMPLOYEE attribute node. */
+    public static final String NAME = "Name";
+    /** XML descriptor for an EMPLOYEE attribute node. */
+    public static final String IS_CONTACT = "IsContact";
+    /** XML descriptor for an EMPLOYEE element node. Multiplicity: 0..* */
+    public static final String POSITION = "Position";
+    /** XML descriptor for a POSITION attribute node. */
+    public static final String _TITLE = "Title";
+    /** XML descriptor for a POSITION attribute node. */
+    public static final String _PAY_TYPE = "PayType";
+    /** XML descriptor for a POSITION attribute node. */
+    public static final String _RATE = "Rate";
+    /** XML descriptor for an EMPLOYEE attribute node. */
+    public static final String GMAIL_ADDRESS = "GmailAddress";
+    /** XML descriptor for an EMPLOYEE element node. Multiplicity: 0..* */
+    public static final String EMAIL_ADDRESS = "EmailAddress";
+    /** XML descriptor for an EMAIL_ADDRESS attribute node. */
+    public static final String _EMAIL_ADDRESS = "Email";
+    /** XML descriptor for an EMAIL_ADDRESS attribute node. */
+    public static final String _PERSONAL = "PersonalName";
+    /** XML descriptor for an EMPLOYEE element node. Multiplicity: 0..* */
+    public static final String PHONE_NUMBER = "PhoneNumber";
+    /** XML descriptor for an PHONE_NUMBER attribute node. */
+    public static final String _PHONE_TYPE = "PhoneType";
+    /** XML descriptor for an PHONE_NUMBER attribute node. */
+    public static final String _NUMBER = "PhoneNumber";
+    /** XML descriptor for an PHONE_NUMBER attribute node. */
+    public static final String _EXTENSION = "PhoneExtension";
+    /** XML descriptor for an EMPLOYEE element node. */
+    public static final String ADDRESS = "Address";
+    /** XML descriptor for an ADDRESS attribute node. */
+    public static final String _STREET = "Street";
+    /** XML descriptor for an ADDRESS attribute node. */
+    public static final String _CITY = "City";
+    /** XML descriptor for an ADDRESS attribute node. */
+    public static final String _STATE = "State";
+    /** XML descriptor for an ADDRESS attribute node. */
+    public static final String _ZIP = "Zip";
+    /** XML descriptor for the index of elements with a multiplicity of one. */
+    public static final int DEFAULT_INDEX = 0;
 
     protected Document xml;
 
@@ -153,16 +117,16 @@ public abstract class XMLFactory<T> {
         return child_element;
     }
 
-    public final static String getAttr(Node root){
-        return root.getNodeValue();
+    public final static String getAttribute(Node root, String attr){
+        return ((Element)root).getAttribute(attr);
     }
 
-    public final static void setAttribute(Element root, String child, String value){
-        root.setAttribute(child, value);
+    public final static void setAttribute(Node root, String child, String value){
+        ((Element)root).setAttribute(child, value);
     }
 
-    public final static NodeList getElements(Element root, String tag_name){
-        return root.getElementsByTagName(tag_name);
+    public final static NodeList getElements(Node root, String tag_name){
+        return ((Element)root).getElementsByTagName(tag_name);
     }
 
     public final static void removeNode(Element root, Node node){

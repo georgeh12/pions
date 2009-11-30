@@ -18,6 +18,7 @@ import com.google.gdata.data.extensions.Who.AttendeeStatus;
 import com.google.gdata.data.extensions.Who.AttendeeType;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
+import java.awt.Desktop;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -67,7 +68,7 @@ public class Calendar implements Serializable, AbstractAlert {
         // Create the calendar entry
         CalendarEntry active_calendar = new CalendarEntry();
         active_calendar.setTitle(new PlainTextConstruct(calendar_name));
-        active_calendar.setTimeZone(new TimeZoneProperty(TimeZone.getDefault().getDisplayName()));
+        active_calendar.setTimeZone(new TimeZoneProperty(TimeZone.getDefault().getID()));
         active_calendar.setCanEdit(true);
 
         // GoogleCalendar created
@@ -118,13 +119,13 @@ public class Calendar implements Serializable, AbstractAlert {
     }
 
     //TODO implement the positions class, and/or allow multiple employees
-    public void addEvent(EmailAddress gmail_address, String title, String details, Date start, Date end)
+    public void addEvent(EmailAddress gmail_address, String title,
+            String details, Date start, Date end)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
         CalendarEntry entry = new CalendarEntry();
 
         //default values
-        entry.setTimeZone(new TimeZoneProperty(TimeZone.getDefault().getDisplayName()));
         entry.setCanEdit(true);
 
         //user defined values
@@ -169,10 +170,14 @@ public class Calendar implements Serializable, AbstractAlert {
     }
 
     public void acceptAlert(AlertType type, EmailAddress sender)
-            throws AlertClassException, NotLoggedInException {
+            throws AlertClassException, NotLoggedInException,
+            AuthenticationException, ServiceException, IOException,
+            URISyntaxException {
         switch(type){
-            case NewWorkSchedule:
-            case UpdatedWorkSchedule:
+            case Availability:
+                Desktop.getDesktop().browse(this.getReadLink());
+                break;
+            case WorkSchedule:
                 EmployeeSingleton.getInstance().getCalendars().setWorkSchedule(this);
                 break;
             default:
@@ -182,10 +187,10 @@ public class Calendar implements Serializable, AbstractAlert {
 
     public void rejectAlert(AlertType type) throws AlertClassException {
         switch(type){
-            case NewWorkSchedule:
+            case Availability:
                 //DONOTHING
                 break;
-            case UpdatedWorkSchedule:
+            case WorkSchedule:
                 //DONOTHING
                 break;
             default:
@@ -195,10 +200,10 @@ public class Calendar implements Serializable, AbstractAlert {
 
     public void ignoreAlert(AlertType type) throws AlertClassException {
         switch(type){
-            case NewWorkSchedule:
+            case Availability:
                 //DONOTHING
                 break;
-            case UpdatedWorkSchedule:
+            case WorkSchedule:
                 //DONOTHING
                 break;
             default:
