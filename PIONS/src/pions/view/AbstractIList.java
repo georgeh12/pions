@@ -32,6 +32,7 @@ public abstract class AbstractIList extends AbstractXMLList {
     private void display() {
         StringBuffer next;
         GridBagLayout layout = new GridBagLayout();
+        panel_display.removeAll();
 
         while((next = parseNext()) != null){
             GridBagConstraints constraints = new GridBagConstraints();

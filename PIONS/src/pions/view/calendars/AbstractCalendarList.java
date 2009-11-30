@@ -82,7 +82,7 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
         togglebutton_contacts.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 if(togglebutton_contacts.isSelected()){
-                    PIONSView.getInstance().showContactFrame();
+                    PIONSView.getInstance().setContactsVisible(true);
                 }
                 else {
                     int index = PIONSView.getInstance().getContactList().getFirstIndex();

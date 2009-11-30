@@ -31,7 +31,6 @@ public final class Alerts {
             e.printStackTrace();
         }
 
-        //might cause cascading View exception
         return null;
     }
 
@@ -42,7 +41,6 @@ public final class Alerts {
             e.printStackTrace();
         }
 
-        //might cause cascading View exception
         return null;
     }
 

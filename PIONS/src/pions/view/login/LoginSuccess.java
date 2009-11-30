@@ -104,6 +104,8 @@ public class LoginSuccess extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_logoutActionPerformed
+        PIONSView.getInstance().setContactsVisible(false);
+        
         if(Employees.logout()){
             PIONSView.getInstance().setMain(new Login());
             PIONSView.getInstance().setMenuVisible(false);
