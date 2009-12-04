@@ -122,7 +122,11 @@ public class Contacts extends Observable implements Serializable {
 
         //TODO getDetails()
         public String getDetails() {
-            throw new UnsupportedOperationException("Not supported yet.");
+            StringBuffer buffer = new StringBuffer();
+
+            buffer.append("Gmail Address: " + gmail_address.toString());
+
+            return buffer.toString();
         }
     }
 }

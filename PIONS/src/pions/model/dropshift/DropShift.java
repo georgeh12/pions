@@ -1,7 +1,7 @@
 
 package pions.model.dropshift;
 
-import com.google.gdata.data.calendar.CalendarEntry;
+import com.google.gdata.data.extensions.EventEntry;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
@@ -20,6 +20,7 @@ import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.ModelException.ScheduleNotFoundException;
+import pions.model.xml.AbstractXMLFactory;
 
 /**
  *
@@ -27,14 +28,10 @@ import pions.model.ModelException.ScheduleNotFoundException;
  */
 public final class DropShift implements Serializable, AbstractAlert {
     private DropShiftMachine machine;
-    private CalendarEntry shift;
+    private EventEntry shift;
 
-    public DropShift(CalendarEntry shift){
+    public DropShift(EventEntry shift){
         this.shift = shift;
-    }
-
-    public CalendarEntry getCurrent(){
-        return shift;
     }
 
     /**
@@ -98,6 +95,14 @@ public final class DropShift implements Serializable, AbstractAlert {
 
     //TODO getDetails()
     public String getDetails() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        StringBuffer buffer = new StringBuffer();
+
+        try{
+        AbstractXMLFactory.newInstance(shift);
+        }
+        catch(Exception e){
+            
+        }
+        return buffer.toString();
     }
 }

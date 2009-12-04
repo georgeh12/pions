@@ -2,7 +2,6 @@
 package pions.controller;
 
 import javax.xml.parsers.ParserConfigurationException;
-import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.extensions.EventEntry;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
@@ -12,8 +11,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
 import org.w3c.dom.Document;
-import pions.controller.xml.AbstractXMLFactory;
-import pions.controller.xml.XMLIterator;
+import pions.model.xml.AbstractXMLFactory;
+import pions.model.xml.XMLIterator;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.Calendar;
@@ -157,7 +156,7 @@ public final class Calendars {
         return null;
     }
 
-    static CalendarEntry getWorkEvent(int index) {
+    static EventEntry getWorkEvent(int index) {
         try {
             return EmployeeSingleton.getInstance().getCalendars().getWorkSchedule().getEvent(index);
         } catch (AuthenticationException e){

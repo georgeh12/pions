@@ -4,7 +4,7 @@ package pions.view.alerts;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import pions.controller.Alerts;
-import pions.controller.xml.XMLIterator;
+import pions.model.xml.XMLIterator;
 
 /**
  *

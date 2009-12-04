@@ -107,11 +107,11 @@ public class Calendar implements Serializable, AbstractAlert {
                 ), entry);
     }
 
-    public void drop(CalendarEntry entry)
+    public void drop(EventEntry entry)
             throws ServiceException, IOException,
             AuthenticationException, NotLoggedInException {
-        entry.setService(Calendars.getService());
         entry.setContent(new PlainTextConstruct(EmployeeSingleton.getInstance().getGmail().getGmailAddress().toString()));
+        Calendars.getService().update(html_link, entry);
     }
 
     //TODO implement the positions class, and/or allow multiple employees
@@ -144,7 +144,7 @@ public class Calendar implements Serializable, AbstractAlert {
             entry.addParticipant(who);
         }
 
-        entry = Calendars.getService().insert(html_link, entry);
+        Calendars.getService().insert(html_link, entry);
     }
 
     public void delete(int index)
@@ -159,10 +159,10 @@ public class Calendar implements Serializable, AbstractAlert {
         return Calendars.getService().getFeed(html_link, EventFeed.class).getEntries().iterator();
     }
 
-    public CalendarEntry getEvent(int index)
+    public EventEntry getEvent(int index)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
-        return Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries().get(index);
+        return Calendars.getService().getFeed(html_link, EventFeed.class).getEntries().get(index);
     }
 
     public void acceptAlert(AlertType type, EmailAddress sender)
