@@ -7,7 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import pions.controller.ContactInfo;
-import pions.controller.xml.XMLFactory;
+import pions.model.xml.XMLFactory;
 
 /**
  *

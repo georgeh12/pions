@@ -9,6 +9,7 @@ import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Iterator;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.Contacts.Contact;
@@ -96,10 +97,6 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         return subordinates.get(index);
     }
 
-    public String getManagerName(){
-        return manager.getName();
-    }
-
     public ArrayList<String> getSubordinateNames(){
         ArrayList<String> names = new ArrayList<String>();
 
@@ -125,7 +122,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     }
 
     private boolean hasGmailAddress(String gmail_address){
-        return gmail.getGmailAddress().equals(gmail_address);
+        return getGmail().getGmailAddress().equals(gmail_address);
     }
 
     private Employee searchEmployees(String gmail_address){
@@ -219,8 +216,38 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         }
     }
 
-    //TODO getDetails()
     public String getDetails() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("Name: " + getName());
+        buffer.append('\n');
+        buffer.append(getPositions().toString());
+        buffer.append('\n');
+        buffer.append(getContactInfo().toString());
+        buffer.append('\n');
+        buffer.append("Gmail Address: " + getGmail().getGmailAddress());
+        buffer.append('\n');
+
+        buffer.append("Manager: ");
+        if(getManager() == null){
+            buffer.append("none");
+        }
+        else{
+            buffer.append(getManager().getName());
+        }
+        buffer.append('\n');
+        
+        buffer.append("Subordinates: ");
+        Iterator<String> iter = getSubordinateNames().iterator();
+        if(iter.hasNext()){
+            buffer.append(iter.next());
+        }
+        else{
+            buffer.append("none");
+        }
+        while(iter.hasNext()){
+            buffer.append(", " + iter.next());
+        }
+
+        return buffer.toString();
     }
 }

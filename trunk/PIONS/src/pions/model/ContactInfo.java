@@ -43,6 +43,19 @@ public class ContactInfo implements Serializable {
         this.address = address;
     }
 
+    @Override
+    public String toString(){
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("Email Address(es): " + email_addresses.toString());
+
+        buffer.append("Phone Number(s): " + phone_numbers.toString());
+
+        buffer.append("Address:\n" + address.toString());
+
+        return buffer.toString();
+    }
+
     public static class EmailAddress implements Serializable {
         private String address = "";
         private String personal = "";

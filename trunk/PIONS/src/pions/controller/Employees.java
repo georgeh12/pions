@@ -7,13 +7,12 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
-import pions.controller.xml.AbstractXMLFactory;
+import pions.model.xml.AbstractXMLFactory;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.Employee;
 import pions.model.EmployeeSingleton;
-import pions.model.ModelException.ContactNotFoundException;
 import pions.model.ModelException.NotLoggedInException;
 
 /**
@@ -124,40 +123,39 @@ public final class Employees {
         return new ArrayList<String>();
     }
 
-    public static void sendNewManager(String email) {
+    public static void sendNewManager(ArrayList<Integer> contact_indices) {
         try {
-            sendNewEmployee(email, AlertType.AddManager);
+            for(Integer index: contact_indices){
+                sendNewEmployee(EmployeeSingleton.getInstance().getContacts().get(index).getAddress(),
+                        AlertType.AddManager);
+            }
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } catch (ContactNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
-    public static void sendNewSubordinate(String email) {
+    public static void sendNewSubordinate(ArrayList<Integer> contact_indices) {
         try {
-            sendNewEmployee(email, AlertType.AddSubordinate);
+            for(Integer index: contact_indices){
+                sendNewEmployee(EmployeeSingleton.getInstance().getContacts().get(index).getAddress(),
+                        AlertType.AddSubordinate);
+            }
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } catch (ContactNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
-    private static void sendNewEmployee(String email, AlertType type)
-            throws NotLoggedInException, ContactNotFoundException {
-        EmailAddress recipient = EmployeeSingleton.getInstance().getContacts()
-                .searchContacts(email).getAddress();
-        if(recipient != null){
-            Gmail.sendAlert(recipient,
-                    new Alert((Employee)EmployeeSingleton.getInstance(),
-                    type));
-        }
-        else{
-            throw new ContactNotFoundException();
-        }
+    private static void sendNewEmployee(EmailAddress email, AlertType type)
+            throws NotLoggedInException {
+        Gmail.sendAlert(email,
+                new Alert((Employee)EmployeeSingleton.getInstance(),
+                type));
     }
 
+    /**
+     * Simplifies name retrieval for the current employee.
+     * @return
+     */
     public static String getName() {
         try {
             return EmployeeSingleton.getInstance().getName();

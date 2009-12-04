@@ -1,7 +1,7 @@
 
 package pions.view.alerts;
 
-import pions.controller.xml.XMLFactory;
+import pions.model.xml.XMLFactory;
 import pions.view.AbstractIList;
 
 /**

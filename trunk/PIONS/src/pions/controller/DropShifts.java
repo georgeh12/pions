@@ -1,11 +1,10 @@
 
 package pions.controller;
 
-import com.google.gdata.data.calendar.CalendarEntry;
+import com.google.gdata.data.extensions.EventEntry;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.EmployeeSingleton;
-import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.dropshift.DropShift;
 
@@ -16,7 +15,7 @@ import pions.model.dropshift.DropShift;
 public final class DropShifts {
     
     private static DropShift drop_shift = null;
-    private static CalendarEntry shift_event = null;
+    private static EventEntry shift_event = null;
 
     public static boolean isInit(){
         return drop_shift != null;

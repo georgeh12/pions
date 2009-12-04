@@ -20,6 +20,25 @@ public class Positions implements Serializable {
         return positions.iterator();
     }
 
+    @Override
+    public String toString(){
+        StringBuffer buffer = new StringBuffer("Position(s): ");
+        Iterator<Position> iter = iterator();
+
+        if(iter.hasNext()){
+            buffer.append(iter.next().toString());
+        }
+        else{
+            buffer.append("none");
+        }
+        
+        while(iter.hasNext()){
+            buffer.append(", " + iter.next().toString());
+        }
+
+        return buffer.toString();
+    }
+
     public static class Position implements Serializable {
         public enum PayType{
             Salary, Hourly;
