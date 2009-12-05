@@ -165,6 +165,38 @@ public class Calendar implements Serializable, AbstractAlert {
         return Calendars.getService().getFeed(html_link, EventFeed.class).getEntries().get(index);
     }
 
+    public static String parseTitle(EventEntry entry){
+        return entry.getTitle().getPlainText();
+    }
+
+    public static String parseText(EventEntry entry){
+        return entry.getPlainTextContent();
+    }
+
+    public static String parseStartTime(EventEntry entry){
+        //This last part is messy because gdata refused to parse the times
+        String xml_blob = entry.getXmlBlob().getBlob();
+        String lookup = "";
+        int index = xml_blob.indexOf(lookup = "<gd:when") + lookup.length();
+        int start_index1 = xml_blob.indexOf(lookup = "startTime='", index) + lookup.length();
+        int start_index2 = xml_blob.indexOf(lookup = "'", start_index1);
+
+        return DateTime.parseDateTime(xml_blob.substring(start_index1, start_index2)).toUiString();
+    }
+
+    public static String parseEndTime(EventEntry entry){
+        //This last part is messy because gdata refused to parse the times
+        String xml_blob = entry.getXmlBlob().getBlob();
+        String lookup = "";
+        int index = xml_blob.indexOf(lookup = "<gd:when") + lookup.length();
+        int start_index1 = xml_blob.indexOf(lookup = "startTime='", index) + lookup.length();
+        int start_index2 = xml_blob.indexOf(lookup = "'", start_index1);
+        int end_index1 = xml_blob.indexOf(lookup = "endTime='", start_index2) + lookup.length();
+        int end_index2 = xml_blob.indexOf(lookup = "'", end_index1);
+
+        return DateTime.parseDateTime(xml_blob.substring(end_index1, end_index2)).toUiString();
+    }
+
     public void acceptAlert(AlertType type, EmailAddress sender)
             throws AlertClassException, NotLoggedInException,
             AuthenticationException, ServiceException, IOException,

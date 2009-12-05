@@ -1,5 +1,5 @@
 
-package pions.model.xml;
+package pions.controller.xml;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;

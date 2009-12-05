@@ -15,12 +15,12 @@ import javax.mail.internet.AddressException;
 import pions.model.AbstractAlert;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
+import pions.model.Calendar;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.ModelException.ScheduleNotFoundException;
-import pions.model.xml.AbstractXMLFactory;
 
 /**
  *
@@ -93,16 +93,21 @@ public final class DropShift implements Serializable, AbstractAlert {
         }
     }
 
-    //TODO getDetails()
     public String getDetails() {
         StringBuffer buffer = new StringBuffer();
 
-        try{
-        AbstractXMLFactory.newInstance(shift);
-        }
-        catch(Exception e){
-            
-        }
+        buffer.append("Name: " + Calendar.parseTitle(shift));
+        buffer.append('\n');
+
+        buffer.append("Text: " + Calendar.parseText(shift));
+        buffer.append('\n');
+
+        buffer.append("Start Time: " + Calendar.parseStartTime(shift));
+        buffer.append('\n');
+
+        buffer.append("  End Time: " + Calendar.parseEndTime(shift));
+        buffer.append('\n');
+        
         return buffer.toString();
     }
 }

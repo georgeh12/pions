@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.internet.AddressException;
-import pions.model.xml.XMLIterator;
+import pions.controller.xml.XMLIterator;
 import pions.model.Alert;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
