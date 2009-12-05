@@ -120,7 +120,6 @@ public class Contacts extends Observable implements Serializable {
             }
         }
 
-        //TODO getDetails()
         public String getDetails() {
             StringBuffer buffer = new StringBuffer();
 
