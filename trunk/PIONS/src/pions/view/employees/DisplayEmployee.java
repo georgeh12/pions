@@ -3,7 +3,7 @@ package pions.view.employees;
 
 import javax.swing.JOptionPane;
 import org.w3c.dom.Document;
-import pions.model.xml.XMLFactory;
+import pions.controller.xml.XMLFactory;
 import pions.view.AbstractXMLList;
 
 /**

@@ -7,7 +7,7 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
-import pions.model.xml.AbstractXMLFactory;
+import pions.controller.xml.AbstractXMLFactory;
 import pions.model.Alert;
 import pions.model.Alert.AlertType;
 import pions.model.ContactInfo.EmailAddress;

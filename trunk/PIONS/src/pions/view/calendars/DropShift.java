@@ -5,8 +5,8 @@ import javax.swing.JOptionPane;
 import org.w3c.dom.Document;
 import pions.controller.Calendars;
 import pions.controller.DropShifts;
-import pions.model.xml.XMLFactory;
-import pions.model.xml.XMLIterator;
+import pions.controller.xml.XMLFactory;
+import pions.controller.xml.XMLIterator;
 import pions.view.AbstractXMLList;
 
 /**

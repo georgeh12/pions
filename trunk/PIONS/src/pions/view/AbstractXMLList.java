@@ -4,7 +4,7 @@ package pions.view;
 import javax.swing.JPanel;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import pions.model.xml.XMLFactory;
+import pions.controller.xml.XMLFactory;
 
 /**
  *

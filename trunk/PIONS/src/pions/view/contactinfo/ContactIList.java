@@ -5,7 +5,7 @@ import pions.view.*;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JOptionPane;
-import pions.model.xml.XMLFactory;
+import pions.controller.xml.XMLFactory;
 import pions.controller.Contacts;
 import pions.controller.Employees;
 
