@@ -241,6 +241,10 @@ public class Calendar implements Serializable, AbstractAlert {
 
     //TODO getDetails()
     public String getDetails() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("Name: " + calendar_name);
+
+        return buffer.toString();
     }
 }
