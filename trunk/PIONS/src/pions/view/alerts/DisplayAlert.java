@@ -1,6 +1,8 @@
 
 package pions.view.alerts;
 
+import pions.view.PIONSView;
+
 /**
  *
  * 
@@ -8,10 +10,10 @@ package pions.view.alerts;
 public class DisplayAlert extends javax.swing.JPanel {
 
     /** Creates new form DisplayAlert */
-    public DisplayAlert(String label_text) {
+    public DisplayAlert(String text) {
         initComponents();
 
-        label_display.setText(label_text);
+        textarea_display.setText(text);
     }
 
     /** This method is called from within the constructor to
@@ -23,41 +25,86 @@ public class DisplayAlert extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        label_display = new javax.swing.JLabel();
         label_title = new javax.swing.JLabel();
+        button_ok = new javax.swing.JButton();
+        scrollpane_display = new javax.swing.JScrollPane();
+        textarea_display = new javax.swing.JTextArea();
+        label_directions = new javax.swing.JLabel();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(pions.PIONS.class).getContext().getResourceMap(DisplayAlert.class);
-        label_display.setText(resourceMap.getString("label_display.text")); // NOI18N
-        label_display.setName("label_display"); // NOI18N
-
         label_title.setFont(resourceMap.getFont("label_title.font")); // NOI18N
         label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_title.setText(resourceMap.getString("label_title.text")); // NOI18N
         label_title.setName("label_title"); // NOI18N
+
+        button_ok.setText(resourceMap.getString("button_ok.text")); // NOI18N
+        button_ok.setName("button_ok"); // NOI18N
+        button_ok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_okActionPerformed(evt);
+            }
+        });
+
+        scrollpane_display.setName("scrollpane_display"); // NOI18N
+
+        textarea_display.setColumns(20);
+        textarea_display.setEditable(false);
+        textarea_display.setLineWrap(true);
+        textarea_display.setRows(5);
+        textarea_display.setWrapStyleWord(true);
+        textarea_display.setName("textarea_display"); // NOI18N
+        scrollpane_display.setViewportView(textarea_display);
+
+        label_directions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_directions.setText(resourceMap.getString("label_directions.text")); // NOI18N
+        label_directions.setName("label_directions"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(label_title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-            .addComponent(label_display, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(label_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(240, Short.MAX_VALUE)
+                .addComponent(button_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(label_title)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_directions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(label_display, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
+                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void button_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_okActionPerformed
+        PIONSView.getInstance().resetAux();
+    }//GEN-LAST:event_button_okActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel label_display;
+    private javax.swing.JButton button_ok;
+    private javax.swing.JLabel label_directions;
     private javax.swing.JLabel label_title;
+    private javax.swing.JScrollPane scrollpane_display;
+    private javax.swing.JTextArea textarea_display;
     // End of variables declaration//GEN-END:variables
 
 }

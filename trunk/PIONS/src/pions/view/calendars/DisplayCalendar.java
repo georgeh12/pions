@@ -5,7 +5,6 @@ import pions.view.*;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import pions.controller.Calendars;
@@ -53,14 +52,6 @@ public class DisplayCalendar extends javax.swing.JPanel {
         button_dropshift_delete.setVisible(visible && DropShifts.isInit());
     }
 
-    private boolean browserDialog(){
-        return JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(this,
-                "This operation will open a new internet browser window.",
-                "Continue?",
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.INFORMATION_MESSAGE);
-    }
-
     private void setAuxPanel(JPanel panel, JToggleButton button){
         if(button_auxpanel != null) button_auxpanel.setSelected(false);
         button_auxpanel = button;
@@ -96,6 +87,8 @@ public class DisplayCalendar extends javax.swing.JPanel {
         togglebutton_availability_edit = new javax.swing.JToggleButton();
         togglebutton_dropshift_create = new javax.swing.JToggleButton();
         togglebutton_subordinate_edit = new javax.swing.JToggleButton();
+        button_activate = new javax.swing.JButton();
+        label_directions_activate = new javax.swing.JLabel();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
@@ -202,6 +195,17 @@ public class DisplayCalendar extends javax.swing.JPanel {
             }
         });
 
+        button_activate.setText(resourceMap.getString("button_activate.text")); // NOI18N
+        button_activate.setName("button_activate"); // NOI18N
+        button_activate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_activateActionPerformed(evt);
+            }
+        });
+
+        label_directions_activate.setText(resourceMap.getString("label_directions_activate.text")); // NOI18N
+        label_directions_activate.setName("label_directions_activate"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,6 +250,12 @@ public class DisplayCalendar extends javax.swing.JPanel {
                         .addComponent(button_dropshift_delete))
                     .addComponent(button_dropshift))
                 .addContainerGap(135, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(label_directions_activate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(button_activate, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,41 +285,24 @@ public class DisplayCalendar extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(togglebutton_dropshift_create)
                     .addComponent(button_dropshift_delete))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_activate)
+                    .addComponent(label_directions_activate))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_work_viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_work_viewActionPerformed
-        if(browserDialog()){
-            try{
-                URI link = Calendars.getReadLink(CalendarType.WorkSchedule);
-                if(link != null) Desktop.getDesktop().browse(link);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        PIONSView.openLink(this, Calendars.getReadLink(CalendarType.WorkSchedule));
     }//GEN-LAST:event_button_work_viewActionPerformed
 
     private void button_availability_viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_availability_viewActionPerformed
-        if(browserDialog()){
-            try{
-                URI link = Calendars.getReadLink(CalendarType.Availability);
-                if(link != null) Desktop.getDesktop().browse(link);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        PIONSView.openLink(this, Calendars.getReadLink(CalendarType.Availability));
     }//GEN-LAST:event_button_availability_viewActionPerformed
 
     private void button_subordinate_viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_subordinate_viewActionPerformed
-        if(browserDialog()){
-            try{
-                URI link = Calendars.getReadLink(CalendarType.SubordinateSchedule);
-                if(link != null) Desktop.getDesktop().browse(link);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        PIONSView.openLink(this, Calendars.getReadLink(CalendarType.SubordinateSchedule));
     }//GEN-LAST:event_button_subordinate_viewActionPerformed
 
     private void button_availabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_availabilityActionPerformed
@@ -359,8 +352,13 @@ public class DisplayCalendar extends javax.swing.JPanel {
         DropShifts.deleteDropShift();
     }//GEN-LAST:event_button_dropshift_deleteActionPerformed
 
+    private void button_activateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_activateActionPerformed
+        PIONSView.openLink(this, "http://www.google.com/calendar/");
+    }//GEN-LAST:event_button_activateActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_activate;
     private javax.swing.JRadioButton button_availability;
     private javax.swing.JButton button_availability_view;
     private javax.swing.JRadioButton button_dropshift;
@@ -370,6 +368,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
     private javax.swing.JRadioButton button_work;
     private javax.swing.JButton button_work_view;
     private javax.swing.JLabel label_directions;
+    private javax.swing.JLabel label_directions_activate;
     private javax.swing.JLabel label_title;
     private javax.swing.JToggleButton togglebutton_availability_edit;
     private javax.swing.JToggleButton togglebutton_dropshift_create;

@@ -1,9 +1,9 @@
 
 package pions.view.alerts;
 
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import pions.controller.Alerts;
+import pions.view.PIONSView;
 
 
 /**
@@ -17,6 +17,10 @@ public class ActiveAlertsIList extends AbstractAlertsIList {
         initComponents();
 
         super.panel_display = panel_display;
+        refresh();
+    }
+
+    private void refresh(){
         super.set(Alerts.getActiveAlertIterator());
     }
 
@@ -182,7 +186,7 @@ public class ActiveAlertsIList extends AbstractAlertsIList {
         int index = super.getFirstIndex();
 
         if(index != -1){
-            new DisplayAlert(Alerts.getActiveAlert(index));
+            PIONSView.getInstance().setAux(new DisplayAlert(Alerts.getActiveAlert(index)));
         }
         else{
             JOptionPane.showMessageDialog(this, "Please select an index.", "No Index Selected", JOptionPane.ERROR_MESSAGE);
@@ -198,33 +202,27 @@ public class ActiveAlertsIList extends AbstractAlertsIList {
     }//GEN-LAST:event_button_select_noneActionPerformed
 
     private void button_acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_acceptActionPerformed
-        ArrayList<Integer> indices = super.getIndices();
-
-        for(int i: indices){
+        for(int i: super.getIndices()){
             Alerts.acceptActiveAlert(i);
         }
-        
-        super.set(Alerts.getActiveAlertIterator());
+
+        refresh();
     }//GEN-LAST:event_button_acceptActionPerformed
 
     private void button_rejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rejectActionPerformed
-        ArrayList<Integer> indices = super.getIndices();
-
-        for(int i: indices){
+        for(int i: super.getIndices()){
             Alerts.rejectActiveAlert(i);
         }
 
-        super.set(Alerts.getActiveAlertIterator());
+        refresh();
     }//GEN-LAST:event_button_rejectActionPerformed
 
     private void button_ignoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ignoreActionPerformed
-        ArrayList<Integer> indices = super.getIndices();
-
-        for(int i: indices){
+        for(int i: super.getIndices()){
             Alerts.ignoreActiveAlert(i);
         }
 
-        super.set(Alerts.getActiveAlertIterator());
+        refresh();
     }//GEN-LAST:event_button_ignoreActionPerformed
 
 

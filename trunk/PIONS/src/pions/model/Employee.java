@@ -31,12 +31,14 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     private Employee manager = null;
     private ArrayList<Employee> subordinates = new ArrayList<Employee>();
 
-    protected Employee(String name, String username, String password)
+    protected Employee(String name, String username, String password,
+            String gmail_address, String gmail_password)
             throws FileNotFoundException, StreamCorruptedException,
             ClassNotFoundException, IOException{
         super.init(username, password);
 
         this.name = name;
+        setGmail(new EmailAddress(gmail_address, name), gmail_password);
     }
 
     /**
@@ -60,6 +62,10 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         return gmail;
     }
 
+    private void setGmail(EmailAddress gmail_address, String gmail_password){
+        gmail = new Gmail(gmail_address, gmail_password);
+    }
+
     public Calendars getCalendars(){
         return calendars;
     }
@@ -70,7 +76,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
 
     public Contact getContact() throws NoSuchAlgorithmException, IOException{
         if(key_pair == null) key_pair = super.generateRSAKeys();
-        return new Contact(getPublicKey(), getGmail().getGmailAddress());
+        return new Contact(getPublicKey(), getGmailAddress());
     }
 
     private PublicKey getPublicKey(){
@@ -78,14 +84,13 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     }
 
     public PublicKey getPublicKey(String gmail_address){
-        Employee target = searchEmployees(gmail_address);
+        Contact contact = getContacts().searchContacts(gmail_address);
 
-        //Check null to prevent Throwing a NullPointerException
-        if(target == null){
+        if(contact == null){
             return null;
         }
         else{
-            return target.getPublicKey();
+            return contact.getPublicKey();
         }
     }
 
@@ -108,31 +113,21 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     }
 
     public EmailAddress getManagerGmail(){
-        return manager.getGmail().getGmailAddress();
+        return getGmailAddress(manager);
     }
 
     public ArrayList<EmailAddress> getSubordinateGmails(){
         ArrayList<EmailAddress> gmail_addresses = new ArrayList<EmailAddress>();
 
         for(Employee employee: subordinates){
-            gmail_addresses.add(employee.getGmail().getGmailAddress());
+            gmail_addresses.add(getGmailAddress(employee));
         }
 
         return (ArrayList<EmailAddress>)gmail_addresses.clone();
     }
 
     private boolean hasGmailAddress(String gmail_address){
-        return getGmail().getGmailAddress().equals(gmail_address);
-    }
-
-    private Employee searchEmployees(String gmail_address){
-        if(manager.hasGmailAddress(gmail_address)) return manager;
-
-        for(Employee employee: subordinates){
-            if(employee.hasGmailAddress(gmail_address)) return employee;
-        }
-
-        return null;
+        return getGmailAddress().equals(gmail_address);
     }
 
     public void setName(String name){
@@ -140,24 +135,54 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         gmail.setGmailAddressPersonal(name);
     }
 
-    public void setGmail(EmailAddress gmail_address, String gmail_password){
-        gmail = new Gmail(gmail_address, gmail_password);
-    }
-
     /**
      * Adds a new manager for the current Employee.
      * @param new_manager
      */
-    protected void addManager(Employee new_manager) {
+    protected final void addManager(Employee new_manager) {
+        int index = compareSubordinate(getGmailAddress(new_manager).getAddress());
+        if(index != -1) subordinates.remove(index);
+
         manager = new_manager;
     }
 
     /**
-     * Adds a new subordinate for the current Employee.
+     * Adds a new subordinate for the current Employee. If the gmail address
+     * is equivalent to a current subordinate's gmail address, it sets the
+     * new subordinate to that index.
      * @param new_subordinate
      */
-    protected void addSubordinate(Employee new_subordinate) {
-        subordinates.add(new_subordinate);
+    protected final void addSubordinate(Employee new_subordinate) {
+        int index = compareSubordinate(getGmailAddress(new_subordinate).getAddress());
+        if(index == -1){
+            subordinates.add(new_subordinate);
+            
+            if(manager != null && manager.hasGmailAddress(
+                    getGmailAddress(new_subordinate).getAddress())){
+                manager = null;
+            }
+        }
+        else {
+            subordinates.set(index, new_subordinate);
+        }
+    }
+
+    private EmailAddress getGmailAddress(){
+        return getGmailAddress(this);
+    }
+
+    private EmailAddress getGmailAddress(Employee employee){
+        return employee.getGmail().getGmailAddress();
+    }
+
+    private int compareSubordinate(String gmail){
+        for(int i = 0; i < subordinates.size(); i++){
+            if(subordinates.get(i).hasGmailAddress(gmail)){
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     /**
@@ -176,7 +201,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         return subordinates.remove(index);
     }
 
-    public void acceptAlert(AlertType type, EmailAddress sender)
+    public void acceptAlert(AlertType type)
             throws NotLoggedInException, AlertClassException {
         switch(type){
             case AddManager:
@@ -224,7 +249,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
         buffer.append('\n');
         buffer.append(getContactInfo().toString());
         buffer.append('\n');
-        buffer.append("Gmail Address: " + getGmail().getGmailAddress());
+        buffer.append("Gmail Address: " + getGmailAddress());
         buffer.append('\n');
 
         buffer.append("Manager: ");

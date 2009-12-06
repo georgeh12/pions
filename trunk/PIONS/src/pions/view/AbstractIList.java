@@ -23,31 +23,44 @@ public abstract class AbstractIList extends AbstractXMLList {
 
     protected void set(XMLIterator iter){
         this.iter = iter;
-        check_boxes = new ArrayList<JCheckBox>();
-        text_areas = new ArrayList<JTextArea>();
 
+        parse();
         display();
     }
 
-    private void display() {
+    private void parse() {
         StringBuffer next;
+        check_boxes = new ArrayList<JCheckBox>();
+        text_areas = new ArrayList<JTextArea>();
+
+        while((next = parseNext()) != null){
+            JCheckBox check_box = new JCheckBox();
+            JTextArea text_area = new JTextArea(next.toString());
+
+            check_boxes.add(check_box);
+            text_areas.add(text_area);
+        }
+    }
+
+    private void display() {
         GridBagLayout layout = new GridBagLayout();
         panel_display.removeAll();
 
-        while((next = parseNext()) != null){
+        for(int i = check_boxes.size() - 1; i >= 0; i--){
+            JCheckBox check_box = check_boxes.get(i);
+            JTextArea text_area = text_areas.get(i);
+            
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.weightx = .5;
             constraints.weighty = 0;
             constraints.insets = new Insets(0,0,10,0);
             constraints.anchor = GridBagConstraints.PAGE_START;
-            constraints.gridy = check_boxes.size();
+            constraints.gridy = GridBagConstraints.RELATIVE;
 
-            JCheckBox check_box = new JCheckBox();
             constraints.gridx = 0;
             constraints.fill = GridBagConstraints.BOTH;
             layout.setConstraints(check_box, constraints);
 
-            JTextArea text_area = new JTextArea(next.toString());
             text_area.setLineWrap(true);
             text_area.setWrapStyleWord(true);
             text_area.setEditable(false);
@@ -57,9 +70,6 @@ public abstract class AbstractIList extends AbstractXMLList {
 
             panel_display.add(check_box);
             panel_display.add(text_area);
-
-            check_boxes.add(check_box);
-            text_areas.add(text_area);
         }
 
         panel_display.setLayout(layout);
@@ -76,21 +86,21 @@ public abstract class AbstractIList extends AbstractXMLList {
     protected abstract StringBuffer parseNext();
 
     public int getFirstIndex(){
-        for(int i = 0; i < check_boxes.size(); i++){
+        for(int i = check_boxes.size() - 1; i >= 0; i--){
             if(check_boxes.get(i).isSelected()) return i;
         }
 
         return -1;
     }
 
-    public ArrayList<Integer> getIndices(){
+    public Integer[] getIndices(){
         ArrayList<Integer> selected = new ArrayList<Integer>();
 
-        for(int i = 0; i < check_boxes.size(); i++){
+        for(int i = check_boxes.size() - 1; i >= 0; i--){
             if(check_boxes.get(i).isSelected()) selected.add(i);
         }
 
-        return selected;
+        return selected.toArray(new Integer[0]);
     }
 
     protected void selectAll(){

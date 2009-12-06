@@ -19,8 +19,7 @@ public final class AlertXMLFactory extends XMLFactory<Alert> {
         Element root = setHead(ALERT);
 
         //Set sender
-        setAttribute(root, SENDER_PERSONAL, alert.getAddress().getPersonal());
-        setAttribute(root, SENDER_EMAIL, alert.getAddress().getAddress());
+        setAttribute(root, SENDER_EMAIL, alert.getAddress());
 
         //Set type
         setAttribute(root, ALERT_TYPE, alert.getType().toString());

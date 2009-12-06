@@ -1,6 +1,7 @@
 
 package pions.view.alerts;
 
+import pions.controller.Alerts;
 import pions.controller.xml.XMLFactory;
 import pions.view.AbstractIList;
 
@@ -17,10 +18,10 @@ public abstract class AbstractAlertsIList extends AbstractIList {
 
             root = XMLFactory.getHead(iter.next(), XMLFactory.ALERT);
 
-            appendAttribute(buffer, XMLFactory.CONTACT_PERSONAL);
+            buffer.append("Sender_Name:\n" + Alerts.getContactName(root));
             buffer.append('\n');
 
-            appendAttribute(buffer, XMLFactory.CONTACT_EMAIL);
+            appendAttribute(buffer, XMLFactory.SENDER_EMAIL);
             buffer.append('\n');
 
             appendAttribute(buffer, XMLFactory.ALERT_TYPE);

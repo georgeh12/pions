@@ -111,7 +111,6 @@ public class DropShift extends AbstractXMLList {
 
         scrollpane_details.setName("scrollpane_details"); // NOI18N
 
-        textarea_details.setBackground(getBackground());
         textarea_details.setColumns(20);
         textarea_details.setEditable(false);
         textarea_details.setLineWrap(true);

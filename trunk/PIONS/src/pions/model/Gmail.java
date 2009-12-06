@@ -8,6 +8,7 @@ import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 import java.util.Properties;
 import javax.mail.BodyPart;
 import javax.mail.Folder;
@@ -33,7 +34,7 @@ import pions.model.ModelException.MessageParserException;
  * 
  * 
  */
-public class Gmail implements Serializable {
+public class Gmail extends Observable implements Serializable {
     private final static String HOST = "pop.gmail.com";
     private final static String STORE = "pop3s";
     private final static String FOLDER_NAME = "Inbox";
@@ -42,12 +43,11 @@ public class Gmail implements Serializable {
     private final static int ATTACHMENT_INDEX = 0;
     private EmailAddress gmail_address;
     private String gmail_password;
-    private int received_alerts = 0;
     private ArrayList<Alert> active_alerts = new ArrayList<Alert>();
     private ArrayList<Alert> saved_alerts = new ArrayList<Alert>();
 
-    Gmail(EmailAddress gmail_username, String gmail_password) {
-        this.gmail_address = gmail_username;
+    Gmail(EmailAddress gmail_address, String gmail_password) {
+        this.gmail_address = gmail_address;
         this.gmail_password = gmail_password;
     }
 
@@ -112,20 +112,27 @@ public class Gmail implements Serializable {
 
         for(Message current: new_alerts){
             AlertType alert_type = null;
+            String error_message = null;
             
             try {
+                error_message = "Reading header.";
                 alert_type = AlertType.valueOf(current.getHeader(ALERT_HEADER)[ATTACHMENT_INDEX]);
 
+                error_message = "Reading sender.";
+                String from = ((InternetAddress)current.getFrom()[0]).getAddress();
+
                 //Retrieves the attachment and decodes it using decryptRSA()
-                Object object = Alert.decryptAlert(
-                        current.getFrom()[0].toString(), alert_type,
+                error_message = "Decoding message";
+                Object object = Alert.decryptAlert(from, alert_type,
                         (InputStream)((MimeMultipart) current.getContent()).getBodyPart(0).getContent());
 
-                Alert add_alert = new Alert((AbstractAlert)object, alert_type);
+                error_message = "Adding alert";
+                Alert add_alert = new Alert(from, (AbstractAlert)object, alert_type);
 
                 active_alerts.add(add_alert);
             } catch (Exception e) {
-                e.initCause(new MessageParserException(alert_type, new_alerts.indexOf(current)));
+                e.initCause(new MessageParserException(
+                        alert_type, new_alerts.indexOf(current), error_message));
                 message_exceptions.add(e);
             }
         }
@@ -170,12 +177,10 @@ public class Gmail implements Serializable {
 
         Folder folder = getFolder(connect(session));
         folder.open(Folder.READ_WRITE);
-        Message alerts[] = folder.getMessages(received_alerts + 1, folder.getMessageCount());
+        Message alerts[] = folder.getMessages();
 
         ArrayList<Message> new_alerts = new ArrayList<Message>();
         for(Message current: alerts){
-            received_alerts = current.getMessageNumber();
-            
             if(current.getSubject().compareTo(SUBJECT) == 0){
                 new_alerts.add(current);
             }
@@ -202,7 +207,7 @@ public class Gmail implements Serializable {
 
         //Add message content
         message.addRecipient(RecipientType.TO, recipient.getInternetAddress());
-        message.setFrom(new InternetAddress(alert.getAddress().getAddress()));
+        message.setFrom(new InternetAddress(alert.getAddress()));
         message.setSubject(SUBJECT);
         Multipart multipart = new MimeMultipart();
 

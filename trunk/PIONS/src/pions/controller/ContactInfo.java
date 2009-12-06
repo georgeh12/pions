@@ -90,8 +90,7 @@ public final class ContactInfo {
             //Set address
             NodeList address = XMLFactory.getElements(head, XMLFactory.ADDRESS);
             {
-                //there should only be one address, hence the index 0
-                Node root = address.item(0);
+                Node root = address.item(XMLFactory.DEFAULT_INDEX);
 
                 EmployeeSingleton.getInstance().getContactInfo().setAddress(
                         new Address(

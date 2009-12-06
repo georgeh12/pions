@@ -11,7 +11,6 @@ import java.security.NoSuchAlgorithmException;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.internet.AddressException;
-import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.ModelException.ScheduleNotFoundException;
@@ -21,7 +20,7 @@ import pions.model.ModelException.ScheduleNotFoundException;
  * 
  */
 public interface AbstractAlert {
-    public void acceptAlert(Alert.AlertType type, EmailAddress sender)
+    public void acceptAlert(Alert.AlertType type)
             throws NotLoggedInException, ScheduleNotFoundException,
             AlertClassException, ServiceException, AuthenticationException,
             IOException, UnsupportedEncodingException, StreamCorruptedException,

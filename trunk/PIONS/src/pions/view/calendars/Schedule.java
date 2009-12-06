@@ -34,6 +34,7 @@ public class Schedule extends AbstractCalendarList {
         field_position.setText("");
     }
 
+    //TODO add calendar GUI and simplify date changing
     @Override
     protected final void addEvent() {
         if(field_gmail.getText().isEmpty()){

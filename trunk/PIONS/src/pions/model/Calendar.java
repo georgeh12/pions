@@ -20,11 +20,9 @@ import com.google.gdata.data.extensions.Who.AttendeeStatus;
 import com.google.gdata.data.extensions.Who.AttendeeType;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
-import java.awt.Desktop;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
@@ -80,11 +78,11 @@ public class Calendar implements Serializable, AbstractAlert {
         html_link = new URL(active_calendar.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
     }
 
-    public URI getReadLink()
+    public String getReadLink()
             throws NotLoggedInException, AuthenticationException,
-            ServiceException, IOException, URISyntaxException {
-        return new URI(Calendars.getService().getFeed(html_link, CalendarFeed.class)
-                .getLink(Link.Rel.ALTERNATE, Link.Type.HTML).getHref());
+            ServiceException, IOException {
+        return Calendars.getService().getFeed(html_link, CalendarFeed.class)
+                .getLink(Link.Rel.ALTERNATE, Link.Type.HTML).getHref();
     }
 
     public void shareRead(String gmail_address)
@@ -114,7 +112,7 @@ public class Calendar implements Serializable, AbstractAlert {
         Calendars.getService().update(html_link, entry);
     }
 
-    //TODO implement the positions class, and/or allow multiple employees
+    //TODO integrate the positions class, and/or allow multiple employees
     public void addEvent(EmailAddress gmail_address, String title,
             String details, Date start, Date end)
             throws NotLoggedInException, AuthenticationException,
@@ -197,13 +195,13 @@ public class Calendar implements Serializable, AbstractAlert {
         return DateTime.parseDateTime(xml_blob.substring(end_index1, end_index2)).toUiString();
     }
 
-    public void acceptAlert(AlertType type, EmailAddress sender)
+    public void acceptAlert(AlertType type)
             throws AlertClassException, NotLoggedInException,
             AuthenticationException, ServiceException, IOException,
             URISyntaxException {
         switch(type){
             case Availability:
-                Desktop.getDesktop().browse(this.getReadLink());
+                //DONOTHING
                 break;
             case WorkSchedule:
                 EmployeeSingleton.getInstance().getCalendars().setWorkSchedule(this);
@@ -239,7 +237,6 @@ public class Calendar implements Serializable, AbstractAlert {
         }
     }
 
-    //TODO getDetails()
     public String getDetails() {
         StringBuffer buffer = new StringBuffer();
 

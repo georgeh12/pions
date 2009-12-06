@@ -7,10 +7,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+import org.w3c.dom.Document;
 import pions.controller.Employees;
 import pions.view.PIONSView;
 
@@ -20,17 +20,15 @@ import pions.view.PIONSView;
  */
 public class SubordinatesEList extends javax.swing.JPanel {
 
+    private DisplayEmployee display_employee = null;
     private ArrayList<String> names = null;
     private ArrayList<JRadioButton> radio_buttons = null;
     private ArrayList<JTextArea> text_areas = null;
     private ButtonGroup button_group = new ButtonGroup();
 
     /** Creates new form SubordinateList */
-    public SubordinatesEList(ArrayList<String> subordinates) {
+    public SubordinatesEList() {
         initComponents();
-        
-        //Sorts the contents of names
-        this.names = new ArrayList(new PriorityQueue(subordinates));
 
         radio_buttons = new ArrayList<JRadioButton>();
         text_areas = new ArrayList<JTextArea>();
@@ -38,16 +36,30 @@ public class SubordinatesEList extends javax.swing.JPanel {
         display();
     }
 
+    private DisplayEmployee getDisplayEmployee(int index){
+        Document xml = Employees.getSubordinateXML(index);
+
+        if(display_employee == null){
+            display_employee = new DisplayEmployee(xml);
+        }
+        else {
+            display_employee.set(xml);
+        }
+
+        return display_employee;
+    }
+
     private void display(){
         GridBagLayout layout = new GridBagLayout();
 
-        for(String name: names){
+        //TODO Sort the contents of names without affecting the order of buttons
+        for(String name: Employees.getSubordinates()){
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.weightx = .5;
             constraints.weighty = 0;
             constraints.insets = new Insets(0,0,10,0);
             constraints.anchor = GridBagConstraints.PAGE_START;
-            constraints.gridy = radio_buttons.size();
+            constraints.gridy = GridBagConstraints.RELATIVE;
 
             JRadioButton radio_button = new JRadioButton();
             constraints.gridx = 0;
@@ -55,6 +67,7 @@ public class SubordinatesEList extends javax.swing.JPanel {
             layout.setConstraints(radio_button, constraints);
 
             JTextArea text_area = new JTextArea(name);
+            text_area.setEditable(false);
             text_area.setLineWrap(true);
             text_area.setWrapStyleWord(true);
             constraints.gridx = 1;
@@ -66,8 +79,7 @@ public class SubordinatesEList extends javax.swing.JPanel {
 
             radio_button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
-                    PIONSView.getInstance().setAux(new DisplayEmployee(Employees.getSubordinateXML(
-                            radio_buttons.indexOf(evt.getSource()))));
+                    PIONSView.getInstance().setAux(getDisplayEmployee(radio_buttons.indexOf(evt.getSource())));
                 }
             });
             button_group.add(radio_button);
@@ -109,16 +121,17 @@ public class SubordinatesEList extends javax.swing.JPanel {
         scrollpane_display.setName("scrollpane_display"); // NOI18N
 
         panel_display.setName("panel_display"); // NOI18N
+        panel_display.setPreferredSize(new java.awt.Dimension(100, 100));
 
         javax.swing.GroupLayout panel_displayLayout = new javax.swing.GroupLayout(panel_display);
         panel_display.setLayout(panel_displayLayout);
         panel_displayLayout.setHorizontalGroup(
             panel_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 261, Short.MAX_VALUE)
         );
         panel_displayLayout.setVerticalGroup(
             panel_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 309, Short.MAX_VALUE)
+            .addGap(0, 298, Short.MAX_VALUE)
         );
 
         scrollpane_display.setViewportView(panel_display);
@@ -129,7 +142,10 @@ public class SubordinatesEList extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addComponent(label_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-            .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +154,8 @@ public class SubordinatesEList extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(label_directions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
+                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -2,13 +2,13 @@
 package pions.view.employees;
 
 import pions.view.login.LoginSuccess;
-import pions.view.*;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import pions.controller.Employees;
+import pions.view.PIONSView;
 
 /**
  *
@@ -94,6 +94,7 @@ public class CreateEmployee extends JPanel {
         label_password2 = new javax.swing.JLabel();
         label_gmail_password2 = new javax.swing.JLabel();
         field_gmail_password2 = new javax.swing.JPasswordField();
+        button_creategmail = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
@@ -173,17 +174,25 @@ public class CreateEmployee extends JPanel {
 
         field_gmail_password2.setName("field_gmail_password2"); // NOI18N
 
+        button_creategmail.setText(resourceMap.getString("button_creategmail.text")); // NOI18N
+        button_creategmail.setName("button_creategmail"); // NOI18N
+        button_creategmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_creategmailActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label_gmail_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                    .addComponent(label_directions2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                    .addComponent(label_directions, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_gmail_directions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addComponent(label_directions2, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addComponent(label_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(label_name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(label_username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -201,8 +210,11 @@ public class CreateEmployee extends JPanel {
                             .addComponent(field_password, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                             .addComponent(field_password2, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                             .addComponent(field_gmail_password2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)))
-                    .addComponent(button_create_account, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                    .addComponent(button_clear, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(button_create_account, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(button_clear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addComponent(button_creategmail)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -245,7 +257,9 @@ public class CreateEmployee extends JPanel {
                 .addGap(11, 11, 11)
                 .addComponent(button_create_account, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(button_clear)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_clear)
+                    .addComponent(button_creategmail))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -352,10 +366,15 @@ public class CreateEmployee extends JPanel {
         clear();
     }//GEN-LAST:event_button_clearActionPerformed
 
+    private void button_creategmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_creategmailActionPerformed
+        PIONSView.openLink(this, "https://www.google.com/accounts/NewAccount");
+    }//GEN-LAST:event_button_creategmailActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_clear;
     private javax.swing.JButton button_create_account;
+    private javax.swing.JButton button_creategmail;
     private javax.swing.JPasswordField field_gmail_password;
     private javax.swing.JPasswordField field_gmail_password2;
     private javax.swing.JTextField field_gmail_username;

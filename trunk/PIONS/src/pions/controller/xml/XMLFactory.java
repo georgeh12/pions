@@ -17,11 +17,9 @@ public abstract class XMLFactory<T> {
     /** XML descriptor for an XML top element node. */
     public static final String ALERT = "Alert";
     /** XML descriptor for an ALERT attribute node. */
-    public static final String SENDER_PERSONAL = "SenderName";
+    public static final String SENDER_EMAIL = "Sender_Email";
     /** XML descriptor for an ALERT attribute node. */
-    public static final String SENDER_EMAIL = "SenderEmail";
-    /** XML descriptor for an ALERT attribute node. */
-    public static final String ALERT_TYPE = "AlertType";
+    public static final String ALERT_TYPE = "Alert_Type";
     /** XML descriptor for an ALERT attribute node. */
     public static final String DESCRIPTION = "Description";
 

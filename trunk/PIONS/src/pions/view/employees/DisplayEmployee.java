@@ -24,6 +24,10 @@ public class DisplayEmployee extends AbstractXMLList {
     public DisplayEmployee(Document xml) {
         initComponents();
 
+        set(xml);
+    }
+
+    public void set(Document xml){
         if(xml == null){
             JOptionPane.showConfirmDialog(this,
                     "Unable to retrieve employee information.",
@@ -33,13 +37,13 @@ public class DisplayEmployee extends AbstractXMLList {
         }
         else{
             root = xml.getElementById(XMLFactory.EMPLOYEE);
-            set();
+            initBuffers();
 
             print();
         }
     }
 
-    private void set(){
+    private void initBuffers(){
         buffer_name = new StringBuffer();
         buffer_iscontact = new StringBuffer();
         buffer_positions = new StringBuffer();
@@ -50,11 +54,17 @@ public class DisplayEmployee extends AbstractXMLList {
 
         appendAttribute(buffer_name, XMLFactory.NAME);
         appendAttribute(buffer_iscontact, XMLFactory.IS_CONTACT);
-        appendElement(buffer_positions, XMLFactory.POSITION);
+        String[] position_attributes = {XMLFactory._TITLE};
+        appendElements(buffer_positions, true, XMLFactory.POSITION, position_attributes);
         appendAttribute(buffer_gmailaddress, XMLFactory.GMAIL_ADDRESS);
-        appendElement(buffer_emailaddresses, XMLFactory.EMAIL_ADDRESS);
-        appendElement(buffer_phonenumbers, XMLFactory.PHONE_NUMBER);
-        appendAttribute(buffer_address, XMLFactory.ADDRESS);
+        String[] email_attributes = {XMLFactory._EMAIL_ADDRESS, XMLFactory._PERSONAL};
+        appendElements(buffer_emailaddresses, true, XMLFactory.EMAIL_ADDRESS, email_attributes);
+        String[] phone_attributes = {XMLFactory._PHONE_TYPE, XMLFactory._NUMBER,
+            XMLFactory._EXTENSION};
+        appendElements(buffer_phonenumbers, true, XMLFactory.PHONE_NUMBER, phone_attributes);
+        String[] address_attributes = {XMLFactory._STREET, XMLFactory._CITY,
+            XMLFactory._STATE, XMLFactory._ZIP};
+        appendElements(buffer_address, false, XMLFactory.ADDRESS, address_attributes);
     }
 
     /**
@@ -65,34 +75,41 @@ public class DisplayEmployee extends AbstractXMLList {
 
         if(checkbox_name.isSelected()){
             buffer.append(buffer_name);
-            buffer.append("\n");
+            buffer.append('\n');
+            buffer.append('\n');
         }
         if(checkbox_contact.isSelected()){
             buffer.append(buffer_iscontact);
-            buffer.append("\n");
+            buffer.append('\n');
+            buffer.append('\n');
         }
         if(checkbox_position.isSelected()){
             buffer.append(buffer_positions);
-            buffer.append("\n");
+            buffer.append('\n');
+            buffer.append('\n');
         }
         if(checkbox_gmail.isSelected()){
             buffer.append(buffer_gmailaddress);
-            buffer.append("\n");
+            buffer.append('\n');
+            buffer.append('\n');
         }
         if(checkbox_email.isSelected()){
             buffer.append(buffer_emailaddresses);
-            buffer.append("\n");
+            buffer.append('\n');
+            buffer.append('\n');
         }
         if(checkbox_phone.isSelected()){
             buffer.append(buffer_phonenumbers);
-            buffer.append("\n");
+            buffer.append('\n');
+            buffer.append('\n');
         }
         if(checkbox_address.isSelected()){
             buffer.append(buffer_address);
-            buffer.append("\n");
+            buffer.append('\n');
         }
         
         textarea_display.setText(buffer.toString());
+        textarea_display.setCaretPosition(0);
     }
 
     /** This method is called from within the constructor to
@@ -124,6 +141,7 @@ public class DisplayEmployee extends AbstractXMLList {
         textarea_display.setColumns(20);
         textarea_display.setEditable(false);
         textarea_display.setLineWrap(true);
+        textarea_display.setTabSize(3);
         textarea_display.setWrapStyleWord(true);
         textarea_display.setName("textarea_display"); // NOI18N
         scrollpane_display.setViewportView(textarea_display);
@@ -135,7 +153,7 @@ public class DisplayEmployee extends AbstractXMLList {
         checkbox_address.setName("checkbox_address"); // NOI18N
         checkbox_address.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkbox_addressActionPerformed(evt);
+                checkboxActionPerformed(evt);
             }
         });
 
@@ -145,7 +163,7 @@ public class DisplayEmployee extends AbstractXMLList {
         checkbox_phone.setName("checkbox_phone"); // NOI18N
         checkbox_phone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkbox_phoneActionPerformed(evt);
+                checkboxActionPerformed(evt);
             }
         });
 
@@ -155,7 +173,7 @@ public class DisplayEmployee extends AbstractXMLList {
         checkbox_email.setName("checkbox_email"); // NOI18N
         checkbox_email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkbox_emailActionPerformed(evt);
+                checkboxActionPerformed(evt);
             }
         });
 
@@ -165,7 +183,7 @@ public class DisplayEmployee extends AbstractXMLList {
         checkbox_position.setName("checkbox_position"); // NOI18N
         checkbox_position.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkbox_positionActionPerformed(evt);
+                checkboxActionPerformed(evt);
             }
         });
 
@@ -175,7 +193,7 @@ public class DisplayEmployee extends AbstractXMLList {
         checkbox_gmail.setName("checkbox_gmail"); // NOI18N
         checkbox_gmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkbox_gmailActionPerformed(evt);
+                checkboxActionPerformed(evt);
             }
         });
 
@@ -185,7 +203,7 @@ public class DisplayEmployee extends AbstractXMLList {
         checkbox_name.setName("checkbox_name"); // NOI18N
         checkbox_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkbox_nameActionPerformed(evt);
+                checkboxActionPerformed(evt);
             }
         });
 
@@ -195,7 +213,7 @@ public class DisplayEmployee extends AbstractXMLList {
         checkbox_contact.setName("checkbox_contact"); // NOI18N
         checkbox_contact.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkbox_contactActionPerformed(evt);
+                checkboxActionPerformed(evt);
             }
         });
 
@@ -232,7 +250,10 @@ public class DisplayEmployee extends AbstractXMLList {
                         .addGap(18, 18, 18)
                         .addComponent(checkbox_address)))
                 .addContainerGap(61, Short.MAX_VALUE))
-            .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,37 +275,14 @@ public class DisplayEmployee extends AbstractXMLList {
                     .addComponent(checkbox_phone)
                     .addComponent(checkbox_address))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
+                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void checkbox_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_nameActionPerformed
+    private void checkboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxActionPerformed
         print();
-    }//GEN-LAST:event_checkbox_nameActionPerformed
-
-    private void checkbox_contactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_contactActionPerformed
-        print();
-    }//GEN-LAST:event_checkbox_contactActionPerformed
-
-    private void checkbox_positionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_positionActionPerformed
-        print();
-    }//GEN-LAST:event_checkbox_positionActionPerformed
-
-    private void checkbox_gmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_gmailActionPerformed
-        print();
-    }//GEN-LAST:event_checkbox_gmailActionPerformed
-
-    private void checkbox_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_emailActionPerformed
-        print();
-    }//GEN-LAST:event_checkbox_emailActionPerformed
-
-    private void checkbox_phoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_phoneActionPerformed
-        print();
-    }//GEN-LAST:event_checkbox_phoneActionPerformed
-
-    private void checkbox_addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_addressActionPerformed
-        print();
-    }//GEN-LAST:event_checkbox_addressActionPerformed
+    }//GEN-LAST:event_checkboxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

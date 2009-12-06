@@ -18,15 +18,20 @@ public abstract class AbstractXMLList extends JPanel {
         buffer.append(XMLFactory.getAttribute(root, tag_name));
     }
 
-    protected final void appendElement(StringBuffer buffer, String tag_name){
-        NodeList node_list = XMLFactory.getElements(root, tag_name);
-        int length = node_list.getLength();
+    protected final void appendElements(StringBuffer buffer, boolean numbered,
+            String node, String[] attributes){
+        NodeList elements = XMLFactory.getElements(root, node);
         
-        if(length > 0){
-            buffer.append(tag_name + ":");
+        buffer.append(node + ":");
 
-            for(int i = 0; i < length; i ++){
-                buffer.append("\n" + node_list.item(i));
+        for(int i = 0; i < elements.getLength(); i ++){
+            buffer.append("\n" + (numbered ? (i+1) + ". " : "\t"));
+            for(int j = 0; j < attributes.length; j ++){
+                if(j != 0) buffer.append("\n\t");
+
+                String attribute = XMLFactory.getAttribute(elements.item(i), attributes[j]);
+
+                buffer.append(attributes[j] + ": " + attribute);
             }
         }
     }
