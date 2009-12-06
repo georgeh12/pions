@@ -20,7 +20,6 @@ import pions.model.Contacts.Contact;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
-import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  *
@@ -111,8 +110,6 @@ public final class Alerts {
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         } catch (AlertClassException e) {
-            e.printStackTrace();
-        } catch (ScheduleNotFoundException e) {
             e.printStackTrace();
         } catch (AuthenticationException e) {
             e.printStackTrace();

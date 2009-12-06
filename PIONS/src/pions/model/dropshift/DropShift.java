@@ -20,7 +20,6 @@ import pions.model.ContactInfo.EmailAddress;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
-import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  *
@@ -38,7 +37,7 @@ public final class DropShift implements Serializable, AbstractAlert {
      * Sets the decorator to accepted and advances the state.
      */
     public void acceptAlert(Alert.AlertType type)
-            throws NotLoggedInException, ScheduleNotFoundException,
+            throws NotLoggedInException,
             AlertClassException, ServiceException, AuthenticationException,
             IOException, UnsupportedEncodingException, StreamCorruptedException,
             AddressException, NoSuchProviderException, MessagingException,

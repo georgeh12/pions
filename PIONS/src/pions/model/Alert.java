@@ -16,7 +16,6 @@ import javax.mail.internet.AddressException;
 import pions.model.Contacts.Contact;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
-import pions.model.ModelException.ScheduleNotFoundException;
 import pions.model.dropshift.DropShift;
 
 /**
@@ -41,7 +40,7 @@ public final class Alert implements Serializable {
     }
 
     public void accept()
-            throws NotLoggedInException, ScheduleNotFoundException,
+            throws NotLoggedInException, 
             AlertClassException, ServiceException, AuthenticationException,
             IOException, UnsupportedEncodingException, StreamCorruptedException,
             AddressException, NoSuchProviderException, MessagingException,
