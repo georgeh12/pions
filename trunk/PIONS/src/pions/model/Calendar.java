@@ -41,16 +41,26 @@ import pions.model.ModelException.NotLoggedInException;
  */
 public class Calendar implements Serializable, AbstractAlert {
     private final static String CALENDAR_SERVICE = "PIONS Calendar";
-    private final static String CALENDAR_SUFFIX = "/owncalendars/full";
-    private final static String ACL_LINK =
-            "http://www.google.com/calendar/feeds/default/private/full";
-    private final URL CALENDAR_FEED;
+    private final static String OWN_CALENDAR_SUFFIX = "/owncalendars/full";
+    private final static String PRIVATE_CALENDAR_SUFFIX = "/private/full";
+    //private final static String ACL_LINK = "http://www.google.com/calendar/feeds/default/private/full";
     private transient CalendarService service = null;
     private String calendar_name;
     private URL html_link;
     private String read_link;
     private String gmail_username;
     private String gmail_password;
+
+    public Calendar(String gmail_username, String gmail_password) throws AuthenticationException,
+            MalformedURLException, ServiceException, IOException, NotLoggedInException {
+        calendar_name = "Own Work Schedule";
+        this.gmail_username = gmail_username;
+        this.gmail_password = gmail_password;
+        html_link = new URL(CalendarService.CALENDAR_ROOT_URL
+                + gmail_username + PRIVATE_CALENDAR_SUFFIX);
+        read_link = getService().getFeed(html_link, CalendarFeed.class)
+                .getLink(Link.Rel.ALTERNATE, Link.Type.HTML).getHref() + "&ctz=America/New_York";
+    }
 
     /**
      * Creates and initializes a calendar if init is true. The variable init
@@ -66,7 +76,6 @@ public class Calendar implements Serializable, AbstractAlert {
     public Calendar(String calendar_name, String gmail_username, String gmail_password) throws AuthenticationException,
             MalformedURLException, ServiceException, IOException, NotLoggedInException {
         this.calendar_name = calendar_name;
-        CALENDAR_FEED = new URL(CalendarService.CALENDAR_ROOT_URL + gmail_username + CALENDAR_SUFFIX);
         this.gmail_username = gmail_username;
         this.gmail_password = gmail_password;
 
@@ -92,7 +101,9 @@ public class Calendar implements Serializable, AbstractAlert {
         active_calendar.setCanEdit(true);
 
         // GoogleCalendar created
-        active_calendar = getService().insert(CALENDAR_FEED, active_calendar);
+        active_calendar = getService().insert(
+                new URL(CalendarService.CALENDAR_ROOT_URL + gmail_username + OWN_CALENDAR_SUFFIX),
+                active_calendar);
 
         // Valid Link.Rel's: ALTERNATE, ENTRY_EDIT, SELF
         html_link = new URL(active_calendar.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
@@ -134,8 +145,22 @@ public class Calendar implements Serializable, AbstractAlert {
     public void drop(EventEntry entry)
             throws ServiceException, IOException,
             AuthenticationException, NotLoggedInException {
-        entry.setContent(new PlainTextConstruct(EmployeeSingleton.getInstance().getGmail().getGmailAddress().toString()));
-        getService().update(html_link, entry);
+        entry.setService(getService());
+        entry.delete();
+        entry.removeExtension(Who.class);
+       
+        entry.addParticipant(getWho(EmployeeSingleton.getInstance().getGmail().getGmailAddress()));
+        getService().getFeed(html_link, EventFeed.class).insert(entry);
+    }
+
+    private Who getWho(EmailAddress gmail_address){
+        Who who = new Who();
+        who.setEmail(gmail_address.getAddress());
+        who.setValueString(gmail_address.getPersonal());
+        who.setAttendeeStatus(AttendeeStatus.EVENT_ACCEPTED);
+        who.setAttendeeType(AttendeeType.EVENT_REQUIRED);
+
+        return who;
     }
 
     //TODO integrate the positions class, and/or allow multiple employees
@@ -160,12 +185,7 @@ public class Calendar implements Serializable, AbstractAlert {
 
         //guest list, optional extension
         if(gmail_address != null){
-            Who who = new Who();
-            who.setEmail(gmail_address.getAddress());
-            who.setValueString(gmail_address.getPersonal());
-            who.setAttendeeStatus(AttendeeStatus.EVENT_ACCEPTED);
-            who.setAttendeeType(AttendeeType.EVENT_REQUIRED);
-            entry.addParticipant(who);
+            entry.addParticipant(getWho(gmail_address));
         }
 
         getService().insert(html_link, entry);
@@ -230,7 +250,9 @@ public class Calendar implements Serializable, AbstractAlert {
                 Desktop.getDesktop().browse(new URI(getReadLink()));
                 break;
             case WorkSchedule:
-                EmployeeSingleton.getInstance().getCalendars().setWorkSchedule(this);
+                Desktop.getDesktop().browse(
+                        new URI(EmployeeSingleton.getInstance().getCalendars()
+                        .getWorkSchedule().getReadLink()));
                 break;
             default:
                 throw new AlertClassException(this.getClass(), type.getAssociatedClass());

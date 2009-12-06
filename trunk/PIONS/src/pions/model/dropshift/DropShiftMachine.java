@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
-import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  * The machine to handle drop shift states.
@@ -51,7 +50,7 @@ public class DropShiftMachine implements Serializable {
         current_state = new DecoratorIgnored(state);
     }
 
-    void accept() throws NotLoggedInException, ScheduleNotFoundException,
+    void accept() throws NotLoggedInException,
             AuthenticationException, ServiceException, IOException{
         current_state.accepted();
     }

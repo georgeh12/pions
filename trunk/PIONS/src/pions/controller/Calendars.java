@@ -17,7 +17,6 @@ import pions.model.Calendar;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.NotLoggedInException;
-import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  *
@@ -147,8 +146,6 @@ public final class Calendars {
             e.printStackTrace();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
-        } catch (ScheduleNotFoundException e){
-            e.printStackTrace();
         }
 
         return null;
@@ -164,8 +161,6 @@ public final class Calendars {
         } catch (IOException e){
             e.printStackTrace();
         } catch (NotLoggedInException e) {
-            e.printStackTrace();
-        } catch (ScheduleNotFoundException e){
             e.printStackTrace();
         }
 
@@ -199,8 +194,6 @@ public final class Calendars {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NotLoggedInException e) {
-            e.printStackTrace();
-        } catch (ScheduleNotFoundException e){
             e.printStackTrace();
         }
 

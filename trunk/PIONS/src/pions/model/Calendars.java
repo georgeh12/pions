@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import pions.model.ModelException.NotLoggedInException;
-import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  *
@@ -37,9 +36,11 @@ public class Calendars implements Serializable {
         return availability;
     }
 
-    public Calendar getWorkSchedule() throws ScheduleNotFoundException{
+    public Calendar getWorkSchedule()
+            throws AuthenticationException, MalformedURLException,
+            ServiceException, IOException, NotLoggedInException {
         if(work_schedule == null){
-            throw new ScheduleNotFoundException(WORK_SCHEDULE);
+            work_schedule = new Calendar(gmail_address, gmail_password);
         }
 
         return work_schedule;

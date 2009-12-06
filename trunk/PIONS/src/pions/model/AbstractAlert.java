@@ -13,7 +13,6 @@ import javax.mail.NoSuchProviderException;
 import javax.mail.internet.AddressException;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
-import pions.model.ModelException.ScheduleNotFoundException;
 
 /**
  * Implements the strategy design pattern.
@@ -21,7 +20,7 @@ import pions.model.ModelException.ScheduleNotFoundException;
  */
 public interface AbstractAlert {
     public void acceptAlert(Alert.AlertType type)
-            throws NotLoggedInException, ScheduleNotFoundException,
+            throws NotLoggedInException,
             AlertClassException, ServiceException, AuthenticationException,
             IOException, UnsupportedEncodingException, StreamCorruptedException,
             AddressException, NoSuchProviderException, MessagingException,
