@@ -24,10 +24,11 @@ public final class EmployeeSingleton extends Employee implements Serializable {
 
     private static EmployeeSingleton singleton = null;
     
-    private EmployeeSingleton(String name, String username, String password)
+    private EmployeeSingleton(String name, String username, String password,
+            String gmail_address, String gmail_password)
             throws FileNotFoundException, StreamCorruptedException,
             ClassNotFoundException, IOException{
-        super(name, username, password);
+        super(name, username, password, gmail_address, gmail_password);
     }
 
     /**
@@ -37,10 +38,12 @@ public final class EmployeeSingleton extends Employee implements Serializable {
         singleton = null;
     }
 
-    public static void init(String name, String username, String password)
+    public static void init(String name, String username, String password,
+            String gmail_address, String gmail_password)
             throws FileNotFoundException, StreamCorruptedException,
             ClassNotFoundException, IOException{
-        singleton = new EmployeeSingleton(name, username, password);
+        singleton = new EmployeeSingleton(name, username, password,
+                gmail_address, gmail_password);
     }
 
     public static void login(String username, String password)

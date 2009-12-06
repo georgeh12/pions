@@ -12,8 +12,11 @@ import java.util.ArrayList;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.internet.AddressException;
+import org.w3c.dom.Element;
+import pions.controller.xml.XMLFactory;
 import pions.controller.xml.XMLIterator;
 import pions.model.Alert;
+import pions.model.Contacts.Contact;
 import pions.model.EmployeeSingleton;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
@@ -62,6 +65,18 @@ public final class Alerts {
         }
     }
 
+    public static String getContactName(Element alert){
+        try {
+            Contact contact = EmployeeSingleton.getInstance().getContacts()
+                    .searchContacts(XMLFactory.getAttribute(alert, XMLFactory.SENDER_EMAIL));
+            if(contact != null) return contact.getAddress().getPersonal();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
     public static String getActiveAlert(int index){
         try {
             return EmployeeSingleton.getInstance().getGmail().getActiveAlert(index).get().getDetails();
@@ -74,7 +89,7 @@ public final class Alerts {
 
     public static String getSavedAlert(int index){
         try {
-            EmployeeSingleton.getInstance().getGmail().getSavedAlert(index).get().getDetails();
+            return EmployeeSingleton.getInstance().getGmail().getSavedAlert(index).get().getDetails();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }

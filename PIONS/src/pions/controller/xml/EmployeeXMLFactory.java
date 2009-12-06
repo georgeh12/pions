@@ -34,7 +34,7 @@ public final class EmployeeXMLFactory extends XMLFactory<Employee> {
 
             //Set isContact
             setAttribute(root, IS_CONTACT, (EmployeeSingleton.getInstance().getContacts()
-                    .searchContacts(employee.getGmail().getGmailAddress()) == null ? "yes" : "no"));
+                    .searchContacts(employee.getGmail().getGmailAddress()) == null ? "no" : "yes"));
 
             //Set positions
             Iterator<Position> positions = employee.getPositions().iterator();

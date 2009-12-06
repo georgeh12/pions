@@ -28,11 +28,34 @@ public final class Contacts {
         }
     }
 
-    public static void sendContactRequest(String email_address) {
+    public static void sendContactRequest(Integer[] contact_indices) {
         try {
-            Gmail.sendAlert(new EmailAddress(email_address),
-                    new Alert(EmployeeSingleton.getInstance().getContact(),
-                    AlertType.ContactRequest));
+            for(int index: contact_indices){
+                sendContactRequest(EmployeeSingleton.getInstance()
+                        .getContacts().get(index).getAddress().getAddress());
+            }
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Returns false if the employee tries to send a request to themself.
+     * Even if an error occurs, it will return true.
+     * @param email_address
+     * @return
+     */
+    public static boolean sendContactRequest(String email_address) {
+        try {
+            if(EmployeeSingleton.getInstance().getGmail().getGmailAddress()
+                    .getAddress().equals(email_address)){
+                return false;
+            }
+            else {
+                Gmail.sendAlert(new EmailAddress(email_address),
+                        new Alert(EmployeeSingleton.getInstance().getContact(),
+                        AlertType.ContactRequest));
+            }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -40,6 +63,8 @@ public final class Contacts {
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }
+
+        return true;
     }
 
     public static XMLIterator<Contact> getContactIterator(){
@@ -63,19 +88,5 @@ public final class Contacts {
         }
 
         return null;
-    }
-
-    public static void sendContactRequest(int index){
-        try {
-            Gmail.sendAlert(EmployeeSingleton.getInstance().getContacts().get(index).getAddress(),
-                    new Alert(EmployeeSingleton.getInstance().getContact(),
-                    AlertType.ContactRequest));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NotLoggedInException e) {
-            e.printStackTrace();
-        }
     }
 }

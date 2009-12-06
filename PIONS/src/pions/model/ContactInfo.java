@@ -47,11 +47,13 @@ public class ContactInfo implements Serializable {
     public String toString(){
         StringBuffer buffer = new StringBuffer();
 
-        buffer.append("Email Address(es): " + email_addresses.toString());
+        buffer.append("Email Address(es): " + email_addresses.toString()
+                .replace("[", "").replace("]", ""));
 
-        buffer.append("Phone Number(s): " + phone_numbers.toString());
+        buffer.append("\nPhone Number(s): " + phone_numbers.toString()
+                .replace("[", "").replace("]", ""));
 
-        buffer.append("Address:\n" + address.toString());
+        buffer.append("\nAddress: " + address.toString());
 
         return buffer.toString();
     }

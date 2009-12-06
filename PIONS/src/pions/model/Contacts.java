@@ -77,12 +77,16 @@ public class Contacts extends Observable implements Serializable {
         public EmailAddress getAddress() {
             return gmail_address;
         }
+
+        public PublicKey getPublicKey() {
+            return public_key;
+        }
         
         public boolean equals(EmailAddress gmail_address){
             return this.gmail_address.equals(gmail_address);
         }
 
-        public void acceptAlert(AlertType type, EmailAddress sender)
+        public void acceptAlert(AlertType type)
                 throws NotLoggedInException, AlertClassException,
                 AddressException, UnsupportedEncodingException,
                 NoSuchProviderException, MessagingException,
@@ -90,7 +94,7 @@ public class Contacts extends Observable implements Serializable {
                 NoSuchAlgorithmException {
             switch(type){
                 case ContactRequest:
-                    EmployeeSingleton.getInstance().getGmail().sendAlert(sender,
+                    EmployeeSingleton.getInstance().getGmail().sendAlert(gmail_address,
                             new Alert(EmployeeSingleton.getInstance().getContact(), AlertType.ContactResponse));
                 case ContactResponse:
                     EmployeeSingleton.getInstance().getContacts().addContact(public_key, gmail_address);
@@ -105,6 +109,9 @@ public class Contacts extends Observable implements Serializable {
                 case ContactRequest:
                     //DONOTHING
                     break;
+                case ContactResponse:
+                    //DONOTHING
+                    break;
                 default:
                     throw new AlertClassException(this.getClass(), type.getAssociatedClass());
             }
@@ -113,6 +120,9 @@ public class Contacts extends Observable implements Serializable {
         public void ignoreAlert(AlertType type) throws AlertClassException {
             switch(type){
                 case ContactRequest:
+                    //DONOTHING
+                    break;
+                case ContactResponse:
                     //DONOTHING
                     break;
                 default:

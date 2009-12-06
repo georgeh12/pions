@@ -128,7 +128,7 @@ public class UpdateAlerts extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
 
-    //TODO extends SwingWorker
+    //TODO implement extends SwingWorker
     private class UpdateThread extends Thread {
         @Override
         public void interrupt(){

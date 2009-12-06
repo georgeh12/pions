@@ -1,10 +1,9 @@
 
 package pions.view.alerts;
 
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import pions.controller.Alerts;
-import pions.controller.xml.XMLIterator;
+import pions.view.PIONSView;
 
 /**
  *
@@ -13,11 +12,16 @@ import pions.controller.xml.XMLIterator;
 public class SavedAlertIList extends AbstractAlertsIList {
 
     /** Creates new form SavedAlerts */
-    public SavedAlertIList(XMLIterator<?> iter) {
+    public SavedAlertIList() {
         initComponents();
 
         super.panel_display = panel_display;
-        super.set(iter);
+        refresh();
+    }
+
+    private void refresh(){
+
+        super.set(Alerts.getSavedAlertIterator());
     }
 
     /** This method is called from within the constructor to
@@ -158,7 +162,7 @@ public class SavedAlertIList extends AbstractAlertsIList {
         int index = super.getFirstIndex();
 
         if(index != -1){
-            new DisplayAlert(Alerts.getSavedAlert(index));
+            PIONSView.getInstance().setAux(new DisplayAlert(Alerts.getSavedAlert(index)));
         }
         else{
             JOptionPane.showMessageDialog(this, "Please select an index.", "No Index Selected", JOptionPane.ERROR_MESSAGE);
@@ -166,11 +170,11 @@ public class SavedAlertIList extends AbstractAlertsIList {
     }//GEN-LAST:event_button_viewActionPerformed
 
     private void button_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_deleteActionPerformed
-        ArrayList<Integer> indices = super.getIndices();
-
-        for(int i: indices){
+        for(int i: super.getIndices()){
             Alerts.deleteSavedAlert(i);
         }
+
+        refresh();
     }//GEN-LAST:event_button_deleteActionPerformed
 
     private void button_select_allActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_select_allActionPerformed

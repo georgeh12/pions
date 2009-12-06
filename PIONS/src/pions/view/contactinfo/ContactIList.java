@@ -20,15 +20,15 @@ public class ContactIList extends AbstractIList implements Observer {
         initComponents();
 
         super.panel_display = panel_display;
+    }
+
+    public void init(){
+        Contacts.subscribe(this);
         refresh();
     }
     
     public void update(Observable o, Object arg) {
         refresh();
-    }
-
-    public void subscribe(){
-        Contacts.subscribe(this);
     }
 
     public void refresh(){
@@ -72,11 +72,11 @@ public class ContactIList extends AbstractIList implements Observer {
         panel_display = new javax.swing.JPanel();
         button_contactrequest = new javax.swing.JButton();
         button_subordinate = new javax.swing.JButton();
-        label_contact = new javax.swing.JLabel();
         button_manager = new javax.swing.JButton();
         button_removecontact = new javax.swing.JButton();
         label_employeerequest = new javax.swing.JLabel();
         label_directions_employeerequest = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(300, 400));
@@ -121,7 +121,7 @@ public class ContactIList extends AbstractIList implements Observer {
         panel_display.setLayout(panel_displayLayout);
         panel_displayLayout.setHorizontalGroup(
             panel_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 261, Short.MAX_VALUE)
         );
         panel_displayLayout.setVerticalGroup(
             panel_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,9 +146,6 @@ public class ContactIList extends AbstractIList implements Observer {
             }
         });
 
-        label_contact.setText(resourceMap.getString("label_contact.text")); // NOI18N
-        label_contact.setName("label_contact"); // NOI18N
-
         button_manager.setText(resourceMap.getString("button_manager.text")); // NOI18N
         button_manager.setName("button_manager"); // NOI18N
         button_manager.addActionListener(new java.awt.event.ActionListener() {
@@ -166,23 +163,23 @@ public class ContactIList extends AbstractIList implements Observer {
         label_directions_employeerequest.setText(resourceMap.getString("label_directions_employeerequest.text")); // NOI18N
         label_directions_employeerequest.setName("label_directions_employeerequest"); // NOI18N
 
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+            .addComponent(label_title, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(label_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                .addComponent(label_directions, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(label_contact)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_contactrequest)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_removecontact)
-                .addContainerGap(50, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,12 +196,19 @@ public class ContactIList extends AbstractIList implements Observer {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_select_all)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_select_none)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(button_select_none)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                .addComponent(scrollpane_display, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(button_contactrequest, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_removecontact)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -213,12 +217,12 @@ public class ContactIList extends AbstractIList implements Observer {
                 .addComponent(label_title)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_directions)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_contact)
-                    .addComponent(button_contactrequest)
-                    .addComponent(button_removecontact))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_contactrequest)
+                    .addComponent(button_removecontact)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_directions_employeerequest)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -254,16 +258,28 @@ public class ContactIList extends AbstractIList implements Observer {
                 JOptionPane.OK_CANCEL_OPTION);
         }
 
-        if(gmail != null) Contacts.sendContactRequest(gmail);
+        if(gmail != null){
+            if(!Contacts.sendContactRequest(gmail)){
+                JOptionPane.showConfirmDialog(this,
+                    "Unable to send a message to your own e-mail address",
+                    "Addressed To Self",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_button_contactrequestActionPerformed
 
     private void button_managerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_managerActionPerformed
-        Employees.sendNewManager(getIndices());
+        Employees.sendNewManager(super.getIndices());
 }//GEN-LAST:event_button_managerActionPerformed
 
     private void button_subordinateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_subordinateActionPerformed
-        Employees.sendNewSubordinate(getIndices());
+        Employees.sendNewSubordinate(super.getIndices());
 }//GEN-LAST:event_button_subordinateActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Contacts.sendContactRequest(super.getIndices());
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -273,7 +289,7 @@ public class ContactIList extends AbstractIList implements Observer {
     private javax.swing.JButton button_select_all;
     private javax.swing.JButton button_select_none;
     private javax.swing.JButton button_subordinate;
-    private javax.swing.JLabel label_contact;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel label_directions;
     private javax.swing.JLabel label_directions_employeerequest;
     private javax.swing.JLabel label_employeerequest;

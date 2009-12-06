@@ -32,7 +32,8 @@ public class Availability extends AbstractCalendarList {
         field_title.setText("");
         textarea_description.setText("");
     }
-    
+
+    //TODO add calendar GUI and simplify date changing
     @Override
     protected void addEvent() {
         Date start_date = (Date)((SpinnerDateModel)spinner_start.getModel()).getValue();

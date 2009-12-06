@@ -1,6 +1,8 @@
 
 package pions.view;
 
+import java.awt.Component;
+import java.awt.Desktop;
 import pions.view.contactinfo.MyContactInfo;
 import pions.view.contactinfo.ContactIList;
 import pions.view.login.Login;
@@ -15,6 +17,9 @@ import pions.view.aboutus.AboutUsAux;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.EventObject;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -24,7 +29,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jdesktop.application.Application.ExitListener;
 import pions.PIONS;
-import pions.controller.Alerts;
 import pions.controller.Employees;
 import pions.view.employees.DisplayEmployee;
 
@@ -151,6 +155,13 @@ public class PIONSView {
 
         //Window Menu
 
+        menu_calendars = window.add(new JMenuItem("Calendars"));
+        menu_calendars.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                menu_calendarsActionPerformed(evt);
+            }
+        });
+
         menu_manager = window.add(new JMenuItem("Manager"));
         menu_manager.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -162,13 +173,6 @@ public class PIONSView {
         menu_subordinates.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 menu_subordinatesActionPerformed(evt);
-            }
-        });
-
-        menu_calendars = window.add(new JMenuItem("Calendars"));
-        menu_calendars.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                menu_calendarsActionPerformed(evt);
             }
         });
 
@@ -275,14 +279,48 @@ public class PIONSView {
                         super.setVisible(visible);
                     }
                 };
+                
                 contact_list.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 contact_list.setContentPane(new ContactIList());
-
-                ((ContactIList)contact_list.getContentPane()).subscribe();
             }
         }
         
         return contact_list;
+    }
+
+    public static void openLink(Component parentComponent, String link){
+        if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
+                parentComponent,
+                "This operation will open a new internet browser window.",
+                "Continue?",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE)){
+
+            try{
+                Desktop.getDesktop().browse(new URI(link));
+            } catch (URISyntaxException e) {
+                JOptionPane.showConfirmDialog(
+                        parentComponent,
+                        "Link provided is invalid.",
+                        "Error Opening Link",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showConfirmDialog(
+                        parentComponent,
+                        "Unable to open link as requested.",
+                        "Error Opening Link",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (NullPointerException e) {
+                JOptionPane.showConfirmDialog(
+                        parentComponent,
+                        "The link does not exist.",
+                        "Error Opening Link",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     private void menu_loginActionPerformed(ActionEvent evt){
@@ -298,7 +336,7 @@ public class PIONSView {
      * @param evt
      */
     private void menu_contactsActionPerformed(ActionEvent evt){
-        getContactFrame().setVisible(!getContactFrame().isVisible());
+        getContactFrame().setVisible(true);
     }
 
     private void menu_contactinfoActionPerformed(ActionEvent evt){
@@ -315,7 +353,7 @@ public class PIONSView {
     }
 
     private void menu_savedalertsActionPerformed(ActionEvent evt){
-        setMain(new SavedAlertIList(Alerts.getSavedAlertIterator()));
+        setMain(new SavedAlertIList());
     }
 
     private void menu_managerActionPerformed(ActionEvent evt){
@@ -323,7 +361,7 @@ public class PIONSView {
     }
 
     private void menu_subordinatesActionPerformed(ActionEvent evt){
-        setMain(new SubordinatesEList(Employees.getSubordinates()));
+        setMain(new SubordinatesEList());
     }
 
     private void menu_calendarsActionPerformed(ActionEvent evt){

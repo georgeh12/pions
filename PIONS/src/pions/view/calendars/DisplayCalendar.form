@@ -74,6 +74,13 @@
               </Group>
               <EmptySpace pref="135" max="32767" attributes="0"/>
           </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="label_directions_activate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="button_activate" pref="142" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -107,7 +114,12 @@
                   <Component id="togglebutton_dropshift_create" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="button_dropshift_delete" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="70" max="32767" attributes="0"/>
+              <EmptySpace pref="36" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="button_activate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="label_directions_activate" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -230,6 +242,21 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="togglebutton_subordinate_editActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="button_activate">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="button_activate.text"/>
+        <Property name="name" type="java.lang.String" value="button_activate" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_activateActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="label_directions_activate">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="label_directions_activate.text"/>
+        <Property name="name" type="java.lang.String" value="label_directions_activate" noResource="true"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

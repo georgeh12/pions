@@ -7,8 +7,6 @@ import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Date;
 import org.w3c.dom.Document;
 import pions.controller.xml.AbstractXMLFactory;
@@ -83,7 +81,7 @@ public final class Calendars {
     public static void addScheduleShift(String gmail_address,
             String name, String position, Date start, Date end){
         try {
-            EmployeeSingleton.getInstance().getCalendars().getAvailability()
+            EmployeeSingleton.getInstance().getCalendars().getSubordinateSchedule()
                     .addEvent((gmail_address == null ? null : new EmailAddress(gmail_address)),
                     name, position, start, end);
         } catch (AuthenticationException e){
@@ -174,7 +172,7 @@ public final class Calendars {
         return null;
     }
     
-    public static URI getReadLink(CalendarType type){
+    public static String getReadLink(CalendarType type){
         try {
             Calendar calendar = null;
 
@@ -199,8 +197,6 @@ public final class Calendars {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
             e.printStackTrace();
         } catch (NotLoggedInException e) {
             e.printStackTrace();
@@ -229,12 +225,24 @@ public final class Calendars {
     
     private static void sendCalendar(EmailAddress email_address, AlertType type){
         try {
-            Calendar work_schedule =
-                    EmployeeSingleton.getInstance().getCalendars().getWorkSchedule();
-            work_schedule.shareRead(email_address.getAddress());
+            Calendar calendar = null;
+
+            switch(type){
+                case WorkSchedule:
+                    calendar = EmployeeSingleton.getInstance().getCalendars()
+                            .getWorkSchedule();
+                    break;
+                case Availability:
+                    calendar = EmployeeSingleton.getInstance().getCalendars()
+                            .getAvailability();
+                    break;
+                default:
+            }
+
+            calendar.shareRead(email_address.getAddress());
 
             Gmail.sendAlert(email_address,
-                    new Alert(work_schedule, type));
+                    new Alert(calendar, type));
         } catch (AuthenticationException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {

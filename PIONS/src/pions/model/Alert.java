@@ -13,7 +13,6 @@ import java.security.NoSuchAlgorithmException;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.internet.AddressException;
-import pions.model.ContactInfo.EmailAddress;
 import pions.model.Contacts.Contact;
 import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
@@ -26,18 +25,18 @@ import pions.model.dropshift.DropShift;
  * 
  */
 public final class Alert implements Serializable {
-    private EmailAddress sender = null;
+    private String email = null;
     private AlertType type = null;
     private AbstractAlert object = null;
 
-    public Alert(EmailAddress sender, AbstractAlert object, AlertType type){
-        this.sender = sender;
+    public Alert(String email, AbstractAlert object, AlertType type){
         this.object = object;
+        this.email = email;
         this.type = type;
     }
 
     public Alert(AbstractAlert object, AlertType type) throws NotLoggedInException{
-        this(EmployeeSingleton.getInstance().getGmail().getGmailAddress(),
+        this(EmployeeSingleton.getInstance().getGmail().getGmailAddress().getAddress(),
                 object, type);
     }
 
@@ -47,7 +46,7 @@ public final class Alert implements Serializable {
             IOException, UnsupportedEncodingException, StreamCorruptedException,
             AddressException, NoSuchProviderException, MessagingException,
             ClassNotFoundException, NoSuchAlgorithmException, URISyntaxException {
-        object.acceptAlert(type, sender);
+        object.acceptAlert(type);
     }
 
     public void reject() throws AlertClassException{
@@ -94,8 +93,8 @@ public final class Alert implements Serializable {
         }
     }
 
-    public EmailAddress getAddress(){
-        return sender;
+    public String getAddress(){
+        return email;
     }
 
     public AlertType getType(){

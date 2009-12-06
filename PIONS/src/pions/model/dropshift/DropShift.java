@@ -37,7 +37,7 @@ public final class DropShift implements Serializable, AbstractAlert {
     /**
      * Sets the decorator to accepted and advances the state.
      */
-    public void acceptAlert(Alert.AlertType type, EmailAddress sender)
+    public void acceptAlert(Alert.AlertType type)
             throws NotLoggedInException, ScheduleNotFoundException,
             AlertClassException, ServiceException, AuthenticationException,
             IOException, UnsupportedEncodingException, StreamCorruptedException,

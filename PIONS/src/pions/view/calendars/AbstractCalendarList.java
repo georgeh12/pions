@@ -95,6 +95,10 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
                         field_gmail.setText(XMLFactory.getAttribute(root,
                                 XMLFactory.CONTACT_EMAIL));
                     }
+                    else{
+                        field_name.setText("");
+                        field_gmail.setText("");
+                    }
                 }
             }
         });

@@ -31,8 +31,7 @@ public final class Employees {
     public static boolean createEmployee(String name, String username, String password,
             String gmail_username, String gmail_password){
         try {
-            EmployeeSingleton.init(name, username, password);
-            Gmail.setGmail(gmail_username, gmail_password);
+            EmployeeSingleton.init(name, username, password, gmail_username, gmail_password);
             EmployeeSingleton.getInstance().saveFile();
 
             return true;
@@ -123,9 +122,9 @@ public final class Employees {
         return new ArrayList<String>();
     }
 
-    public static void sendNewManager(ArrayList<Integer> contact_indices) {
+    public static void sendNewManager(Integer[] contact_indices) {
         try {
-            for(Integer index: contact_indices){
+            for(int index: contact_indices){
                 sendNewEmployee(EmployeeSingleton.getInstance().getContacts().get(index).getAddress(),
                         AlertType.AddManager);
             }
@@ -134,9 +133,9 @@ public final class Employees {
         }
     }
 
-    public static void sendNewSubordinate(ArrayList<Integer> contact_indices) {
+    public static void sendNewSubordinate(Integer[] contact_indices) {
         try {
-            for(Integer index: contact_indices){
+            for(int index: contact_indices){
                 sendNewEmployee(EmployeeSingleton.getInstance().getContacts().get(index).getAddress(),
                         AlertType.AddSubordinate);
             }

@@ -155,6 +155,7 @@ public class Login extends javax.swing.JPanel {
     private void button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_loginActionPerformed
         if(Employees.login(field_username.getText(), String.valueOf(field_password.getPassword()))){
             PIONSView.getInstance().setMain(new LoginSuccess());
+            PIONSView.getInstance().getContactList().init();
         }
         else{
             JOptionPane.showMessageDialog(this, "Please enter a valid username and password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
