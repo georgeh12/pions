@@ -175,6 +175,7 @@ public class SavedAlertIList extends AbstractAlertsIList {
         }
 
         refresh();
+        PIONSView.getInstance().resetAux();
     }//GEN-LAST:event_button_deleteActionPerformed
 
     private void button_select_allActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_select_allActionPerformed

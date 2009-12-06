@@ -230,7 +230,7 @@ public final class Calendars {
             switch(type){
                 case WorkSchedule:
                     calendar = EmployeeSingleton.getInstance().getCalendars()
-                            .getWorkSchedule();
+                            .getSubordinateSchedule();
                     break;
                 case Availability:
                     calendar = EmployeeSingleton.getInstance().getCalendars()
@@ -252,8 +252,6 @@ public final class Calendars {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NotLoggedInException e) {
-            e.printStackTrace();
-        } catch (ScheduleNotFoundException e){
             e.printStackTrace();
         }
     }

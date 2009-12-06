@@ -5,7 +5,6 @@ import com.google.gdata.client.calendar.CalendarService;
 import com.google.gdata.data.DateTime;
 import com.google.gdata.data.Link;
 import com.google.gdata.data.PlainTextConstruct;
-import com.google.gdata.data.acl.AclEntry;
 import com.google.gdata.data.acl.AclRole;
 import com.google.gdata.data.acl.AclScope;
 import com.google.gdata.data.calendar.CalendarAclRole;
@@ -20,9 +19,11 @@ import com.google.gdata.data.extensions.Who.AttendeeStatus;
 import com.google.gdata.data.extensions.Who.AttendeeType;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
+import java.awt.Desktop;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
@@ -39,11 +40,17 @@ import pions.model.ModelException.NotLoggedInException;
  * 
  */
 public class Calendar implements Serializable, AbstractAlert {
-    private final static String OWN_CALENDARS = CalendarService.CALENDAR_ROOT_URL
-            + "default/owncalendars/full";
-    private final static String ACL_LIST = "http://schemas.google.com/acl/2007#accessControlList";
+    private final static String CALENDAR_SERVICE = "PIONS Calendar";
+    private final static String CALENDAR_SUFFIX = "/owncalendars/full";
+    private final static String ACL_LINK =
+            "http://www.google.com/calendar/feeds/default/private/full";
+    private final URL CALENDAR_FEED;
+    private transient CalendarService service = null;
     private String calendar_name;
     private URL html_link;
+    private String read_link;
+    private String gmail_username;
+    private String gmail_password;
 
     /**
      * Creates and initializes a calendar if init is true. The variable init
@@ -56,10 +63,23 @@ public class Calendar implements Serializable, AbstractAlert {
      * @throws IOException
      * @throws pions.model.ModelException.NotLoggedInException
      */
-    public Calendar(String calendar_name) throws AuthenticationException,
+    public Calendar(String calendar_name, String gmail_username, String gmail_password) throws AuthenticationException,
             MalformedURLException, ServiceException, IOException, NotLoggedInException {
         this.calendar_name = calendar_name;
+        CALENDAR_FEED = new URL(CalendarService.CALENDAR_ROOT_URL + gmail_username + CALENDAR_SUFFIX);
+        this.gmail_username = gmail_username;
+        this.gmail_password = gmail_password;
+
         create();
+    }
+
+    private CalendarService getService() throws AuthenticationException{
+        if(service == null){
+            service = new CalendarService(CALENDAR_SERVICE);
+            service.setUserCredentials(gmail_username, gmail_password);
+        }
+
+        return service;
     }
 
     private void create() throws AuthenticationException, MalformedURLException,
@@ -72,44 +92,50 @@ public class Calendar implements Serializable, AbstractAlert {
         active_calendar.setCanEdit(true);
 
         // GoogleCalendar created
-        active_calendar = Calendars.getService().insert(new URL(OWN_CALENDARS), active_calendar);
+        active_calendar = getService().insert(CALENDAR_FEED, active_calendar);
 
         // Valid Link.Rel's: ALTERNATE, ENTRY_EDIT, SELF
         html_link = new URL(active_calendar.getLink(Link.Rel.ALTERNATE, Link.Type.ATOM).getHref());
+        read_link = getService().getFeed(html_link, CalendarFeed.class)
+                .getLink(Link.Rel.ALTERNATE, Link.Type.HTML).getHref() + "&ctz=America/New_York";
     }
 
-    public String getReadLink()
-            throws NotLoggedInException, AuthenticationException,
-            ServiceException, IOException {
-        return Calendars.getService().getFeed(html_link, CalendarFeed.class)
-                .getLink(Link.Rel.ALTERNATE, Link.Type.HTML).getHref();
+    public String getReadLink() {
+        return read_link;
     }
 
     public void shareRead(String gmail_address)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, MalformedURLException, IOException {
-        share(html_link, gmail_address, CalendarAclRole.READ);
+        share(gmail_address, CalendarAclRole.READ);
     }
 
-    private void share(URL url, String gmail_address, AclRole rights)
+    /**
+     * Should add the user to the ACL for the specified calendar feed or events.
+     * Not working at this time.
+     * @param gmail_address
+     * @param rights
+     * @throws pions.model.ModelException.NotLoggedInException
+     * @throws AuthenticationException
+     * @throws ServiceException
+     * @throws MalformedURLException
+     * @throws IOException
+     */
+    private void share(String gmail_address, AclRole rights)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, MalformedURLException, IOException {
-        AclEntry entry = new AclEntry();
-        entry.setScope(new AclScope(AclScope.Type.USER, gmail_address));
-        entry.setRole(rights);
-
-        // This algorithm should retrieve the ACL list for this calendar's feed.
-        Calendars.getService().insert(
-                new URL(Calendars.getService().getFeed(url, CalendarFeed.class)
-                .getLink(ACL_LIST, Link.Type.ATOM).getHref()
-                ), entry);
+        for(CalendarEntry entry: getService().getFeed(html_link, CalendarFeed.class).getEntries()){
+            entry.addExtension(new AclScope(AclScope.Type.USER, gmail_address));
+            entry.addExtension(rights);
+            entry.update();
+        }
     }
 
     public void drop(EventEntry entry)
             throws ServiceException, IOException,
             AuthenticationException, NotLoggedInException {
         entry.setContent(new PlainTextConstruct(EmployeeSingleton.getInstance().getGmail().getGmailAddress().toString()));
-        Calendars.getService().update(html_link, entry);
+        getService().update(html_link, entry);
     }
 
     //TODO integrate the positions class, and/or allow multiple employees
@@ -142,25 +168,25 @@ public class Calendar implements Serializable, AbstractAlert {
             entry.addParticipant(who);
         }
 
-        Calendars.getService().insert(html_link, entry);
+        getService().insert(html_link, entry);
     }
 
     public void delete(int index)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
-        Calendars.getService().getFeed(html_link, CalendarFeed.class).getEntries().get(index).delete();
+        getService().getFeed(html_link, CalendarFeed.class).getEntries().get(index).delete();
     }
 
     public Iterator<EventEntry> getEvents()
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
-        return Calendars.getService().getFeed(html_link, EventFeed.class).getEntries().iterator();
+        return getService().getFeed(html_link, EventFeed.class).getEntries().iterator();
     }
 
     public EventEntry getEvent(int index)
             throws NotLoggedInException, AuthenticationException,
             ServiceException, IOException {
-        return Calendars.getService().getFeed(html_link, EventFeed.class).getEntries().get(index);
+        return getService().getFeed(html_link, EventFeed.class).getEntries().get(index);
     }
 
     public static String parseTitle(EventEntry entry){
@@ -201,7 +227,7 @@ public class Calendar implements Serializable, AbstractAlert {
             URISyntaxException {
         switch(type){
             case Availability:
-                //DONOTHING
+                Desktop.getDesktop().browse(new URI(getReadLink()));
                 break;
             case WorkSchedule:
                 EmployeeSingleton.getInstance().getCalendars().setWorkSchedule(this);
@@ -241,6 +267,7 @@ public class Calendar implements Serializable, AbstractAlert {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append("Name: " + calendar_name);
+        buffer.append("\nInternet Address:\n" + getReadLink());
 
         return buffer.toString();
     }

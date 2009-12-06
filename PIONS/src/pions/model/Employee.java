@@ -25,7 +25,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
     private Positions positions = null;
     private ContactInfo contact_info = null;
     private Gmail gmail = null;
-    private Calendars calendars = new Calendars();
+    private Calendars calendars;
     private Contacts contacts = new Contacts();
     private KeyPair key_pair = null;
     private Employee manager = null;
@@ -39,6 +39,7 @@ public class Employee extends Login implements Serializable, AbstractAlert {
 
         this.name = name;
         setGmail(new EmailAddress(gmail_address, name), gmail_password);
+        calendars = new Calendars(gmail_address, gmail_password);
     }
 
     /**
