@@ -278,7 +278,7 @@ public class ContactIList extends AbstractIList implements Observer {
 }//GEN-LAST:event_button_subordinateActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Contacts.sendContactRequest(super.getIndices());
+        Contacts.sendContactResponse(super.getIndices());
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

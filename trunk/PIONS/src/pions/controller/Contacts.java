@@ -28,15 +28,26 @@ public final class Contacts {
         }
     }
 
-    public static void sendContactRequest(Integer[] contact_indices) {
+    public static void sendContactResponse(Integer[] contact_indices) {
         try {
             for(int index: contact_indices){
                 sendContactRequest(EmployeeSingleton.getInstance()
-                        .getContacts().get(index).getAddress().getAddress());
+                        .getContacts().get(index).getAddress().getAddress(),
+                        AlertType.ContactResponse);
             }
         } catch (NotLoggedInException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean sendContactRequest(String email_address) {
+        try{
+            return sendContactRequest(email_address, AlertType.ContactRequest);
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+
+        return true;
     }
 
     /**
@@ -45,7 +56,8 @@ public final class Contacts {
      * @param email_address
      * @return
      */
-    public static boolean sendContactRequest(String email_address) {
+    public static boolean sendContactRequest(String email_address, AlertType type)
+            throws NotLoggedInException {
         try {
             if(EmployeeSingleton.getInstance().getGmail().getGmailAddress()
                     .getAddress().equals(email_address)){
@@ -54,13 +66,11 @@ public final class Contacts {
             else {
                 Gmail.sendAlert(new EmailAddress(email_address),
                         new Alert(EmployeeSingleton.getInstance().getContact(),
-                        AlertType.ContactRequest));
+                        type));
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NotLoggedInException e) {
             e.printStackTrace();
         }
 

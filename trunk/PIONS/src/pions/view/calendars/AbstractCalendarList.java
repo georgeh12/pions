@@ -3,6 +3,7 @@ package pions.view.calendars;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -16,6 +17,7 @@ import pions.controller.xml.XMLIterator;
 import pions.view.AbstractXMLList;
 import pions.view.PIONSView;
 
+//TODO Implement time validation, and an error message.
 /**
  *
  * 
