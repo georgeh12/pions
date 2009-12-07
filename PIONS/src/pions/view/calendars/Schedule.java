@@ -53,6 +53,7 @@ public class Schedule extends AbstractCalendarList {
                     start_date,
                     end_date);
 
+            clear();
             refresh();
         }
     }

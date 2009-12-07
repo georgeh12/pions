@@ -52,7 +52,6 @@ public abstract class AbstractCalendarList extends AbstractXMLList {
         button_add.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 addEvent();
-                clear();
             }
         });
     }

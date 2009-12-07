@@ -67,12 +67,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="21" pref="21" max="21" attributes="0"/>
                       <Component id="togglebutton_dropshift_create" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="button_dropshift_delete" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="button_dropshift" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="135" max="32767" attributes="0"/>
+              <EmptySpace pref="189" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -110,10 +108,7 @@
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               <Component id="button_dropshift" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="togglebutton_dropshift_create" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="button_dropshift_delete" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="togglebutton_dropshift_create" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="36" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="button_activate" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -205,15 +200,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_dropshiftActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="button_dropshift_delete">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="button_dropshift_delete.text"/>
-        <Property name="name" type="java.lang.String" value="button_dropshift_delete" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_dropshift_deleteActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="togglebutton_availability_edit">

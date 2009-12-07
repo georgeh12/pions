@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Properties;
 import javax.mail.BodyPart;
+import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
@@ -25,6 +26,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.NoSuchProviderException;
 import javax.mail.MessagingException;
+import javax.mail.search.FlagTerm;
 import pions.model.ContactInfo.EmailAddress;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.Alert.AlertType;
@@ -177,7 +179,7 @@ public class Gmail extends Observable implements Serializable {
 
         Folder folder = getFolder(connect(session));
         folder.open(Folder.READ_WRITE);
-        Message alerts[] = folder.getMessages();
+        Message alerts[] = folder.search(new FlagTerm(new Flags(Flags.Flag.SEEN), false));
 
         ArrayList<Message> new_alerts = new ArrayList<Message>();
         for(Message current: alerts){

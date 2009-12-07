@@ -96,6 +96,25 @@ public final class Calendars {
         }
     }
 
+    public static XMLIterator<EventEntry> getWorkSchedule() {
+        try {
+            return new XMLIterator<EventEntry>(EmployeeSingleton.getInstance()
+                    .getCalendars().getWorkSchedule().getEvents());
+        } catch (AuthenticationException e){
+            e.printStackTrace();
+        } catch (ServiceException e){
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (NotLoggedInException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static XMLIterator<EventEntry> getScheduleShifts() {
         try {
             return new XMLIterator<EventEntry>(EmployeeSingleton.getInstance()

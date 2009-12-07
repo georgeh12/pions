@@ -26,16 +26,16 @@ abstract class AbstractDecorator extends AbstractState implements Serializable {
 
     @Override
     protected void accepted() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        drop_shift_state.accepted();
     }
 
     @Override
     protected void rejected() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        drop_shift_state.rejected();
     }
 
     @Override
     protected void ignored() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        drop_shift_state.ignored();
     }
 }

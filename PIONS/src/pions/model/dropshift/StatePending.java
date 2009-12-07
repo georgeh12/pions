@@ -33,9 +33,7 @@ class StatePending extends AbstractState implements Serializable {
 
     @Override
     protected ArrayList<EmailAddress> getRecipients() throws NotLoggedInException {
-        ArrayList<EmailAddress> email_address = new ArrayList<EmailAddress>();
-        email_address.add(EmployeeSingleton.getInstance().getManagerGmail());
-        return email_address;
+        return null;
     }
 
     @Override
