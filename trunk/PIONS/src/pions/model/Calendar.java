@@ -142,17 +142,6 @@ public class Calendar implements Serializable, AbstractAlert {
         }
     }
 
-    public void drop(EventEntry entry)
-            throws ServiceException, IOException,
-            AuthenticationException, NotLoggedInException {
-        entry.setService(getService());
-        entry.delete();
-        entry.removeExtension(Who.class);
-       
-        entry.addParticipant(getWho(EmployeeSingleton.getInstance().getGmail().getGmailAddress()));
-        getService().getFeed(html_link, EventFeed.class).insert(entry);
-    }
-
     private Who getWho(EmailAddress gmail_address){
         Who who = new Who();
         who.setEmail(gmail_address.getAddress());
@@ -209,15 +198,63 @@ public class Calendar implements Serializable, AbstractAlert {
         return getService().getFeed(html_link, EventFeed.class).getEntries().get(index);
     }
 
-    public static String parseTitle(EventEntry entry){
+    /**
+     * Tried just about everything to make this function work. All failed
+     * attempts are marked as comments. All I am trying to do is edit the
+     * participants for an event. Shouldn't be that hard, right?
+     * @param entry_href
+     * @throws ServiceException
+     * @throws IOException
+     * @throws AuthenticationException
+     * @throws pions.model.ModelException.NotLoggedInException
+     */
+    public void drop(String entry_href)
+            throws ServiceException, IOException,
+            AuthenticationException, NotLoggedInException {
+        EventEntry entry = parseEntry(entry_href);
+        entry.setService(getService());
+        entry.removeExtension(Who.class);
+        entry.addParticipant(getWho(EmployeeSingleton.getInstance().getGmail().getGmailAddress()));
+
+        //getService().update(new URL(entry.getEditLink().getHref()), entry);
+        //getService().delete(new URL(entry.getEditLink().getHref()));
+        //getService().insert(html_link, entry);
+        //getService().getFeed(html_link, EventFeed.class).insert(entry);
+    }
+
+    public static String parseHref(EventEntry entry){
+        return entry.getSelfLink().getHref();
+    }
+
+    public EventEntry parseEntry(String entry_href)
+            throws AuthenticationException, IOException, ServiceException {
+        return getService().getEntry(new URL(entry_href), EventEntry.class);
+    }
+
+    public final String parseTitle(String entry_href)
+            throws AuthenticationException, IOException, ServiceException {
+        return parseTitle(parseEntry(entry_href));
+    }
+
+    public static String parseTitle(EventEntry entry) {
         return entry.getTitle().getPlainText();
     }
 
-    public static String parseText(EventEntry entry){
+    public final String parseText(String entry_href)
+            throws AuthenticationException, IOException, ServiceException {
+        return parseText(parseEntry(entry_href));
+    }
+
+    public static String parseText(EventEntry entry) {
         return entry.getPlainTextContent();
     }
 
-    public static String parseStartTime(EventEntry entry){
+    public final String parseStartTime(String entry_href)
+            throws AuthenticationException, IOException, ServiceException {
+        return parseStartTime(parseEntry(entry_href));
+    }
+
+    public static String parseStartTime(EventEntry entry) {
         //This last part is messy because gdata refused to parse the times
         String xml_blob = entry.getXmlBlob().getBlob();
         String lookup = "";
@@ -228,7 +265,12 @@ public class Calendar implements Serializable, AbstractAlert {
         return DateTime.parseDateTime(xml_blob.substring(start_index1, start_index2)).toUiString();
     }
 
-    public static String parseEndTime(EventEntry entry){
+    public final String parseEndTime(String entry_href)
+            throws AuthenticationException, IOException, ServiceException {
+        return parseEndTime(parseEntry(entry_href));
+    }
+
+    public static String parseEndTime(EventEntry entry) {
         //This last part is messy because gdata refused to parse the times
         String xml_blob = entry.getXmlBlob().getBlob();
         String lookup = "";
@@ -241,7 +283,7 @@ public class Calendar implements Serializable, AbstractAlert {
         return DateTime.parseDateTime(xml_blob.substring(end_index1, end_index2)).toUiString();
     }
 
-    public void acceptAlert(AlertType type)
+    public final void acceptAlert(AlertType type)
             throws AlertClassException, NotLoggedInException,
             AuthenticationException, ServiceException, IOException,
             URISyntaxException {
@@ -259,7 +301,7 @@ public class Calendar implements Serializable, AbstractAlert {
         }
     }
 
-    public void rejectAlert(AlertType type) throws AlertClassException {
+    public final void rejectAlert(AlertType type) throws AlertClassException {
         switch(type){
             case Availability:
                 //DONOTHING
@@ -272,7 +314,7 @@ public class Calendar implements Serializable, AbstractAlert {
         }
     }
 
-    public void ignoreAlert(AlertType type) throws AlertClassException {
+    public final void ignoreAlert(AlertType type) throws AlertClassException {
         switch(type){
             case Availability:
                 //DONOTHING
@@ -285,7 +327,7 @@ public class Calendar implements Serializable, AbstractAlert {
         }
     }
 
-    public String getDetails() {
+    public final String getDetails() {
         StringBuffer buffer = new StringBuffer();
 
         buffer.append("Name: " + calendar_name);

@@ -25,20 +25,27 @@ import pions.model.ModelException.NotLoggedInException;
 public class Contacts extends Observable implements Serializable {
     private ArrayList<Contact> contacts = new ArrayList<Contact>();
 
+    public void addContact(Contact contact){
+        contacts.add(contact);
+        
+        setChanged();
+        notifyObservers();
+    }
+
     public void addContact(PublicKey public_key, EmailAddress email_address){
         Contact contact = new Contact(public_key, email_address);
         
         Contact search = searchContacts(contact.gmail_address);
 
         if(search == null){
-            contacts.add(contact);
+            addContact(contact);
         }
         else {
             contacts.set(contacts.indexOf(search), contact);
-        }
 
-        setChanged();
-        notifyObservers();
+            setChanged();
+            notifyObservers();
+        }
     }
 
     public Iterator<Contact> iterator(){

@@ -19,21 +19,7 @@ public class DropShift extends AbstractXMLList {
     public DropShift() {
         initComponents();
 
-        init(Calendars.getScheduleShifts());
-    }
-
-    private StringBuffer getBuffer(Document xml){
-        root = XMLFactory.getHead(xml, XMLFactory.CALENDAR);
-
-        StringBuffer buffer = new StringBuffer();
-
-        appendAttribute(buffer, XMLFactory.TITLE);
-        buffer.append(", ");
-        appendAttribute(buffer, XMLFactory.START_TIME);
-        buffer.append(", ");
-        appendAttribute(buffer, XMLFactory.END_TIME);
-
-        return buffer;
+        init(Calendars.getWorkSchedule());
     }
 
     private void init(XMLIterator<?> iter){
@@ -53,12 +39,15 @@ public class DropShift extends AbstractXMLList {
 
         buffer.append(XMLFactory.TITLE + ": ");
         buffer.append(XMLFactory.getAttribute(root, XMLFactory.TITLE));
+        buffer.append('\n');
         buffer.append(XMLFactory.TEXT + ": ");
         buffer.append(XMLFactory.getAttribute(root, XMLFactory.TEXT));
+        buffer.append('\n');
         buffer.append(XMLFactory.START_TIME + ": ");
-        buffer.append(XMLFactory.getAttribute(root, XMLFactory.START_TIME).substring(5));
+        buffer.append(XMLFactory.getAttribute(root, XMLFactory.START_TIME));
+        buffer.append('\n');
         buffer.append(XMLFactory.END_TIME + ": ");
-        buffer.append(XMLFactory.getAttribute(root, XMLFactory.END_TIME).substring(11));
+        buffer.append(XMLFactory.getAttribute(root, XMLFactory.END_TIME));
 
         textarea_details.setText(buffer.toString());
     }

@@ -43,6 +43,7 @@ public class Availability extends AbstractCalendarList {
                 start_date,
                 end_date);
 
+        clear();
         refresh();
     }
 

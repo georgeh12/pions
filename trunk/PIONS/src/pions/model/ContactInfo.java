@@ -304,7 +304,7 @@ public class ContactInfo implements Serializable {
         public String toString(){
             return street_address + "\n" +
                     city +
-                    (state != State.None ? ", " + state + " " : "") +
+                    (state != State.None ? ", " + state : "") + " " +
                     zip;
         }
 

@@ -2,9 +2,17 @@
 package pions.controller;
 
 import com.google.gdata.data.extensions.EventEntry;
-import pions.model.Alert;
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
+import java.io.IOException;
+import java.io.StreamCorruptedException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.internet.AddressException;
 import pions.model.Alert.AlertType;
-import pions.model.EmployeeSingleton;
+import pions.model.ModelException.AlertClassException;
 import pions.model.ModelException.NotLoggedInException;
 import pions.model.dropshift.DropShift;
 
@@ -14,30 +22,38 @@ import pions.model.dropshift.DropShift;
  */
 public final class DropShifts {
     
-    private static DropShift drop_shift = null;
     private static EventEntry shift_event = null;
-
-    public static boolean isInit(){
-        return drop_shift != null;
-    }
 
     public static void setCurrentShift(int index){
         shift_event = Calendars.getWorkEvent(index);
     }
 
-    public static void createDropShift() {
-        drop_shift = new DropShift(shift_event);
-    }
-
-    public static void deleteDropShift() {
-        drop_shift = null;
-    }
-
     public static void sendDropShift() {
         try{
-            Gmail.sendAlert(EmployeeSingleton.getInstance().getManagerGmail(),
-                    new Alert(drop_shift, AlertType.DropShift));
+            new DropShift(shift_event).acceptAlert(AlertType.DropShift);
         } catch(NotLoggedInException e){
+            e.printStackTrace();
+        } catch(AlertClassException e){
+            e.printStackTrace();
+        } catch(AuthenticationException e){
+            e.printStackTrace();
+        } catch(UnsupportedEncodingException e){
+            e.printStackTrace();
+        } catch(ServiceException e){
+            e.printStackTrace();
+        } catch(StreamCorruptedException e){
+            e.printStackTrace();
+        } catch(AddressException e){
+            e.printStackTrace();
+        } catch(NoSuchProviderException e){
+            e.printStackTrace();
+        } catch(MessagingException e){
+            e.printStackTrace();
+        } catch(ClassNotFoundException e){
+            e.printStackTrace();
+        } catch(NoSuchAlgorithmException e){
+            e.printStackTrace();
+        } catch(IOException e){
             e.printStackTrace();
         }
     }

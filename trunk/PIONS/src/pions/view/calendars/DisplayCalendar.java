@@ -2,14 +2,10 @@
 package pions.view.calendars;
 
 import pions.view.*;
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import pions.controller.Calendars;
 import pions.controller.Calendars.CalendarType;
-import pions.controller.DropShifts;
 
 /**
  *
@@ -48,8 +44,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
     }
 
     private void setDropShiftVisible(boolean visible){
-        togglebutton_dropshift_create.setVisible(visible && !DropShifts.isInit());
-        button_dropshift_delete.setVisible(visible && DropShifts.isInit());
+        togglebutton_dropshift_create.setVisible(visible);
     }
 
     private void setAuxPanel(JPanel panel, JToggleButton button){
@@ -83,7 +78,6 @@ public class DisplayCalendar extends javax.swing.JPanel {
         button_availability = new javax.swing.JRadioButton();
         button_subordinate = new javax.swing.JRadioButton();
         button_dropshift = new javax.swing.JRadioButton();
-        button_dropshift_delete = new javax.swing.JButton();
         togglebutton_availability_edit = new javax.swing.JToggleButton();
         togglebutton_dropshift_create = new javax.swing.JToggleButton();
         togglebutton_subordinate_edit = new javax.swing.JToggleButton();
@@ -163,14 +157,6 @@ public class DisplayCalendar extends javax.swing.JPanel {
             }
         });
 
-        button_dropshift_delete.setText(resourceMap.getString("button_dropshift_delete.text")); // NOI18N
-        button_dropshift_delete.setName("button_dropshift_delete"); // NOI18N
-        button_dropshift_delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_dropshift_deleteActionPerformed(evt);
-            }
-        });
-
         togglebutton_availability_edit.setText(resourceMap.getString("togglebutton_availability_edit.text")); // NOI18N
         togglebutton_availability_edit.setName("togglebutton_availability_edit"); // NOI18N
         togglebutton_availability_edit.addActionListener(new java.awt.event.ActionListener() {
@@ -245,11 +231,9 @@ public class DisplayCalendar extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(togglebutton_dropshift_create)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(button_dropshift_delete))
+                        .addComponent(togglebutton_dropshift_create))
                     .addComponent(button_dropshift))
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label_directions_activate)
@@ -282,9 +266,7 @@ public class DisplayCalendar extends javax.swing.JPanel {
                 .addGap(7, 7, 7)
                 .addComponent(button_dropshift)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(togglebutton_dropshift_create)
-                    .addComponent(button_dropshift_delete))
+                .addComponent(togglebutton_dropshift_create)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_activate)
@@ -348,10 +330,6 @@ public class DisplayCalendar extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_togglebutton_dropshift_createActionPerformed
 
-    private void button_dropshift_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_dropshift_deleteActionPerformed
-        DropShifts.deleteDropShift();
-    }//GEN-LAST:event_button_dropshift_deleteActionPerformed
-
     private void button_activateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_activateActionPerformed
         PIONSView.openLink(this, "http://www.google.com/calendar/");
     }//GEN-LAST:event_button_activateActionPerformed
@@ -362,7 +340,6 @@ public class DisplayCalendar extends javax.swing.JPanel {
     private javax.swing.JRadioButton button_availability;
     private javax.swing.JButton button_availability_view;
     private javax.swing.JRadioButton button_dropshift;
-    private javax.swing.JButton button_dropshift_delete;
     private javax.swing.JRadioButton button_subordinate;
     private javax.swing.JButton button_subordinate_view;
     private javax.swing.JRadioButton button_work;
